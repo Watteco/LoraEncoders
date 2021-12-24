@@ -1,0 +1,922 @@
+{
+   "clusterID":"DifferentialPressure",
+   "clusterName":["Differential pressure measurement","Mesure différentiel de pression"],
+   "expert":false,
+   "attributes":[
+				{
+				"AttributeID":"MeasuredValue",
+				"commands":	[
+					{
+					"CommandID":"ConfigureReporting",
+					"name":["MeasuredValue - Configure reporting","Valeure mesurée  - Configurer les rapports de nombre de changements d'état"],
+					"expert":false,
+					"ReportType":[
+						{
+						"parameters":[
+							{
+								"ParameterID":"AttributeType",
+								"editable":false,
+								"value":"Int16"
+							},
+							{
+							   "ParameterID":"ReportParameters",
+							   "editable":false,
+							   "value":{
+								  "New":"No",
+								  "Reserved":0,
+								  "CauseRequest":"No",
+								  "SecuredIfAlarm":"No",
+								  "Secured":"No",
+								  "NoHeaderPort":"No",
+								  "Batch":"No"
+							}
+							},
+							
+							{
+							   "ParameterID":"MinReport",
+							   "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							   "ParameterID":"MaxReport",
+							   "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+								"ParameterID": "Data",
+								"name": ["Reportable change","Variation à signaler"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,65535],
+								"type": "number",
+								"mantissa": 1,
+								"multiplier": 1,
+								"unit": ["Pa","Pa"]
+							}
+							]
+							},
+							{
+								"parameters": [
+									{
+										"ParameterID": "AttributeType",
+										"editable": false,
+										"value": "Int16"
+									},
+									{
+										"ParameterID": "ReportParameters",
+										"editable": false,
+										"value": {
+											"New": "No",
+											"Size": 0,
+											"Batch": "Yes"
+										}
+									},
+									{
+										"ParameterID": "FieldIndex",
+										"name": ["Field(s)","Champ(s)"],
+										"editable": true,
+										"comment": ["---","---"],
+										"type": "select",
+										"options": [
+											{
+												"OptionID": 0,
+												"name": ["none","none"]
+											}
+										]
+									},
+									{
+										"ParameterID": "MinReport",
+										"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "time"
+									},
+									{
+										"ParameterID": "MaxReport",
+										"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "time"
+									},
+									{
+										"ParameterID": "Delta",
+										"name": ["Delta","Delta"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["Pa","Pa"]
+									},
+									{
+										"ParameterID": "Resolution",
+										"name": ["Resolution","Résolution"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["Pa","Pa"]
+									},
+									{
+										"ParameterID": "TagValue",
+										"editable": true,
+										"type": "data",
+										"subParameters": [
+											{
+												"ParameterID": "TagLabel",
+												"name": ["TagLabel","TagLabel"],
+												"editable": true,
+												"comment": ["---","---"],
+												"range": [0,31],
+												"type": "number",
+												"mantissa": 1,
+												"multiplier": 1,
+												"unit": ["",""]
+											},
+											{
+												"ParameterID": "TagSize",
+												"name": ["TagSize","TagSize"],
+												"editable": true,
+												"comment": ["---","---"],
+												"range": [1,7],
+												"type": "number",
+												"mantissa": 1,
+												"multiplier": 1,
+												"unit": ["",""]
+											}
+											
+										]
+									}
+								]
+							}
+						 ]
+					},
+					{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["MeasuredValue - Read reporting configuration","Valeur mesurée - Lire la configuration des rapports pour le nombre de changements d'état"],
+					"expert": true,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								}
+							]
+						}
+						]
+					},
+					{
+					"CommandID": "ReadAttribute",
+					"expert": true,
+					"name": ["MeasuredValue - Read the measured value","Valeur mesurée - Lire la valeur mesurée"]
+					}
+				   ]
+				},
+				{
+				"AttributeID":"MinMeasuredValue",
+				"commands":	[
+					{
+					"CommandID": "ReadAttribute",
+					"expert": true,
+					"name": ["MinMeasuredValue - Read the minimum measured value","Valeur minimale mesurée - Lire la valeur minimale mesurée"]
+					}
+				   ]
+				},		
+				{
+				"AttributeID":"MaxMeasuredValue",
+				"commands":	[
+					{
+					"CommandID": "ReadAttribute",
+					"expert": true,
+					"name": ["MaxMeasuredValue - Read the maximal measured value","Valeur maximale mesurée - Lire la valeur maximale mesurée"]
+					}
+				   ]
+				},
+				{
+				"AttributeID":"MeasurementPeriodAttribute",
+				"commands":	[
+					{
+					"CommandID": "ReadAttribute",
+					"name": ["MeasurementPeriodAttribute-Read the measurement perdiod","Période de mesure- Lire la période de mesurement"]
+					},
+					{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["MeasurementPeriodAttribute - Write the measurement period","Période de mesure- Définir la période de mesure"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt32"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["The period to write","La période à définir"],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,4294967295],
+							"type": "number",
+							"mantissa": 1,
+							"multiplier": 1,
+							"unit": ["ms","ms"]
+						}
+					]
+				}
+				   ]
+				},
+				{
+				"AttributeID":"SamplePerMeasurementAttribute",
+				"commands":	[
+					{
+					"CommandID": "ReadAttribute",
+					"name": ["SamplePerMeasurementAttribute - Read the sample per measurement attribute.","Echantillon par mesure - Lire le nombre d'échantillon par mesure"]
+					},
+					{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["SamplePerMeasurementAttribute - Write the sample per measurement attribute.","Echantillon par mesure - Définir le nombre d'échantillon par mesure"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt32"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["The number of samples done for each measurement","Le nombre d'échantillons effectués pour chaque mesure"],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,65353],
+							"type": "number",
+							"mantissa": 1,
+							"multiplier": 1,
+							"unit": ["",""]
+						}
+						]
+					}
+					]
+				},
+				{
+				"AttributeID":"SamplePerConfirmationMeasurementAttribute",
+				"commands":	[
+					{
+					"CommandID": "ReadAttribute",
+					"name": ["SamplePerConfirmationMeasurementAttribute - Read the sample per confirmation measurement attribute","Echantillon de confirmation par mesure - Lire le nombre d'échantillon de confirmation par mesure."]
+					},
+					{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["SamplePerConfirmationMeasurementAttribute - Write the sample per confirmation measurement attribute","Echantillon de confirmation par mesure - Définir le nombre d'échantillon de confirmation par mesure."],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt32"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["The number of confirmation samples done for each confirmed measurement","Le nombre d'échantillons de confirmation effectués pour chaque mesure confirmée"],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,65353],
+							"type": "number",
+							"mantissa": 1,
+							"multiplier": 1,
+							"unit": ["",""]
+						}
+						]
+					}
+					]
+				},
+				{
+				"AttributeID":"SamplePeriodeAttribute",
+				"commands":	[
+					{
+					"CommandID": "ReadAttribute",
+					"name": ["SamplePeriodAttribute - Read the time between two samples.","Période d'échantillonage - Lire la valeur de temps entre deux mesures"]
+					},
+					{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["SamplePeriodAttribute - Write the time between two samples.","Période d'échantillonage - Définir la valeur de temps entre deux mesures"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt32"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Sample period","Période d'échantillonage"],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,4294967295],
+							"type": "number",
+							"mantissa": 1,
+							"multiplier": 1,
+							"unit": ["ms","ms"]
+						}
+						]
+					}
+					]
+				},
+				{
+				"AttributeID":"MeanMeasuredValueSinceLastReportAttribute",
+				"commands":	[
+					{
+					"CommandID":"ConfigureReporting",
+					"name":["MeanMeasuredValueSinceLastReportAttribute - Configure reporting","Valeur moyenne mesurée depuis le dernier rapport - Configurer le rapport"],
+					"expert":false,
+					"ReportType":[
+						{
+						"parameters":[
+							{
+							   "ParameterID":"ReportParameters",
+							   "editable":false,
+							   "value":{
+								  "New":"No",
+								  "Reserved":0,
+								  "CauseRequest":"No",
+								  "SecuredIfAlarm":"No",
+								  "Secured":"No",
+								  "NoHeaderPort":"No",
+								  "Batch":"No"
+							   }
+							},
+							{
+							   "ParameterID":"AttributeType",
+							   "editable":false,
+							   "value":"Int16"
+							},
+							{
+							   "ParameterID":"MinReport",
+							   "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							   "ParameterID":"MaxReport",
+							   "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							   "ParameterID":"Data",
+							   "name":["Reportable change","Variation à signaler"],
+							   "editable":true,
+							   "comment":["---","---"],
+							   "range":[0,65535],
+							   "type":"Number",
+							   "Mentissa":1,
+							   "Multiplier":1
+							}
+							]
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "Int16"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Size": 0,
+										"Batch": "Yes"
+									}
+								},
+								{
+									"ParameterID": "FieldIndex",
+									"name": ["Field(s)","Champ(s)"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["none","none"]
+										}
+									]
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Delta",
+									"name": ["Delta","Delta"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1
+								},
+								{
+									"ParameterID": "Resolution",
+									"name": ["Resolution","Résolution"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1
+								},
+								{
+									"ParameterID": "TagValue",
+									"editable": true,
+									"type": "data",
+									"subParameters": [
+										{
+											"ParameterID": "TagLabel",
+											"name": ["TagLabel","TagLabel"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,31],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										},
+										{
+											"ParameterID": "TagSize",
+											"name": ["TagSize","TagSize"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [1,7],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										}
+										
+									]
+								}
+							]
+						}
+					]
+					},
+					{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["MeanMeasuredValueSinceLastReportAttribute - Read reporting configuration","Valeur moyenne mesurée depuis le dernier rapport - Lire la configuration"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								}
+							]
+						}
+						]
+					},
+					{
+					"CommandID": "ReadAttribute",
+					"expert": true,
+					"name": ["MeanMeasuredValueSinceLastReportAttribute - Read the current mean measured value","Valeur moyenne mesurée depuis le dernier rapport - Lire la valeur moyenne actuelle"]
+					}
+				   ]
+				},
+				{
+				"AttributeID":"MinimalMeasuredValueSinceLastReportAttribute",
+				"commands":	[
+					{
+					"CommandID":"ConfigureReporting",
+					"name":["MinMeasuredValueSinceLastReportAttribute - Configure reporting","Valeur minimale mesurée depuis le dernier rapport - Configurer le rapport"],
+					"expert":false,
+					"ReportType":[
+						{
+						"parameters":[
+							{
+							   "ParameterID":"ReportParameters",
+							   "editable":false,
+							   "value":{
+								  "New":"No",
+								  "Reserved":0,
+								  "CauseRequest":"No",
+								  "SecuredIfAlarm":"No",
+								  "Secured":"No",
+								  "NoHeaderPort":"No",
+								  "Batch":"No"
+							   }
+							},
+							{
+							   "ParameterID":"AttributeType",
+							   "editable":false,
+							   "value":"Int16"
+							},
+							{
+							   "ParameterID":"MinReport",
+							   "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							   "ParameterID":"MaxReport",
+							   "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+								"ParameterID":"Data",
+								"name":["Reportable change","Variation à signaler"],
+								"editable":true,
+								"comment":["---","---"],
+								"range":[0,65535],
+								"type":"Number",
+								"Mentissa":1,
+								"Multiplier":1
+							 }
+							]
+							},
+							{
+								"parameters": [
+									{
+										"ParameterID": "AttributeType",
+										"editable": false,
+										"value": "Int16"
+									},
+									{
+										"ParameterID": "ReportParameters",
+										"editable": false,
+										"value": {
+											"New": "No",
+											"Size": 0,
+											"Batch": "Yes"
+										}
+									},
+									{
+										"ParameterID": "FieldIndex",
+										"name": ["Field(s)","Champ(s)"],
+										"editable": true,
+										"comment": ["---","---"],
+										"type": "select",
+										"options": [
+											{
+												"OptionID": 0,
+												"name": ["none","none"]
+											}
+										]
+									},
+									{
+										"ParameterID": "MinReport",
+										"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "time"
+									},
+									{
+										"ParameterID": "MaxReport",
+										"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "time"
+									},
+									{
+										"ParameterID": "Delta",
+										"name": ["Delta","Delta"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["mV","mV"]
+									},
+									{
+										"ParameterID": "Resolution",
+										"name": ["Resolution","Résolution"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["mV","mV"]
+									},
+									{
+										"ParameterID": "TagValue",
+										"editable": true,
+										"type": "data",
+										"subParameters": [
+											{
+												"ParameterID": "TagLabel",
+												"name": ["TagLabel","TagLabel"],
+												"editable": true,
+												"comment": ["---","---"],
+												"range": [0,31],
+												"type": "number",
+												"mantissa": 1,
+												"multiplier": 1,
+												"unit": ["",""]
+											},
+											{
+												"ParameterID": "TagSize",
+												"name": ["TagSize","TagSize"],
+												"editable": true,
+												"comment": ["---","---"],
+												"range": [1,7],
+												"type": "number",
+												"mantissa": 1,
+												"multiplier": 1,
+												"unit": ["",""]
+											}
+											
+										]
+									}
+								]
+							}
+						 ]
+					},
+					{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["MinMeasuredValueSinceLastReportAttribute - Read reporting configuration","Valeur minimale mesurée depuis le dernier rapport - Lire la configuration"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								}
+							]
+						}
+						]
+					},
+					{
+					"CommandID": "ReadAttribute",
+					"expert": true,
+					"name": ["MinMeasuredValueSinceLastReportAttribute - Read the current count","Valeur minimale mesurée depuis le dernier rapport - Lire le comptage actuel"]
+					}
+				   ]
+				},
+				{
+				"AttributeID":"MaximalMeasuredValueSinceLastReportAttribute",
+				"commands":	[
+					{
+					"CommandID":"ConfigureReporting",
+					"name":["MaximalMeasuredValueSinceLastReportAttribute - Configure reporting","Valeur maximale de mesure depuis le dernier rapport - Configurer le rapport"],
+					"expert":false,
+					"ReportType":[
+						{
+						"parameters":[
+							{
+								"ParameterID":"AttributeType",
+								"editable":false,
+								"value":"Int16"
+							},
+							{
+							   "ParameterID":"ReportParameters",
+							   "editable":false,
+							   "value":{
+								  "New":"No",
+								  "Reserved":0,
+								  "CauseRequest":"No",
+								  "SecuredIfAlarm":"No",
+								  "Secured":"No",
+								  "NoHeaderPort":"No",
+								  "Batch":"No"
+							   }
+							},
+							
+							{
+							   "ParameterID":"MinReport",
+							   "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							   "ParameterID":"MaxReport",
+							   "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+								"ParameterID":"Data",
+								"name":["Reportable change","Variation à signaler"],
+								"editable":true,
+								"comment":["---","---"],
+								"range":[0,65535],
+								"type":"Number",
+								"Mentissa":1,
+								"Multiplier":1
+							 }
+							]
+							},
+							{
+								"parameters": [
+									{
+										"ParameterID": "AttributeType",
+										"editable": false,
+										"value": "Int16"
+									},
+									{
+										"ParameterID": "ReportParameters",
+										"editable": false,
+										"value": {
+											"New": "No",
+											"Size": 0,
+											"Batch": "Yes"
+										}
+									},
+									{
+										"ParameterID": "FieldIndex",
+										"name": ["Field(s)","Champ(s)"],
+										"editable": true,
+										"comment": ["---","---"],
+										"type": "select",
+										"options": [
+											{
+												"OptionID": 0,
+												"name": ["none","none"]
+											}
+										]
+									},
+									{
+										"ParameterID": "MinReport",
+										"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "time"
+									},
+									{
+										"ParameterID": "MaxReport",
+										"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "time"
+									},
+									{
+										"ParameterID": "Delta",
+										"name": ["Delta","Delta"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["mV","mV"]
+									},
+									{
+										"ParameterID": "Resolution",
+										"name": ["Resolution","Résolution"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,32767],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["mV","mV"]
+									},
+									{
+										"ParameterID": "TagValue",
+										"editable": true,
+										"type": "data",
+										"subParameters": [
+											{
+												"ParameterID": "TagLabel",
+												"name": ["TagLabel","TagLabel"],
+												"editable": true,
+												"comment": ["---","---"],
+												"range": [0,31],
+												"type": "number",
+												"mantissa": 1,
+												"multiplier": 1,
+												"unit": ["",""]
+											},
+											{
+												"ParameterID": "TagSize",
+												"name": ["TagSize","TagSize"],
+												"editable": true,
+												"comment": ["---","---"],
+												"range": [1,7],
+												"type": "number",
+												"mantissa": 1,
+												"multiplier": 1,
+												"unit": ["",""]
+											}
+											
+										]
+									}
+								]
+							}
+						 ]
+					},
+					{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["MaximalMeasuredValueSinceLastReportAttribute - Read reporting configuration","Valeur maximale de mesure depuis le dernier rapport - Lire la configuration"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								}
+							]
+						}
+						]
+					},
+					{
+					"CommandID": "ReadAttribute",
+					"expert": true,
+					"name": ["MaximalMeasuredValueSinceLastReportAttribute - Read the current count","Valeur maximale de mesure depuis le dernier rapport - Lire le comptage actuel"]
+					}
+				   ]
+				}
+	]
+				
+				
+}
+				
+	
+
+   

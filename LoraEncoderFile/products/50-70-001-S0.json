@@ -1,0 +1,56 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+			{
+				"attribute" : "NodePowerDescriptor",
+				"available" : true,
+				"config" : [[[4,100,1,1]] ]	
+			}
+			]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "BinaryInput",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+			{
+				"attribute" : "PresentValue",
+				"available" : true,
+				"config" : [[[0,1,0,1]]] 	
+			},
+			{
+				"attribute" : "Count",
+				"available" : true	
+			}
+			]
+		}
+	],
+	 "embeddedProductName": "ips-binaryinput"
+}

@@ -1,0 +1,59 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : 
+			[
+				{
+					"attribute" : "NodePowerDescriptor",
+					"available" : true,
+					"config" : [[[4,100,1,1]]] 	
+				}
+			]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "BinaryInput",
+			"customName": ["Light pulses measurement","Mesure des impulsions lumineuses"],
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : 
+			[
+				{
+					"attribute" : "Count",
+					"available" : true,
+					"config" : [[[0,1,0,1]]] 	
+				},
+				{
+					"attribute" :	"PresentValue",
+					"available":	true
+				}
+			]
+		}
+	],
+	"embeddedProductName": "ips-ild"
+}

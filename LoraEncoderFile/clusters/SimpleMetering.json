@@ -1,0 +1,294 @@
+{
+   "clusterID":"SimpleMetering",
+   "clusterName":["Simple metering","Simple metering"],
+   "expert":false,
+   "attributes":[
+				{
+				"AttributeID":"CurrentMetering",
+				"commands":	[
+					{
+					"CommandID":"ConfigureReporting",
+					"name":["SimpleMetering - Configure reporting","SimpleMetering  - Configurer les rapports"],
+					"expert":false,
+					"ReportType":[
+						{
+						"parameters":[
+							{
+							   "ParameterID":"ReportParameters",
+							   "editable":false,
+							   "value":{
+								  "New":"No",
+								  "Reserved":0,
+								  "CauseRequest":"No",
+								  "SecuredIfAlarm":"No",
+								  "Secured":"No",
+								  "NoHeaderPort":"No",
+								  "Batch":"No"
+							   }
+							},
+							{
+							   "ParameterID":"AttributeType",
+							   "editable":false,
+							   "value":"ByteString"
+							},
+							{
+							   "ParameterID":"MinReport",
+							   "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							   "ParameterID":"MaxReport",
+							   "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							"ParameterID": "Data",
+							"editable": true,
+							"type": "data",
+							"subParameters": [
+								{
+								   "ParameterID":"DataLength",
+								   "name":["Length of the data","Longueur de la trame"],
+								   "editable":false,
+								   "comment":["---","---"],
+								   "range":[0,13],
+								   "multiplier": 1,
+								   "type":"number"
+								},
+								{
+								   "ParameterID":"ActiveEnergy",
+								   "fieldIndex" : 0,
+								   "name":["variation of summation of the active energy","variation de la somme de l'énergie active"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,16777215],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["W.h","W.h"]
+								},
+								{
+								   "ParameterID":"ReactiveEnergy",
+								   "fieldIndex" : 1,
+								   "name":["variation of summation of the reactive energy","variation de la somme de l'énergie réactive"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,16777215],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["Var.h","Var.h"]
+								},
+								{
+								   "ParameterID":"NbMinutes",
+								   "fieldIndex" : 2,
+								   "name":["variation of number of sample","variation du nombre d'échantillon"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["sample(s)","échantillon(s)"]
+								},
+								{
+								   "ParameterID":"ActivePower",
+								   "fieldIndex" : 3,
+								   "name":["variation of active power ","variation de l'énergie active"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["W","W"]
+								},
+								
+								{
+								   "ParameterID":"ReactivePower",
+								   "fieldIndex" : 4,
+								   "name":["variation of reactive power","variation de l'énergie réactive"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["Var","Var"]
+								}
+							  ]
+							}
+						 ]
+					  },
+					  {
+						"parameters": [
+							{
+								"ParameterID": "AttributeType",
+								"editable": false,
+								"value": "ByteString"
+							},
+							{
+								"ParameterID": "ReportParameters",
+								"editable": false,
+								"value": {
+									"New": "No",
+									"Size": 0,
+									"Batch": "Yes"
+								}
+							},
+							{
+								"ParameterID": "FieldIndex",
+								"name": ["Field(s)","Champ(s)"],
+								"editable": true,
+								"comment": ["---","---"],
+								"type": "select",
+								"options": [
+									{
+										"OptionID": 0,
+										"name": ["variation of summation of the active energy","variation de la somme de l'énergie active"]
+									},
+									{
+										"OptionID": 1,
+										"name": ["variation of summation of the reactive energy","variation de la somme de l'énergie réactive"]
+									},
+									{
+										"OptionID": 2,
+										"name": ["variation of number of sample","variation du nombre d'échantillon"]
+									},
+									{
+										"OptionID": 3,
+										"name":["variation of active power ","variation de l'énergie active"]
+									},
+									{
+										"OptionID": 4,
+										"name": ["variation of reactive power","variation de l'énergie réactive"]
+									}
+								]
+							},
+							{
+								"ParameterID": "MinReport",
+								"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "time"
+							},
+							{
+								"ParameterID": "MaxReport",
+								"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "time"
+							},
+							{
+								"ParameterID": "Delta",
+								"name": ["Delta","Delta"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "number",
+								"mantissa": 1000,
+								"multiplier": 1,
+								"unit": ["",""]
+							},
+							{
+								"ParameterID": "Resolution",
+								"name": ["Resolution","Résolution"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "number",
+								"mantissa": 1000,
+								"multiplier": 1,
+								"unit": ["",""]
+							},
+							{
+								"ParameterID": "TagValue",
+								"editable": true,
+								"type": "data",
+								"subParameters": [
+									{
+										"ParameterID": "TagLabel",
+										"name": ["TagLabel","TagLabel"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,31],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["",""]
+									},
+									{
+										"ParameterID": "TagSize",
+										"name": ["TagSize","TagSize"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [1,7],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["",""]
+									}
+									
+								]
+							}
+						]
+					}
+				   ]
+				},				
+				{
+						"CommandID": "ReadReportingConfiguration",
+						"name": ["SimpleMetering - Read reporting configuration","SimpleMetering - Lire la configuration des rapports"],
+						"expert": false,
+						"parameters": [
+							{
+								"ParameterID": "ReportParameters",
+								"editable": false,
+								"value": {
+									"New": "No",
+									"Reserved": 0,
+									"CauseRequest": "No",
+									"SecuredIfAlarm": "No",
+									"Secured": "No",
+									"NoHeaderPort": "No",
+									"Batch": "No"
+								}
+							}
+						]
+				},
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["SimpleMetering - Read current values","SimpleMetering - Lire les valeurs actuelles"],
+					"expert": true
+				}
+				]
+				},
+				{
+					"AttributeID":"ClusterSpecificCommand",
+					"commands":[
+							{
+							"CommandID":"ClusterSpecificCommand",
+							"name":["Reset the consumption of the device","Réinitialiser la consommation de l'appareil"],
+							"expert":false,
+							"parameters":[
+								{
+								   "ParameterID":"Data",
+								   "editable":false,
+								   "value":[0]
+								}
+								]
+					}
+					]
+				}
+	]
+}
+   

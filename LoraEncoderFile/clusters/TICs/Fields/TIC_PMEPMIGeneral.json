@@ -1,0 +1,405 @@
+{
+	"parameters": [
+		{
+			"ParameterID":"TRAME",
+			"comment":["","TEST"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"ADS",
+			"comment":["","Chaîne de 12 caractères contenant l'identifiant du compteur (ADS)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"MESURES1",
+			"comment":["","Chaîne indiquant le nom du traitement tarifaire associé au calendrier n°1"],
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+			]
+		},		
+		{
+			"ParameterID":"DATE",
+			"comment":["","Date et heure courante (JJ/MM/AA HH:MM:SS)===(DMYhms)"],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"EA_s",
+			"comment":["","Energie active soutirée (au primaire) depuis dernier top Td"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERp_s",
+			"comment":["","Energie réactive positive (au primaire) depuis dernier top Td en période de soutirage d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERm_s",
+			"comment":["","Energie réactive négative (au primaire) depuis dernier top Td en période de soutirage d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"EAPP_s",
+			"comment":["","Energie apparente soutirée (au primaire) depuis dernier top Td"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"EA_i",
+			"comment":["","Energie active injectée (au primaire) depuis dernier top Td"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERp_i",
+			"comment":["","Energie réactive positive (au primaire) depuis dernier top Td en période d'injection d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERm_i",
+			"comment":["","Energie réactive négative (au primaire) depuis dernier top Td en période d'injection d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"EAPP_i",
+			"comment":["","Energie apparente injectée (au primaire) depuis dernier top Td"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"PTCOUR1",
+			"comment":["","Période tarifaire courante (chaîne associée de 3 caractères alphanumériques)"],
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+			]
+		},
+		{
+			"ParameterID":"TARIFDYN",
+			"comment":["","Chaîne de caractères indiquant la présence du signal tarifaire externe"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"ETATDYN1",
+			"comment":["","Libellé de la période tarifaire de la période dynamique en cours(chaîne associée de 3 caractères alphanumériques)"],
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+			]
+		},
+		{
+			"ParameterID":"PREAVIS1",
+			"comment":["","Libellé de la période tarifaire faisant l'objet du préavis en cours"],
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+			]
+		},
+		{
+			"ParameterID":"TDYN1CD",
+			"comment":["","Chaîne de caractères indiquant l'horodate de début et le libellé de la période tarifaire de la période dynamique en cours ('JJ/MM/AA HH:MM:SS-aaa')"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"TDYN1CF",
+			"comment":["","Chaîne de caractères indiquant l'horodate de fin et le libellé de la période tarifaire de la période dynamique en cours ('JJ/MM/AA HH:MM:SS-aaa')"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"TDYN1FD",
+			"comment":["","Chaîne de caractères indiquant l'horodate de début et le libellé de la période tarifaire de la prochaine période dynamique ('JJ/MM/AA HH:MM:SS-aaa')"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"TDYN1FF",
+			"comment":["","Chaîne de caractères indiquant l'horodate de fin et le libellé de la période tarifaire de la prochaine période dynamique ('JJ/MM/AA HH:MM:SS-aaa')"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"MODE",
+			"comment":["","Prend la valeur ' CONTROLE ' si le compteur est dans ce mode"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"CONFIG",
+			"comment":["","Prend la valeur ' CONSO ' ou ' PROD '"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"DATEPA1",
+			"comment":["","Date de la puissance active moyenne Tc min d'étiquette ' PAX ' (X = 1)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PA1_s",
+			"comment":["","Puissance active moyenne Tc min (X = 1) en soutirage"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"PA1_i",
+			"comment":["","Puissance active moyenne Tc min (X = 1) en injection"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"DATEPA2",
+			"comment":["","Date de la puissance active moyenne Tc min d'étiquette ' PAX ' (X = 2)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PA2_s",
+			"comment":["","Puissance active moyenne Tc min (X = 2) en soutirage"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"PA2_i",
+			"comment":["","Puissance active moyenne Tc min (X = 2) en injection"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"DATEPA3",
+			"comment":["","Date de la puissance active moyenne Tc min d'étiquette ' PAX ' (X = 3)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PA3_s",
+			"comment":["","Puissance active moyenne Tc min (X = 3) en soutirage"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"PA3_i",
+			"comment":["","Puissance active moyenne Tc min (X = 3) en injection"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"DATEPA4",
+			"comment":["","Date de la puissance active moyenne Tc min d'étiquette ' PAX ' (X =4)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PA4_s",
+			"comment":["","Puissance active moyenne Tc min (X = 4) en soutirage"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"PA4_i",
+			"comment":["","Puissance active moyenne Tc min (X = 4) en injection"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"DATEPA5",
+			"comment":["","Date de la puissance active moyenne Tc min d'étiquette ' PAX ' (X = 5)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PA5_s",
+			"comment":["","Puissance active moyenne Tc min (X = 5) en soutirage"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"PA5_i",
+			"comment":["","Puissance active moyenne Tc min (X = 5) en injection"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"DATEPA6",
+			"comment":["","Date de la puissance active moyenne Tc min d'étiquette ' PAX ' (X = 6)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PA6_s",
+			"comment":["","Puissance active moyenne Tc min (X = 6) en soutirage"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"PA6_i",
+			"comment":["","Puissance active moyenne Tc min (X = 6) en injection"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"DebP",
+			"comment":["","Date et heure de début de la période P (JJ/MM/AA HH:MM:SS)===(DMYhms)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"EAP_s",
+			"comment":["","Energie active soutirée de la période P pour la période tarifaire en cours"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"EAP_i",
+			"comment":["","Energie active injectée de la période P pour la période tarifaire en cours"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERpP_s",
+			"comment":["","Energie réactive positive de la période P pour la période tarifaire en cours en période de soutirage d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERmP_s",
+			"comment":["","Energie réactive négative de la période P pour la période tarifaire en cours en période de soutirage d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERpP_i",
+			"comment":["","Energie réactive positive de la période P pour la période tarifaire en cours en période d'injection d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERmP_i",
+			"comment":["","Energie réactive négative de la période P pour la période tarifaire en cours en période d'injection d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"DebPm1",
+			"comment":["","Date et heure de début de la période P -1 (JJ/MM/AA HH:MM:SS)===(DMYhms)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"FinPm1",
+			"comment":["","Date et heure de fin de la période P -1 (JJ/MM/AA HH:MM:SS)===(DMYhms)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"EaPm1_s",
+			"comment":["","Energie active soutirée de la période P -1 pour la période tarifaire en cours"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"EaPm1_i",
+			"comment":["","Energie active injectée de la période P -1 pour la période tarifaire en cours"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERpPm1_s",
+			"comment":["","Energie réactive positive de la période P -1 pour la période tarifaire en cours en période de soutirage d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERmPm1_s",
+			"comment":["","Energie réactive négative de la période P -1 pour la période tarifaire en cours en période de soutirage d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERpPm1_i",
+			"comment":["","Energie réactive positive de la période P -1 pour la période tarifaire en cours en période d'injection d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"ERmPm1_i",
+			"comment":["","Energie réactive négative pour la période P -1 pour la période tarifaire en cours en période d'injection d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"PS",
+			"comment":["","Puissance souscrite de la période tarifaire en cours"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PREAVIS",
+			"comment":["","Chaîne ' DEP '"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PA1MN",
+			"comment":["","Puissance active 1 minute"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"PMAX_s",
+			"comment":["","Puissance maximale atteinte en période de soutirage d'énergie active pour la période tarifaire en cours"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PMAX_i",
+			"comment":["","Puissance maximale atteinte en période d'injection d'énergie active pour la période tarifaire en cours"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"TGPHI_s",
+			"comment":["","Tangente phi moyenne 10 minutes en période de soutirage d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"TGPHI_i",
+			"comment":["","Tangente phi moyenne 10 minutes en période d'injection d'énergie active"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"MESURES2",
+			"comment":["","Chaîne indiquant le nom du traitement tarifaire associé au calendrier n°2"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PTCOUR2",
+			"comment":["","Période tarifaire courante (chaîne associée de 3 caractères alphanumériques)"],
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+			]
+		},
+		{
+			"ParameterID":"ETATDYN2",
+			"comment":["","Libellé de la période tarifaire de la période dynamique en cours (chaîne associée de 3 caractères alphanumériques)"],
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+			]
+		},
+		{
+			"ParameterID":"PREAVIS2",
+			"comment":["","Libellé de la période tarifaire faisant l'objet du préavis en cours "],
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+			]
+		},
+		{
+			"ParameterID":"TDYN2CD",
+			"comment":["","Chaîne de caractères indiquant l'horodate de début et le libellé de la période tarifaire de la période dynamique en cours ('JJ/MM/AA HH:MM:SS-aaa')"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"TDYN2CF",
+			"comment":["","Chaîne de caractères indiquant l'horodate de fin et le libellé de la période tarifaire de la période dynamique en cours ('JJ/MM/AA HH:MM:SS-aaa')"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"TDYN2FD",
+			"comment":["","Chaîne de caractères indiquant l'horodate de début et le libellé de la période tarifaire de la prochaine période dynamique ('JJ/MM/AA HH:MM:SS-aaa')"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"TDYN2FF",
+			"comment":["","Chaîne de caractères indiquant l'horodate de fin et le libellé de la période tarifaire de la prochaine période dynamique ('JJ/MM/AA HH:MM:SS-aaa')"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"DebP_2",
+			"comment":["","Date de début de la période P (JJ/MM/AA HH:MM:SS)===(DMYhms)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"EaP_s2",
+			"comment":["","Energie active soutirée de la période P pour la période tarifaire en cours pour MESURES2"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"DebPm1_2",
+			"comment":["","Date de début de la période P-1 (JJ/MM/AA HH:MM:SS)===(DMYhms)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"FinPm1_2",
+			"comment":["","Date de fin de la période P-1 (JJ/MM/AA HH:MM:SS)===(DMYhms)"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"EaPm1_s2",
+			"comment":["","Energie active soutirée de la période P -1 pour la période tarifaire en cours pour MESURES2"],
+			"editable":true, "type":"number","selectable":true
+		},
+		{
+			"ParameterID":"_DDEPMES1_",
+			"comment":["","Champ calculé: Durée de dépassement pour la période tarifaire en cours."],
+			"editable":true, "type":"number","selectable":true
+		}
+	]
+}

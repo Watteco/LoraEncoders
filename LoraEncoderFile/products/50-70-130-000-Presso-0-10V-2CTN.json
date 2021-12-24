@@ -1,0 +1,90 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4,2],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute" : "NodePowerDescriptor", 
+					"available" : true,
+					"config" : [[[4,100,6,3],[2,100,5,3]]] 
+				}	
+			]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "AnalogInput",
+			"endpoints": [1],
+			"endpointsComment": [["Current measurement","Mesure de courant"],["Voltage measurement","Mesure de tension"]],
+			"Data.unit": [[" mV"," mV"]],
+			"Data.comment": [["---","---"]],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute" : "PresentValue",
+					"available" : true,
+					"config" : [[[0,1,2,3]]] 	
+				}
+			]
+		},
+		{
+			"clusterID": "Temperature",
+			"endpoints": [0,1],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute" : "MeasuredValue",
+					"available" : true,
+					"config" : [[[0,0.1,0,3]],[[0,0.1,1,3]]] 	
+				}
+			]
+		},
+		{
+			"clusterID": "BinaryInput",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute" : "Count",
+					"available" : true,
+					"config" : [[[0,1,3,3]]] 	
+				},
+				{
+					"attribute" : "PresentValue",
+					"available" : true,
+					"config" : [[[0,1,4,3]]] 	
+				}
+			]
+		}
+	],
+	"embeddedProductName": "ips-analoginput"
+
+}

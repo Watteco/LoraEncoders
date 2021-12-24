@@ -1,0 +1,60 @@
+{
+	"products": [
+
+		{
+			"name": "In'O (50-70-016-005)",
+			"file": "50-70-016-005-Ino"
+		},
+		{
+			"name": "Monit'O (50-70-141)",
+			"file": "50-70-141-Batto"
+		},
+		{
+			"name": "Press'O (50-70-017-005)",
+			"file": "50-70-017-005-Presso"
+		},
+		{
+			"name": "Press'O 0-10V 2CTN (50-70-130-00)",
+			"file": "50-70-130-000-Presso-0-10V-2CTN"
+		},
+		{
+			"name": "Pulse Sens'O (50-70-[014/072/039/051])",
+			"file": "50-70-014-PulseSenso"
+		},
+		{
+			"name": "Triphaso (50-70-[105/145])",
+			"file": "50-70-105-Triphaso"
+		},
+		{
+			"name": "PW (50-70-027)",
+			"file": "50-70-027-PW"
+		},
+		{
+			"name": "THr (50-70-007)",
+			"file": "50-70-007-THr"
+		},
+		{
+			"name": "Celso (50-70-049)",
+			"file": "50-70-049-Celso"
+		},
+		{
+			"name": "PulseSenso (50-70-014)",
+			"file": "50-70-014-PulseSenso"
+		},
+		{
+			"name": "Ventil'o (50-70-064)",
+			"file": "50-70-064-Ventil'o"
+		},
+		{
+			"name": "TH (50-70-053)",
+			"file": "50-70-053-TH"
+		}
+
+	],
+	"in_developpement_products": [
+		{
+			"name": "TIC-PMEPMI (50-70-045)",
+			"file": "50-70-045-TIC-PMEPMI"
+		}
+	]
+}

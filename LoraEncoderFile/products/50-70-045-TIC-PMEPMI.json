@@ -1,0 +1,139 @@
+{
+	"embeddedProductName": "ips-tic",
+	"subProductSelector": [
+		{
+			"subProductID": "---",
+			"name": ["---","---"]
+		},
+		{
+			"subProductID": "MT_CBEMM_ICC",
+			"name": ["Mono phased CBE/Linky (Historic)","CBE/Linky (Historique) monophasé"]
+		},
+		{
+			"subProductID": "MT_CBETM",
+			"name": ["Three phased CBE/Linky (Historic)","CBE/Linky (Historique) triphasé"]
+		},
+		{
+			"subProductID": "MT_STD",
+			"name": ["Linky (Standard)", "Linky (Standard)"]
+		},
+		{
+			"subProductID": "MT_PMEPMI",
+			"name": ["PMEPMI", "PMEPMI"]
+		},
+		{
+			"subProductID": "MT_ICE",
+			"name": ["ICE (Emeraude)", "ICE (Emeraude)"]
+		}
+	],
+	"clusters": [
+		{
+			"clusterID": "TIC_CBE",
+			"subProductID": ["MT_CBEMM_ICC","MT_CBETM"],
+			"TICAttributeInstances": [0,5],
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute" : "General",
+					"available" : true
+				}
+			]
+		},
+		{
+			"clusterID": "TIC_CJE",
+			"subProductID": ["MT_CJE"],
+			"TICAttributeInstances": [0,5],
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "TIC_STD",
+			"subProductID": ["MT_STD"],
+			"TICAttributeInstances": [0,5],
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "TIC_PMEPMI",
+			"subProductID": ["MT_PMEPMI"],
+			"TICAttributeInstances": [0,5],
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute" : "General",
+					"available" : true
+				}
+			]
+		},
+		{
+			"clusterID": "TIC_ICE",
+			"subProductID": ["MT_ICE"],
+			"TICAttributeInstances": [0,2],
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "SimpleMetering",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch":[
+				{
+					"attribute" : "CurrentMetering",
+					"available":true
+				}
+			]
+		},
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4,2],
+			"threshold" : {
+				"available" : false,
+				"slot" : [
+					{
+						"attribute" : "NodePowerDescriptor", 
+						"numberSlot" : 1,
+						"fieldindex" : [4,2]
+					}
+				]
+			}
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		}
+	]
+}

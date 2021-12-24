@@ -1,0 +1,91 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[2],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "NodePowerDescriptor", 
+                      "numberSlot" : 1,
+                      "fieldindex" : [2]
+                      }
+                  ]
+
+            },
+			"batch" : [
+				{
+					"attribute" : "NodePowerDescriptor",
+					"available" : true
+				}
+				]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "EnergyPowerMetering",
+			"endpoints": [0,1,2,3],
+			"endpointsComment": [["phase A","phase A"],["phase B","phase B"],["phase C","phase C"],["phase A+B+C","phase A+B+C"]],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "PresentValues", 
+                      "numberSlot" : 8,
+                      "fieldindex" : [0,1,2,3,4,5,6,7]
+                      }
+                  ]
+
+            },
+			"batch":
+			[
+				{
+					"attribute" : "PresentValues",
+					"available" : true
+				}
+			]
+		},
+		{
+			"clusterID": "VoltageCurrentMetering",
+			"endpoints": [0,1,2],
+			"endpointsComment": [["phase A","phase A"],["phase B","phase B"],["phase C","phase C"],["phase A+b+C","phase A+b+C"]],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "PresentValues", 
+                      "numberSlot" : 6,
+                      "fieldindex" : [0,1,2]
+                      }
+                  ]
+
+            },
+			"batch":
+			[
+				{
+					"attribute" : "PresentValues",
+					"available" : true
+				}
+			]
+		}	
+		
+	],
+	 "embeddedProductName": "ips-tri"
+}

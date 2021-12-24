@@ -1,0 +1,71 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "NodePowerDescriptor", 
+                      "numberSlot" : 1,
+                      "fieldindex" : [4]
+                      }
+                  ]
+
+            },
+			"batch" : [
+				{
+					"attribute" : "NodePowerDescriptor",
+					"available" : true
+				}
+				]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "AnalogInput",
+			"customName": ["Aperture angle measurement","Mesure de l'ange d'ouverture"],
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"Data.unit": [["°","°"]],
+			"Data.comment":[["---","---"]],
+			"Data.range": [[0,180]],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "PresentValue", 
+                      "numberSlot" : 2,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : [
+			{	
+				"attribute" : "PresentValue",
+				"available" : true	
+			}
+			]
+
+		}
+	],
+	"embeddedProductName": "ips-ild-WADS"
+}

@@ -1,0 +1,13 @@
+{
+"OutilLocalDeConfigurationOTA" :false,
+"refreshTimingOnGet" : 5000,
+"pathPost":"http://localhost:56700/",
+<<<<<<< .mine
+"pathPython": "C:\\Users\\noejean\\AppData\\Local\\Programs\\Python\\Python37-32\\Python.exe"
+||||||| .r5714
+"pathPython": "C:\\Users\\administrateur.MICREL\\AppData\\Local\\Programs\\Python\\Python36\\python.exe"
+=======
+"pathPython": "C:\\Users\\administrateur.MICREL\\AppData\\Local\\Programs\\Python\\Python36\\python.exe",
+"HubO" : false
+>>>>>>> .r5800
+}

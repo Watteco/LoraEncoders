@@ -1,0 +1,384 @@
+{
+	"parameters": [
+		{
+			"ParameterID":"ADSC",
+			"comment":["","Adresse Secondaire du Compteur"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"VTIC",
+			"comment":["","Version de la TIC "],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"DATE",
+			"comment":["","Date et heure courante"],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"NGTF",
+			"comment":["","Nom de la grille tarifaire fournisseur"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"LTARF",
+			"comment":["","Libellé tarif fournisseur en cours"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"EAST",
+			"comment":["","Energie active soutirée totale "],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"EASF01",
+			"comment":["","Energie active soutirée Fournisseur, index 01"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASF02",
+			"comment":["","Energie active soutirée Fournisseur, index 02"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASF03",
+			"comment":["","Energie active soutirée Fournisseur, index 03"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASF04",
+			"comment":["","Energie active soutirée Fournisseur, index 04"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+        {
+			"ParameterID":"EASF05",
+			"comment":["","Energie active soutirée Fournisseur, index 05"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASF06",
+			"comment":["","Energie active soutirée Fournisseur, index 06"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASF07",
+			"comment":["","Energie active soutirée Fournisseur, index 07"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASF08",
+			"comment":["","Energie active soutirée Fournisseur, index 08"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASF09",
+			"comment":["","Energie active soutirée Fournisseur, index 09"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASF10",
+			"comment":["","Energie active soutirée Fournisseur, index 10"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"EASD01",
+			"comment":["","Energie active soutirée Distributeur, index 01"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASD01",
+			"comment":["","Energie active soutirée Distributeur, index 01"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASD02",
+			"comment":["","Energie active soutirée Distributeur, index 02"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASD03",
+			"comment":["","Energie active soutirée Distributeur, index 03"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+        },
+        {
+			"ParameterID":"EASD04",
+			"comment":["","Energie active soutirée Distributeur, index 04"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"EAIT",
+			"comment":["","Energie active injectée totale"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"ERQ1",
+			"comment":["","Energie réactive Q1 totale"],
+			"editable":true, "type":"number","selectable":true, "unit":["varh","varh"]
+        },
+        {
+			"ParameterID":"ERQ2",
+			"comment":["","Energie réactive Q2 totale"],
+			"editable":true, "type":"number","selectable":true, "unit":["varh","varh"]
+        },
+        {
+			"ParameterID":"ERQ3",
+			"comment":["","Energie réactive Q3 totale"],
+			"editable":true, "type":"number","selectable":true, "unit":["varh","varh"]
+        },
+        {
+			"ParameterID":"ERQ4",
+			"comment":["","Energie réactive Q4 totale"],
+			"editable":true, "type":"number","selectable":true, "unit":["varh","varh"]
+		},
+		{
+			"ParameterID":"IRMS1",
+			"comment":["","Courant efficace, phase 1"],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+        },
+        {
+			"ParameterID":"IRMS1",
+			"comment":["","Courant efficace, phase 1"],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+        },
+        {
+			"ParameterID":"IRMS2",
+			"comment":["","Courant efficace, phase 2"],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+        },
+        {
+			"ParameterID":"IRMS3",
+			"comment":["","Courant efficace, phase 3"],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+        },
+        {
+			"ParameterID":"URMS1",
+			"comment":["","tension efficace, phase 1"],
+			"editable":true, "type":"number","selectable":true, "unit":["V","V"]
+        },
+        {
+			"ParameterID":"URMS2",
+			"comment":["","tension efficace, phase 2"],
+			"editable":true, "type":"number","selectable":true, "unit":["V","V"]
+        },
+        {
+			"ParameterID":"URMS3",
+			"comment":["","tension efficace, phase 3"],
+			"editable":true, "type":"number","selectable":true, "unit":["V","V"]
+        },
+        {
+			"ParameterID":"PREF",
+			"comment":["","Puissance app. de référence (PREF)"],
+			"editable":true, "type":"number","selectable":true, "unit":["kVA","kVA"]
+        },
+        {
+			"ParameterID":"PCOUP",
+			"comment":["","Puissance app. de coupure (PCOUP) "],
+			"editable":true, "type":"number","selectable":true, "unit":["kVA","kVA"]
+        },
+        {
+			"ParameterID":"SINSTS",
+			"comment":["","Puissance app. Instantanée soutirée"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SINSTS1",
+			"comment":["","Puissance app. instantanée soutirée phase 1"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SINSTS2",
+			"comment":["","Puissance app. instantanée soutirée phase 2"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SINSTS3",
+			"comment":["","Puissance app. instantanée soutirée phase 3"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SMAXSN",
+			"comment":["","Puissance app. max. soutirée n"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SMAXSN1",
+			"comment":["","Puissance app. max. soutirée n , phase 1 "],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SMAXSN2",
+			"comment":["","Puissance app. max. soutirée n , phase 2 "],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SMAXSN3",
+			"comment":["","Puissance app. max. soutirée n , phase 3 "],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SMAXSN-1",
+			"comment":["","Puissance app max. soutirée n-1"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SMAXSN1-1 ",
+			"comment":["","Puissance app. max. soutirée n-1 , phase 1"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SMAXSN2-1",
+			"comment":["","Puissance app. max. soutirée n-1 , phase 2"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SMAXSN3-1",
+			"comment":["","Puissance app. max. soutirée n-1 , phase 3"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SINSTI",
+			"comment":["","Puissance app. Instantanée injectée"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SMAXIN",
+			"comment":["","Puissance app. Instantanée injectée n"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"SMAXIN-1",
+			"comment":["","Puissance app. Instantanée injectée n-1"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+        },
+        {
+			"ParameterID":"CCASN",
+			"comment":["","Point n de la courbe de charge active soutirée"],
+			"editable":true, "type":"number","selectable":true, "unit":["W","W"]
+        },
+        {
+			"ParameterID":"CCASN-1",
+			"comment":["","Point n-1 de la courbe de charge active soutirée"],
+			"editable":true, "type":"number","selectable":true, "unit":["W","W"]
+        },
+        {
+			"ParameterID":"CCAIN",
+			"comment":["","Point n de la courbe de charge active injectée"],
+			"editable":true, "type":"number","selectable":true, "unit":["W","W"]
+        },
+        {
+			"ParameterID":"CCAIN-1",
+			"comment":["","Point n-1 de la courbe de charge active injectée"],
+			"editable":true, "type":"number","selectable":true, "unit":["W","W"]
+        },
+        {
+			"ParameterID":"CCAIN",
+			"comment":["","Point n de la courbe de charge active injectée"],
+			"editable":true, "type":"number","selectable":true, "unit":["W","W"]
+        },
+        {
+			"ParameterID":"CCAIN-1",
+			"comment":["","Point n-1 de la courbe de charge active injectée"],
+			"editable":true, "type":"number","selectable":true, "unit":["W","W"]
+        },
+        {
+			"ParameterID":"CCAIN",
+			"comment":["","Point n de la courbe de charge active injectée"],
+			"editable":true, "type":"number","selectable":true, "unit":["W","W"]
+        },
+        {
+			"ParameterID":"UMOY1",
+			"comment":["","Tension moy. ph. 1"],
+			"editable":true, "type":"number","selectable":true, "unit":["V","V"]
+        },
+        {
+			"ParameterID":"UMOY2",
+			"comment":["","Tension moy. ph. 2"],
+			"editable":true, "type":"number","selectable":true, "unit":["V","V"]
+        },
+        {
+			"ParameterID":"UMOY3",
+			"comment":["","Tension moy. ph. 3"],
+			"editable":true, "type":"number","selectable":true, "unit":["V","V"]
+        },
+        {
+			"ParameterID":"STGE",
+			"comment":["","Registre de Statuts"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"DPM1",
+			"comment":["","Debut Pointe Mobile 1 "],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"FPM1",
+			"comment":["","Fin Pointe Mobile 1 "],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"DPM2",
+			"comment":["","Debut Pointe Mobile 2"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"FPM2",
+			"comment":["","Fin Pointe Mobile 2"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"DPM3",
+			"comment":["","Fin Pointe Mobile 3"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"FPM3",
+			"comment":["","Fin Pointe Mobile 3"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"MSG1",
+			"comment":["","Message court"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"MSG2",
+			"comment":["","Message ultra court"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"PRM",
+			"comment":["","Point de délivrance "],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"RELAIS",
+			"comment":["","Relais"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"NTARF",
+			"comment":["","Numéro de l’index tarifaire en cours"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"NJOURF",
+			"comment":["","Numéro du jour en cours calendrier fournisseur"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"NJOURF+1",
+			"comment":["","Numéro du prochain jour calendrier fournisseur"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"PJOURF+1",
+			"comment":["","Profil du prochain jour calendrier fournisseur"],
+			"editable":false, "selectable":true
+        },
+        {
+			"ParameterID":"PPOINTE",
+			"comment":["","Profil du prochain jour de pointe"],
+			"editable":false, "selectable":true
+        }
+	]
+}

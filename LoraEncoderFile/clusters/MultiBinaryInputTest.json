@@ -1,0 +1,157 @@
+{
+	"clusterID": "MultiBinaryInputTest",
+	"clusterName": ["Multi Binary Input","Entrées binaires multiples Test"],
+	"expert": false,
+	"attributes": [
+		{
+			"AttributeID": "PresentValues",
+			"commands": [
+				{
+					"CommandID": "ConfigureReporting",
+					"name": ["State - Configure reporting","Etat - Configurer les rapports de changement d'état"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "Bitmap16"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Data",
+									"name": ["Reportable change","Variation à signaler"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": "{
+												"b15": 0,
+												"b14": 0,
+												"b13": 0,
+												"b12": 0,
+												"b11": 0,
+												"b10": 0,
+												"b9": 0,
+												"b8": 0,
+												"b7": 0,
+												"b6": 0,
+												"b5": 0,
+												"b4": 0,
+												"b3": 0,
+												"b2": 0,
+												"b1": 0,
+												"b0": 1
+											}",
+											"name": ["No Report on state variation","Pas de rapport sur changement d'état"],
+
+										},
+										{
+											"OptionID":  "{
+												"b15": 0,
+												"b14": 0,
+												"b13": 0,
+												"b12": 0,
+												"b11": 0,
+												"b10": 0,
+												"b9": 0,
+												"b8": 0,
+												"b7": 0,
+												"b6": 0,
+												"b5": 0,
+												"b4": 0,
+												"b3": 0,
+												"b2": 0,
+												"b1": 0,
+												"b0": 0
+											}",
+											"name": ["Report on state variation","Rapport sur changement d'état"],
+
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["State - Read reporting configuration","Etat - Lire la configuration des rapports de changement d'état"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								}
+							]
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "Yes"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["State - Read current state","Etat - Lire l'état actuel"],
+					"expert": true
+				}
+			]
+		}
+		
+	]
+}

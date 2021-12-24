@@ -1,0 +1,7 @@
+{
+"OutilLocalDeConfigurationOTA" :false,
+"refreshTimingOnGet" : 5000,
+"pathPost":"http://localhost:56700/",
+"pathPython": "C:\\Users\\noejean\\AppData\\Local\\Programs\\Python\\Python37-32\\Python.exe",
+"HubO" : false
+}

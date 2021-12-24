@@ -1,0 +1,234 @@
+{
+   "clusterID":"VoltageCurrentMetering",
+   "clusterName":["Voltage And Current Metering","Mesure des tensions et courants"],
+   "expert":false,
+   "attributes":[
+				{
+				"AttributeID":"PresentValues",
+				"commands":	[
+					{
+					"CommandID":"ConfigureReporting",
+					"name":["CurrentMetering - Configure reporting","Mesure courante  - Configurer les rapports"],
+					"expert":false,
+					"ReportType":[
+						{
+						"parameters":[
+							{
+							   "ParameterID":"AttributeType",
+							   "editable":false,
+							   "value":"ByteString"
+							},
+							{
+							   "ParameterID":"ReportParameters",
+							   "editable":false,
+							   "value":{
+								  "New":"No",
+								  "Reserved":0,
+								  "CauseRequest":"No",
+								  "SecuredIfAlarm":"No",
+								  "Secured":"No",
+								  "NoHeaderPort":"No",
+								  "Batch":"No"
+							   }
+							},
+							{
+							   "ParameterID":"MinReport",
+							   "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							   "ParameterID":"MaxReport",
+							   "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							"ParameterID": "Data",
+							"editable": true,
+							"type": "data",
+							"subParameters": [
+								{
+								   "ParameterID":"DataLength",
+								   "name":["Length of the data","Longueur de la trame"],
+								   "editable":false,
+								   "comment":["---","---"],
+								   "range":[0,13],
+								   "multiplier": 1,
+								   "type":"number"
+								},
+								{
+								   "ParameterID":"Vrms (V/10)",
+								   "fieldIndex": 0,
+								   "name":["variation of voltage","variation de tension"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 10,
+								   "unit":["V","V"]
+								},
+																{
+								   "ParameterID":"Irms (A/10)",
+								   "fieldIndex": 1,
+								   "name":["variation of current","variation du courant"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 10,
+								   "unit":["A","A"]
+								},
+								{
+								   "ParameterID":"Angle (degrees)",
+								   "fieldIndex": 2,
+								   "name":["variation of angle","variation de l'angle"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["degrees","degrés"]
+								}
+							  ]
+							}
+						 ]
+					  },
+					  {
+						"parameters": [
+							{
+								"ParameterID": "ReportParameters",
+								"editable": false,
+								"value": {
+									"New": "No",
+									"Size": 0,
+									"Batch": "Yes"
+								}
+							},
+							{
+								"ParameterID": "FieldIndex",
+								"name": ["Field(s)","Champ(s)"],
+								"editable": true,
+								"comment": ["---","---"],
+								"type": "select",
+								"options": [
+									{
+										"OptionID": 0,
+										"name": ["variation of voltage","variation de tension"]
+									},
+									{
+										"OptionID": 1,
+										"name":["variation of current","variation du courant"]
+									},
+									{
+										"OptionID": 2,
+										"name": ["variation of angle","variation de l'angle"]
+									}
+								]
+							},
+							{
+								"ParameterID": "MinReport",
+								"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "time"
+							},
+							{
+								"ParameterID": "MaxReport",
+								"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "time"
+							},
+							{
+								"ParameterID": "Delta",
+								"name": ["Delta","Delta"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "number",
+								"mantissa": 1,
+								"multiplier": 1,
+								"unit": ["",""]
+							},
+							{
+								"ParameterID": "Resolution",
+								"name": ["Resolution","Résolution"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "number",
+								"mantissa": 1,
+								"multiplier": 1,
+								"unit": ["",""]
+							},
+							{
+								"ParameterID": "TagValue",
+								"editable": true,
+								"type": "data",
+								"subParameters": [
+									{
+										"ParameterID": "TagLabel",
+										"name": ["TagLabel","TagLabel"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,31],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["",""]
+									},
+									{
+										"ParameterID": "TagSize",
+										"name": ["TagSize","TagSize"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [1,7],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["",""]
+									}
+									
+								]
+							}
+						]
+					}
+				   ]
+				},				
+				{
+						"CommandID": "ReadReportingConfiguration",
+						"name": ["CurrentMetering - Read reporting configuration","Mesure courante - Lire la configuration des rapports"],
+						"expert": false,
+						"parameters": [
+							{
+								"ParameterID": "ReportParameters",
+								"editable": false,
+								"value": {
+									"New": "No",
+									"Reserved": 0,
+									"CauseRequest": "No",
+									"SecuredIfAlarm": "No",
+									"Secured": "No",
+									"NoHeaderPort": "No",
+									"Batch": "No"
+								}
+							}
+						]
+				}
+				]
+				}
+	]
+}
+   

@@ -1,0 +1,69 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4,2],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "NodePowerDescriptor", 
+                      "numberSlot" : 7,
+                      "fieldindex" : [4,2]
+                      }
+                  ]
+
+            },
+			"batch" : [
+				{
+					"attribute" : "NodePowerDescriptor",
+					"available" : true
+				}
+				]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "AnalogInput",
+			"customName": ["Current Measurement","Mesure de courant"],
+			"endpoints": [1],
+			"endpointsComment": ["---","---"],
+			"Data.unit": [["A","A"]],
+			"Data.comment": [["---","---"]],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "PresentValue", 
+                      "numberSlot" : 7,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : [
+			{	
+				"attribute" : "PresentValue",
+				"available" : true
+			}
+			]
+		}
+	],
+	"embeddedProductName": "ips-analoginput"
+}

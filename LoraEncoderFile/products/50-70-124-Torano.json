@@ -1,0 +1,133 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" :[ 
+			{	
+				"attribute":"NodePowerDescriptor",
+				"available" : true,
+				"config" : [[[4,100,11,4]]]	
+			}
+			]
+		},
+		
+		
+		{  
+			"clusterID": "BinaryInput",
+			"endpoints": [0,1,2],
+			"endpointsComment": [["Pin 1[+] & 2[GND] <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorC-300x198.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">","Pin 1[+] & 2[GND] <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorC-300x198.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">"],["Pin 3[+] & 4[GND] <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorC-300x198.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">","Pin 3[+] & 4[GND] <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorC-300x198.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">"],["Pin 6[+] & 7[GND] <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorC-300x198.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">","Pin 6[+] & 7[GND] <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorC-300x198.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">"]],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "PresentValue", 
+                      "numberSlot" : 2,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" :[	 
+			{	
+				"attribute":"Count",
+				"available" : true,
+				"config" : [[[0,1,0,4]],[[0,1,1,4]],[[0,1,2,4]]]	
+			},
+			{
+				"attribute":"PresentValue",
+				"available" : true,
+				"config" : [[[0,1,3,4]],[[0,1,4,4]],[[0,1,5,4]]]
+			}
+
+			]
+		},
+	
+		{
+			"clusterID": "AnalogInput",
+			"endpoints": [0,1,2,3,4],
+			"minMaxReport":[[60,1],[60,1]],
+			"endpointsComment": [["Current measurement on A.3 <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorA.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/Capture-150x135.png\">",
+			"Mesure de courant sur A.3 <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorA.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/Capture-150x135.png\">"],
+			["Voltage measurement on B.3<br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorB.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">",
+			"Mesure de tension sur B.3<br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorB.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">"],
+			["Voltage measurement on B.6 <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorB.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\"> ",
+			"Mesure de tension sur B.6  <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorB.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">"],
+			["Ratiometric measurement in %:  B.3/B.1 <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorB.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">",
+			"Mesure ratiométique en %:  B.3/B.1 <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorB.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">"],
+			["Ratiometric measurement in %:  B.6/B.1 <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorB.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">",
+			"Mesure ratiométique en %:  B.6/B.1 <br><img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/04/ToranoConnectorB.png\"><br> <img src=\"http://support.nke-watteco.com/wp-content/uploads/2021/02/CaptureEmbase6pts-150x126.png\">"]],
+			"customAttributes":
+                [
+                    {
+						"attribute":"PresentValue",
+						"Data.unit": [["mA","mA"],["mV","mV"],["mV","mV"],["%","%"],["%","%"]],
+						"Data.comment": [["---","---"],["---","---"],["---","---"],["---","---"],["---","---"]],
+						"Data.range": [[0,20],[0,5000],[0,5000],[0,100],[0,100]]
+						},
+						{
+						"attribute":"PowerDuration",
+						"Data.unit": [["ms","ms"],["ms","ms"],["ms","ms"],["ms","ms"],["ms","ms"]],
+						"Data.comment": [["---","---"],["---","---"],["---","---"],["---","---"],["---","---"]],
+						"Data.range": [[0,65535],[0,65535],[0,65535],[0,65535],[0,65535]]
+						}
+                ]
+            ,
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "PresentValue", 
+                      "numberSlot" : 4,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : [
+				{
+					"attribute" : "PresentValue", 
+					"available" : true,
+					"config" : [[[0,0.004,6,4]],[[0,1,7,4]],[[0,1,8,4]],[[0,0.1,9,4]],[[0,0.1,10,4]]] 
+				}	
+			]
+		},
+		{
+			"clusterID": "MultiBinaryInput",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" :[
+			{
+				"attribute":"PresentValue",
+				"available":true,
+				"config" : [[[0,1,7,4]]]
+			}
+			]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		}
+	],
+	 "embeddedProductName": "ips-torano"
+}

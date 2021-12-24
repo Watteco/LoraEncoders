@@ -1,0 +1,638 @@
+{
+	"clusterID": "BinaryInput",
+	"clusterName": ["Binary Input","Entrée binaire"],
+	"expert": false,
+	"attributes": [
+		{
+			"AttributeID": "PresentValue",
+			"commands": [
+				{
+					"CommandID": "ConfigureReporting",
+					"name": ["State - Configure reporting","Etat - Configurer les rapports de changement d'état"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "Boolean"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Data",
+									"name": ["Reportable change","Variation à signaler"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"unit": ["",""],
+									"range": [0,1],
+									"multiplier": 1,
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["No Report on state variation","Pas de rapport sur changement d'état"]
+										},
+										{
+											"OptionID": 1,
+											"name": ["Report on state variation","Rapport sur changement d'état"]
+										}
+									]
+								}
+							]
+						},
+					{
+						"parameters": [
+							{
+								"ParameterID": "AttributeType",
+								"editable": false,
+								"value": "Boolean"
+							},
+							{
+								"ParameterID": "ReportParameters",
+								"editable": false,
+								"value": {
+									"New": "No",
+									"Size": 0,
+									"Batch": "Yes"
+								}
+							},
+							{
+								"ParameterID": "FieldIndex",
+								"name": ["Field(s)","Champ(s)"],
+								"editable": true,
+								"comment": ["---","---"],
+								"type": "select",
+								"options": [
+									{
+										"OptionID": 0,
+										"name": ["none","none"]
+									}
+								]
+							},
+							{
+								"ParameterID": "MinReport",
+								"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "time"
+							},
+							{
+								"ParameterID": "MaxReport",
+								"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "time"
+							},
+							{
+								"ParameterID": "Delta",
+								"name": ["Delta","Delta"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,1],
+								"type": "number",
+								"mantissa": 1,
+								"multiplier": 1,
+								"unit": ["",""]
+							},
+							{
+								"ParameterID": "Resolution",
+								"name": ["Resolution","Résolution"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [1,1],
+								"type": "number",
+								"mantissa": 1,
+								"multiplier": 1,
+								"unit": ["",""]
+							},
+							{
+								"ParameterID": "TagValue",
+								"editable": true,
+								"type": "data",
+								"subParameters": [
+									{
+										"ParameterID": "TagLabel",
+										"name": ["TagLabel","TagLabel"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,31],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["",""]
+									},
+									{
+										"ParameterID": "TagSize",
+										"name": ["TagSize","TagSize"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [1,7],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["",""]
+									}
+									
+								]
+							}
+						]
+					}
+					]
+				},
+				{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["State - Read reporting configuration","Etat - Lire la configuration des rapports de changement d'état"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								}
+							]
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "Yes"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["State - Read current state","Etat - Lire l'état actuel"],
+					"expert": true
+				}
+			]
+		},
+		{
+			"AttributeID": "Count",
+			"commands": [
+				{
+					"CommandID": "ConfigureReporting",
+					"name": ["Count - Configure reporting","Comptage - Configurer les rapports de nombre de changements d'état"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "UInt32"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Data",
+									"name": ["Reportable change","Variation à signaler"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,4294967295],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["",""]
+								}
+							]
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "UInt32"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Size": 0,
+										"Batch": "Yes"
+									}
+								},
+								{
+									"ParameterID": "FieldIndex",
+									"name": ["Field(s)","Champ(s)"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["none","none"]
+										}
+									]
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Delta",
+									"name": ["Delta","Delta"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["",""]
+								},
+								{
+									"ParameterID": "Resolution",
+									"name": ["Resolution","Résolution"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["",""]
+								},
+								{
+									"ParameterID": "TagValue",
+									"editable": true,
+									"type": "data",
+									"subParameters": [
+										{
+											"ParameterID": "TagLabel",
+											"name": ["TagLabel","TagLabel"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,31],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										},
+										{
+											"ParameterID": "TagSize",
+											"name": ["TagSize","TagSize"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [1,7],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										}
+										
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["Count - Read reporting configuration","Comptage - Lire la configuration des rapports pour le nombre de changements d'état"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								}
+							]
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "Yes"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Count - Read current value","Comptage - Lire la valeur actuelle du compteur de changements d'état"],
+					"expert": true
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Count - Write current value","Comptage - Définir la valeur actuelle du compteur de changements d'état"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt32"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Counter value to be set","Valeur du compteur à définir"],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,4294967295],
+							"type": "number",
+							"mantissa": 1,
+							"multiplier": 1,
+							"unit": ["",""]
+						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "Polarity",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Polarity - Read the current polarity of the remote sensor","Polarité - Lire la polarité actuelle du capteur distant"],
+					"expert": true
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Polarity - Write the polarity of the remote sensor","Polarité - Définir la polarité du capteur distant"],
+					"expert": true,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "Boolean"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Polarity to be set","Polarité à définir"],
+							"editable": true,
+							"comment": ["---","---"],
+							"type": "select",
+							"options": [
+								{
+									"OptionID": 0,
+									"name": ["Normal","Normale"]
+								},
+								{
+									"OptionID": 1,
+									"name": ["Reversed","Inversée"]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "EdgeSelection",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["EdgeSelection - Read the current counting edge selection","Sélection Front - Lire la sélection actuelle de la transition de comptage"],
+					"expert": true
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["EdgeSelection - Write the counting edge selection of the remote sensor","Sélection Front - Définir la sélection de la transition de comptage du capteur distant"],
+					"expert": true,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "Bitmap8"
+						},
+						{
+							"ParameterID": "Data",
+							"editable": true,
+							"type": "data",
+							"subParameters": [
+								{
+									"ParameterID": "b7",
+									"editable": false,
+									"value": 0
+								},
+								{
+									"ParameterID": "b6",
+									"editable": false,
+									"value": 0
+								},
+								{
+									"ParameterID": "b5",
+									"editable": false,
+									"value": 0
+								},
+								{
+									"ParameterID": "b4",
+									"editable": false,
+									"value": 0
+								},
+								{
+									"ParameterID": "b3",
+									"editable": false,
+									"value": 0
+								},
+								{
+									"ParameterID": "b2",
+									"name": ["Polling","Polling"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["Disabled","Désactivé"]
+										},
+										{
+											"OptionID": 1,
+											"name": ["Enabled","Activé"]
+										}
+									]
+								},
+								{
+									"ParameterID": "b1",
+									"name": ["Rising edge","Rising edge"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["Disabled","Désactivé"]
+										},
+										{
+											"OptionID": 1,
+											"name": ["Enabled","Activé"]
+										}
+									]
+								},
+								{
+									"ParameterID": "b0",
+									"name": ["Falling edge","Falling edge"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["Disabled","Désactivé"]
+										},
+										{
+											"OptionID": 1,
+											"name": ["Enabled","Activé"]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "DebouncePeriod",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["DebouncePeriod - Read the current debounce period","Antirebond - Lire la durée d'anti rebond actuelle"],
+					"expert": false
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["DebouncePeriod - Write the debounce period of the remote sensor","Antirebond - Définir la durée de l'anti rebond du capteur distant"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt16"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Debounce period to be set","Période de débounce à définir"],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,65535],
+							"type": "number",
+							"mantissa": 1,
+							"multiplier": 1,
+							"unit": ["ms","ms"]
+						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "ApplicationType",
+			"commands": [
+				{
+					"CommandID": "ApplicationType - ReadAttribute",
+					"name": ["Read the application type of the remote sensor","Lire le type d'application du capteur distant"],
+					"expert": true
+				}
+			]
+		}
+	]
+}

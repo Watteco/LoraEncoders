@@ -1,0 +1,37 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute" : "NodePowerDescriptor",
+					"available" : true
+				}
+				]
+		},
+		{
+			"clusterID": "MultiStateOutput",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		}
+	],
+
+	"embeddedProductName": "ips-actuatorpilotwire"
+}

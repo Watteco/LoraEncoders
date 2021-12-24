@@ -1,0 +1,256 @@
+{
+	"clusterID": "AnalogInput",
+	"clusterName": ["Analog Input Cluster","Entrée analogique"],
+	"expert": false,
+	"attributes": [
+		{
+			"AttributeID": "PresentValue",
+			"commands": [
+				{
+					"CommandID": "ConfigureReporting",
+					"name": ["Configure reporting","Configurer les rapports"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "SinglePrecision"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Data",
+									"name": ["Reportable change","Variation à signaler"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,100000.00],
+									"type": "number",
+									"mantissa": 100,
+									"multiplier": 1,
+									"unit": ["%","%"]
+								}
+							]
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "SinglePrecision"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Size": 0,
+										"Batch": "Yes"
+									}
+								},
+								{
+									"ParameterID": "FieldIndex",
+									"name": ["Field(s)","Champ(s)"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["none","none"]
+										}
+									]
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Delta",
+									"name": ["Delta","Delta"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "number",
+									"mantissa": 1000,
+									"multiplier": 1,
+									"unit": ["mV","mV"]
+								},
+								{
+									"ParameterID": "Resolution",
+									"name": ["Resolution","Résolution"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "number",
+									"mantissa": 1000,
+									"multiplier": 1,
+									"unit": ["mV","mV"]
+								},
+								{
+									"ParameterID": "TagValue",
+									"editable": true,
+									"type": "data",
+									"subParameters": [
+										{
+											"ParameterID": "TagLabel",
+											"name": ["TagLabel","TagLabel"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,31],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										},
+										{
+											"ParameterID": "TagSize",
+											"name": ["TagSize","TagSize"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [1,7],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										}
+										
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["Read reporting configuration","Lire la configuration des rapports"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								}
+							]
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "Yes"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read current value","Lire la valeur actuelle"],
+					"expert": true
+				}
+			]
+		},
+		{
+			"AttributeID": "ApplicationType",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read the application type of the remote sensor","Lire le type d'application du capteur distant"],
+					"expert": true
+				}
+			]
+		},
+		{
+			"AttributeID": "PowerDuration",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read the application type of the remote sensor","Lire le type d'application du capteur distant"],
+					"expert": true
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Power Duration - Write current value","Power Duration - Définir la valeur actuelle"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt16"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Set the power duration in ms. The real time is : (floor(vvvv/62.5)+1 )*62.5 +10 ms","Configurer la durée de puissance en ms. Le temps réel est : (floor(vvvv/62.5)+1 )*62.5 +10 ms"],
+							"editable": true,
+							"comment": ["ms","ms"],
+							"range": [0,65535],
+							"type": "number",
+							"mantissa": 1,
+							"multiplier": 1,
+							"unit": ["ms","ms"]
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,229 @@
+{
+	"parameters": [
+		{
+			"ParameterID":"CONTRAT",
+			"comment":["","Type de tarif et option tarifaire "],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"DATECOUR",
+			"comment":["","Date courante"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"DATE",
+			"comment":["","Date courante"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"EA",
+			"comment":["","Energie active depuis le dernier top Td minutes "],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"ERP",
+			"comment":["","Energie réactive positive depuis le dernier top Td minutes"],
+			"editable":false, "type":"number","selectable":true, "unit":["varh","varh"]
+		},
+		{
+			"ParameterID":"PTCOUR",
+			"comment":["","Période tarifaire courante "],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PREAVIS",
+			"comment":["","Chaîne 'DEP', 'EJP', 'HM', 'DSM' ou 'SCM'"],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"MODE",
+			"comment":["","Chaîne 'CONTROLE'"],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"DATEPA1",
+			"comment":["","Date du point de mesure n°1 "],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"PA1",
+			"comment":["","Valeur puissance moyenne active n°1 "],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"DATEPA2",
+			"comment":["","Date du point de mesure n°2"],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"PA2",
+			"comment":["","Valeur puissance moyenne active n°2 "],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"DATEPA3",
+			"comment":["","Date du point de mesure n°3"],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"PA3",
+			"comment":["","Valeur puissance moyenne active n°3"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"DATEPA4",
+			"comment":["","Date du point de mesure n°4"],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"PA4",
+			"comment":["","Valeur puissance moyenne active n°4"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"DATEPA5",
+			"comment":["","Date du point de mesure n°5"],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"PA5",
+			"comment":["","Valeur puissance moyenne active n°5"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"DATEPA6",
+			"comment":["","Date du point de mesure n°6"],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"PA6",
+			"comment":["","Valeur puissance moyenne active n°6"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"*p* ",
+			"comment":["","Chanp générique de basculement vers les energ/période "],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"KDC",
+			"comment":["","Coefficient de préavis de dépassement"],
+			"editable":true, "type":"number","selectable":true, "unit":["%","%"]
+		},
+		{
+			"ParameterID":"KDCD",
+			"comment":["","Coefficient de dégagement de préavis de dépassement"],
+			"editable":true, "type":"number","selectable":true, "unit":["%","%"]
+		},
+		{
+			"ParameterID":"TGPHI",
+			"comment":["","Tangente phi moyenne 10 minutes (2.4) "],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"PSP",
+			"comment":["","Puissance souscrite de la période tarifaire P"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSPM",
+			"comment":["","Puissance souscrite de la période tarifaire PM"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSHPH",
+			"comment":["","Puissance souscrite de la période tarifaire HPH"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSHPD",
+			"comment":["","Puissance souscrite de la période tarifaire HPD"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSHCH",
+			"comment":["","Puissance souscrite de la période tarifaire HCH"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSHCD",
+			"comment":["","Puissance souscrite de la période tarifaire HCD"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSHPE",
+			"comment":["","Puissance souscrite de la période tarifaire HPE"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSHCE",
+			"comment":["","Puissance souscrite de la période tarifaire HCE"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSJA",
+			"comment":["","Puissance souscrite de la période tarifaire JA"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSHH",
+			"comment":["","Puissance souscrite de la période tarifaire HH"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSHD",
+			"comment":["","Puissance souscrite de la période tarifaire HD"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSHM",
+			"comment":["","Puissance souscrite de la période tarifaire HM"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSDSM",
+			"comment":["","Puissance souscrite de la période tarifaire DSM"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PSSCM",
+			"comment":["","Puissance souscrite de la période tarifaire SCM"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"MODE",
+			"comment":["","Chaîne 'CONTROLE' "],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"PA1MN",
+			"comment":["","Puissance moyenne active 1 minute"],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PA10MN",
+			"comment":["","Puissance moyenne active 10 minutes. "],
+			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
+		},
+		{
+			"ParameterID":"PREA1MN",
+			"comment":["","Puissance moyenne réactive 1 minute signée"],
+			"editable":true, "type":"number","selectable":true, "unit":["kvar","kvar"]
+		},
+		{
+			"ParameterID":"PREA10MN",
+			"comment":["","Puissance moyenne réactive 10 minutes signée"],
+			"editable":true, "type":"number","selectable":true, "unit":["kvar","kvar"]
+		},
+		{
+			"ParameterID":"TGPHI",
+			"comment":["","Tangente phi moyenne 10 minutes"],
+			"editable":false, "selectable":true
+		},
+		{
+			"ParameterID":"U10MN",
+			"comment":["","Valeur moyenne des 3 tensions composées sur 10 minutes"],
+			"editable":true, "type":"number","selectable":true, "unit":["V","V"]
+		}
+	]
+}

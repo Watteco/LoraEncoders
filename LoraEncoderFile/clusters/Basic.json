@@ -1,0 +1,70 @@
+{
+	"clusterID": "Basic",
+	"clusterName": ["Basic","Basique"],
+	"expert": true,
+	"attributes": [
+		{
+			"AttributeID": "FirmwareVersion",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read firmware version","Lire la version du firmware"]
+				}
+			]
+		},
+		{
+			"AttributeID": "KernelVersion",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read kernel version","Lire la version du kernel"]
+				}
+			]
+		},
+		{
+			"AttributeID": "Manufacturer",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read manufacturer","Lire le fabricant"]
+				}
+			]
+		},
+		{
+			"AttributeID": "ModelIdentifier",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read model identifier","Lire l'identifiant du modèle"]
+				}
+			]
+		},
+		{
+			"AttributeID": "DateCode",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read production date","Lire la date de production"]
+				}
+			]
+		},
+		{
+			"AttributeID": "LocationDescription",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read location description","Lire la description de localisation"]
+				}
+			]
+		},
+		{
+			"AttributeID": "ApplicationName",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read application name","Lire le nom de l'application"]
+				}
+			]
+		}
+	]
+}

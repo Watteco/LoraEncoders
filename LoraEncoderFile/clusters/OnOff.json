@@ -1,0 +1,271 @@
+{
+	"clusterID": "OnOff",
+	"clusterName": ["ON/OFF","ON/OFF"],
+	"expert": false,
+	"attributes": [
+		{
+			"AttributeID": "State",
+			"commands": [
+				{
+					"CommandID": "ConfigureReporting",
+					"name": ["State - Configure reporting","Etat - Configurer les rapports"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "Boolean"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Data",
+									"name": ["Reportable change","Variation à signaler"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["No report on state variation","Pas de Rapport sur changement d'état"]
+										},
+										{
+											"OptionID": 1,
+											"name": ["Report on state variation","Rapport sur changement d'état"]
+										}
+									]
+								}
+							]
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "Boolean"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Size": 0,
+										"Batch": "Yes"
+									}
+								},
+								{
+									"ParameterID": "FieldIndex",
+									"name": ["Field(s)","Champ(s)"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["none","none"]
+										}
+									]
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Delta",
+									"name": ["Delta","Delta"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,1],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["",""]
+								},
+								{
+									"ParameterID": "Resolution",
+									"name": ["Resolution","Résolution"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [1,1],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["",""]
+								},
+								{
+									"ParameterID": "TagValue",
+									"editable": true,
+									"type": "data",
+									"subParameters": [
+										{
+											"ParameterID": "TagLabel",
+											"name": ["TagLabel","TagLabel"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,31],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										},
+										{
+											"ParameterID": "TagSize",
+											"name": ["TagSize","TagSize"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [1,7],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										}
+										
+									]
+								}
+							]
+						}
+
+					]
+					
+				},
+				{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["State - Read reporting configuration","Etat - Lire la configuration des rapports"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "ReportParameters",
+							"editable": false,
+							"value": {
+								"New": "No",
+								"Reserved": 0,
+								"CauseRequest": "No",
+								"SecuredIfAlarm": "No",
+								"Secured": "No",
+								"NoHeaderPort": "No",
+								"Batch": "No"
+							}
+						}
+					]
+				},
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["State - Read current state","Etat - Lire l'état actuel"],
+					"expert": true
+				}
+			]
+		},
+		{
+			"AttributeID": "ClusterSpecificCommand",
+			"commands": [
+				{
+					"CommandID": "ClusterSpecificCommand",
+					"name": ["Switch OFF the relay","Désactiver le relais"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "Data",
+							"editable": false,
+							"value": [0]
+						}
+					]
+				},
+				{
+					"CommandID": "ClusterSpecificCommand",
+					"name": ["Switch ON the relay","Activer le relais"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "Data",
+							"editable": false,
+							"value": [1]
+						}
+					]
+				},
+				{
+					"CommandID": "ClusterSpecificCommand",
+					"name": ["Invert the relay state","Inverser l'état du relais"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "Data",
+							"editable": false,
+							"value": [2]
+						}
+					]
+				},
+				{
+					"CommandID": "ClusterSpecificCommand",
+					"name": ["Generate one pulse during a specified time","Générer une impulsion pendant une durée déterminée"],
+					"expert": true,
+					"parameters": [
+						{
+							"ParameterID": "Data",
+							"editable": true,
+							"type": "array",
+							"subParameters": [
+								{
+									"ParameterID": "Data1",
+									"editable": false,
+									"value": 241
+								},
+								{
+									"ParameterID": "Data2",
+									"name": ["Pulse duration","Durée de l'impulsion"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,255],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["s","s"]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

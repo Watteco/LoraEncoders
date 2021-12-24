@@ -1,0 +1,163 @@
+{
+	"clusterID": "Occupancy",
+	"clusterName": ["Occupancy","Présence"],
+	"expert": false,
+	"attributes": [
+		{
+			"AttributeID": "Occupancy",
+			"commands": [
+				{
+					"CommandID": "ConfigureReporting",
+					"name": ["Occupancy - Configure reporting","Présence - Configurer les rapports"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "Boolean"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Data",
+									"name": ["Reportable change","Variation à signaler"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["No report on state variation","Pas de Rapport sur changement d'état"]
+										},
+										{
+											"OptionID": 1,
+											"name": ["Report on state variation","Rapport sur changement d'état"]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["Occupancy - Read reporting configuration","Présence - Lire la configuration des rapports"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								}
+							]
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "Yes"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Occupancy - Read current state","Présence - Lire l'état actuel"],
+					"expert": true
+				}
+			]
+		},
+		{
+			"AttributeID": "OccupancyType",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Occupancy - Read the sensing type","Présence - Lire le type de capteur"],
+					"expert": true
+				}
+			]
+		},
+		{
+			"AttributeID": "OccupiedToUnoccupiedDelay",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Occupancy - Read the delay without move to accept Unoccupied state","Présence - Lire le délai nécessaire sans détection pour passer en non occupé"],
+					"expert": true
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Write the delay without move to accept Unoccupied state","Ecrire le délai nécessaire sans détection pour passer en non occupé"],
+					"expert": true,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt16"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Delay","Délai"],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,65535],
+							"type": "number",
+							"mantissa": 1,
+							"multiplier": 1,
+							"unit": ["s","s"]
+						}
+					]
+				}
+			]
+		}
+	]
+}

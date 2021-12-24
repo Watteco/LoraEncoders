@@ -1,0 +1,78 @@
+{
+	"clusters": [
+		{
+			"clusterID": "OnOff",
+			"endpoints": [0,1,2,3],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch":[
+				{
+					"attribute" : "State",
+					"available":true
+				}
+			]
+		},
+		{
+			"clusterID": "BinaryInput",
+			"endpoints": [0,1,2,3,4,5,6,7,8,9],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute":"State",
+					"available":true
+				},
+				{
+					"attribute" : "Count",
+					"available" : true,
+					"config" : [[[0,1,0,4]],[[0,1,1,4]],[[0,1,2,4]],[[0,1,3,4]],[[0,1,4,4]],[[0,1,5,4]],[[0,1,6,4]],[[0,1,7,4]],[[0,1,8,4]]]	
+				}
+			]
+		},
+		{
+			"clusterID": "MultiBinaryInput",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4,2],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute" : "NodePowerDescriptor",
+					"available" : true,
+					"config" : [[[4,100,10,4],[2,100,11,4]]]
+				}
+				]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		}
+	],
+	 "embeddedProductName": "ips-ild"
+}

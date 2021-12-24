@@ -1,0 +1,78 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[2],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute" : "NodePowerDescriptor",
+					"available" : true
+				}
+				]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "SimpleMetering",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch":[
+				{
+					"attribute" : "CurrentMetering",
+					"available":true
+				}
+			]
+		},
+		{
+			"clusterID": "OnOff",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch":[
+				{
+					"attribute" : "State",
+					"available":true
+				}
+			]
+		},
+		{
+			"clusterID": "PowerQuality",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch":[
+				{
+					"attribute" : "CurrentValues",
+					"available":false
+				}
+			]
+		}
+	],
+	 "embeddedProductName": "ips-sp"
+}

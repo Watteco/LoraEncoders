@@ -1,0 +1,403 @@
+{
+   "clusterID":"EnergyPowerMetering",
+   "clusterName":["Energy And Power Metering","Mesure des énergies et puissances"],
+   "expert":false,
+   "attributes":[
+				{
+				"AttributeID":"PresentValues",
+				"commands":	[
+					{
+					"CommandID":"ConfigureReporting",
+					"name":["CurrentMetering - Configure reporting","Mesure courante  - Configurer les rapports"],
+					"expert":false,
+					"ReportType":[
+						{
+						"parameters":[
+							{
+							   "ParameterID":"AttributeType",
+							   "editable":false,
+							   "value":"ByteString"
+							},
+							{
+							   "ParameterID":"ReportParameters",
+							   "editable":false,
+							   "value":{
+								  "New":"No",
+								  "Reserved":0,
+								  "CauseRequest":"No",
+								  "SecuredIfAlarm":"No",
+								  "Secured":"No",
+								  "NoHeaderPort":"No",
+								  "Batch":"No"
+							   }
+							},
+							{
+							   "ParameterID":"MinReport",
+							   "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							   "ParameterID":"MaxReport",
+							   "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							"ParameterID": "Data",
+							"editable": true,
+							"type": "data",
+							"subParameters": [
+								{
+								   "ParameterID":"DataLength",
+								   "name":["Length of the data","Longueur de la trame"],
+								   "editable":false,
+								   "comment":["---","---"],
+								   "range":[0,13],
+								   "multiplier": 1,
+								   "type":"number"
+								},
+								{
+								   "ParameterID":"PositiveActiveEnergy",
+								   "fieldIndex": 0,
+								   "name":["variation of summation of the positive active energy","variation de la somme de l'énergie positive active"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,16777215],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["W.h","W.h"]
+								},
+																{
+								   "ParameterID":"NegativeActiveEnergy",
+								   "fieldIndex": 1,
+								   "name":["variation of summation of the negative active energy","variation de la somme de l'énergie négative active"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,16777215],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["W.h","W.h"]
+								},
+								{
+								   "ParameterID":"PositiveReActiveEnergy",
+								   "fieldIndex": 2,
+								   "name":["variation of summation of the positive reactive energy","variation de la somme de l'énergie positive réactive"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,16777215],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["Var.h","Var.h"]
+								},
+								{
+								   "ParameterID":"NegativeReActiveEnergy",
+								   "fieldIndex": 3,
+								   "name":["variation of summation of the negative reactive energy","variation de la somme de l'énergie négative réactive"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,16777215],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["Var.h","Var.h"]
+								},
+								{
+								   "ParameterID":"PositiveActivePower",
+								   "fieldIndex": 4,
+								   "name":["variation of positive active power ","variation de l'énergie positive active"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,16777215],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["W","W"]
+								},
+								{
+								   "ParameterID":"NegativeActivePower",
+								   "fieldIndex": 5,
+								   "name":["variation of negative active power ","variation de l'énergie négative active"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,16777215],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["W","W"]
+								},
+								{
+								   "ParameterID":"PositiveReActivePower",
+								   "fieldIndex": 6,
+								   "name":["variation of positive reactive power","variation de l'énergie positive réactive"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,16777215],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["Var","Var"]
+								},
+								{
+								   "ParameterID":"NegativeReActivePower",
+								   "fieldIndex": 7,
+								   "name":["variation of negative reactive power","variation de l'énergie négative réactive"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,16777215],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["Var","Var"]
+								}
+							  ]
+							}
+						 ]
+					  },
+					  {
+						"parameters": [
+							{
+								"ParameterID": "ReportParameters",
+								"editable": false,
+								"value": {
+									"New": "No",
+									"Size": 0,
+									"Batch": "Yes"
+								}
+							},
+							{
+								"ParameterID": "FieldIndex",
+								"name": ["Field(s)","Champ(s)"],
+								"editable": true,
+								"comment": ["---","---"],
+								"type": "select",
+								"options": [
+									{
+										"OptionID": 0,
+										"name": ["variation of summation of the positive active energy","variation de la somme de l'énergie positive active"]
+									},
+									{
+										"OptionID": 1,
+										"name":["variation of summation of the negative active energy","variation de la somme de l'énergie négative active"]
+									},
+									{
+										"OptionID": 2,
+										"name": ["variation of summation of the positive reactive energy","variation de la somme de l'énergie positive réactive"]
+									},
+									{
+										"OptionID": 3,
+										"name":["variation of summation of the negative reactive energy","variation de la somme de l'énergie négative réactive"]
+									},
+									{
+										"OptionID":4,
+										"name":["variation of positive active power ","variation de l'énergie positive active"]
+									},
+									{
+										"OptionID":5,
+										"name":["variation of negative active power ","variation de l'énergie négative active"]
+									},
+									{
+										"OptionID":6,
+										"name":["variation of positive reactive power","variation de l'énergie positive réactive"]
+									},
+									{
+										"OptionID":7,
+										"name":["variation of negative reactive power","variation de l'énergie négative réactive"]
+									}
+								]
+							},
+							{
+								"ParameterID": "MinReport",
+								"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "time"
+							},
+							{
+								"ParameterID": "MaxReport",
+								"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "time"
+							},
+							{
+								"ParameterID": "Delta",
+								"name": ["Delta","Delta"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "number",
+								"mantissa": 1,
+								"multiplier": 1,
+								"unit": ["",""]
+							},
+							{
+								"ParameterID": "Resolution",
+								"name": ["Resolution","Résolution"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "number",
+								"mantissa": 1,
+								"multiplier": 1,
+								"unit": ["",""]
+							},
+							{
+								"ParameterID": "TagValue",
+								"editable": true,
+								"type": "data",
+								"subParameters": [
+									{
+										"ParameterID": "TagLabel",
+										"name": ["TagLabel","TagLabel"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,31],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["",""]
+									},
+									{
+										"ParameterID": "TagSize",
+										"name": ["TagSize","TagSize"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [1,7],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["",""]
+									}
+									
+								]
+							}
+						]
+					}
+				   ]
+				},				
+				{
+						"CommandID": "ReadReportingConfiguration",
+						"name": ["CurrentMetering - Read reporting configuration","Mesure courante - Lire la configuration des rapports"],
+						"expert": false,
+						"parameters": [
+							{
+								"ParameterID": "ReportParameters",
+								"editable": false,
+								"value": {
+									"New": "No",
+									"Reserved": 0,
+									"CauseRequest": "No",
+									"SecuredIfAlarm": "No",
+									"Secured": "No",
+									"NoHeaderPort": "No",
+									"Batch": "No"
+								}
+							}
+						]
+				}
+				]
+				},
+				{
+					"AttributeID":"MeanPowerDelay",
+					"commands":	[
+						{
+								"CommandID": "WriteAttributeNoResponse",
+								"name": ["MeanPowerDelay - Write the periodicity on which the powers are averaged","Périodicité de la moyenne des puisssances - Ecrire la périodicité sur laquelle les puissances sont moyennées"],
+								"expert": false,
+								"parameters": [
+									{
+										"ParameterID": "AttributeType",
+										"editable": false,
+										"value": "UInt32"
+									},
+									{
+										"ParameterID": "Data",
+										"name": ["Periodictity power average","Périodicité de la moyenne des puissances"],
+										"editable": true,
+										"comment": ["periodicity on which the powers are averaged","périodicité sur laquelle les puissances sont moyennées"],
+										"range": [0,4000000000],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["sec","sec"]
+									}
+								]
+						},				
+						{
+								"CommandID": "ReadAttribute",
+								"name": ["MeanPowerDelay - Read the periodicity on which the powers are averaged","Périodicité de la moyenne des puisssances -  Lire la périodicité sur laquelle les puissances sont moyennées"],
+								"expert": false
+						}
+					]
+				},
+				{
+					"AttributeID":"EnergiesUnit",
+					"commands":	[
+						{
+								"CommandID": "WriteAttributeNoResponse",
+								"name": ["EnergiesUnit - Write the unit of energies","Unités des énergies - Ecrire l'unité des énergies"],
+								"expert": false,
+								"parameters": [
+									{
+										"ParameterID": "AttributeType",
+										"editable": false,
+										"value": "UInt8"
+									},
+									{
+										"ParameterID": "Data",
+										"name": ["Energies Unit","Unité des énergies"],
+										"editable": true,
+										"comment": ["Unit of energies","Unité des énergies"],
+										"type": "select",
+										"options": [
+											{
+												"OptionID": 0,
+												"name": ["Wh/VARh","Wh/VARh"]
+											},
+											{
+												"OptionID": 1,
+												"name": ["kWh/kVARh","kWh/kVARh"]
+											}
+										]
+									}
+								]
+						},				
+						{
+								"CommandID": "ReadAttribute",
+								"name": ["EnergiesUnit - Read the unit of energies","Unités des énergies - Lire l'unité des énergies"],
+								"expert": false
+						}
+					]
+				},
+				{
+					"AttributeID":"ClusterSpecificCommand",
+					"commands":[
+							{
+							"CommandID":"ClusterSpecificCommand",
+							"name":["Reset the consumption of the device","Réinitialiser la consommation de l'appareil"],
+							"expert":false,
+							"parameters":[
+								{
+								   "ParameterID":"Data",
+								   "editable":false,
+								   "value":[0]
+								}
+								]
+					}
+					]
+				}
+	]
+}
+   

@@ -1,0 +1,96 @@
+{
+	"clusterID": "LoRaWAN",
+	"clusterName": ["LoRaWAN","LoRaWAN"],
+	"expert": false,
+	"attributes": [
+		{
+			"AttributeID": "MessageType",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read the message type for Data Up","Lire le type de message pour Data Up"],
+					"expert": false
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Write the message type for Data Up","Définir le type de message pour Data Up"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "General8"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Message type","Type de message"],
+							"editable": true,
+							"comment": ["---","---"],
+							"type": "select",
+							"options": [
+								{
+									"OptionID": 0,
+									"name": ["All frames unconfirmed","Toutes les trames non confirmées"]
+								},
+								{
+									"OptionID": 1,
+									"name": ["All frames confirmed","Toutes les trames confirmées"]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "NumberOfRetryIfConfirmed",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"expert": true,
+					"name": ["Read the number of retries for Confirmed Data Up","Lire le nombre de tentatives pour Confirmed Data Up"]
+				}
+			]
+		},
+		{
+			"AttributeID": "ReAssociationParameters",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"expert": false,
+					"name": ["Read parameters of automatic association","Lire les paramètres de l'association automatique"]
+				}
+			]
+		},
+		{
+			"AttributeID": "DataRateParameters",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"expert": true,
+					"name": ["Read parameters of DataRate","Lire les paramètres de DataRate"]
+				}
+			]
+		},
+		{
+			"AttributeID": "ABPDevAddr",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"expert": true,
+					"name": ["Read the configured ABP_DevAddr","Lire l'ABP_DevAddr configuré"]
+				}
+			]
+		},
+		{
+			"AttributeID": "OTAAppEUI",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"expert": true,
+					"name": ["Read the configured OTA_APPEUI","Lire l'OTA_APPEUI configuré"]
+				}
+			]
+		}
+	]
+}

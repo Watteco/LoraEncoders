@@ -1,0 +1,191 @@
+{
+	"clusterID": "SerialInterface",
+	"clusterName": ["Serial Interface","Interface Série"],
+	"expert": false,
+	"attributes": [
+		{
+			"AttributeID": "Speed",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Serial Interface - Read data rate","Serial Interface - Lire la vitesse série"]
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Serial Interface - Write data rate","Serial Interface - Ecrire la vitesse série"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt24"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Set the data rate","Configurer la vitesse série"],
+							"editable": true,
+							"comment": ["available data rate : 1200/2400/4800/9600/19200/38400/57600/115200 bits/s","vitesse disponible: 1200/2400/4800/9600/19200/38400/57600/115200 bits/s"],
+							"type": "select",
+							"options": [
+								{
+									"OptionID": 1200,
+									"name": ["1200 bits/s","1200 bits/s"]
+								},
+								{
+									"OptionID": 2400,
+									"name": ["2400 bits/s","2400 bits/s"]
+								},
+								{
+									"OptionID": 4800,
+									"name": ["4800 bits/s","4800 bits/s"]
+								},
+								{
+									"OptionID": 9600,
+									"name": ["9600 bits/s [default]","9600 bits/s [défaut]"]
+								},
+								{
+									"OptionID": 19200,
+									"name": ["19200 bits/s","19200 bits/s"]
+								},
+								{
+									"OptionID": 38400,
+									"name": ["38400 bits/s","38400 bits/s"]
+								},
+								{
+									"OptionID": 57600,
+									"name": ["57600 bits/s","57600 bits/s"]
+								},
+								{
+									"OptionID": 115200,
+									"name": ["115200 bits/s","115200 bits/s"]
+								}
+							]
+
+						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "DataBits",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Serial Interface - Read data bits","Serial Interface - Lire les data bits"]
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Serial Interface - Write data bits","Serial Interface - Ecrire les data bits"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt8"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Set the data bits","Configurer les data bits"],
+							"editable": true,
+							"comment": ["available data rate : 7/8 bits","data bits disponible: 7/8 bits"],
+							"type": "select",
+							"options": [
+								{
+									"OptionID": 7,
+									"name": ["7 bits","7 bits"]
+								},
+								{
+									"OptionID": 8,
+									"name": ["8 bits","8 bits"]
+								}
+							]
+
+						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "Parity",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Serial Interface - Read parity","Serial Interface - Lire parité"]
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Serial Interface - Write parity","Serial Interface - Ecrire la parité"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt8"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Set the parity","Configurer la parité"],
+							"editable": true,
+							"comment": ["",""],
+							"type": "select",
+							"options": [
+								{
+									"OptionID": 0,
+									"name": ["none","none"]
+								},
+								{
+									"OptionID": 1,
+									"name": ["odd","impair"]
+								},
+								{
+									"OptionID": 2,
+									"name": ["even","pair"]
+								}
+							]
+
+						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "StopBits",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Serial Interface - Read stop bit","Serial Interface - Lire le bit de stop"]
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Serial Interface - Write stop bit","Serial Interface - Ecrire le bit de stop"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt8"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Set the number of stop bits","Configurer le nombre de bit de stop"],
+							"editable": true,
+							"comment": ["",""],
+							"type": "select",
+							"options": [
+								{
+									"OptionID": 1,
+									"name": ["1 bit","1 bit"]
+								},
+								{
+									"OptionID": 2,
+									"name": ["2 bits","2 bits"]
+								}
+							]
+
+						}
+					]
+				}
+			]
+		}
+	]
+}

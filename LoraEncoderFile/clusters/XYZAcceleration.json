@@ -1,0 +1,1826 @@
+{
+    "clusterID":"XYZAcceleration",
+    "clusterName":["XYZAcceleration","XYZAcceleration"],
+    "expert":false,
+    "attributes":[
+                {
+                    "AttributeID":"Stats_X",
+                    "commands":[
+                        
+                        {
+                            "CommandID": "ConfigureReporting",
+                            "name": ["Stats_X - Configure reporting","Stats_X - Configurer les rapports"],
+                            "expert": false,
+                            "ReportType": [
+                                {
+                                    "parameters":[
+                                        {
+                                            "ParameterID":"AttributeType",
+                                            "editable":false,
+                                            "value":"ByteString"
+                                        },
+                                        {
+                                           "ParameterID":"ReportParameters",
+                                           "editable":false,
+                                           "value":{
+                                              "New":"No",
+                                              "Reserved":0,
+                                              "CauseRequest":"No",
+                                              "SecuredIfAlarm":"No",
+                                              "Secured":"No",
+                                              "NoHeaderPort":"No",
+                                              "Batch":"No"
+                                           }
+                                        },
+                                        {
+                                           "ParameterID":"MinReport",
+                                           "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+                                           "editable":true,
+                                           "type":"time",
+                                           "comment":["---","---"],
+                                           "range":[0,32767]
+                                        },
+                                        {
+                                           "ParameterID":"MaxReport",
+                                           "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+                                           "editable":true,
+                                           "type":"time",
+                                           "comment":["---","---"],
+                                           "range":[0,32767]
+                                           
+                                        },
+                                        {
+                                        "ParameterID": "Data",
+                                        "editable": true,
+                                        "type": "data",
+                                        "subParameters": [
+                                            {
+                                               "ParameterID":"DataLength",
+                                               "name":["Length of the data","Longueur de la trame"],
+                                               "editable":false,
+                                               "comment":["---","---"],
+                                               "range":[0,13],
+                                               "multiplier": 1,
+                                               "type":"number"
+                                            },
+                                            {
+                                               "ParameterID":"NbAcq",
+                                               "fieldIndex" : 0,
+                                               "name":["NbAcq","NbAcq"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["",""]
+                                            },
+                                            {
+                                               "ParameterID":"MinMean",
+                                               "fieldIndex" : 1,
+                                               "name":["MinMean","MinMean"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            {
+                                               "ParameterID":"MinMax",
+                                               "fieldIndex" : 2,
+                                               "name":["MinMax","MinMax"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            {
+                                               "ParameterID":"MinDt",
+                                               "fieldIndex" : 3,
+                                               "name":["MinDt","MinDt"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MeanMean",
+                                               "fieldIndex" : 4,
+                                               "name":["MeanMean","MeanMean"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MeanMax",
+                                               "fieldIndex" : 5,
+                                               "name":["MeanMax","MeanMax"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MeanDt",
+                                               "fieldIndex" : 6,
+                                               "name":["MeanDt","MeanDt"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MaxMean",
+                                               "fieldIndex" : 7,
+                                               "name":["MaxMean","MaxMean"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MaxMax",
+                                               "fieldIndex" : 8,
+                                               "name":["MaxMax","MaxMax"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MaxDt",
+                                               "fieldIndex" : 9,
+                                               "name":["MaxDt","MaxDt"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            }
+                                          ]
+                                        }
+                                     ]
+                                  },
+                                  {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Size": 0,
+                                                "Batch": "Yes"
+                                            }
+                                        },
+                                        {
+                                            "ParameterID": "AttributeType",
+                                            "editable": false,
+                                            "value": "ByteString"
+                                        },
+                                        {
+                                            "ParameterID": "FieldIndex",
+                                            "name": ["Field(s)","Champ(s)"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "type": "select",
+                                            "options": [
+                                                {
+                                                    "OptionID": 0,
+                                                    "name": ["NbAcq","NbAcq"]
+                                                },
+                                                {
+                                                    "OptionID": 1,
+                                                    "name": ["MinMean","MinMean"]
+                                                },
+                                                {
+                                                    "OptionID": 2,
+                                                    "name": ["MinMax","MinMax"]
+                                                },
+                                                {
+                                                    "OptionID": 3,
+                                                    "name":["MinDt","MinDt"]
+                                                },
+                                                {
+                                                    "OptionID": 4,
+                                                    "name": ["MeanMean","MeanMean"]
+                                                },
+                                                {
+                                                    "OptionID": 5,
+                                                    "name": ["MeanMax","MeanMax"]
+                                                },
+                                                {
+                                                    "OptionID": 6,
+                                                    "name": ["MeanDt","MeanDt"]
+                                                },
+                                                {
+                                                    "OptionID": 7,
+                                                    "name": ["MaxMean","MaxMean"]
+                                                },
+                                                {
+                                                    "OptionID": 8,
+                                                    "name": ["MaxMax","MaxMax"]
+                                                },
+                                                {
+                                                    "OptionID": 9,
+                                                    "name": ["MaxDt","MaxDt"]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "MinReport",
+                                            "name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "time"
+                                        },
+                                        {
+                                            "ParameterID": "MaxReport",
+                                            "name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "time"
+                                        },
+                                        {
+                                            "ParameterID": "Delta",
+                                            "name": ["Delta","Delta"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "number",
+                                            "mantissa": 1000,
+                                            "multiplier": 1,
+                                            "unit": ["",""]
+                                        },
+                                        {
+                                            "ParameterID": "Resolution",
+                                            "name": ["Resolution","Résolution"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "number",
+                                            "mantissa": 1000,
+                                            "multiplier": 1,
+                                            "unit": ["",""]
+                                        },
+                                        {
+                                            "ParameterID": "TagValue",
+                                            "editable": true,
+                                            "type": "data",
+                                            "subParameters": [
+                                                {
+                                                    "ParameterID": "TagLabel",
+                                                    "name": ["TagLabel","TagLabel"],
+                                                    "editable": true,
+                                                    "comment": ["---","---"],
+                                                    "range": [0,31],
+                                                    "type": "number",
+                                                    "mantissa": 100,
+                                                    "multiplier": 1,
+                                                    "unit": ["",""]
+                                                },
+                                                {
+                                                    "ParameterID": "TagSize",
+                                                    "name": ["TagSize","TagSize"],
+                                                    "editable": true,
+                                                    "comment": ["---","---"],
+                                                    "range": [1,7],
+                                                    "type": "number",
+                                                    "mantissa": 100,
+                                                    "multiplier": 1,
+                                                    "unit": ["",""]
+                                                }
+                                                
+                                            ]
+                                        }
+                                    ]
+                                }
+                        
+                            ]
+                        },
+                        {
+                            "CommandID": "ReadReportingConfiguration",
+                            "name": ["Stats_X - Read reporting configuration","Stats_X - Lire la configuration des rapports"],
+                            "expert": false,
+                            "ReportType": [
+                                {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Reserved": 0,
+                                                "CauseRequest": "No",
+                                                "SecuredIfAlarm": "No",
+                                                "Secured": "No",
+                                                "NoHeaderPort": "No",
+                                                "Batch": "No"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Reserved": 0,
+                                                "CauseRequest": "No",
+                                                "SecuredIfAlarm": "No",
+                                                "Secured": "No",
+                                                "NoHeaderPort": "No",
+                                                "Batch": "Yes"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "CommandID": "ReadAttribute",
+                            "name": ["Read current value","Lire la valeur actuelle"],
+                            "expert": true
+                        }
+                    ]
+                },
+                {
+                    "AttributeID":"Stats_Y",
+                    "commands":[
+                        
+                        {
+                            "CommandID": "ConfigureReporting",
+                            "name": ["Stats_Y - Configure reporting","Stats_Y - Configurer les rapports"],
+                            "expert": false,
+                            "ReportType": [
+                                {
+                                    "parameters":[
+                                        {
+                                           "ParameterID":"ReportParameters",
+                                           "editable":false,
+                                           "value":{
+                                              "New":"No",
+                                              "Reserved":0,
+                                              "CauseRequest":"No",
+                                              "SecuredIfAlarm":"No",
+                                              "Secured":"No",
+                                              "NoHeaderPort":"No",
+                                              "Batch":"No"
+                                           }
+                                        },
+                                        {
+                                           "ParameterID":"AttributeType",
+                                           "editable":false,
+                                           "value":"ByteString"
+                                        },
+                                        {
+                                           "ParameterID":"MinReport",
+                                           "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+                                           "editable":true,
+                                           "type":"time",
+                                           "comment":["---","---"],
+                                           "range":[0,32767]
+                                           
+                                        },
+                                        {
+                                           "ParameterID":"MaxReport",
+                                           "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+                                           "editable":true,
+                                           "type":"time",
+                                           "comment":["---","---"],
+                                           "range":[0,32767]
+                                           
+                                        },
+                                        {
+                                        "ParameterID": "Data",
+                                        "editable": true,
+                                        "type": "data",
+                                        "subParameters": [
+                                            {
+                                               "ParameterID":"DataLength",
+                                               "name":["Length of the data","Longueur de la trame"],
+                                               "editable":false,
+                                               "comment":["---","---"],
+                                               "range":[0,13],
+                                               "multiplier": 1,
+                                               "type":"number"
+                                            },
+                                            {
+                                               "ParameterID":"NbAcq",
+                                               "fieldIndex" : 0,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["",""]
+                                            },
+                                            {
+                                               "ParameterID":"MinMean",
+                                               "fieldIndex" : 1,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            {
+                                               "ParameterID":"MinMax",
+                                               "fieldIndex" : 2,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            {
+                                               "ParameterID":"MinDt",
+                                               "fieldIndex" : 3,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MeanMean",
+                                               "fieldIndex" : 4,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MeanMax",
+                                               "fieldIndex" : 5,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MeanDt",
+                                               "fieldIndex" : 6,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MaxMean",
+                                               "fieldIndex" : 7,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MaxMax",
+                                               "fieldIndex" : 8,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            {
+                                               "ParameterID":"MaxDt",
+                                               "fieldIndex" : 9,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            }
+                                          ]
+                                        }
+                                     ]
+                                  },
+                                  {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "AttributeType",
+                                            "editable": false,
+                                            "value": "ByteString"
+                                        },
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Size": 0,
+                                                "Batch": "Yes"
+                                            }
+                                        },
+                                        {
+                                            "ParameterID": "FieldIndex",
+                                            "name": ["Field(s)","Champ(s)"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "type": "select",
+                                            "options": [
+                                                {
+                                                    "OptionID": 0,
+                                                    "name": ["NbAcq","NbAcq"]
+                                                },
+                                                {
+                                                    "OptionID": 1,
+                                                    "name": ["MinMean","MinMean"]
+                                                },
+                                                {
+                                                    "OptionID": 2,
+                                                    "name": ["MinMax","MinMax"]
+                                                },
+                                                {
+                                                    "OptionID": 3,
+                                                    "name":["MinDt","MinDt"]
+                                                },
+                                                {
+                                                    "OptionID": 4,
+                                                    "name": ["MeanMean","MeanMean"]
+                                                },
+                                                {
+                                                    "OptionID": 5,
+                                                    "name": ["MeanMax","MeanMax"]
+                                                },
+                                                {
+                                                    "OptionID": 6,
+                                                    "name": ["MeanDt","MeanDt"]
+                                                },
+                                                {
+                                                    "OptionID": 7,
+                                                    "name": ["MaxMean","MaxMean"]
+                                                },
+                                                {
+                                                    "OptionID": 8,
+                                                    "name": ["MaxMax","MaxMax"]
+                                                },
+                                                {
+                                                    "OptionID": 9,
+                                                    "name": ["MaxDt","MaxDt"]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "MinReport",
+                                            "name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "time"
+                                        },
+                                        {
+                                            "ParameterID": "MaxReport",
+                                            "name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "time"
+                                        },
+                                        {
+                                            "ParameterID": "Delta",
+                                            "name": ["Delta","Delta"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "number",
+                                            "mantissa": 1000,
+                                            "multiplier": 1,
+                                            "unit": ["",""]
+                                        },
+                                        {
+                                            "ParameterID": "Resolution",
+                                            "name": ["Resolution","Résolution"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "number",
+                                            "mantissa": 1000,
+                                            "multiplier": 1,
+                                            "unit": ["",""]
+                                        },
+                                        {
+                                            "ParameterID": "TagValue",
+                                            "editable": true,
+                                            "type": "data",
+                                            "subParameters": [
+                                                {
+                                                    "ParameterID": "TagLabel",
+                                                    "name": ["TagLabel","TagLabel"],
+                                                    "editable": true,
+                                                    "comment": ["---","---"],
+                                                    "range": [0,31],
+                                                    "type": "number",
+                                                    "mantissa": 100,
+                                                    "multiplier": 1,
+                                                    "unit": ["",""]
+                                                },
+                                                {
+                                                    "ParameterID": "TagSize",
+                                                    "name": ["TagSize","TagSize"],
+                                                    "editable": true,
+                                                    "comment": ["---","---"],
+                                                    "range": [1,7],
+                                                    "type": "number",
+                                                    "mantissa": 100,
+                                                    "multiplier": 1,
+                                                    "unit": ["",""]
+                                                }
+                                                
+                                            ]
+                                        }
+                                    ]
+                                }
+                        
+                            ]
+                        },
+                        {
+                            "CommandID": "ReadReportingConfiguration",
+                            "name": ["Stats_Y - Read reporting configuration","Stats_Y - Lire la configuration des rapports"],
+                            "expert": false,
+                            "ReportType": [
+                                {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Reserved": 0,
+                                                "CauseRequest": "No",
+                                                "SecuredIfAlarm": "No",
+                                                "Secured": "No",
+                                                "NoHeaderPort": "No",
+                                                "Batch": "No"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Reserved": 0,
+                                                "CauseRequest": "No",
+                                                "SecuredIfAlarm": "No",
+                                                "Secured": "No",
+                                                "NoHeaderPort": "No",
+                                                "Batch": "Yes"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "CommandID": "ReadAttribute",
+                            "name": ["Read current value","Lire la valeur actuelle"],
+                            "expert": true
+                        }
+                    ]
+                },
+                {
+                    "AttributeID":"Stats_Z",
+                    "commands":[
+                        
+                        {
+                            "CommandID": "ConfigureReporting",
+                            "name": ["Stats_Z - Configure reporting","Stats_Z - Configurer les rapports"],
+                            "expert": false,
+                            "ReportType": [
+                                {
+                                    "parameters":[
+                                        {
+                                           "ParameterID":"ReportParameters",
+                                           "editable":false,
+                                           "value":{
+                                              "New":"No",
+                                              "Reserved":0,
+                                              "CauseRequest":"No",
+                                              "SecuredIfAlarm":"No",
+                                              "Secured":"No",
+                                              "NoHeaderPort":"No",
+                                              "Batch":"No"
+                                           }
+                                        },
+                                        {
+                                           "ParameterID":"AttributeType",
+                                           "editable":false,
+                                           "value":"ByteString"
+                                        },
+                                        {
+                                           "ParameterID":"MinReport",
+                                           "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+                                           "editable":true,
+                                           "type":"time",
+                                           "comment":["---","---"],
+                                           "range":[0,32767]
+                                           
+                                        },
+                                        {
+                                           "ParameterID":"MaxReport",
+                                           "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+                                           "editable":true,
+                                           "type":"time",
+                                           "comment":["---","---"],
+                                           "range":[0,32767]
+                                           
+                                        },
+                                        {
+                                        "ParameterID": "Data",
+                                        "editable": true,
+                                        "type": "data",
+                                        "subParameters": [
+                                            {
+                                               "ParameterID":"DataLength",
+                                               "name":["Length of the data","Longueur de la trame"],
+                                               "editable":false,
+                                               "comment":["---","---"],
+                                               "range":[0,13],
+                                               "multiplier": 1,
+                                               "type":"number"
+                                            },
+                                            {
+                                               "ParameterID":"NbAcq",
+                                               "fieldIndex" : 0,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["",""]
+                                            },
+                                            {
+                                               "ParameterID":"MinMean",
+                                               "fieldIndex" : 1,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            {
+                                               "ParameterID":"MinMax",
+                                               "fieldIndex" : 2,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            {
+                                               "ParameterID":"MinDt",
+                                               "fieldIndex" : 3,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MeanMean",
+                                               "fieldIndex" : 4,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MeanMax",
+                                               "fieldIndex" : 5,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MeanDt",
+                                               "fieldIndex" : 6,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MaxMean",
+                                               "fieldIndex" : 7,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MaxMax",
+                                               "fieldIndex" : 8,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"MaxDt",
+                                               "fieldIndex" : 9,
+                                               "name":["",""],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            }
+                                          ]
+                                        }
+                                     ]
+                                  },
+                                  {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "AttributeType",
+                                            "editable": false,
+                                            "value": "ByteString"
+                                        },
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Size": 0,
+                                                "Batch": "Yes"
+                                            }
+                                        },
+                                        {
+                                            "ParameterID": "FieldIndex",
+                                            "name": ["Field(s)","Champ(s)"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "type": "select",
+                                            "options": [
+                                                {
+                                                    "OptionID": 0,
+                                                    "name": ["NbAcq","NbAcq"]
+                                                },
+                                                {
+                                                    "OptionID": 1,
+                                                    "name": ["MinMean","MinMean"]
+                                                },
+                                                {
+                                                    "OptionID": 2,
+                                                    "name": ["MinMax","MinMax"]
+                                                },
+                                                {
+                                                    "OptionID": 3,
+                                                    "name":["MinDt","MinDt"]
+                                                },
+                                                {
+                                                    "OptionID": 4,
+                                                    "name": ["MeanMean","MeanMean"]
+                                                },
+                                                {
+                                                    "OptionID": 5,
+                                                    "name": ["MeanMax","MeanMax"]
+                                                },
+                                                {
+                                                    "OptionID": 6,
+                                                    "name": ["MeanDt","MeanDt"]
+                                                },
+                                                {
+                                                    "OptionID": 7,
+                                                    "name": ["MaxMean","MaxMean"]
+                                                },
+                                                {
+                                                    "OptionID": 8,
+                                                    "name": ["MaxMax","MaxMax"]
+                                                },
+                                                {
+                                                    "OptionID": 9,
+                                                    "name": ["MaxDt","MaxDt"]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "MinReport",
+                                            "name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "time"
+                                        },
+                                        {
+                                            "ParameterID": "MaxReport",
+                                            "name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "time"
+                                        },
+                                        {
+                                            "ParameterID": "Delta",
+                                            "name": ["Delta","Delta"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "number",
+                                            "mantissa": 1000,
+                                            "multiplier": 1,
+                                            "unit": ["",""]
+                                        },
+                                        {
+                                            "ParameterID": "Resolution",
+                                            "name": ["Resolution","Résolution"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "number",
+                                            "mantissa": 1000,
+                                            "multiplier": 1,
+                                            "unit": ["",""]
+                                        },
+                                        {
+                                            "ParameterID": "TagValue",
+                                            "editable": true,
+                                            "type": "data",
+                                            "subParameters": [
+                                                {
+                                                    "ParameterID": "TagLabel",
+                                                    "name": ["TagLabel","TagLabel"],
+                                                    "editable": true,
+                                                    "comment": ["---","---"],
+                                                    "range": [0,31],
+                                                    "type": "number",
+                                                    "mantissa": 100,
+                                                    "multiplier": 1,
+                                                    "unit": ["",""]
+                                                },
+                                                {
+                                                    "ParameterID": "TagSize",
+                                                    "name": ["TagSize","TagSize"],
+                                                    "editable": true,
+                                                    "comment": ["---","---"],
+                                                    "range": [1,7],
+                                                    "type": "number",
+                                                    "mantissa": 100,
+                                                    "multiplier": 1,
+                                                    "unit": ["",""]
+                                                }
+                                                
+                                            ]
+                                        }
+                                    ]
+                                }
+                        
+                            ]
+                        },
+                        {
+                            "CommandID": "ReadReportingConfiguration",
+                            "name": ["Stats_Z - Read reporting configuration","Stats_Z - Lire la configuration des rapports"],
+                            "expert": false,
+                            "ReportType": [
+                                {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Reserved": 0,
+                                                "CauseRequest": "No",
+                                                "SecuredIfAlarm": "No",
+                                                "Secured": "No",
+                                                "NoHeaderPort": "No",
+                                                "Batch": "No"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Reserved": 0,
+                                                "CauseRequest": "No",
+                                                "SecuredIfAlarm": "No",
+                                                "Secured": "No",
+                                                "NoHeaderPort": "No",
+                                                "Batch": "Yes"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "CommandID": "ReadAttribute",
+                            "name": ["Read current value","Lire la valeur actuelle"],
+                            "expert": true
+                        }
+                    ]
+                },
+                {
+                    "AttributeID":"Last",
+                    "commands":[
+                        
+                        {
+                            "CommandID": "ConfigureReporting",
+                            "name": ["Last - Configure reporting","Last - Configurer les rapports"],
+                            "expert": false,
+                            "ReportType": [
+                                {
+                                    "parameters":[
+                                        {
+                                           "ParameterID":"ReportParameters",
+                                           "editable":false,
+                                           "value":{
+                                              "New":"No",
+                                              "Reserved":0,
+                                              "CauseRequest":"No",
+                                              "SecuredIfAlarm":"No",
+                                              "Secured":"No",
+                                              "NoHeaderPort":"No",
+                                              "Batch":"No"
+                                           }
+                                        },
+                                        {
+                                           "ParameterID":"AttributeType",
+                                           "editable":false,
+                                           "value":"ByteString"
+                                        },
+                                        {
+                                           "ParameterID":"MinReport",
+                                           "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+                                           "editable":true,
+                                           "type":"time",
+                                           "comment":["---","---"],
+                                           "range":[0,32767]
+                                           
+                                        },
+                                        {
+                                           "ParameterID":"MaxReport",
+                                           "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+                                           "editable":true,
+                                           "type":"time",
+                                           "comment":["---","---"],
+                                           "range":[0,32767]
+                                           
+                                        },
+                                        {
+                                        "ParameterID": "Data",
+                                        "editable": true,
+                                        "type": "data",
+                                        "subParameters": [
+                                            {
+                                               "ParameterID":"DataLength",
+                                               "name":["Length of the data","Longueur de la trame"],
+                                               "editable":false,
+                                               "comment":["---","---"],
+                                               "range":[0,13],
+                                               "multiplier": 1,
+                                               "type":"number"
+                                            },
+                                            {
+                                               "ParameterID":"NbTriggedAcq",
+                                               "fieldIndex" : 0,
+                                               "name":["NbTriggedAcq","NbTriggedAcq"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["",""]
+                                            },
+                                            {
+                                               "ParameterID":"Mean_X",
+                                               "fieldIndex" : 1,
+                                               "name":["Mean_X","Mean_X"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            {
+                                               "ParameterID":"Max_X",
+                                               "fieldIndex" : 2,
+                                               "name":["Max_X","Max_X"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            {
+                                               "ParameterID":"Dt_X",
+                                               "fieldIndex" : 3,
+                                               "name":["Dt_X","Dt_X"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"Mean_Y",
+                                               "fieldIndex" : 4,
+                                               "name":["Mean_Y","Mean_Y"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"Max_Y",
+                                               "fieldIndex" : 5,
+                                               "name":["Max_Y","Max_Y"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"Dt_Y",
+                                               "fieldIndex" : 6,
+                                               "name":["Dt_Y","Dt_Y"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"Mean_Z",
+                                               "fieldIndex" : 7,
+                                               "name":["Mean_Z","Mean_Z"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            
+                                            {
+                                               "ParameterID":"Max_Z",
+                                               "fieldIndex" : 8,
+                                               "name":["Max_Z","Max_Z"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 100,
+                                               "multiplier": 100,
+                                               "unit":["G","G"]
+                                            },
+                                            {
+                                               "ParameterID":"Dt_Z",
+                                               "fieldIndex" : 9,
+                                               "name":["Dt_Z","Dt_Z"],
+                                               "editable":true,
+                                               "comment":["---","---"],
+                                               "range":[0,65535],
+                                               "type":"number",
+                                               "mantissa": 1,
+                                               "multiplier": 1,
+                                               "unit":["ms","ms"]
+                                            }
+                                          ]
+                                        }
+                                     ]
+                                  },
+                                  {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "AttributeType",
+                                            "editable": false,
+                                            "value": "ByteString"
+                                        },
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Size": 0,
+                                                "Batch": "Yes"
+                                            }
+                                        },
+                                        {
+                                            "ParameterID": "FieldIndex",
+                                            "name": ["Field(s)","Champ(s)"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "type": "select",
+                                            "options": [
+                                                {
+                                                    "OptionID": 0,
+                                                    "name": ["NbTriggedAcq","NbTriggedAcq"]
+                                                },
+                                                {
+                                                    "OptionID": 1,
+                                                    "name": ["Mean_X","Mean_X"]
+                                                },
+                                                {
+                                                    "OptionID": 2,
+                                                    "name": ["Max_X","Max_X"]
+                                                },
+                                                {
+                                                    "OptionID": 3,
+                                                    "name":["Dt_X","Dt_X"]
+                                                },
+                                                {
+                                                    "OptionID": 4,
+                                                    "name": ["Mean_Y","Mean_Y"]
+                                                },
+                                                {
+                                                    "OptionID": 5,
+                                                    "name": ["Max_Y","Max_Y"]
+                                                },
+                                                {
+                                                    "OptionID": 6,
+                                                    "name": ["Dt_Y","Dt_Y"]
+                                                },
+                                                {
+                                                    "OptionID": 7,
+                                                    "name": ["Mean_Z","Mean_Z"]
+                                                },
+                                                {
+                                                    "OptionID": 8,
+                                                    "name": ["Max_Z","Max_Z"]
+                                                },
+                                                {
+                                                    "OptionID": 9,
+                                                    "name": ["Dt_Z","Dt_Z"]
+                                                },
+                                                {
+                                                    "OptionID": 10,
+                                                    "name": ["SignalEachAcq","SignalEachAcq"]
+                                                },
+                                                {
+                                                    "OptionID": 11,
+                                                    "name": ["Reserved","Reserved"]
+                                                },
+                                                {
+                                                    "OptionID": 12,
+                                                    "name": ["RstAftStdRpt_X","RstAftStdRpt_X"]
+                                                },
+                                                {
+                                                    "OptionID": 13,
+                                                    "name": ["RstAftStdRpt_Y","RstAftStdRpt_Y"]
+                                                },
+                                                {
+                                                    "OptionID": 14,
+                                                    "name": ["RstAftStdRpt_Z","RstAftStdRpt_Z"]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "MinReport",
+                                            "name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "time"
+                                        },
+                                        {
+                                            "ParameterID": "MaxReport",
+                                            "name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "time"
+                                        },
+                                        {
+                                            "ParameterID": "Delta",
+                                            "name": ["Delta","Delta"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "number",
+                                            "mantissa": 1000,
+                                            "multiplier": 1,
+                                            "unit": ["",""]
+                                        },
+                                        {
+                                            "ParameterID": "Resolution",
+                                            "name": ["Resolution","Résolution"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "range": [0,32767],
+                                            "type": "number",
+                                            "mantissa": 1000,
+                                            "multiplier": 1,
+                                            "unit": ["",""]
+                                        },
+                                        {
+                                            "ParameterID": "TagValue",
+                                            "editable": true,
+                                            "type": "data",
+                                            "subParameters": [
+                                                {
+                                                    "ParameterID": "TagLabel",
+                                                    "name": ["TagLabel","TagLabel"],
+                                                    "editable": true,
+                                                    "comment": ["---","---"],
+                                                    "range": [0,31],
+                                                    "type": "number",
+                                                    "mantissa": 100,
+                                                    "multiplier": 1,
+                                                    "unit": ["",""]
+                                                },
+                                                {
+                                                    "ParameterID": "TagSize",
+                                                    "name": ["TagSize","TagSize"],
+                                                    "editable": true,
+                                                    "comment": ["---","---"],
+                                                    "range": [1,7],
+                                                    "type": "number",
+                                                    "mantissa": 100,
+                                                    "multiplier": 1,
+                                                    "unit": ["",""]
+                                                }
+                                                
+                                            ]
+                                        }
+                                    ]
+                                }
+                        
+                            ]
+                        },
+                        {
+                            "CommandID": "ReadReportingConfiguration",
+                            "name": ["Last - Read reporting configuration","Last - Lire la configuration des rapports"],
+                            "expert": false,
+                            "ReportType": [
+                                {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Reserved": 0,
+                                                "CauseRequest": "No",
+                                                "SecuredIfAlarm": "No",
+                                                "Secured": "No",
+                                                "NoHeaderPort": "No",
+                                                "Batch": "No"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "parameters": [
+                                        {
+                                            "ParameterID": "ReportParameters",
+                                            "editable": false,
+                                            "value": {
+                                                "New": "No",
+                                                "Reserved": 0,
+                                                "CauseRequest": "No",
+                                                "SecuredIfAlarm": "No",
+                                                "Secured": "No",
+                                                "NoHeaderPort": "No",
+                                                "Batch": "Yes"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "CommandID": "ReadAttribute",
+                            "name": ["Last - Read current value","Last - Lire la valeur actuelle"],
+                            "expert": true
+                        }
+                    ]
+                },
+                {
+                    "AttributeID":"Params",
+                    "commands":[
+                        {
+                            "CommandID": "ReadAttribute",
+                            "name": ["State - Read current state","Etat - Lire l'état actuel"],
+                            "expert": true
+                        },
+                        {
+                            "CommandID": "WriteAttributeNoResponse",
+                            "name": ["Params - WriteAttributeNoResponse","Params - WriteAttributeNoResponse"],
+                            "expert": false,
+                            "parameters": [
+                                {
+                                    "ParameterID": "AttributeType",
+                                    "editable": false,
+                                    "value": "ByteString"
+                                },
+                                {
+                                    "ParameterID": "Data",
+                                    "editable": true,
+                                    "type": "data",
+                                    "subParameters": [
+                                        {
+                                           "ParameterID":"DataLength",
+                                           "name":["Length of the data","Longueur de la trame"],
+                                           "editable":false,
+                                           "comment":["---","---"],
+                                           "range":[0,13],
+                                           "multiplier": 1,
+                                           "type":"number"
+                                        },
+                                        {
+                                           "ParameterID":"WaitFreq",
+                                           "fieldIndex" : 0,
+                                           "name":["WaitFreq","WaitFreq"],
+                                           "editable":true,
+                                           "comment":["---","---"],
+                                           "range":[0,65535],
+                                           "type":"number",
+                                           "mantissa": 10,
+                                           "multiplier": 10,
+                                           "unit":["Hz","Hz"]
+                                        },
+                                        {
+                                           "ParameterID":"AcqFreq",
+                                           "fieldIndex" : 1,
+                                           "name":["AcqFreq","AcqFreq"],
+                                           "editable":true,
+                                           "comment":["---","---"],
+                                           "range":[0,65535],
+                                           "type":"number",
+                                           "mantissa": 10,
+                                           "multiplier": 10,
+                                           "unit":["Hz","Hz"]
+                                        },
+                                        {
+                                           "ParameterID":"NewWaitDelay",
+                                           "fieldIndex" : 2,
+                                           "name":["New Wait Delay","NewWaitDelay"],
+                                           "editable":true,
+                                           "comment":["---","---"],
+                                           "range":[0,32767],
+                                           "type":"time",
+                                           "mantissa": 1,
+                                           "multiplier": 1,
+                                           "unit":["",""]
+                                        },
+                                        {
+                                            "ParameterID":"MinReport",
+                                            "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+                                            "editable":true,
+                                            "type":"time",
+                                            "comment":["---","---"],
+                                            "range":[0,32767]
+                                         },
+                                        {
+                                           "ParameterID":"MaxAcqDuration",
+                                           "fieldIndex" : 3,
+                                           "name":["MaxAcqDuration","MaxAcqDuration"],
+                                           "editable":true,
+                                           "comment":["---","---"],
+                                           "range":[1000,65535],
+                                           "type":"number",
+                                           "mantissa": 1,
+                                           "multiplier": 1,
+                                           "unit":["ms","ms"]
+                                        },
+                                        
+                                        {
+                                           "ParameterID":"Threshold_X",
+                                           "fieldIndex" : 4,
+                                           "name":["Threshold_X","Threshold_X"],
+                                           "editable":true,
+                                           "comment":["---","---"],
+                                           "range":[2,40000],
+                                           "type":"number",
+                                           "mantissa": 100,
+                                           "multiplier": 100,
+                                           "unit":["G","G"]
+                                        },
+                                        
+                                        {
+                                           "ParameterID":"Threshold_Y",
+                                           "fieldIndex" : 5,
+                                           "name":["Threshold_Y","Threshold_Y"],
+                                           "editable":true,
+                                           "comment":["---","---"],
+                                           "range":[2,40000],
+                                           "type":"number",
+                                           "mantissa": 100,
+                                           "multiplier": 100,
+                                           "unit":["G","G"]
+                                        },
+                                        
+                                        {
+                                           "ParameterID":"Threshold_Z",
+                                           "fieldIndex" : 6,
+                                           "name":["Threshold_Z","Threshold_Z"],
+                                           "editable":true,
+                                           "comment":["---","---"],
+                                           "range":[2,40000],
+                                           "type":"number",
+                                           "mantissa": 100,
+                                           "multiplier": 100,
+                                           "unit":["G","G"]
+                                        },
+                                        
+                                        {
+                                           "ParameterID":"OverThrshDt",
+                                           "fieldIndex" : 7,
+                                           "name":["OverThrshDt","OverThrshDt"],
+                                           "editable":false,
+                                           "comment":["---","---"],
+                                           "range":[0,65535],
+                                           "type":"number",
+                                           "mantissa": 1,
+                                           "multiplier": 1,
+                                           "unit":["ms","ms"]
+                                        },
+                                        
+                                        {
+                                           "ParameterID":"UnderThrshDt",
+                                           "fieldIndex" : 8,
+                                           "name":["UnderThrshDt","UnderThrshDt"],
+                                           "editable":true,
+                                           "comment":["---","---"],
+                                           "range":[0,65535],
+                                           "type":"number",
+                                           "mantissa": 1,
+                                           "multiplier": 1,
+                                           "unit":["ms","ms"]
+                                        },
+                                        {
+                                           "ParameterID":"Range",
+                                           "fieldIndex" : 9,
+                                           "name":["Range","Range"],
+                                           "editable":true,
+                                           "comment":["---","---"],
+                                           "range":[0,40000],
+                                           "type":"number",
+                                           "mantissa": 100,
+                                           "multiplier": 100,
+                                           "unit":["G","G"]
+                                        },
+                                        {
+                                            "ParameterID":"FilterSmoothCoef",
+                                            "fieldIndex" : 10,
+                                            "name":["FilterSmoothCoef","FilterSmoothCoef"],
+                                            "editable":true,
+                                            "comment":["---","---"],
+                                            "range":[0,255],
+                                            "type":"number",
+                                            "mantissa": 1,
+                                            "multiplier": 1,
+                                            "unit":["",""]
+                                         },
+                                         {
+                                            "ParameterID":"FilterGainCoef",
+                                            "fieldIndex" : 11,
+                                            "name":["FilterGainCoef","FilterGainCoef"],
+                                            "editable":true,
+                                            "comment":["---","---"],
+                                            "range":[0,255],
+                                            "type":"number",
+                                            "mantissa": 1,
+                                            "multiplier": 1,
+                                            "unit":["",""]
+                                         },
+                                        {
+                                        "ParameterID": "WM_SignalEachAcq",
+                                        "fieldIndex" : 12,
+                                        "name": ["WM_SignalEachAcq","WM_SignalEachAcq"],
+                                        "editable": true,
+                                        "comment": ["---","---"],
+                                        "type": "select",
+                                        "unit": ["",""],
+                                        "range": [0,1],
+                                        "multiplier": 1,
+                                        "options": [
+                                            {
+                                                "OptionID": 0,
+                                                "name": ["No","Non"]
+                                            },
+                                            {
+                                                "OptionID": 1,
+                                                "name": ["Yes","Oui"]
+                                            }
+                                        ]
+                                        },
+                                        {                                            
+                                            "ParameterID":"WM_Reserved",
+                                            "fieldIndex" : 13,
+                                            "name":["WM_Reserved","WM_Reserved"],
+                                            "editable": true,
+                                            "comment":["---","---"],
+                                            "range":[0,31],
+                                            "type":"number",
+                                            "mantissa": 1,
+                                            "multiplier": 1,
+                                            "unit":["",""]
+                                        },
+                                        {
+                                            "ParameterID": "WM_RstAftStdRpt_X",
+                                            "fieldIndex" : 14,
+                                            "name": ["WM_RstAftStdRpt_X","WM_RstAftStdRpt_X"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "type": "select",
+                                            "unit": ["",""],
+                                            "range": [0,1],
+                                            "multiplier": 1,
+                                            "options": [
+                                                {
+                                                    "OptionID": 0,
+                                                    "name": ["No","Non"]
+                                                },
+                                                {
+                                                    "OptionID": 1,
+                                                    "name": ["Yes","Oui"]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "WM_RstAftStdRpt_Y",
+                                            "fieldIndex" : 15,
+                                            "name": ["WM_RstAftStdRpt_Y","WM_RstAftStdRpt_Y"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "type": "select",
+                                            "unit": ["",""],
+                                            "range": [0,1],
+                                            "multiplier": 1,
+                                            "options": [
+                                                {
+                                                    "OptionID": 0,
+                                                    "name": ["No","Non"]
+                                                },
+                                                {
+                                                    "OptionID": 1,
+                                                    "name": ["Yes","Oui"]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "WM_RstAftStdRpt_Z",
+                                            "fieldIndex" : 16,
+                                            "name": ["WM_RstAftStdRpt_Z","WM_RstAftStdRpt_Z"],
+                                            "editable": true,
+                                            "comment": ["---","---"],
+                                            "type": "select",
+                                            "unit": ["",""],
+                                            "range": [0,1],
+                                            "multiplier": 1,
+                                            "options": [
+                                                {
+                                                    "OptionID": 0,
+                                                    "name": ["No","Non"]
+                                                },
+                                                {
+                                                    "OptionID": 1,
+                                                    "name": ["Yes","yes"]
+                                                }
+                                            ]
+                                        }
+                                            
+                                        
+                                         
+                                      ]
+                                    }
+                            ]
+                        }
+                    ]
+                }
+    ]
+}

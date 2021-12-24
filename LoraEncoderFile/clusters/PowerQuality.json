@@ -1,0 +1,500 @@
+{
+	"clusterID": "PowerQuality",
+	"clusterName": ["Power Quality Cluster","Power Quality"],
+	"expert": false,
+	"attributes": [
+		{
+			"AttributeID": "CurrentValues",
+			"commands": [
+				{
+					"CommandID": "ConfigureReporting",
+					"name": ["Configure reporting","Configurer les rapports"],
+					"expert": false,
+					"ReportType": [
+						{
+							"parameters": [
+                                {
+                                    "ParameterID":"ReportParameters",
+                                    "editable":false,
+                                    "value":{
+                                       "New":"No",
+                                       "Reserved":0,
+                                       "CauseRequest":"No",
+                                       "SecuredIfAlarm":"No",
+                                       "Secured":"No",
+                                       "NoHeaderPort":"No",
+                                       "Batch":"No"
+                                    }
+                                 },
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "ByteString"
+								},
+								
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"type": "time",
+									"comment": ["---","---"],
+									"range": [0,32767]
+									
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"type": "time",
+									"comment": ["---","---"],
+									"range": [0,32767]
+                                },
+                                {
+                                    "ParameterID": "Data",
+                                    "editable": true,
+                                    "type": "data",
+                                    "subParameters": [
+                                        {
+                                            "ParameterID":"DataLength",
+                                            "name":["Length of the data","Longueur de la trame"],
+                                            "editable":false,
+                                            "comment":["---","---"],
+                                            "range":[0,13],
+                                            "multiplier": 1,
+                                            "type":"number"
+                                         },
+                                        {
+											"ParameterID": "Freq",
+                                            "fieldIndex" : 0,
+											"name": ["Reportable change of frequence","Variation à signaler de la fréquence"],
+                                            "editable": true,
+											"comment": ["---","---"],
+											"range": [0,32.767],
+											"type": "number",
+											"mantissa": 1000,
+											"multiplier": 1000,
+											"unit": ["Hz","Hz"]
+										},
+										{
+                                            "ParameterID": "FreqMin",
+                                            "fieldIndex" : 1,
+											"name": ["Reportable change of minimal frequence","Variation à signaler de la fréquence minimale"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,32.767],
+											"type": "number",
+											"mantissa": 1000,
+											"multiplier": 1000,
+											"unit": ["Hz","Hz"]
+										},
+										{
+                                            "ParameterID": "FreqMax",
+                                            "fieldIndex" : 2,
+											"name": ["Reportable change of maximal frequence","Variation à signaler de la fréquence maximale"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,32.767],
+											"type": "number",
+											"mantissa": 1000,
+											"multiplier": 1000,
+											"unit": ["Hz","Hz"]
+                                        },
+                                        {
+											"ParameterID": "Vrms",
+                                            "fieldIndex" : 3,
+											"name": ["Reportable change of Vrms","Variation à signaler de la Vrms"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,500],
+											"type": "number",
+											"mantissa": 10,
+											"multiplier": 10,
+											"unit": ["V","V"]
+                                        },
+                                        {
+                                            "ParameterID": "VrmsMin",
+                                            "fieldIndex" : 4,
+											"name": ["Reportable change of minimal Vrms","Variation à signaler de la Vrms minimale"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,500],
+											"type": "number",
+											"mantissa": 10,
+											"multiplier": 10,
+											"unit": ["V","V"]
+                                        },
+                                        {
+                                            "ParameterID": "VrmsMax",
+                                            "fieldIndex" : 5,
+											"name": ["Reportable change of maximal Vrms","Variation à signaler de la Vrms maximale"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,500],
+											"type": "number",
+											"mantissa": 10,
+											"multiplier": 10,
+											"unit": ["V","V"]
+                                        },
+                                        {
+                                            "ParameterID": "Vpeak",
+                                            "fieldIndex" : 6,
+											"name": ["Reportable change of Vpeak","Variation à signaler de la Vpeak"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,500],
+											"type": "number",
+											"mantissa": 10,
+											"multiplier": 10,
+											"unit": ["V","V"]
+                                        },
+                                        {
+                                            "ParameterID": "VpeakMin",
+                                            "fieldIndex" : 7,
+											"name": ["Reportable change of minimal Vpeak","Variation à signaler de la Vpeak minimale"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,500],
+											"type": "number",
+											"mantissa": 10,
+											"multiplier": 10,
+											"unit": ["V","V"]
+                                        },
+                                        {
+											"ParameterID": "VpeakMax",
+                                            "fieldIndex" : 8,
+											"name": ["Reportable change of maximal Vpeak","Variation à signaler de la Vpeak maximale"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,500],
+											"type": "number",
+											"mantissa": 10,
+											"multiplier": 10,
+											"unit": ["V","V"]
+										},
+                                        {
+											"ParameterID": "OverVoltageNumber",
+                                            "fieldIndex" : 9,
+											"name": ["Reportable change of over voltage number","Variation à signaler du nombre de surtension."],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,32767],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										},
+                                        {
+											"ParameterID": "SagNumber",
+                                            "fieldIndex" : 10,
+											"name": ["Reportable change of sag number","Variation à signaler du nombre de chute de tension"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,32767],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										},
+                                        {
+											"ParameterID": "BrownoutNumber",
+                                            "fieldIndex" : 11,
+											"name": ["Reportable change of brownout number","Variation à signaler du nombre de démarage"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,32767],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										}
+                                      ]
+                                    }
+								]
+							
+							
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "ByteString"
+								},
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Size": 0,
+										"Batch": "Yes"
+									}
+								},
+								{
+									"ParameterID": "FieldIndex",
+									"name": ["Field(s)","Champ(s)"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+                                            "OptionID": 0,
+                                            "name": ["variation of frequence","variation de la somme de l'énergie active"]
+                                        },
+                                        {
+                                            "OptionID": 1,
+                                            "name": ["variation of minimal frequence","variation de la somme de l'énergie réactive"]
+                                        },
+                                        {
+                                            "OptionID": 2,
+                                            "name": ["variation of maximal frequence","variation du nombre d'échantillon"]
+                                        },
+                                        {
+                                            "OptionID": 3,
+                                            "name":["variation of vrms ","variation de l'énergie active"]
+                                        },
+                                        {
+                                            "OptionID": 4,
+                                            "name": ["variation of minimal vrms","variation de l'énergie réactive"]
+                                        },
+                                        {
+                                            "OptionID": 5,
+                                            "name": ["variation of maximal vrms","variation de la somme de l'énergie active"]
+                                        },
+                                        {
+                                            "OptionID": 6,
+                                            "name": ["variation of vpeak","variation de la somme de l'énergie réactive"]
+                                        },
+                                        {
+                                            "OptionID": 7,
+                                            "name": ["variation of minimal vpeak","variation du nombre d'échantillon"]
+                                        },
+                                        {
+                                            "OptionID": 8,
+                                            "name":["variation of maximal vpea","variation de l'énergie active"]
+                                        },
+                                        {
+                                            "OptionID": 9,
+                                            "name": ["variation of over voltage number","variation de l'énergie réactive"]
+                                        },
+                                        {
+                                            "OptionID": 10,
+                                            "name": ["variation of sag number","variation de la somme de l'énergie active"]
+                                        },
+                                        {
+                                            "OptionID": 11,
+                                            "name": ["variation of brownout number","variation de la somme de l'énergie réactive"]
+                                        }
+									]
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Delta",
+									"name": ["Delta","Delta"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "number",
+									"mantissa": 1000,
+									"multiplier": 1,
+									"unit": ["",""]
+								},
+								{
+									"ParameterID": "Resolution",
+									"name": ["Resolution","Résolution"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "number",
+									"mantissa": 1000,
+									"multiplier": 1,
+									"unit": ["",""]
+								},
+								{
+									"ParameterID": "TagValue",
+									"editable": true,
+									"type": "data",
+									"subParameters": [
+										{
+											"ParameterID": "TagLabel",
+											"name": ["TagLabel","TagLabel"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,31],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										},
+										{
+											"ParameterID": "TagSize",
+											"name": ["TagSize","TagSize"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [1,7],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										}
+										
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"CommandID": "ReadReportingConfiguration",
+					"name": ["Read reporting configuration","Lire la configuration des rapports"],
+					"expert": false,
+					
+					
+					"parameters": [
+					{
+						"ParameterID": "ReportParameters",
+						"editable": false,
+						"value": {
+							"New": "No",
+							"Reserved": 0,
+							"CauseRequest": "No",
+							"SecuredIfAlarm": "No",
+							"Secured": "No",
+							"NoHeaderPort": "No",
+							"Batch": "No"
+						}
+					}
+					]	
+				},
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read current value","Lire la valeur actuelle"],
+					"expert": true
+				}
+			]
+		},
+		{
+			"AttributeID": "ApplicationType",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Read the application type of the remote sensor","Lire le type d'application du capteur distant"],
+					"expert": true
+				}
+			]
+		},
+		{
+			"AttributeID": "SagCycleThreshold",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Sag cycle Threshold - Read the current over sag cycle threshold","Sag cycle Threshold - Lire la valeure actuelle"],
+					"expert": true
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Sag cycle Threshold - Write current value","Sag cycle Threshold - Définir la valeur actuelle"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt16"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Set the sag half-cycle number.","Définir le nombre de demi-cycle de tension basse."],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,65534],
+							"type": "number",
+							"mantissa": 10,
+							"multiplier": 10,
+							"unit": ["V","V"]
+						}
+					]
+				}
+			]
+        },
+        {
+			"AttributeID": "SagVoltageThreshold",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Sag voltage Threshold - Read the current Sag voltage threshold ","Sag voltage Threshold - Lire la valeure actuelle du seuil d'affaissement de la tension."],
+					"expert": true
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Sag voltage Threshold - Write current value","Sag voltage Threshold - Définir la valeur actuelle"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt16"
+						},
+						{
+							"ParameterID": "Data",
+							"name":  ["Set the sag voltage value.","Définir la valeur de tension basse."],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,65534],
+							"type": "number",
+							"mantissa": 10,
+							"multiplier": 10,
+							"unit": ["V","V"]
+						}
+					]
+				}
+			]
+		},
+        {
+			"AttributeID": "OverVoltageThreshold",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Over voltage Threshold - Read the current over voltage threshold ","Over voltage Threshold - Lire la valeure actuelle de surtension"],
+					"expert": true
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Over voltage Threshold - Write current value","Over voltage Threshold - Définir la valeur actuelle"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt16"
+						},
+						{
+							"ParameterID": "Data",
+							"name":  ["Set the over voltage value.","Définir la valeur de tension haute."],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,65534],
+							"type": "number",
+							"mantissa": 10,
+							"multiplier": 10,
+							"unit": ["V","V"]
+						}
+					]
+				}
+			]
+        }
+	]
+}

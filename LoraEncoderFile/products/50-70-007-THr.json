@@ -1,0 +1,83 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4,3],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+			{
+				"attribute" : "NodePowerDescriptor",
+				"available" : true,
+				"config" : [[[3,100,3,3],[4,100,4,3]]] 	
+			}
+			]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Temperature",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+			{
+				"attribute" : "MeasuredValue",
+				"available" : true,
+				"config" : [[[0,0.1,0,3]]] 	
+			}
+			]
+		},
+		{
+			"clusterID": "RelativeHumidity",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+			{
+				"attribute": "MeasuredValue",
+				"available" : true,
+				"config" : [[[0,1,1,3]]] 	
+			}
+			]
+		},
+		{
+			"clusterID": "Illuminance",
+			"customName": ["Illuminance Measurement","Mesure d'éclairement"],
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+			{	
+				"attribute" : "MeasuredValue",
+				"available" : true,
+				"config" : [[[0,10,2,3]]] 	
+			}
+			]
+		}
+	],
+	 "embeddedProductName": "ips-temperaturehumidity"
+}

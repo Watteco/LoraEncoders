@@ -1,0 +1,19 @@
+{
+   "clusterID":"TIC_ICE",
+   "clusterName":["TIC ICE(Emeraude)","TIC ICE(Emeraude)"],
+   "expert":false,
+   "attributes":[
+		{
+			"AttributeID":"General",
+			"CommandsTemplate":"TICs/TIC_AttributeCommandsTemplate"
+		},
+		{
+			"AttributeID":"ICEp",
+			"CommandsTemplate":"TICs/TIC_AttributeCommandsTemplate"
+		},
+		{
+			"AttributeID":"ICEpm1",
+			"CommandsTemplate":"TICs/TIC_AttributeCommandsTemplate"
+		}
+	]
+}

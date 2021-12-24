@@ -1,0 +1,185 @@
+{
+	"parameters": [
+		{
+			"ParameterID":"ADIR1",
+			"comment":["","Avert. de Dépass. I Phase 1 "],
+			"editable":true,"selectable":true, "range":[0,999], "type":"number", "unit":["A","A"]
+		},
+		{
+			"ParameterID":"ADIR2",
+			"comment":["","Avert. de Dépass. I Phase 2"],
+			"editable":true, "range":[0,999], "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"ADIR3",
+			"comment":["","Avert. de Dépass. I Phase 3"],
+			"editable":true, "range":[0,999], "type":"number", "unit":["A","A"],
+			"selectable":true
+		},
+		{
+			"ParameterID":"ADCO",
+			"comment":["","Adresse compteur"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"OPTARIF",
+			"comment":["","Option tarif"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"ISOUSC",
+			"comment":["","Intensité souscrite"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"BASE",
+			"comment":["","Index option base"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"HCHC",
+			"comment":["","Index Heures creuses"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"HCHP",
+			"comment":["","Index Heures pleines"],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"EJPHN",
+			"comment":["","EJP Heures normales "],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"EJPHPM",
+			"comment":["","EJP Heures pointe mobile"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"BBRHCJB",
+			"comment":["","Tempo: Heures creuses J bleus"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"BBRHPJB",
+			"comment":["","Tempo: Heures pleines J bleus"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"BBRHCJW",
+			"comment":["","Tempo: Heures creuses J blancs"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"BBRHPJW",
+			"comment":["","Tempo: Heures pleines J blancs "],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"BBRHCJR",
+			"comment":["","Tempo: Heures creuses J rouges"],
+			"editable":true, "type":"number","selectable":true,"unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"BBRHPJR",
+			"comment":["","Tempo: Heures pleines J rouges"],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"PEJP",
+			"comment":["","Préavis EJP "],
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+		},
+		{
+			"ParameterID":"GAZ",
+			"comment":["","Index Gaz"],
+			"editable":true, "type":"number","selectable":true, "unit":["dal","dal"]
+		},
+		{
+			"ParameterID":"AUTRE",
+			"comment":["","Index Troisième compteur"],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"PTEC",
+			"comment":["","Période Tarifaire en cours"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"DEMAIN",
+			"comment":["","Couleur du lendemain"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"IINST",
+			"comment":["","Intensité instantanée "],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"IINST1",
+			"comment":["","Intensité instantanée Phase1 "],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"IINST2",
+			"comment":["","Intensité instantanée Phase2"],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"IINST3",
+			"comment":["","Intensité instantanée Phase3"],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"ADPS",
+			"comment":["","Avertissement dépass puiss sous"],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"IMAX",
+			"comment":["","Intensité maximale appelée "],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"IMAX1",
+			"comment":["","Intensité maximale appelée P1 "],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"IMAX2",
+			"comment":["","Intensité maximale appelée P2 "],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"IMAX3",
+			"comment":["","Intensité maximale appelée P3 "],
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+		},
+		{
+			"ParameterID":"PMAX",
+			"comment":["","Puiss. Maximale tri-phasée "],
+			"editable":true, "type":"number","selectable":true, "unit":["W","W"]
+		},
+		{
+			"ParameterID":"PAPP",
+			"comment":["","Puiss.Apparente tri-phasée"],
+			"editable":true, "type":"number","selectable":true, "unit":["VA","VA"]
+		},
+		{
+			"ParameterID":"HHPHC",
+			"comment":["","Horaire Heure Pleine/creuse"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"MOTDETAT",
+			"comment":["","Mot d'état du compteur"],
+			"editable":false,"selectable":true
+		},
+		{
+			"ParameterID":"PPOT",
+			"comment":["","Présence des potentiels "],
+			"editable":false,"selectable":true
+		}
+	]
+}

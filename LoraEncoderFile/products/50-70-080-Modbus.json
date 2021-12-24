@@ -1,0 +1,47 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4,2],
+			"threshold" : {
+                "available" : false
+			}
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "SerialMasterSlave",
+			"endpoints": [0,1,2,3,4,5,6,7,8,9],
+			"endpointsComment": ["---","---","---","---","---","---","---","---","---","---"],
+			"threshold" : {
+                "available" : false
+			}
+		},
+		{
+			"clusterID": "SerialInterface",
+			"endpoints": [0],
+			"endpointsComment": ["---"],
+			"threshold" : {
+                "available" : false
+			}
+		}
+	],
+	"embeddedProductName": "ips-modbus-sensor",
+	"defaultAddresses":["@10a00","@10bfe"]
+}

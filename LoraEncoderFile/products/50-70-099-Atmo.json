@@ -1,0 +1,138 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "NodePowerDescriptor", 
+                      "numberSlot" : 4,
+                      "fieldindex" : [4]
+                      }
+                  ]
+
+            },
+			"batch" : 
+			[
+				{
+					"attribute" : "NodePowerDescriptor",
+					"available" : true,
+					"config" : [[[4,1,5,3]]] 	
+				}
+			]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Temperature",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "MeasuredValue", 
+                      "numberSlot" : 4,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : 
+			[
+				{	
+					"attribute" : "MeasuredValue",
+					"available" : true,
+					"config" : [[[0,0.01,0,3]]] 	
+				}
+			]
+		},
+		{
+			"clusterID": "RelativeHumidity",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "MeasuredValue", 
+                      "numberSlot" : 4,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : 
+			[
+				{	
+					"attribute" : "MeasuredValue",
+					"available" : true,
+					"config" : [[[0,0.01,1,3]]] 	
+				}
+			]
+		},
+		{
+			"clusterID": "Pressure",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "MeasuredValue", 
+                      "numberSlot" : 4,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : 
+			[
+				{	
+					"attribute" : "MeasuredValue",
+					"available" : true,
+					"config" : [[[0,1,2,3]]] 	
+				}
+			]
+		},
+		{
+			"clusterID": "BinaryInput",
+			"endpoints": [0,1],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : 
+			[
+				{	
+					"attribute" : "Count",
+					"available" : true,
+					"config" : [[[0,1,3,3]],[[0,1,4,3]]] 	
+				},
+				{
+					"attribute" : "PresentValue",
+					"available" : true
+				}
+			]
+		}
+	],
+	"embeddedProductName": "ips-pluvio"
+}
