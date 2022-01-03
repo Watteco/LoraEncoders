@@ -2021,7 +2021,17 @@ function fReadAllFile(){
 	function setupReader(file) {
 		// C'est une fonction asynchrone
 		var reader = new FileReader();
-		gDeviceListName = file.name;  
+		gDeviceListName = file.name;
+		
+		// Check if gDeviceListName is correctly formatted for the LoraUpdater
+		let result = [...gDeviceListName.matchAll(/[_]/g)].map(a => a.index);
+
+		let firstCondition = gDeviceListName.startsWith("ListeProduits_"); // Must start with ListeProduits_
+		let secondCondition = !isNaN(gDeviceListName.slice(result[0]+1,result[1])); // Must be followed by numbers
+		
+		if(!(firstCondition && secondCondition)){
+			gDeviceListName = "ListeProduits_" + Math.floor(Math.random() * 10000) +"_" + gDeviceListName;
+		}
 		reader.onload = function(e) {   
 			var text = e.target.result;
 			gDeviceListTemp += text;
