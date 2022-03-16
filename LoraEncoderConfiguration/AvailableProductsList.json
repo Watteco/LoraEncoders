@@ -1,9 +1,16 @@
 {
 	"products": [
-
+		{
+			"name": "Flash'O (50-70-071)",
+			"file": "50-70-071-Flasho"
+		},
 		{
 			"name": "In'O (50-70-016-005)",
-			"file": "50-70-016-005-Ino"
+			"file": "50-70-016-Ino"
+		},		
+		{
+			"name": "Modbus (50-70-[080/109]) - under construction",
+			"file": "50-70-080-Modbus"
 		},
 		{
 			"name": "Monit'O (50-70-141)",
@@ -14,42 +21,45 @@
 			"file": "50-70-017-005-Presso"
 		},
 		{
-			"name": "Press'O 0-10V 2CTN (50-70-130-00)",
-			"file": "50-70-130-000-Presso-0-10V-2CTN"
+			"name": "Pulse Sens'O Atex zone 1 (50-70-123)",
+			"file": "50-70-123-PulseSenso"
 		},
 		{
-			"name": "Pulse Sens'O (50-70-[014/072/039/051])",
+			"name": "Pulse Sens'O (50-70-[014/072/039/051/160])",
 			"file": "50-70-014-PulseSenso"
+		},
+		{
+			"name": "Remote Temperature 1CTN (50-70-043-003)",
+			"file": "50-70-043-003-RT"
+		},
+		{
+			"name": "Remote Temperature 2CTN (50-70-[163/184)",
+			"file": "50-70-139-000-RT2CTN"
+		},
+		{
+			"name": "Outdoor Temperature (50-70-164)",
+			"file": "50-70-164-RT"
+		},
+		{
+			"name": "Toran'O Atex zone 1(50-70-124)",
+			"file": "50-70-124-Torano"
+		},
+		{
+			"name": "TH (50-70-[053/162])",
+			"file": "50-70-053-TH"
+		},
+		{
+			"name": "T (50-70-[085/167])",
+			"file": "50-70-085-T"
 		},
 		{
 			"name": "Triphaso (50-70-[105/145])",
 			"file": "50-70-105-Triphaso"
 		},
 		{
-			"name": "PW (50-70-027)",
-			"file": "50-70-027-PW"
-		},
-		{
-			"name": "THr (50-70-007)",
-			"file": "50-70-007-THr"
-		},
-		{
-			"name": "Celso (50-70-049)",
-			"file": "50-70-049-Celso"
-		},
-		{
-			"name": "PulseSenso (50-70-014)",
-			"file": "50-70-014-PulseSenso"
-		},
-		{
-			"name": "Ventil'o (50-70-064)",
+			"name": "Ventil'O (50-70-[064/101/166])",
 			"file": "50-70-064-Ventil'o"
-		},
-		{
-			"name": "TH (50-70-053)",
-			"file": "50-70-053-TH"
 		}
-
 	],
 	"in_developpement_products": [
 		{
