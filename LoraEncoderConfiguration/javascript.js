@@ -1631,6 +1631,14 @@ function formatParameterData(parameter,parameterIndex) {
 				return (! isNaN(intval) ? intval : selectedOption);
 			}
 		break;
+
+		case "String":
+			var selectedOption = document.getElementById('parameter' + parameterIndex).value;
+			if(selectedOption.length % 2 != 0){
+				selectedOption = "0" + selectedOption
+			}
+			return selectedOption;
+		break;
 		
 		default:
 			if(currentCommandParameters[0].value === "SinglePrecision"){

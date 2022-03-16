@@ -66,13 +66,11 @@
 								{
 								   "ParameterID":"Bytes",
 								   "fieldIndex" : 0,
-								   "name":["report on slave modbus answer variation","report sur variation de la réponse de l'esclave modbus"],
+								   "name":["Report on slave modbus answer variation","Report sur variation de la réponse de l'esclave modbus"],
 								   "editable":true,
 								   "comment":["0: no report on variation\n1: report on variation","0: pas de report sur variation\n1: report sur variation"],
 								   "range":[0,1],
-								   "type":"String",
-								   "multiplier": 1,
-								   "unit":["",""]
+								   "type":"String"
 								}
 							  ]
 							}
@@ -110,11 +108,30 @@
 							"CommandID":"ClusterSpecificCommand",
 							"name":["Direct exchange","Direct exchange"],
 							"expert":false,
+							"type":"array",
 							"parameters":[
 								{
-								   "ParameterID":"Data",
-								   "editable":false,
-								   "value":[0]
+									"ParameterID": "Data",
+									"editable": true,
+									"type": "array",
+									"subParameters": [
+										{
+											"ParameterID": "Data1",
+											"editable": false,
+											"value": 241
+										},
+										{
+											"ParameterID": "Data2",
+											"name": ["Pulse duration","Durée de l'impulsion"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,255],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["s","s"]
+										}
+									]
 								}
 								]
 					}
