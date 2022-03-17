@@ -55,23 +55,23 @@
 							"type": "data",
 							"subParameters": [
 								{
-								   "ParameterID":"DataLength",
-								   "name":["Length of the data","Longueur de la trame"],
-								   "editable":false,
-								   "comment":["---","---"],
-								   "range":[0,13],
-								   "multiplier": 1,
-								   "type":"number"
-								},
-								{
-								   "ParameterID":"Bytes",
-								   "fieldIndex" : 0,
-								   "name":["Report on slave modbus answer variation","Report sur variation de la réponse de l'esclave modbus"],
-								   "editable":true,
-								   "comment":["0: no report on variation\n1: report on variation","0: pas de report sur variation\n1: report sur variation"],
-								   "range":[0,1],
-								   "type":"String"
-								}
+									"ParameterID":"DataLength",
+									"name":["Length of the data","Longueur de la trame"],
+									"editable":false,
+									"comment":["---","---"],
+									"range":[0,13],
+									"multiplier": 1,
+									"type":"number"
+								 },
+								 {
+									"ParameterID":"Bytes",
+									"fieldIndex" : 0,
+									"name":["Report on slave modbus answer variation","Report sur variation de la réponse de l'esclave modbus"],
+									"editable":true,
+									"comment":["0: no report on variation\n1: report on variation","0: pas de report sur variation\n1: report sur variation"],
+									"range":[0,1],
+									"type":"String"
+								 }
 							  ]
 							}
 						 ]
@@ -100,6 +100,39 @@
 						]
 				}
 				]
+				},				
+				{
+					"AttributeID":"Request",
+					"commands":[
+						{
+							"CommandID": "ReadAttribute",
+							"name": ["Read current value","Lire la valeur actuelle"],
+							"expert": true
+						},
+						{
+							"CommandID": "WriteAttributeNoResponse",
+							"name": ["Set the current Request frame used for the Serial Master/Slave exchange.","Définissez la trame de requête actuelle utilisée pour l'échange Serial Master/Slave."],
+							"expert": true,
+							"parameters": [
+								{
+									"ParameterID": "AttributeType",
+									"editable": false,
+									"value": "UInt16"
+								},
+								{
+									"ParameterID": "Data",
+									"name": ["Delay","Délai"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,65535],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["s","s"]
+								}
+							]
+						}
+					]
 				},
 				{
 					"AttributeID":"ClusterSpecificCommand",
