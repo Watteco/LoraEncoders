@@ -8,7 +8,7 @@
 				"commands":	[
 					{
 					"CommandID":"ConfigureReporting",
-					"name":["SerialMasterSlave - Configure reporting","SerialMasterSlave  - Configurer les rapports"],
+					"name":["Answer - Configure reporting","Answer  - Configurer les rapports"],
 					"expert":false,
 					"ReportType":[
 						{
@@ -81,7 +81,7 @@
 				},				
 				{
 						"CommandID": "ReadReportingConfiguration",
-						"name": ["SerialMasterSlave - Read reporting configuration","SerialMasterSlave - Lire la configuration des rapports"],
+						"name": ["Answer - Read reporting configuration","Answer - Lire la configuration des rapports"],
 						"expert": false,
 						"parameters": [
 							{
@@ -106,30 +106,43 @@
 					"commands":[
 						{
 							"CommandID": "ReadAttribute",
-							"name": ["Read current value","Lire la valeur actuelle"],
+							"name": ["Request - Read current value","Request - Lire la valeur actuelle"],
 							"expert": true
 						},
 						{
 							"CommandID": "WriteAttributeNoResponse",
-							"name": ["Set the current Request frame used for the Serial Master/Slave exchange.","Définissez la trame de requête actuelle utilisée pour l'échange Serial Master/Slave."],
-							"expert": true,
+							"name": ["Request - Write attribute no response","Request - Write attribute no response."],
+							"expert": false,
 							"parameters": [
 								{
 									"ParameterID": "AttributeType",
 									"editable": false,
-									"value": "UInt16"
+									"value": "ByteString"
 								},
 								{
 									"ParameterID": "Data",
-									"name": ["Delay","Délai"],
 									"editable": true,
-									"comment": ["---","---"],
-									"range": [0,65535],
-									"type": "number",
-									"mantissa": 1,
-									"multiplier": 1,
-									"unit": ["s","s"]
-								}
+									"type": "data",
+									"subParameters": [
+									{
+										"ParameterID":"DataLength",
+										"name":["Length of the data","Longueur de la trame"],
+										"editable":false,
+										"comment":["---","---"],
+										"range":[0,13],
+										"multiplier": 1,
+										"type":"number"
+									},
+									{
+										"ParameterID":"Bytes",
+										"fieldIndex" : 0,
+										"name":["Set the current Request frame used for the Serial Master/Slave exchange.","Définissez la trame de requête actuelle utilisée pour l'échange Serial Master/Slave."],
+										"editable":true,
+										"comment":["Trame hexa","Trame hexa"],
+										"range":[0,80],
+										"type":"hexa"
+									}
+								]}
 							]
 						}
 					]
