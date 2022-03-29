@@ -1,394 +1,1254 @@
 {
-	"clusterID": "Configuration",
-	"clusterName": ["Configuration cluster","Configuration générale"],
-	"expert": false,
-	"attributes": [
+    "clusterID": "Configuration",
+    "clusterName": [
+        "Configuration cluster",
+        "Configuration générale"
+    ],
+    "expert": false,
+    "attributes": [
+        {
+            "AttributeID": "Descriptor",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Read available EndPoints and clusters",
+                        "Lire les EndPoints et clusters disponibles"
+                    ],
+                    "expert": true
+                }
+            ]
+        },
+        {
+            "AttributeID": "NodePowerDescriptor",
+            "commands": [
+                {
+                    "CommandID": "ConfigureReporting",
+                    "name": [
+                        "NodePowerDescriptor - Configure reporting",
+                        "Alimentation - Configurer les rapports"
+                    ],
+                    "expert": false,
+                    "ReportType": [
+                        {
+                            "parameters": [
+                                {
+                                    "ParameterID": "AttributeType",
+                                    "editable": false,
+                                    "value": "ByteString"
+                                },
+                                {
+                                    "ParameterID": "ReportParameters",
+                                    "editable": false,
+                                    "value": {
+                                        "New": "No",
+                                        "Reserved": 0,
+                                        "CauseRequest": "No",
+                                        "SecuredIfAlarm": "No",
+                                        "Secured": "No",
+                                        "NoHeaderPort": "No",
+                                        "Batch": "No"
+                                    }
+                                },
+                                {
+                                    "ParameterID": "MinReport",
+                                    "name": [
+                                        "Minimum reporting interval",
+                                        "Intervalle de rapport minimal"
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        32767
+                                    ],
+                                    "type": "time"
+                                },
+                                {
+                                    "ParameterID": "MaxReport",
+                                    "name": [
+                                        "Maximum reporting interval",
+                                        "Intervalle de rapport maximal"
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        32767
+                                    ],
+                                    "type": "time"
+                                },
+                                {
+                                    "ParameterID": "Data",
+                                    "editable": true,
+                                    "type": "data",
+                                    "subParameters": [
+                                        {
+                                            "ParameterID": "Size",
+                                            "editable": false,
+                                            "value": 5
+                                        },
+                                        {
+                                            "ParameterID": "CurrentPowerMode",
+                                            "editable": false,
+                                            "value": "ONWhenIdle"
+                                        },
+                                        {
+                                            "ParameterID": "AvailablePowerSourceBitField",
+                                            "name": [
+                                                "Power source",
+                                                "Source d'alimentation"
+                                            ],
+                                            "editable": true,
+                                            "comment": [
+                                                "---",
+                                                "---"
+                                            ],
+                                            "type": "select",
+                                            "options": [
+                                                {
+                                                    "OptionID": 1,
+                                                    "name": [
+                                                        "Constant (main) or External power",
+                                                        "Energie continue ou externe"
+                                                    ]
+                                                },
+                                                {
+                                                    "OptionID": 2,
+                                                    "name": [
+                                                        "Rechargeable battery",
+                                                        "Recharge des batteries"
+                                                    ]
+                                                },
+                                                {
+                                                    "OptionID": 3,
+                                                    "name": [
+                                                        "Constant (main) or External power and Rechargeable battery",
+                                                        "Energie continue ou externe et recharge des batteries"
+                                                    ]
+                                                },
+                                                {
+                                                    "OptionID": 4,
+                                                    "name": [
+                                                        "Disposable battery",
+                                                        "Batterie disponible"
+                                                    ]
+                                                },
+                                                {
+                                                    "OptionID": 5,
+                                                    "name": [
+                                                        "Constant Power and Disposable battery",
+                                                        "Alimentation externe et batterie disponible"
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "ConstantVoltage",
+                                            "fieldIndex": 2,
+                                            "name": [
+                                                "Reportable change of constant voltage",
+                                                "Variation à signaler du courant continu"
+                                            ],
+                                            "editable": true,
+                                            "comment": [
+                                                "---",
+                                                "---"
+                                            ],
+                                            "range": [
+                                                0,
+                                                32767
+                                            ],
+                                            "type": "number",
+                                            "mantissa": 1,
+                                            "multiplier": 1,
+                                            "unit": [
+                                                "mV",
+                                                "mV"
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "RechargeableBatteryVoltage",
+                                            "fieldIndex": 3,
+                                            "name": [
+                                                "Reportable change of rechargeable battery voltage",
+                                                "Variation à signaler de la recharge des batteries disponibles"
+                                            ],
+                                            "editable": true,
+                                            "comment": [
+                                                "---",
+                                                "---"
+                                            ],
+                                            "range": [
+                                                0,
+                                                32767
+                                            ],
+                                            "type": "number",
+                                            "mantissa": 1,
+                                            "multiplier": 1,
+                                            "unit": [
+                                                "mV",
+                                                "mV"
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "DisposableBatteryVoltage",
+                                            "fieldIndex": 4,
+                                            "name": [
+                                                "Reportable change of disposable battery voltage",
+                                                "Variation à signaler de la tension des batteries disponibles"
+                                            ],
+                                            "editable": true,
+                                            "comment": [
+                                                "---",
+                                                "---"
+                                            ],
+                                            "range": [
+                                                0,
+                                                32767
+                                            ],
+                                            "type": "number",
+                                            "mantissa": 1,
+                                            "multiplier": 1,
+                                            "unit": [
+                                                "mV",
+                                                "mV"
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "CurrentPowerSource",
+                                            "editable": false,
+                                            "value": "No"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "parameters": [
+                                {
+                                    "ParameterID": "ReportParameters",
+                                    "editable": false,
+                                    "value": {
+                                        "New": "No",
+                                        "Size": 0,
+                                        "Batch": "Yes"
+                                    }
+                                },
+                                {
+                                    "ParameterID": "FieldIndex",
+                                    "name": [
+                                        "Field(s)",
+                                        "Champ(s)"
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "type": "select",
+                                    "options": [
+                                        {
+                                            "OptionID": 2,
+                                            "name": [
+                                                "Reportable change of constant voltage",
+                                                "Variation à signaler du courant continu"
+                                            ]
+                                        },
+                                        {
+                                            "OptionID": 3,
+                                            "name": [
+                                                "Reportable change of rechargeable battery voltage",
+                                                "Variation à signaler de la recharge des batteries disponibles"
+                                            ]
+                                        },
+                                        {
+                                            "OptionID": 4,
+                                            "name": [
+                                                "Reportable change of disposable battery voltage",
+                                                "Variation à signaler de la tension des batteries disponibles"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ParameterID": "MinReport",
+                                    "name": [
+                                        "Minimum reporting interval",
+                                        "Intervalle de rapport minimal"
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        32767
+                                    ],
+                                    "type": "time"
+                                },
+                                {
+                                    "ParameterID": "MaxReport",
+                                    "name": [
+                                        "Maximum reporting interval",
+                                        "Intervalle de rapport maximal"
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        32767
+                                    ],
+                                    "type": "time"
+                                },
+                                {
+                                    "ParameterID": "Delta",
+                                    "name": [
+                                        "Delta",
+                                        "Delta"
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        32767
+                                    ],
+                                    "type": "number",
+                                    "mantissa": 1,
+                                    "multiplier": 1,
+                                    "unit": [
+                                        "",
+                                        ""
+                                    ]
+                                },
+                                {
+                                    "ParameterID": "Resolution",
+                                    "name": [
+                                        "Resolution",
+                                        "Résolution"
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        32767
+                                    ],
+                                    "type": "number",
+                                    "mantissa": 1,
+                                    "multiplier": 1,
+                                    "unit": [
+                                        "",
+                                        ""
+                                    ]
+                                },
+                                {
+                                    "ParameterID": "TagValue",
+                                    "editable": true,
+                                    "type": "data",
+                                    "subParameters": [
+                                        {
+                                            "ParameterID": "TagLabel",
+                                            "name": [
+                                                "TagLabel",
+                                                "TagLabel"
+                                            ],
+                                            "editable": true,
+                                            "comment": [
+                                                "---",
+                                                "---"
+                                            ],
+                                            "range": [
+                                                0,
+                                                31
+                                            ],
+                                            "type": "number",
+                                            "mantissa": 1,
+                                            "multiplier": 1,
+                                            "unit": [
+                                                "",
+                                                ""
+                                            ]
+                                        },
+                                        {
+                                            "ParameterID": "TagSize",
+                                            "name": [
+                                                "TagSize",
+                                                "TagSize"
+                                            ],
+                                            "editable": true,
+                                            "comment": [
+                                                "---",
+                                                "---"
+                                            ],
+                                            "range": [
+                                                1,
+                                                7
+                                            ],
+                                            "type": "number",
+                                            "mantissa": 1,
+                                            "multiplier": 1,
+                                            "unit": [
+                                                "",
+                                                ""
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "CommandID": "ReadReportingConfiguration",
+                    "name": [
+                        "NodePowerDescriptor - Read reporting configuration",
+                        "Alimentation - Lire la configuration des rapports"
+                    ],
+                    "expert": false,
+                    "ReportType": [
+                        {
+                            "parameters": [
+                                {
+                                    "ParameterID": "ReportParameters",
+                                    "editable": false,
+                                    "value": {
+                                        "New": "No",
+                                        "Reserved": 0,
+                                        "CauseRequest": "No",
+                                        "SecuredIfAlarm": "No",
+                                        "Secured": "No",
+                                        "NoHeaderPort": "No",
+                                        "Batch": "No"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "parameters": [
+                                {
+                                    "ParameterID": "ReportParameters",
+                                    "editable": false,
+                                    "value": {
+                                        "New": "No",
+                                        "Reserved": 0,
+                                        "CauseRequest": "No",
+                                        "SecuredIfAlarm": "No",
+                                        "Secured": "No",
+                                        "NoHeaderPort": "No",
+                                        "Batch": "Yes"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "NodePowerDescriptor - Read current power data",
+                        "Alimentation - Lire les données d'alimentation actuelles"
+                    ],
+                    "expert": true
+                }
+            ]
+        },
+        {
+            "AttributeID": "Action1",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Action1 - Read the application type of the remote sensor",
+                        "Action1 - Lire le type d'application du capteur distant"
+                    ],
+                    "expert": false
+                },
+                {
+                    "CommandID": "WriteAttributeNoResponse",
+                    "name": [
+                        "Action1 - Write attribute no response",
+                        "Action1 - Write attribute no response."
+                    ],
+                    "expert": false,
+                    "parameters": [
+                        {
+                            "ParameterID": "AttributeType",
+                            "editable": false,
+                            "value": "ByteString"
+                        },
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "type": "data",
+                            "subParameters": [
+                                {
+                                    "ParameterID": "DataLength",
+                                    "name": [
+                                        "Length of the data",
+                                        "Longueur de la trame"
+                                    ],
+                                    "editable": false,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        13
+                                    ],
+                                    "multiplier": 1,
+                                    "type": "number"
+                                },
+                                {
+                                    "ParameterID": "Bytes",
+                                    "fieldIndex": 0,
+                                    "name": [
+                                        "Set the current Request frame.",
+                                        "Définissez la trame de requête actuelle."
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "Trame hexa",
+                                        "Trame hexa"
+                                    ],
+                                    "range": [
+                                        0,
+                                        80
+                                    ],
+                                    "type": "hexa"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+		
 		{
-			"AttributeID": "Descriptor",
-			"commands": [
-				{
-					"CommandID": "ReadAttribute",
-					"name": ["Read available EndPoints and clusters","Lire les EndPoints et clusters disponibles"],
-					"expert": true
-				}
-			]
-		},
+            "AttributeID": "Action2",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Action2 - Read the application type of the remote sensor",
+                        "Action2 - Lire le type d'application du capteur distant"
+                    ],
+                    "expert": true
+                },
+                {
+                    "CommandID": "WriteAttributeNoResponse",
+                    "name": [
+                        "Action2 - Write attribute no response",
+                        "Action2 - Write attribute no response."
+                    ],
+                    "expert": true,
+                    "parameters": [
+                        {
+                            "ParameterID": "AttributeType",
+                            "editable": false,
+                            "value": "ByteString"
+                        },
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "type": "data",
+                            "subParameters": [
+                                {
+                                    "ParameterID": "DataLength",
+                                    "name": [
+                                        "Length of the data",
+                                        "Longueur de la trame"
+                                    ],
+                                    "editable": false,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        13
+                                    ],
+                                    "multiplier": 1,
+                                    "type": "number"
+                                },
+                                {
+                                    "ParameterID": "Bytes",
+                                    "fieldIndex": 0,
+                                    "name": [
+                                        "Set the current Request frame.",
+                                        "Définissez la trame de requête actuelle."
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "Trame hexa",
+                                        "Trame hexa"
+                                    ],
+                                    "range": [
+                                        0,
+                                        80
+                                    ],
+                                    "type": "hexa"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
 		{
-			"AttributeID": "NodePowerDescriptor",
-			"commands": [
-				{
-					"CommandID": "ConfigureReporting",
-					"name": ["NodePowerDescriptor - Configure reporting","Alimentation - Configurer les rapports"],
-					"expert": false,
-					"ReportType": [
-						{
-							"parameters": [
-								{
-									"ParameterID": "AttributeType",
-									"editable": false,
-									"value": "ByteString"
-								},
-								{
-									"ParameterID": "ReportParameters",
-									"editable": false,
-									"value": {
-										"New": "No",
-										"Reserved": 0,
-										"CauseRequest": "No",
-										"SecuredIfAlarm": "No",
-										"Secured": "No",
-										"NoHeaderPort": "No",
-										"Batch": "No"
-									}
-								},
-								{
-									"ParameterID": "MinReport",
-									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
-									"editable": true,
-									"comment": ["---","---"],
-									"range": [0,32767],
-									"type": "time"
-								},
-								{
-									"ParameterID": "MaxReport",
-									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
-									"editable": true,
-									"comment": ["---","---"],
-									"range": [0,32767],
-									"type": "time"
-								},
-								{
-									"ParameterID": "Data",
-									"editable": true,
-									"type": "data",
-									"subParameters": [
-										{
-											"ParameterID": "Size",
-											"editable": false,
-											"value": 5
-										},
-										{
-											"ParameterID": "CurrentPowerMode",
-											"editable": false,
-											"value": "ONWhenIdle"
-										},
-										{
-											"ParameterID": "AvailablePowerSourceBitField",
-											"name": ["Power source","Source d'alimentation"],
-											"editable": true,
-											"comment": ["---","---"],
-											"type": "select",
-											"options": [
-												{
-													"OptionID":1,
-													"name":["Constant (main) or External power","Energie continue ou externe"]
-												},
-												{
-													"OptionID":2,
-													"name":["Rechargeable battery","Recharge des batteries"]
-												},
-												{
-													"OptionID":3,
-													"name":["Constant (main) or External power and Rechargeable battery","Energie continue ou externe et recharge des batteries"]
-												},
-												{
-													"OptionID":4,
-													"name":["Disposable battery","Batterie disponible"]
-												},
-												
-												{											
-													"OptionID": 5,
-													"name": ["Constant Power and Disposable battery","Alimentation externe et batterie disponible"]
-												}
-												
-											]
-										},
-										{
-											"ParameterID": "ConstantVoltage",
-											"fieldIndex": 2,
-											"name": ["Reportable change of constant voltage","Variation à signaler du courant continu"],
-											"editable": true,
-											"comment": ["---","---"],
-											"range": [0,32767],
-											"type": "number",
-											"mantissa": 1,
-											"multiplier": 1,
-											"unit": ["mV","mV"]
-										},
-										{
-											"ParameterID": "RechargeableBatteryVoltage",
-											"fieldIndex": 3,
-											"name": ["Reportable change of rechargeable battery voltage","Variation à signaler de la recharge des batteries disponibles"],
-											"editable": true,
-											"comment": ["---","---"],
-											"range": [0,32767],
-											"type": "number",
-											"mantissa": 1,
-											"multiplier": 1,
-											"unit": ["mV","mV"]
-										},
-										{
-											"ParameterID": "DisposableBatteryVoltage",
-											"fieldIndex": 4,
-											"name": ["Reportable change of disposable battery voltage","Variation à signaler de la tension des batteries disponibles"],
-											"editable": true,
-											"comment": ["---","---"],
-											"range": [0,32767],
-											"type": "number",
-											"mantissa": 1,
-											"multiplier": 1,
-											"unit": ["mV","mV"]
-										},
-										{
-											"ParameterID": "CurrentPowerSource",
-											"editable": false,
-											"value": "No"
-										}
-									]
-								}
-							]
-						},
-						{
-							"parameters": [
-								{
-									"ParameterID": "ReportParameters",
-									"editable": false,
-									"value": {
-										"New": "No",
-										"Size": 0,
-										"Batch": "Yes"
-									}
-								},
-								{
-									"ParameterID": "FieldIndex",
-									"name": ["Field(s)","Champ(s)"],
-									"editable": true,
-									"comment": ["---","---"],
-									"type": "select",
-									"options": [
-										{
-											"OptionID": 2,
-											
-											"name": ["Reportable change of constant voltage","Variation à signaler du courant continu"]
-										},
-										{
-											"OptionID": 3,
-											"name": ["Reportable change of rechargeable battery voltage","Variation à signaler de la recharge des batteries disponibles"]
-										},
-										{
-											"OptionID": 4,
-											"name": ["Reportable change of disposable battery voltage","Variation à signaler de la tension des batteries disponibles"]
-										}
-									]
-								},
-								{
-									"ParameterID": "MinReport",
-									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
-									"editable": true,
-									"comment": ["---","---"],
-									"range": [0,32767],
-									"type": "time"
-								},
-								{
-									"ParameterID": "MaxReport",
-									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
-									"editable": true,
-									"comment": ["---","---"],
-									"range": [0,32767],
-									"type": "time"
-								},
-								{
-									"ParameterID": "Delta",
-									"name": ["Delta","Delta"],
-									"editable": true,
-									"comment": ["---","---"],
-									"range": [0,32767],
-									"type": "number",
-									"mantissa": 1,
-									"multiplier": 1,
-									"unit": ["",""]
-								},
-								{
-									"ParameterID": "Resolution",
-									"name": ["Resolution","Résolution"],
-									"editable": true,
-									"comment": ["---","---"],
-									"range": [0,32767],
-									"type": "number",
-									"mantissa": 1,
-									"multiplier": 1,
-									"unit": ["",""]
-								},
-								{
-									"ParameterID": "TagValue",
-									"editable": true,
-									"type": "data",
-									"subParameters": [
-										{
-											"ParameterID": "TagLabel",
-											"name": ["TagLabel","TagLabel"],
-											"editable": true,
-											"comment": ["---","---"],
-											"range": [0,31],
-											"type": "number",
-											"mantissa": 1,
-											"multiplier": 1,
-											"unit": ["",""]
-										},
-										{
-											"ParameterID": "TagSize",
-											"name": ["TagSize","TagSize"],
-											"editable": true,
-											"comment": ["---","---"],
-											"range": [1,7],
-											"type": "number",
-											"mantissa": 1,
-											"multiplier": 1,
-											"unit": ["",""]
-										}
-										
-									]
-								}
-							]
-						}
-					]
-				},
-				{
-					"CommandID": "ReadReportingConfiguration",
-					"name": ["NodePowerDescriptor - Read reporting configuration","Alimentation - Lire la configuration des rapports"],
-					"expert": false,
-					"ReportType": [
-						{
-							"parameters": [
-								{
-									"ParameterID": "ReportParameters",
-									"editable": false,
-									"value": {
-										"New": "No",
-										"Reserved": 0,
-										"CauseRequest": "No",
-										"SecuredIfAlarm": "No",
-										"Secured": "No",
-										"NoHeaderPort": "No",
-										"Batch": "No"
-									}
-								}
-							]
-						},
-						{
-							"parameters": [
-								{
-									"ParameterID": "ReportParameters",
-									"editable": false,
-									"value": {
-										"New": "No",
-										"Reserved": 0,
-										"CauseRequest": "No",
-										"SecuredIfAlarm": "No",
-										"Secured": "No",
-										"NoHeaderPort": "No",
-										"Batch": "Yes"
-									}
-								}
-							]
-						}
-					]
-				},
-				{
-					"CommandID": "ReadAttribute",
-					"name": ["NodePowerDescriptor - Read current power data","Alimentation - Lire les données d'alimentation actuelles"],
-					"expert": true
-				}
-			]
-		},
+            "AttributeID": "Action3",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Action3 - Read the application type of the remote sensor",
+                        "Action3 - Lire le type d'application du capteur distant"
+                    ],
+                    "expert": true
+                },
+                {
+                    "CommandID": "WriteAttributeNoResponse",
+                    "name": [
+                        "Action3 - Write attribute no response",
+                        "Action3 - Write attribute no response."
+                    ],
+                    "expert": true,
+                    "parameters": [
+                        {
+                            "ParameterID": "AttributeType",
+                            "editable": false,
+                            "value": "ByteString"
+                        },
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "type": "data",
+                            "subParameters": [
+                                {
+                                    "ParameterID": "DataLength",
+                                    "name": [
+                                        "Length of the data",
+                                        "Longueur de la trame"
+                                    ],
+                                    "editable": false,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        13
+                                    ],
+                                    "multiplier": 1,
+                                    "type": "number"
+                                },
+                                {
+                                    "ParameterID": "Bytes",
+                                    "fieldIndex": 0,
+                                    "name": [
+                                        "Set the current Request frame.",
+                                        "Définissez la trame de requête actuelle."
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "Trame hexa",
+                                        "Trame hexa"
+                                    ],
+                                    "range": [
+                                        0,
+                                        80
+                                    ],
+                                    "type": "hexa"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
 		{
-			"AttributeID": "ClusterSpecificCommand",
-			"commands": [
-				{
-					"CommandID": "ClusterSpecificCommand",
-					"name": ["Remove reports","Supprimer les rapports"],
-					"expert": false,
-					"parameters": [
-						{
-							"ParameterID": "Data",
-							"name": ["Report(s) to remove","Rapport(s) à supprimer"],
-							"editable": true,
-							"comment": ["---","---"],
-							"type": "select",
-							"options": [
-								{
-									"OptionID": "[2,1]",
-									"name": ["Remove standard reports","Supprimer les rapports standards"]
-								},
-								{
-									"OptionID": "[2,2]",
-									"name": ["Remove batch reports","Supprimer les rapports batch"]
-								},
-								{
-									"OptionID": "[2,3]",
-									"name": ["Remove standard and batch reports","Supprimer les rapports standards et batch"]
-								}
-							]
-						}
-					]
-				},
-				{
-					"CommandID": "ClusterSpecificCommand",
-					"name": ["Get specific batch","Obtenir un batch spécifique"],
-					"expert": false,
-					"parameters": [
-						{
-							"ParameterID": "Data",
-							"name": ["Batch counter","Compteur du batch"],
-							"editable": true,
-							"comment": ["---","---"],
-							"type": "select",
-							"options": [
-								{
-									"OptionID": "[3,1]",
-									"name": ["1","1"]
-								},
-								{
-									"OptionID": "[3,2]",
-									"name": ["2","2"]
-								},
-								{
-									"OptionID": "[3,3]",
-									"name": ["3","3"]
-								},
-								{
-									"OptionID": "[3,4]",
-									"name": ["4","4"]
-								},
-								{
-									"OptionID": "[3,5]",
-									"name": ["5","5"]
-								},
-								{
-									"OptionID": "[3,6]",
-									"name": ["6","6"]
-								},
-								{
-									"OptionID": "[3,7]",
-									"name": ["7","7"]
-								}
-							]
-						}
-					]
-				},
-				{
-					"CommandID": "ClusterSpecificCommand",
-					"name": ["Reboot the device","Redémarrer l'appareil"],
-					"expert": false,
-					"parameters": [
-						{
-							"ParameterID": "Data",
-							"editable": false,
-							"value": [0]
-						}
-					]
-				}
-			]
-		}
-	]
+            "AttributeID": "Action4",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Action4 - Read the application type of the remote sensor",
+                        "Action4 - Lire le type d'application du capteur distant"
+                    ],
+                    "expert": true
+                },
+                {
+                    "CommandID": "WriteAttributeNoResponse",
+                    "name": [
+                        "Action4 - Write attribute no response",
+                        "Action4 - Write attribute no response."
+                    ],
+                    "expert": true,
+                    "parameters": [
+                        {
+                            "ParameterID": "AttributeType",
+                            "editable": false,
+                            "value": "ByteString"
+                        },
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "type": "data",
+                            "subParameters": [
+                                {
+                                    "ParameterID": "DataLength",
+                                    "name": [
+                                        "Length of the data",
+                                        "Longueur de la trame"
+                                    ],
+                                    "editable": false,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        13
+                                    ],
+                                    "multiplier": 1,
+                                    "type": "number"
+                                },
+                                {
+                                    "ParameterID": "Bytes",
+                                    "fieldIndex": 0,
+                                    "name": [
+                                        "Set the current Request frame.",
+                                        "Définissez la trame de requête actuelle."
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "Trame hexa",
+                                        "Trame hexa"
+                                    ],
+                                    "range": [
+                                        0,
+                                        80
+                                    ],
+                                    "type": "hexa"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+		{
+            "AttributeID": "Action5",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Action5 - Read the application type of the remote sensor",
+                        "Action5 - Lire le type d'application du capteur distant"
+                    ],
+                    "expert": true
+                },
+                {
+                    "CommandID": "WriteAttributeNoResponse",
+                    "name": [
+                        "Action5 - Write attribute no response",
+                        "Action5 - Write attribute no response."
+                    ],
+                    "expert": true,
+                    "parameters": [
+                        {
+                            "ParameterID": "AttributeType",
+                            "editable": false,
+                            "value": "ByteString"
+                        },
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "type": "data",
+                            "subParameters": [
+                                {
+                                    "ParameterID": "DataLength",
+                                    "name": [
+                                        "Length of the data",
+                                        "Longueur de la trame"
+                                    ],
+                                    "editable": false,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        13
+                                    ],
+                                    "multiplier": 1,
+                                    "type": "number"
+                                },
+                                {
+                                    "ParameterID": "Bytes",
+                                    "fieldIndex": 0,
+                                    "name": [
+                                        "Set the current Request frame.",
+                                        "Définissez la trame de requête actuelle."
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "Trame hexa",
+                                        "Trame hexa"
+                                    ],
+                                    "range": [
+                                        0,
+                                        80
+                                    ],
+                                    "type": "hexa"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+		{
+            "AttributeID": "Action6",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Action6 - Read the application type of the remote sensor",
+                        "Action6 - Lire le type d'application du capteur distant"
+                    ],
+                    "expert": true
+                },
+                {
+                    "CommandID": "WriteAttributeNoResponse",
+                    "name": [
+                        "Action6 - Write attribute no response",
+                        "Action6 - Write attribute no response."
+                    ],
+                    "expert": true,
+                    "parameters": [
+                        {
+                            "ParameterID": "AttributeType",
+                            "editable": false,
+                            "value": "ByteString"
+                        },
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "type": "data",
+                            "subParameters": [
+                                {
+                                    "ParameterID": "DataLength",
+                                    "name": [
+                                        "Length of the data",
+                                        "Longueur de la trame"
+                                    ],
+                                    "editable": false,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        13
+                                    ],
+                                    "multiplier": 1,
+                                    "type": "number"
+                                },
+                                {
+                                    "ParameterID": "Bytes",
+                                    "fieldIndex": 0,
+                                    "name": [
+                                        "Set the current Request frame.",
+                                        "Définissez la trame de requête actuelle."
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "Trame hexa",
+                                        "Trame hexa"
+                                    ],
+                                    "range": [
+                                        0,
+                                        80
+                                    ],
+                                    "type": "hexa"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+		{
+            "AttributeID": "Action7",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Action7 - Read the application type of the remote sensor",
+                        "Action7 - Lire le type d'application du capteur distant"
+                    ],
+                    "expert": true
+                },
+                {
+                    "CommandID": "WriteAttributeNoResponse",
+                    "name": [
+                        "Action7 - Write attribute no response",
+                        "Action7 - Write attribute no response."
+                    ],
+                    "expert": true,
+                    "parameters": [
+                        {
+                            "ParameterID": "AttributeType",
+                            "editable": false,
+                            "value": "ByteString"
+                        },
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "type": "data",
+                            "subParameters": [
+                                {
+                                    "ParameterID": "DataLength",
+                                    "name": [
+                                        "Length of the data",
+                                        "Longueur de la trame"
+                                    ],
+                                    "editable": false,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        13
+                                    ],
+                                    "multiplier": 1,
+                                    "type": "number"
+                                },
+                                {
+                                    "ParameterID": "Bytes",
+                                    "fieldIndex": 0,
+                                    "name": [
+                                        "Set the current Request frame.",
+                                        "Définissez la trame de requête actuelle."
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "Trame hexa",
+                                        "Trame hexa"
+                                    ],
+                                    "range": [
+                                        0,
+                                        80
+                                    ],
+                                    "type": "hexa"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+		{
+            "AttributeID": "Action8",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Action8 - Read the application type of the remote sensor",
+                        "Action8 - Lire le type d'application du capteur distant"
+                    ],
+                    "expert": true
+                },
+                {
+                    "CommandID": "WriteAttributeNoResponse",
+                    "name": [
+                        "Action8 - Write attribute no response",
+                        "Action8 - Write attribute no response."
+                    ],
+                    "expert": true,
+                    "parameters": [
+                        {
+                            "ParameterID": "AttributeType",
+                            "editable": false,
+                            "value": "ByteString"
+                        },
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "type": "data",
+                            "subParameters": [
+                                {
+                                    "ParameterID": "DataLength",
+                                    "name": [
+                                        "Length of the data",
+                                        "Longueur de la trame"
+                                    ],
+                                    "editable": false,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        13
+                                    ],
+                                    "multiplier": 1,
+                                    "type": "number"
+                                },
+                                {
+                                    "ParameterID": "Bytes",
+                                    "fieldIndex": 0,
+                                    "name": [
+                                        "Set the current Request frame.",
+                                        "Définissez la trame de requête actuelle."
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "Trame hexa",
+                                        "Trame hexa"
+                                    ],
+                                    "range": [
+                                        0,
+                                        80
+                                    ],
+                                    "type": "hexa"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+		{
+            "AttributeID": "Action9",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Action9 - Read the application type of the remote sensor",
+                        "Action9 - Lire le type d'application du capteur distant"
+                    ],
+                    "expert": true
+                },
+                {
+                    "CommandID": "WriteAttributeNoResponse",
+                    "name": [
+                        "Action9 - Write attribute no response",
+                        "Action9 - Write attribute no response."
+                    ],
+                    "expert": true,
+                    "parameters": [
+                        {
+                            "ParameterID": "AttributeType",
+                            "editable": false,
+                            "value": "ByteString"
+                        },
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "type": "data",
+                            "subParameters": [
+                                {
+                                    "ParameterID": "DataLength",
+                                    "name": [
+                                        "Length of the data",
+                                        "Longueur de la trame"
+                                    ],
+                                    "editable": false,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        13
+                                    ],
+                                    "multiplier": 1,
+                                    "type": "number"
+                                },
+                                {
+                                    "ParameterID": "Bytes",
+                                    "fieldIndex": 0,
+                                    "name": [
+                                        "Set the current Request frame.",
+                                        "Définissez la trame de requête actuelle."
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "Trame hexa",
+                                        "Trame hexa"
+                                    ],
+                                    "range": [
+                                        0,
+                                        80
+                                    ],
+                                    "type": "hexa"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "AttributeID": "ClusterSpecificCommand",
+            "commands": [
+                {
+                    "CommandID": "ClusterSpecificCommand",
+                    "name": [
+                        "Remove reports",
+                        "Supprimer les rapports"
+                    ],
+                    "expert": false,
+                    "parameters": [
+                        {
+                            "ParameterID": "Data",
+                            "name": [
+                                "Report(s) to remove",
+                                "Rapport(s) à supprimer"
+                            ],
+                            "editable": true,
+                            "comment": [
+                                "---",
+                                "---"
+                            ],
+                            "type": "select",
+                            "options": [
+                                {
+                                    "OptionID": "[2,1]",
+                                    "name": [
+                                        "Remove standard reports",
+                                        "Supprimer les rapports standards"
+                                    ]
+                                },
+                                {
+                                    "OptionID": "[2,2]",
+                                    "name": [
+                                        "Remove batch reports",
+                                        "Supprimer les rapports batch"
+                                    ]
+                                },
+                                {
+                                    "OptionID": "[2,3]",
+                                    "name": [
+                                        "Remove standard and batch reports",
+                                        "Supprimer les rapports standards et batch"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "CommandID": "ClusterSpecificCommand",
+                    "name": [
+                        "Get specific batch",
+                        "Obtenir un batch spécifique"
+                    ],
+                    "expert": false,
+                    "parameters": [
+                        {
+                            "ParameterID": "Data",
+                            "name": [
+                                "Batch counter",
+                                "Compteur du batch"
+                            ],
+                            "editable": true,
+                            "comment": [
+                                "---",
+                                "---"
+                            ],
+                            "type": "select",
+                            "options": [
+                                {
+                                    "OptionID": "[3,1]",
+                                    "name": [
+                                        "1",
+                                        "1"
+                                    ]
+                                },
+                                {
+                                    "OptionID": "[3,2]",
+                                    "name": [
+                                        "2",
+                                        "2"
+                                    ]
+                                },
+                                {
+                                    "OptionID": "[3,3]",
+                                    "name": [
+                                        "3",
+                                        "3"
+                                    ]
+                                },
+                                {
+                                    "OptionID": "[3,4]",
+                                    "name": [
+                                        "4",
+                                        "4"
+                                    ]
+                                },
+                                {
+                                    "OptionID": "[3,5]",
+                                    "name": [
+                                        "5",
+                                        "5"
+                                    ]
+                                },
+                                {
+                                    "OptionID": "[3,6]",
+                                    "name": [
+                                        "6",
+                                        "6"
+                                    ]
+                                },
+                                {
+                                    "OptionID": "[3,7]",
+                                    "name": [
+                                        "7",
+                                        "7"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "CommandID": "ClusterSpecificCommand",
+                    "name": [
+                        "Reboot the device",
+                        "Redémarrer l'appareil"
+                    ],
+                    "expert": false,
+                    "parameters": [
+                        {
+                            "ParameterID": "Data",
+                            "editable": false,
+                            "value": [
+                                0
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }
