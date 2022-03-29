@@ -71,6 +71,7 @@
 		<link rel="apple-touch-icon-precomposed" href="http://support.nke-watteco.com/wp-content/uploads/2016/07/cropped-logo-nke-electronics.png">
 		<meta name="msapplication-TileImage" content="http://support.nke-watteco.com/wp-content/uploads/2016/07/cropped-logo-nke-electronics.png">
 		<script type="text/javascript" src="javascript.js?v=0.1"></script>
+		<link rel="stylesheet" href="style.css">
 	</head>
 
 
@@ -92,7 +93,7 @@
 									<h1><a name="FrameEncoder"></a><script type="text/javascript">document.write(langData.frameEncoder[lang])</script></h1>
 									<hr />
 									<p><script type="text/javascript">document.write(langData.firstMsg[lang])</script></p>
-									<div id="productContainer">
+									<fieldset id="fieldset"><div id="productContainer">
 										<div style="margin-bottom: 15px;">
 											<label for="productSelect" style="font-size: 16px;">① <span style="font-size: 16px;"><script type="text/javascript">document.write(langData.chooseProductMsg[lang])</script></span></label>
 											<select onchange="switchProduct();" id="productSelect">
@@ -108,12 +109,13 @@
 										<p id="selectConfigOr" style="font-size: 16px; display: none;"><span style="font-size: 16px;"><script type="text/javascript">document.write(langData.or[lang])</script></span></p>
 									</div>
 									<div id="configContainer"></div>
-									<div id="generateButtonContainer""></div>
+									<div id="generateButtonContainer"></div>
 									<div id="outputContainer">
 										<div id="jsonOutput"></div>
 										<div id="frameOutput"></div>
 										<div id="txtOutput" ></div>
 									</div> 
+									</fieldset>
 									<div id="localSetupCom">
 										<p id="txtNbSix" style="font-size: 16px; display: none;">⑥ <span style="font-size: 16px;"><script type="text/javascript">document.write(langData.finalSelectMsgCom[lang])</script></span></p>
 									</div>
