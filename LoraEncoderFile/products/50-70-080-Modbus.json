@@ -34,6 +34,14 @@
 			}
 		},
 		{
+			"clusterID": "MultiMasterSlave",
+			"endpoints": [0],
+			"endpointsComment": ["---","---","---","---","---","---","---","---","---","---"],
+			"threshold" : {
+                "available" : false
+			}
+		},
+		{
 			"clusterID": "SerialInterface",
 			"endpoints": [0],
 			"endpointsComment": ["---"],
