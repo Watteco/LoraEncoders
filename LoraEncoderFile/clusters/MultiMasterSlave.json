@@ -1,0 +1,141 @@
+{
+    "clusterID":"MultiMasterSlave",
+    "clusterName":["Multi Master Slave","Multi Master Slave"],
+    "expert":false,
+    "attributes":[
+                 {
+                 "AttributeID":"PresentValue",
+                 "commands":	[
+                     {
+                     "CommandID":"ConfigureReporting",
+                     "name":["PresentValue - Configure reporting","PresentValue  - Configurer les rapports"],
+                     "expert":false,
+                     "ReportType":[
+                         {
+                         "parameters":[
+                             {
+                                "ParameterID":"ReportParameters",
+                                "editable":false,
+                                "value":{
+                                   "New":"No",
+                                   "Reserved":0,
+                                   "CauseRequest":"No",
+                                   "SecuredIfAlarm":"No",
+                                   "Secured":"No",
+                                   "NoHeaderPort":"No",
+                                   "Batch":"No"
+                                }
+                             },
+                             {
+                                "ParameterID":"AttributeType",
+                                "editable":false,
+                                "value":"ByteString"
+                             },
+                             {
+                                "ParameterID":"MinReport",
+                                "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+                                "editable":true,
+                                "type":"time",
+                                "comment":["---","---"],
+                                "range":[0,32767]
+                                
+                             },
+                             {
+                                "ParameterID":"MaxReport",
+                                "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+                                "editable":true,
+                                "type":"time",
+                                "comment":["---","---"],
+                                "range":[0,32767]
+                                
+                             },
+                             {
+                             "ParameterID": "Data",
+                             "editable": true,
+                             "type": "data",
+                             "subParameters": [
+                                 {
+                                     "ParameterID":"DataLength",
+                                     "name":["Length of the data","Longueur de la trame"],
+                                     "editable":false,
+                                     "comment":["---","---"],
+                                     "range":[0,13],
+                                     "multiplier": 1,
+                                     "type":"number"
+                                  },
+                                  {
+                                     "ParameterID":"Bytes",
+                                     "fieldIndex" : 0,
+                                     "name":["Report on slave modbus answer variation","Report sur variation de la réponse de l'esclave modbus"],
+                                     "editable":true,
+                                     "comment":["0: no report on variation\n1: report on variation","0: pas de report sur variation\n1: report sur variation"],
+                                     "range":[0,1],
+                                     "type":"String"
+                                  }
+                               ]
+                             }
+                          ]
+                       }
+                       
+                    ]
+                 },				
+                 {
+                         "CommandID": "ReadReportingConfiguration",
+                         "name": ["PresentValue - Read reporting configuration","PresentValue - Lire la configuration des rapports"],
+                         "expert": false,
+                         "parameters": [
+                             {
+                                 "ParameterID": "ReportParameters",
+                                 "editable": false,
+                                 "value": {
+                                     "New": "No",
+                                     "Reserved": 0,
+                                     "CauseRequest": "No",
+                                     "SecuredIfAlarm": "No",
+                                     "Secured": "No",
+                                     "NoHeaderPort": "No",
+                                     "Batch": "No"
+                                 }
+                             }
+                         ]
+                 }
+                 ]
+                 },				
+                 {
+                     "AttributeID":"HeaderOption",
+                     "commands":[
+                        {
+                            "CommandID": "WriteAttributeNoResponse",
+                            "name": ["Header - Set the current value of the Header option","En-tête - Définir la valeur actuelle de l'option En-tête"],
+                            "expert": true,
+                            "parameters": [
+                                {
+                                    "ParameterID": "AttributeType",
+                                    "editable": false,
+                                    "value": "Boolean"
+                                },
+                                {
+                                    "ParameterID": "Data",
+                                    "name": ["ModBus answers' headers are kept in the Present value","Les en-têtes des réponses ModBus sont conservés dans la valeur actuelle"],
+                                    "editable": true,
+                                    "comment": ["---","---"],
+                                    "type": "select",
+                                    "options": [
+                                        {
+                                            "OptionID": 0,
+                                            "name": ["No","Non"]
+                                        },
+                                        {
+                                            "OptionID": 1,
+                                            "name": ["Yes","Oui"]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                     ]
+                 }
+     ]
+ }
+    
+ 
