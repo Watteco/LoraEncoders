@@ -151,7 +151,7 @@
                                         },
                                         {
                                             "ParameterID": "ConstantVoltage",
-                                            "fieldIndex": 2,
+                                            "fieldIndex": 1,
                                             "name": [
                                                 "Reportable change of constant voltage",
                                                 "Variation à signaler du courant continu"
@@ -175,7 +175,7 @@
                                         },
                                         {
                                             "ParameterID": "RechargeableBatteryVoltage",
-                                            "fieldIndex": 3,
+                                            "fieldIndex": 2,
                                             "name": [
                                                 "Reportable change of rechargeable battery voltage",
                                                 "Variation à signaler de la recharge des batteries disponibles"
