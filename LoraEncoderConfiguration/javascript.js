@@ -28,14 +28,24 @@ function getLang() {
 
 //Variable contenant la langue actuelle
 var lang = getLang();
-var isSwitchingLang = false;
-window.addEventListener('beforeunload', (event) => {
-    if (gLocalConfiguration && !isSwitchingLang) {
-		//navigator.sendBeacon("http://localhost:56700/System.txt","Action=Quit");
-		console.log("Fermeture du logiciel");
-    }
 
-});
+
+// Une fonction qui permet de fermer le logiciel LoraUpdater.exe à la fermeture de la page 
+// var isSwitchingLang = false;
+
+// sessionStorage.setItem('reloaded', 'yes');
+
+// window.addEventListener('beforeunload', (event) => {
+// 	if (sessionStorage.getItem('reloaded') != null) {
+// 		console.log('page was reloaded');
+// 	} else {
+// 		console.log('page was not reloaded');
+// 		if (gLocalConfiguration && !isSwitchingLang) {
+// 			navigator.sendBeacon("http://localhost:56700/System.txt","Action=Quit");
+// 			console.log("Fermeture du logiciel");
+// 		}
+// 	}
+// });
 
 //Définition des constantes de langue
 var langData = {
@@ -98,11 +108,14 @@ var langData = {
 	outputFormatDesc: ["Description","Description"],
 	generateOutput: ["Generate output","Générer la sortie"],
 	frame: ["Frame","Trame"],
+	directSend: ["Send to end-device","Envoyer au périphérique"],
 	text: ["Text","Texte"],
 	frameDesc: ["This output format provides the configuration frame directly. This one may be sent directly to the sensor later via the dedicated platform.","Ce type de sortie permet d'obtenir directement la trame de configuration. Celle-ci pourra être envoyée directement au capteur par la suite via la plateforme dédiée."],
 	jsonDesc: ["Advanced users - This type of output returns entered informations in a JSON format. This data can be processed by the Python program whose source code is available for download via the link at the bottom of the page.","Utilisateurs avancés - Ce type de sortie restitue les informations entrées sous un format JSON. Ces données peuvent être traitées par le programme en Python dont le code source est disponible en téléchargement via le lien présent en bas de la page."],
+	directSendDesc: ["This option allows you to send the entered configuration directly to the selected end-device. It is necessary to check manually afterwards that the information is correctly taken into account by the end-device.","Cette option permet d'envoyer directement la configuration saisie au périphérique choisi. Il est nécessaire de vérifier manuellement par la suite la correcte prise en compte des informations par le capteur."],
 	txtDesc: ["Create a txt file wich contain the trame to be send to fota","Creer un fichier txt à envoyer à fota"], 
 	chooseOutput: ["Choose this format","Choisir ce format"],
+	sendFrameOutput: ["Send the frame","Envoyer la trame"],
 	chooseOption: ["Choose this option","Choisir cette option"],
 	addOutput: ["Add this frame","Ajouter cette trame"],
 	resetOutput: ["Reset the output","Réinitialiser la sortie"],
@@ -116,7 +129,7 @@ var langData = {
 	finalConfMsg: ["Your configuration is available below:","Votre configuration est disponible ci-dessous:"],
 	finalSelectMsgCom: ["Fill in your COM port.","Renseignez votre port COM."],
 	finalSelectMsgSelect: ["Select your DeviceList.","Sélectionner votre DeviceList."],
-	finalConfButton:["Click on 'Configuration' button to send your configuration n°","Cliquer sur le bouton 'Configuration' pour envoyer votre configuration n°"],
+	finalConfButton:["⑧ Enter the configuration mode to send your configuration n°","⑧ Entrer en mode configuration pour envoyer votre configuration n°"],
 	errorLoadConf: ["The configuration you chose doesn't match with the selected device.","Vous avez sélectionné une configuration qui n'est pas valable pour ce capteur"],
 	errorMsg: ["An error has occurred ! Please try again.","Une erreur est survenue ! Veuillez réessayer."],
 	errorTrame:["Your frame contain too many bytes","Ta trame contient trop d'octets"],
@@ -190,7 +203,9 @@ function rndHexValue(digit){
     }
     return number
 }
-
+function replaceAt(str, index, replacement) {
+    return str.substr(0, index) + replacement + str.substr(index + replacement.length);
+}
 // Foncion permettant de rajouter un 0 devant un chiffre ( twoDigit(1) --> 01 etc..)
 function twoDigit(n) {
   return (n.length === 1 ? '0' : '') + n
@@ -222,7 +237,7 @@ function formatBitmap(size,bit,x){
 
 // variable contenant une valeur aléatoire à ajouter à la trame
 var rndHex = rndHexValue(4);
-var rndHexToDec = parseInt("" + rndHex.slice(2,4) +rndHex.slice(0,2),16).toString(10);
+var rndHexToDec = 0;
 var gRandValueConfig = currentDefaultAddresses[1] + addSpace(rndHex) + "\nq";
 
 function getRootUrl() {
@@ -274,50 +289,70 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 
 
  function postHTML(){
-	
-	dataFile = gDeviceList;
+	if(document.getElementById("postButton").checked){
 
-	postCom();
+		document.getElementById("fieldset").setAttribute("disabled","true")
+		postCom();
 
-	var date = formatDate();
-	var lrndHex = "" + rndHex.slice(2,4) +rndHex.slice(0,2);
-	
-	var xhr = new XMLHttpRequest();
-	
-	xhr.open("POST", path + 'C0.0.0.0_' + currentEmbeddedName + '.' + parseInt(lrndHex,16).toString(10) +'.' + date +'.txt', true);
-	//xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
-	//xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-	xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-	xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
-			if (this.readyState === XMLHttpRequest.DONE &&  ((this.status === 201) || (this.status === 200))) {
-				document.getElementById("postButtonResultId").innerHTML = '<b>' + langData.congratulation[lang] + '</b>' ;
-				setTimeout(function(){ document.getElementById("postButtonResultId").innerHTML = ''; }, 8000);
-				
-				var xhr = new XMLHttpRequest();
-				
-				xhr.open("POST", path + gDeviceListName, true);
-				//fileFormat[0] === "txt" ? xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8") : xhr.setRequestHeader("Content-Type", "Application/octet-stream") ;
-				xhr.setRequestHeader("Content-Type", "text/plain");
-				xhr.setRequestHeader("Accept","*/*");
-				xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
-						if (this.readyState === XMLHttpRequest.DONE &&  (this.status === 200)) {
-							console.log('Your list of product has been sent');
-						} else if(this.readyState === XMLHttpRequest.DONE){
-							console.log('An error occured while transferring your list of product');
+		dataFile = gDeviceList;
+
+		var date = formatDate();
+		var lrndHex = "" + rndHex.slice(2,4) +rndHex.slice(0,2);
+		
+		var xhr = new XMLHttpRequest();
+		
+		xhr.open("POST", path + 'C0.0.0.0_' + currentEmbeddedName + '.' + parseInt(lrndHex,16).toString(10) +'.' + date +'.txt', true);
+
+		xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+		xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
+				if (this.readyState === XMLHttpRequest.DONE &&  ((this.status === 201) || (this.status === 200))) {
+					document.getElementById("postButtonResultId").innerHTML = '<b>' + langData.congratulation[lang] + '</b>' ;
+
+					var xhr = new XMLHttpRequest();
+					
+					xhr.open("POST", path + gDeviceListName, true);
+					//fileFormat[0] === "txt" ? xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8") : xhr.setRequestHeader("Content-Type", "Application/octet-stream") ;
+					xhr.setRequestHeader("Content-Type", "text/plain");
+					xhr.setRequestHeader("Accept","*/*");
+					xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
+							if (this.readyState === XMLHttpRequest.DONE &&  (this.status === 200)) {
+								console.log('Your list of product has been sent');
+							} else if(this.readyState === XMLHttpRequest.DONE){
+								console.log('An error occured while transferring your list of product');
+							}
 						}
-					}
-				xhr.send(dataFile);
-				
-			}  else if(this.status === 0){
-				alert(langData.errorFota[lang]);
-			}else if(this.readyState === XMLHttpRequest.DONE){
-				document.getElementById("postButtonResultId").innerHTML = langData.FichierKeyManquant[lang];
-				setTimeout(function(){ document.getElementById("postButtonResultId").innerHTML = ''; }, 3000);
+					xhr.send(dataFile);
+					
+				}  else if(this.status === 0){
+					alert(langData.errorFota[lang]);
+				}else if(this.readyState === XMLHttpRequest.DONE){
+					document.getElementById("postButtonResultId").innerHTML = langData.FichierKeyManquant[lang];
+					setTimeout(function(){ document.getElementById("postButtonResultId").innerHTML = ''; }, 3000);
+				}
 			}
-		}
-	
-	xhr.send(currentDefaultAddresses[0]  + (gLocalConfiguration   ? gDataReset +"\n" : "") +gDataConcatenation +gRandValueConfig);
+		
+		xhr.send(currentDefaultAddresses[0]  + (gLocalConfiguration   ? gDataReset +"\n" : "") +gDataConcatenation +gRandValueConfig);
+	}else{
+		document.getElementById("postButtonResultId").innerHTML = '';
 
+		document.getElementById("fieldset").removeAttribute("disabled")
+
+		var xhr = new XMLHttpRequest();
+					
+		xhr.open("POST", path + gDeviceListName, true);
+		xhr.setRequestHeader("Content-Type", "text/plain");
+		xhr.setRequestHeader("Accept","*/*");
+		xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
+				if (this.readyState === XMLHttpRequest.DONE &&  (this.status === 200)) {
+					console.log('Your empty list of product has been sent');
+				} else if(this.readyState === XMLHttpRequest.DONE){
+					console.log('An error occured while transferring your empty list of product');
+				}
+			}
+	xhr.send("DevEUI;ABP_DevAddr;ABP_NwkSKey;ABP_AppSKey;CodeFamille;Version;OTA_AppKey;OTA_AppEUI;Unconfirmed;CodeFamillePF;Synchro;Adr;SN;NumBL;NumCde;DevEUI2");
+		
+	}
+	
 }
 
 function postCom(){
@@ -345,13 +380,6 @@ function postCom(){
 	
 	xhr.send("DonglePort="+document.getElementById("selectCom").value);
 }
-
-function postQuit(){
-	
-	
-
-}
-
 //Fonction permettant de vider le contenu d'un élément HTML précis
 function clearElement(element) {
 	var node = document.getElementById(element);
@@ -370,6 +398,7 @@ function resetData(element) {
 			currentProduct = "";
 			currentReportType = 0;
 			currentProductData = {};
+			currentCustomData = null;
 		case "subProduct":
 			currentSubProduct = "";
 			currentCluster = "";
@@ -553,6 +582,7 @@ function switchProduct() {
 				showLocalBlock();
 				fShowFile();
 				showLocalConf();
+				document.getElementById("switchLabel").setAttribute("style", "display:none")
 			};
 			selectConfig.onchange = function() {loadFile(selectConfig.files)};
 	
@@ -977,12 +1007,14 @@ function switchCategory(lCurrentReportType = 0) {
 
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
+		generateButton.id = "addFrameButton"; // Mise en place d'un id
 		generateButton.value = langData.chooseOption[lang]; //Texte du bouton
 		generateButton.onclick = function() { showFinalTxt(generateCheckbox.checked,true)}; //Cliquer sur le bouton appelle la fonction de création du fichier txt et du téléchargement de celui ci
 		row.insertCell(3).appendChild(generateButton); //Insertion du bouton dans la troisième cellule	
 		
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
+		generateButton.id = "resetFrameButton"; // Mise en place d'un id
 		generateButton.value = langData.chooseOption[lang]; //Texte du bouton
 		generateButton.onclick = function() { resetShowFinalTxt(generateCheckbox.checked); }; //Cliquer sur le bouton appelle la fonction de création du fichier txt et du téléchargement de celui ci
 		row.insertCell(4).appendChild(generateButton); //Insertion du bouton dans la troisième cellule
@@ -1116,7 +1148,24 @@ function updateBatchData(){
 				if(element.attribute === currentClusterData.attributes[currentAttributeIndex].AttributeID){
 					if(element.config != undefined){
 						allConfigBatch = element.config;
-						var fieldIndexFinder = element.config[Number(document.getElementById("endpointSelect").selectedIndex)].findIndex(config => config[0] == Number(document.getElementById("parameter0").value));
+						if(allConfigBatch.length != 0){
+							//On récupère les différents fieldIndex des config dispo par endpoint dans une liste
+							var availableField = [];
+							for(config in allConfigBatch[Number(document.getElementById("endpointSelect").selectedIndex)]){
+								availableField.push(allConfigBatch[Number(document.getElementById("endpointSelect").selectedIndex)][config][0]);
+							}
+							// Si les des options ne sont pas dans les fiedIndex dispo on les enlève
+							var options = document.getElementById("parameter0").options;
+							for(let i=0;i<options.length;i++){
+								if(!availableField.includes(Number(options[i].value))){
+									document.getElementById("parameter0").removeChild(options[i]);
+									i--;
+								}
+							}
+						}
+						var fieldIndexFinder = element.config[Number(document.getElementById("endpointSelect").selectedIndex)].findIndex(config => config[0] == document.getElementById("parameter0").value);
+						
+						
 						configBatch = element.config[Number(document.getElementById("endpointSelect").selectedIndex)][fieldIndexFinder];
 					}else{
 						var lConfigBatch = [];
@@ -1133,6 +1182,22 @@ function updateBatchData(){
 							
 						}
 						configBatch = [0,1,0,1];
+						
+						if(allConfigBatch.length != 0){
+							//On récupère les différents fieldIndex des config dispo par endpoint dans une liste
+							var availableField = [];
+							for(config in allConfigBatch[Number(document.getElementById("endpointSelect").selectedIndex)]){
+								availableField.push(allConfigBatch[Number(document.getElementById("endpointSelect").selectedIndex)][config][0]);
+							}
+							// Si les des options ne sont pas dans les fiedIndex dispo on les enlève
+							var options = document.getElementById("parameter0").options;
+							for(let i=0;i<options.length;i++){
+								if(!availableField.includes(Number(options[i].value))){
+									document.getElementById("parameter0").removeChild(options[i]);
+									i--;
+								}
+							}
+						}
 					}
 					
 				}
@@ -1142,7 +1207,12 @@ function updateBatchData(){
 	});
 	// Si on a que le FieldIndex 0 ou pas de fieldIndex on cache le select, sinon on n'affiche que les fields qu'on peut modifier
 	if(document.getElementById("parameter0").options.length <= 1){
-		document.getElementById("parameter0").parentElement.parentElement.style.display = 'none';
+		if(currentCluster.startsWith("TIC")){
+			populateFieldIndexList();
+		}else{
+			document.getElementById("parameter0").parentElement.parentElement.style.display = 'none';
+		}
+
 	}
 	// Si une range et une unité ont été définis dans le cluster du produit alors on les récupères, ou si il y a plusieurs fieldIndex 
 	if(currentClusterData.unit !== undefined || currentClusterData.range !== undefined){
@@ -1152,7 +1222,11 @@ function updateBatchData(){
 		currentField.mantissa = 1;
 		currentField.multiplier = 1;
 	}else if(document.getElementById("parameter0").options.length > 1 || (document.getElementById("parameter0").options.length == 1 && document.getElementById("parameter0").options[0].textContent !="none")){
-		var currentField = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters.length-1].subParameters.find(element => element.fieldIndex == document.getElementById("parameter0").value);
+		if(currentCluster.startsWith("TIC")){
+			var currentField = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters.length-1].subParameters[2].find(element => element.FieldIndex == document.getElementById("parameter0").value);
+		}else{
+			var currentField = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters.length-1].subParameters.find(element => element.FieldIndex == document.getElementById("parameter0").value);
+		}
 	}
 	// Si une des deux conditions précédentes a été réalisées alors on fait les modifications adéquates
 	if(currentField !== undefined){
@@ -1165,23 +1239,7 @@ function updateBatchData(){
 		}
 	}
 	
-	if(allConfigBatch.length != 0){
-		//On récupère les différents fieldIndex des config dispo par endpoint dans une liste
-		var availableField = [];
-		for(config in allConfigBatch[Number(document.getElementById("endpointSelect").selectedIndex)]){
-			availableField.push(allConfigBatch[Number(document.getElementById("endpointSelect").selectedIndex)][config][0]);
-		}
-		// Si les des options ne sont pas dans les fiedIndex dispo on les enlève
-		var options = document.getElementById("parameter0").options;
-		for(let i=0;i<options.length;i++){
-			if(!availableField.includes(Number(options[i].value))){
-				document.getElementById("parameter0").removeChild(options[i]);
-				i--;
-			}
-		}
-		
-	
-	}
+
 	//Si on est en mode simple on affiche la config de base et on grise les cases tagsize taglabel et resolution, si on est mode advanced on affiche la config et on dégrise les input 
 	if(currentSelectedMode == 0){
 		if(configBatch.toString() == "0,0,0,1"){
@@ -1206,8 +1264,82 @@ function updateBatchData(){
 	}
 }
 
+function updateBitfield(sub){
+
+	var lFields = sub; // Array avec tous les fields
+	var lBitFieldReport = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+	var lBitFieldData = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+	var lSelectedFields = []; // Array avec les fields selectionnes
+	var lEditableFields = [];
+
+	//On parcourt tous les fields selectionnes et on ajoute dans lSelectedFields ceux qu'on a coche
+	for(var i=0; i < lFields.length; i++){
+		if(isSelectedParam(i+3)) lSelectedFields.push(lFields[i]["ParameterID"]);
+		if(isEditedParam(lFields[i],i+3)) lEditableFields.push(lFields[i]["ParameterID"]);
+	} 
+			
+		
+	var lIndexReport = 0; // L'index du field selectionne dans tous les fields
+	var lIndexData = 0; // L'index du field selectionne dans tous les fields
+	for (var i=0; i<lSelectedFields.length ;i++) {
+		lIndexReport = lFields.findIndex(param => param.ParameterID == lSelectedFields[i]);
+		lBitFieldReport = replaceAt(lBitFieldReport,lIndexReport,"1");
+	}
+	for (var i=0; i<lEditableFields.length ;i++) {
+		lIndexData = lFields.findIndex(param => param.ParameterID == lEditableFields[i]);
+		lBitFieldData = replaceAt(lBitFieldData,lIndexData,"1");
+	}
+	
+	//On enleve tous les 0 a la fin
+	while(lBitFieldReport[lBitFieldReport.length-1] == "0") lBitFieldReport = lBitFieldReport.slice(0,lBitFieldReport.length-1);
+	while(lBitFieldData[lBitFieldData.length-1] == "0") lBitFieldData = lBitFieldData.slice(0,lBitFieldData.length-1);
+
+	//Si le BitField n'a pas un octet au complet alors on le complete avec des 0
+	while((lBitFieldReport.length%8) != 0) lBitFieldReport = lBitFieldReport + "0";
+	while((lBitFieldData.length%8) != 0) lBitFieldData = lBitFieldData + "0";
+
+
+	//On compte le nombre de 1 dans le BitField report
+	var lNbrOneReport = 0
+	for(el in lBitFieldReport){
+		if(lBitFieldReport[el] == "1") lNbrOneReport++;
+	}
+
+	//On compte le nombre de 1 dans le BitField Data
+	var lNbrOneData = 0
+	for(el in lBitFieldData){
+		if(lBitFieldData[el] == "1") lNbrOneData++;
+	}
+
+	//Variable avec le nombre d'octet du BitField Report
+	var lNbrByteBitFieldReport = lBitFieldReport.length/8;
+	var lPresentFieldReport = "";
+	var lSizeReport = 0;
+	if(lNbrOneReport > lNbrByteBitFieldReport){
+		lPresentFieldReport = "DescVarIndexes";
+		lSizeReport = lNbrOneReport + 1;
+	}else{
+		lPresentFieldReport = "DescVarBitfield";
+		lSizeReport = lNbrByteBitFieldReport + 1;
+	} 
+
+	//Variable avec le nombre d'octet du BitField Data
+	var lNbrByteBitFieldData = lBitFieldData.length/8;
+	var lPresentFieldData = "";
+	var lSizeData = 0;
+	if(lNbrOneData > lNbrByteBitFieldData){
+		lPresentFieldData = "DescVarIndexes";
+		lSizeData = lNbrOneData + 1;
+	}else{
+		lPresentFieldData = "DescVarBitfield";
+		lSizeData = lNbrByteBitFieldData + 1;
+	} 
+
+	return [[lBitFieldReport, lPresentFieldReport, lSizeReport],[lBitFieldData, lPresentFieldData, lSizeData]];
+}
+
 //Fonction permettant d'ajouter une nouvelle ligne de paramètre
-function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable=false, InstanceRange=[0,0]) {
+function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = false,editable=true, InstanceRange=[0,0]) {
 	var cellNum = 0;
 	var row = body.insertRow(rowIndex); //Insertion d'une nouvelle ligne dans le tableau
 
@@ -1293,7 +1425,7 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable=false
 			
 			parameter.options.forEach(function(currentOption) {
 				var opt = document.createElement('option'); //On ajoute une nouvelle option
-				opt.appendChild(document.createTextNode(currentOption.name[lang]));
+				opt.appendChild(document.createTextNode(currentOption.name === undefined ? currentOption.comment[1] :currentOption.name[lang]));
 				opt.value = currentOption.OptionID;
 				select.appendChild(opt); //On ajoute notre option à la liste select précédente
 			});
@@ -1305,9 +1437,8 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable=false
 			});
 			
 		break;
-		
-		default:
-		
+
+		case "hexa":
 			var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
 			getParameterInfos(parameter,infos );
 			parameter.row = row;
@@ -1317,7 +1448,55 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable=false
 			}
 			row.insertCell(cellNum++);
 			row.insertCell(cellNum++);
-			UpdateStdFields(parameter,infos);
+
+			parameter.row.cells[1].innerHTML = 
+			"<input type='string' value='' onchange='modifyParameter()' id='parameter" + parameter.index + "'> "; //Insertion du champ pour rentrer la valeur correspondant à l'option
+		
+			parameter.row.cells[2].outerHTML = 
+			"<td id='interval" + parameter.index + "'>" + infos.comment + 
+			(Array.isArray(infos.range) || (infos.unit[lang] != "") ?
+			" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1]  : "") +
+			infos.unit + ")</td>"
+			: "");
+			
+		break;
+
+		case "hexaArray":
+			var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
+			getParameterInfos(parameter,infos );
+			parameter.row = row;
+			parameter.index = parameterIndex;
+			if (infos.EndPointDependant) {
+				EndPointDependantParametersList.push(parameter);
+			}
+			row.insertCell(cellNum++);
+			row.insertCell(cellNum++);
+
+			parameter.row.cells[1].innerHTML = 
+			"<input type='string' value='' onchange='modifyParameter()' id='parameter" + parameter.index + "'> "; //Insertion du champ pour rentrer la valeur correspondant à l'option
+		
+			parameter.row.cells[2].outerHTML = 
+			"<td id='interval" + parameter.index + "'>" + infos.comment + 
+			(Array.isArray(infos.range) || (infos.unit[lang] != "") ?
+			" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1] : "") +
+			infos.unit + ")</td>"
+			: "");
+			
+		break;
+		
+		
+		default:
+			
+			var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
+			getParameterInfos(parameter,infos,selectable, InstanceRange );
+			parameter.row = row;
+			parameter.index = parameterIndex;
+			if (infos.EndPointDependant) {
+				EndPointDependantParametersList.push(parameter);
+			}
+			row.insertCell(cellNum++);
+			row.insertCell(cellNum++);
+			UpdateStdFields(parameter,infos,editable);
 			
 			
 	}
@@ -1354,8 +1533,10 @@ function checkDataValidity(element,parameter) {
 	var enteredValue = document.getElementById('parameter' + parameter).value; //On récupère la valeur saisie
 	var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
 	getParameterInfos(element,infos );		
-
-	if(enteredValue > infos.range[1]) { //Si la valeur est trop élevée
+	
+	if(element.type == "hexa" || element.type == "hexaArray") { //Si le paramètre est une donnée hexadécimal
+		document.getElementById('parameter' + parameter).value = isHexByte(enteredValue.trim()) && enteredValue.length < infos.range[1] ? enteredValue.trim() : "";
+	}else if(enteredValue > infos.range[1]) { //Si la valeur est trop élevée
 		document.getElementById('parameter' + parameter).value = infos.range[1]; //On la modifie par la valeur maximale
 	} else if(enteredValue < infos.range[0]) { //Si la valeur est trop faible
 		document.getElementById('parameter' + parameter).value = infos.range[0]; //On la modifie par la valeur minimale
@@ -1366,6 +1547,13 @@ function checkDataValidity(element,parameter) {
 	}
 }
 
+function isHexByte(str) {
+	if(str.length % 2 === 0){
+		return /^[A-F0-9]+$/i.test(str)
+	}else{
+		return false
+	}
+  }
 
 //Fonction permettant de modifier l'affichage lors d'un changement de type de rapport
 function modifyReportType() {
@@ -1450,6 +1638,15 @@ function isSelectedParam(paramIndex) {
 	return(isSelected);
 }
 
+function isEditedParam(param,paramIndex){
+	if(!param.editable) return false;
+	if(param.type == "select"){
+		return document.getElementById("parameter"+paramIndex).selectedIndex == 1 ? true : false;
+	}else if (param.type == "number"){
+		return document.getElementById("parameter"+paramIndex).value == 0 ? false : true;
+	}
+	
+}
 //Fonction permettant de générer les données sous format JSON
 function generateJson() {
 	var jsonObject = new Object(); //Création d'un objet JavaScript
@@ -1500,6 +1697,22 @@ function generateJson() {
 								i++; //Incrémentation de la variable "i"
 							}
 							
+						}else if(subParameter.ParameterID == undefined){
+							// On est dans les datas du TIC, je n'ai pas trouve mieux
+							var dataParameterTic = new Object();
+							subParameter.forEach(sub => {
+								if (isEditedParam(sub,i))	dataParameterTic[sub.ParameterID] = formatParameterData(sub,i);
+								i++
+							});
+							
+							dataParameter["TICCriteriaFields"] = dataParameterTic;
+							var lRes = updateBitfield(subParameter);
+							dataParameter["TICReportSelector"]["BitField"] = lRes[0][0];
+							dataParameter["TICReportSelector"]["DescHeader"]["PresentField"] = lRes[0][1];
+							dataParameter["TICReportSelector"]["DescHeader"]["Size"] = lRes[0][2];
+							dataParameter["TICDataSelector"]["BitField"] = lRes[1][0];
+							dataParameter["TICDataSelector"]["DescHeader"]["PresentField"] = lRes[1][1];
+							dataParameter["TICDataSelector"]["DescHeader"]["Size"] = lRes[1][2];
 						} else {
 							dataParameter[subParameter.ParameterID] = subParameter.value;
 						}
@@ -1509,8 +1722,15 @@ function generateJson() {
 					jsonObject[element.ParameterID] = new Array();
 					element.subParameters.forEach(function(subParameter) {
 						if(subParameter.editable) {
-							if (isSelectedParam(i))	jsonObject[element.ParameterID].push(formatParameterData(subParameter,i));
-							i++;
+							if(subParameter.type === "hexaArray"){
+								var hexaArrayData = formatParameterData(subParameter,i);
+								hexaArrayData.map(el => jsonObject[element.ParameterID].push(el));
+								i++;
+							}else{
+								if (isSelectedParam(i))	jsonObject[element.ParameterID].push(formatParameterData(subParameter,i));
+								i++;
+							}
+
 						} else {
 							jsonObject[element.ParameterID].push(subParameter.value);
 						}
@@ -1544,7 +1764,12 @@ function generateJson() {
 		currentCommandParameters.forEach(function(element) { //Pour chacun des paramètres de la commande sélectionnée
 			if(element.ParameterID === "ReportParameters"){
 				jsonObject[element.ParameterID] = element.value;
-			}else{
+			}
+			else if(element.ParameterID === "Instance"){
+				jsonObject[element.ParameterID] = formatParameterData(element,i);
+				i++;
+			}
+			else{
 				if(element.editable) {
 					if(element.type == "data") {
 						var dataParameter = new Object();
@@ -1626,7 +1851,9 @@ function formatParameterData(parameter,parameterIndex) {
 			var selectedOption = document.getElementById('parameter' + parameterIndex).value;
 			if(isJson(selectedOption)) {
 				return JSON.parse(selectedOption);
-			} else {
+			} else if(parameter.selectable){
+				return parameter.options[1].OptionID;
+			}else{
 				intval = parseInt(selectedOption);
 				return (! isNaN(intval) ? intval : selectedOption);
 			}
@@ -1639,7 +1866,22 @@ function formatParameterData(parameter,parameterIndex) {
 			}
 			return selectedOption;
 		break;
+
+		case "hexa":
+			return document.getElementById('parameter' + parameterIndex).value.toString();
+		break;
 		
+		case "hexaArray":
+			var bytes = document.getElementById('parameter' + parameterIndex).value.toString();
+			var bytesArray = []
+			for(var i = 0; i< bytes.length; i+=2){
+				bytesArray.push(bytes.slice(i,i+2))
+			}
+			bytesArray.unshift(bytesArray.length)
+			bytesArray = bytesArray.map(el => parseInt(el,16))
+
+
+			return bytesArray;
 		default:
 			if(currentCommandParameters[0].value === "SinglePrecision"){
 				return Number(document.getElementById('parameter' + parameterIndex).value);
@@ -1656,7 +1898,7 @@ function showFinalJson() {
 	clearElement("frameOutput");
 	var jsonOutput = generateJson();
 	var outputLength = jsonOutput.split(/\r\n|\r|\n/).length; //On adapte la hauteur du bloc de sortie
-	if(!thresholdAvailable && checkTresholdOnExceedOnFall()){
+	if((thresholdAvailable && checkTresholdOnExceedOnFall()) || !thresholdAvailable){
 		document.getElementById('jsonOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalJsonMsg[lang] + "</p><textarea rows='" + outputLength + "' cols='100' style='resize:none' readonly='readonly'>" + jsonOutput + "</textarea>";
 	}
 }
@@ -1695,8 +1937,6 @@ function showFinalFrame() {
 	clearElement("jsonOutput");
 	clearElement("frameOutput");
 
-	
-	var scriptLocation = getEncoderFileLocation();
 	var jsonOutput = generateJson();
 	if((thresholdAvailable && checkTresholdOnExceedOnFall()) || !thresholdAvailable){
 		getEncoderFileLocation(function(scriptLocation) {
@@ -1723,6 +1963,8 @@ function showFinalFrame() {
 
 //Fonction permettant la récupération et l'affichage de la trame pour Fota
 function showFinalTxt(checked,aButton){
+
+	if(document.getElementById('parameter0') != null && document.getElementById('parameter0').value === '') return
 	
 	clearElement("jsonOutput");
 	clearElement("frameOutput");
@@ -1734,17 +1976,15 @@ function showFinalTxt(checked,aButton){
 		showLocalConf();
 		fShowFile();
 	}
-	
-	
-	var scriptLocation = getEncoderFileLocation();
+
 	var jsonOutput = generateJson();
 	
-	if(!gFileLoaded){
-		rndHex = rndHexValue(4);
-		gRandValueConfig = currentDefaultAddresses[1] + addSpace(rndHex) + "\nq";
-		rndHexToDec = parseInt("" + rndHex.slice(2,4) +rndHex.slice(0,2),16).toString(10);
-	}
-	document.getElementById('txtNbEight').innerHTML= langData.finalConfButton[lang] + '<b>' + rndHexToDec + '</b>';
+	rndHex = rndHexValue(4);
+	gRandValueConfig = currentDefaultAddresses[1] + addSpace(rndHex) + "\nq";
+	rndHexToDec = parseInt("" + rndHex.slice(2,4) +rndHex.slice(0,2),16).toString(10);
+	
+	document.getElementById('txtNbEight').innerHTML= langData.finalConfButton[lang] + '<b>' + rndHexToDec + '' + '<br/> Mode configuration :</b>';
+	document.getElementById("txtNbEight").setAttribute("style","line-height: 32px;");
 	if((thresholdAvailable && checkTresholdOnExceedOnFall()) || !thresholdAvailable){
 
 			getEncoderFileLocation(function(scriptLocation) {
@@ -1841,6 +2081,7 @@ function loadFile(files){
        only variable, hence immutable. To make any changes,  
        changing const to var, here and In the reader.onload  
        function would be advisible */
+	gDataConcatenation = "";
 	const file = files[0]; 
 	var fileName;
 	if (file.name.includes("_") && file.name.split("_")[1].includes(".")){
@@ -1880,7 +2121,10 @@ function loadFile(files){
 				gRandValueConfig = currentDefaultAddresses[1] + addSpace(rndHex) + "\nq";
 				rndHexToDec = parseInt("" + rndHex.slice(2,4) +rndHex.slice(0,2),16).toString(10);
 			}
-			document.getElementById('txtNbEight').innerHTML= langData.finalConfButton[lang] + '<b>' + rndHexToDec + '</b>';
+			document.getElementById('txtNbEight').innerHTML= langData.finalConfButton[lang] + '<b>' + rndHexToDec + '' + '<br/> Mode configuration :</b>';
+			document.getElementById("txtNbEight").setAttribute("style","line-height: 32px;");
+
+			document.getElementById("switchLabel").setAttribute("style","display: inline-block");
 			gFileLoaded = true;
 		}
 
@@ -1890,6 +2134,7 @@ function loadFile(files){
 	}else{
 		document.getElementById("selectFile").value = null;
 		alert(langData.errorLoadConf[lang]);
+		document.getElementById("switchLabel").setAttribute("style","display: none");
 		gFileLoaded = false;
 	}
 	
@@ -1971,16 +2216,28 @@ function fSelectFile(){
 }
 
 function confButton(){
+
+	var switchLabel = document.createElement("LABEL");
+	switchLabel.setAttribute("class", "switch");
+	switchLabel.setAttribute("id","switchLabel")
+
 	// On créé un bouton pour envoyer la configuration
 	var postButton = document.createElement("INPUT");
-	postButton.setAttribute("type", "button");
+	postButton.setAttribute("type", "checkbox");
 	postButton.setAttribute("id", "postButton");
-	postButton.setAttribute("value", langData.click[lang]);
-	postButton.setAttribute("style","float:left;margin-bottom: 2%;");
-	postButton.setAttribute('style','display:none;');
+	postButton.setAttribute("style","float:left;margin-bottom: 2%;display:none;");
+	postButton.setAttribute('style','');
 	postButton.onclick = function() { postHTML(); };
-	document.getElementById("localSetupButton").appendChild(postButton);
 	
+	
+	var switchSlider = document.createElement("SPAN");
+	switchSlider.setAttribute("class", "slider round")
+
+	switchLabel.appendChild(postButton)
+	switchLabel.appendChild(switchSlider)
+
+	document.getElementById("localSetupButton").appendChild(switchLabel);
+
 	var postButtonResult = document.createElement("div");
 	postButtonResult.setAttribute('id','postButtonResultId');
 	postButtonResult.setAttribute('style','display:none;');
@@ -1991,13 +2248,13 @@ function confButton(){
 
 // On affiche les boutons et du texte après demande du text
 function showLocalBlock(){
-	document.getElementById("txtNbSix").setAttribute("style","display:bock;");
-	document.getElementById("selectCom").setAttribute("style","display:bock;");
-	document.getElementById("selectFileId").setAttribute("style","display:bock;");
-	document.getElementById("txtNbSeven").setAttribute("style","display:bock;");
-	document.getElementById("postButton").setAttribute("style","display:bock;");
-	document.getElementById("postButtonResultId").setAttribute("style","display:bock;");
-	document.getElementById("txtNbEight").setAttribute("style","display:bock;");
+	document.getElementById("txtNbSix").setAttribute("style","display:block;");
+	document.getElementById("selectCom").setAttribute("style","display:block;");
+	document.getElementById("selectFileId").setAttribute("style","display:block;");
+	document.getElementById("txtNbSeven").setAttribute("style","display:block;");
+	document.getElementById("switchLabel").setAttribute("style","display:inline-block;");
+	document.getElementById("postButtonResultId").setAttribute("style","display:block;");
+	document.getElementById("txtNbEight").setAttribute("style","display:block;");
 }
 
 
@@ -2099,7 +2356,7 @@ function fShowFile() {
 //	PARTIE 9 : Fonctions permettant la récupération du fichier DeviceList et l'affichage de ses données dans un tableau
 //----------------------------------------------------------------------------------------------------------------------
 
-var scannedDevice = new Map();
+var scannedDevice = new Object();
 
 function callGetTXT(){
 	let xhr = new XMLHttpRequest();
@@ -2109,11 +2366,11 @@ function callGetTXT(){
 	xhr.send();
 	xhr.onload = function() {
 		let responseObj = xhr.response;
-		doThings(responseObj);
+		displayDeviceArray(responseObj);
 	};	
 }
 
-function doThings(fullTxt){
+function displayDeviceArray(fullTxt){
 	
 	var txt = fullTxt; // On récupère le contenu de la réponse get 
 	var l = txt.split('\r\n'); // On la sépare en ligne pour traiter chaque appareil
@@ -2140,19 +2397,37 @@ function doThings(fullTxt){
 		ligne = body.insertRow(i);
 		var infos = l[i].split(';'); // On sépare la ligne de notre appareil en mot pour les insérer un par un dans le tableau
 		infos.splice(1,1);
-		for (var j = 0; j < infos.length; j++){
 
-			if (scannedDevice.size != 0 && scannedDevice.has(infos[2]) && (scannedDevice.get(infos[2]) != infos[7])){
-				ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
-				ligne.setAttribute('style','background-color: #82feb7 ;');
+		var color = 'white';
 
+		const wasInList = scannedDevice.hasOwnProperty(infos[2])
+		const isSameAsCurrentConfig = infos[7] === rndHexToDec
+		const wasSameAsSavedConfig = wasInList ? scannedDevice[infos[2]]["config"] === infos[7] : false
+
+		if(rndHexToDec === 0){
+			color = 'white' // White
+		}else{
+			if (Object.keys(scannedDevice).length != 0 && wasInList){
+				if(wasSameAsSavedConfig && isSameAsCurrentConfig){
+					color = "#A4D8A1" // Green
+				}else if(isSameAsCurrentConfig){
+					color = "#2FDC26" // Green flashy
+				}else{
+					color = "white" // White
+				}
 			}else{
-				ligne.insertCell(j).innerHTML = "<span>" + infos[j] + "</span>";
-				ligne.setAttribute('style','background-color:white;');
+				if(isSameAsCurrentConfig){
+					color = "#2FDC26" // Green flashy
+				}else{
+					color = 'white'
+				}
 			}
-
 		}
-		scannedDevice.set( infos[2], infos[7]);
+		for (var j = 0; j < infos.length; j++){
+			ligne.insertCell(j).innerHTML = "<span>" + infos[j] + "</span>";
+			ligne.setAttribute('style','background-color:'+ color+';');
+		}
+		scannedDevice[infos[2]] = {"config" : infos[7]};
 	}
 }
 
@@ -2219,6 +2494,9 @@ function getThreshold(currentCluster,body){
 			for (var j = 0 ; j<thresholdSlotAvailable ; j++){
 				slotAvailable[j]=j;
 			}
+			fieldIndex = [];
+			fieldIndexName = [];
+			fieldRange = [];
 			fieldUnit = [];
 			// Si c'est un bytestring alors on aura des histoires de fieldindex et de source à gérer
 			if(currentAttributeType === 'ByteString'){
@@ -2290,7 +2568,7 @@ function getThreshold(currentCluster,body){
 
 					// "Data.range"
 					if(currentCustomData["Data.range"] != undefined){
-						fieldRange.push(currentCustomData["Data.unit"])
+						fieldRange.push(currentCustomData["Data.range"])
 						for(el in fieldRange){
 							fieldRange[el] = "Data="+fieldRange[el]
 						}
@@ -2311,7 +2589,7 @@ function getThreshold(currentCluster,body){
 				}else{
 					// "Data.range"
 					if(currentProductDataCluster["Data.range"] != undefined){
-						fieldRange.push(currentProductDataCluster["Data.unit"])
+						fieldRange.push(currentProductDataCluster["Data.range"])
 						for(el in currentProductDataCluster["endpoints"]){
 							fieldRange[el] = "Data="+fieldRange[el]
 						}
@@ -2504,6 +2782,11 @@ function setThresh(body){
 							for (var slot = 0; slot < allThreshold.length; slot++){
 								document.getElementById("text_Gap_"+slot).textContent = (fieldUnit[0][document.getElementById("endpointSelect").selectedIndex])[lang];
 								document.getElementById("text_Value_"+slot).textContent = (fieldUnit[0][document.getElementById("endpointSelect").selectedIndex])[lang];
+								document.getElementById("Value_"+slot).min = Number(fieldRange[0].split("=")[1].split(",")[document.getElementById("endpointSelect").value*2]);
+								document.getElementById("Value_"+slot).max = Number(fieldRange[0].split("=")[1].split(",")[document.getElementById("endpointSelect").value*2+1]);
+								document.getElementById("Gap_"+slot).min = Number(fieldRange[0].split("=")[1].split(",")[document.getElementById("endpointSelect").value*2]);
+								document.getElementById("Gap_"+slot).max = Number(fieldRange[0].split("=")[1].split(",")[document.getElementById("endpointSelect").value*2+1]);
+									
 								if(Array.isArray(currentClusterData.endpointsComment[lang])){
 									document.getElementById("endpointSelect").parentElement.nextElementSibling.innerHTML = currentClusterData.endpointsComment[document.getElementById("endpointSelect").value][lang]
 								}
@@ -2616,8 +2899,10 @@ function setThresh(body){
 										
 									}
 								default:
-									document.getElementById("Value_"+(this.id).split("_")[1]).max = Number((fieldRange[0].split("=")[1]).split(",")[1]);
-									document.getElementById("Gap_"+(this.id).split("_")[1]).max = Number((fieldRange[0].split("=")[1]).split(",")[1]);
+									document.getElementById("Value_"+(this.id).split("_")[1]).min = Number(fieldRange[0].split("=")[1].split(",")[document.getElementById("endpointSelect").value*2]);
+									document.getElementById("Value_"+(this.id).split("_")[1]).max = Number(fieldRange[0].split("=")[1].split(",")[document.getElementById("endpointSelect").value*2+1]);
+									document.getElementById("Gap_"+(this.id).split("_")[1]).min = Number(fieldRange[0].split("=")[1].split(",")[document.getElementById("endpointSelect").value*2]);
+									document.getElementById("Gap_"+(this.id).split("_")[1]).max = Number(fieldRange[0].split("=")[1].split(",")[document.getElementById("endpointSelect").value*2+1]);
 									break;
 							}
 						};

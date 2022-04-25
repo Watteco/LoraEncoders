@@ -164,18 +164,16 @@
 										{
 											"ParameterID": "Data1",
 											"editable": false,
-											"value": 241
+											"value": 0
 										},
 										{
-											"ParameterID": "Data2",
-											"name": ["Pulse duration","Durée de l'impulsion"],
-											"editable": true,
-											"comment": ["---","---"],
-											"range": [0,255],
-											"type": "number",
-											"mantissa": 1,
-											"multiplier": 1,
-											"unit": ["s","s"]
+											"ParameterID":"Bytes",
+											"fieldIndex" : 0,
+											"name":["Set the Modbus frame to send.","Définissez la trame Modbus à envoyer."],
+											"editable":true,
+											"comment":["Trame hexa","Trame hexa"],
+											"range":[0,80],
+											"type":"hexaArray"
 										}
 									]
 								}
