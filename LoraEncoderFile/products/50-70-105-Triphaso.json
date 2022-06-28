@@ -63,6 +63,34 @@
 			]
 		},
 		{
+			"clusterID": "EnergyPowerMultiMetering",
+			"endpoints": [0],
+			"endpointsComment": ["phase's A,B,C","phase's A,B,C"],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "EnergyPresentValues", 
+                      "numberSlot" : 6,
+                      "fieldindex" : [0,1,2,3,4,5]
+					},
+					{
+						"attribute" : "PowerPresentValues", 
+						"numberSlot" : 6,
+						"fieldindex" : [0,1,2,3,4,5]
+					}
+                  ]
+
+            },
+			"batch":
+			[
+				{
+					"attribute" : "EnergyPresentValues",
+					"available" : true
+				}
+			]
+		},
+		{
 			"clusterID": "VoltageCurrentMetering",
 			"endpoints": [0,1,2],
 			"endpointsComment": [["phase A","phase A"],["phase B","phase B"],["phase C","phase C"],["phase A+b+C","phase A+b+C"]],
@@ -84,7 +112,30 @@
 					"available" : true
 				}
 			]
-		}	
+		},
+		{
+			"clusterID": "VoltageCurrentMultiMetering",
+			"endpoints": [0],
+			"endpointsComment": ["phase's A,B,C","phase's A,B,C"],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "PresentValues", 
+                      "numberSlot" : 9,
+                      "fieldindex" : [0,1,2,3,4,5,6,7,8]
+                      }
+                  ]
+
+            },
+			"batch":
+			[
+				{
+					"attribute" : "PresentValues",
+					"available" : true
+				}
+			]
+		}		
 		
 	],
 	 "embeddedProductName": "ips-tri"

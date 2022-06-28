@@ -1,0 +1,645 @@
+{
+    "clusterID":"EnergyPowerMultiMetering",
+    "clusterName":["Energy And Power Multi Metering","Mesure multiples des énergies et puissances"],
+    "expert":false,
+    "attributes":[
+                 {
+                 "AttributeID":"EnergyPresentValues",
+                 "commands":	[
+                     {
+                     "CommandID":"ConfigureReporting",
+                     "name":["EnergyCurrentMultiMetering - Configure reporting","Mesure courante de l'energie des trois phases - Configurer les rapports"],
+                     "expert":false,
+                     "ReportType":[
+                         {
+                         "parameters":[
+                             {
+                                "ParameterID":"AttributeType",
+                                "editable":false,
+                                "value":"ByteString"
+                             },
+                             {
+                                "ParameterID":"ReportParameters",
+                                "editable":false,
+                                "value":{
+                                   "New":"No",
+                                   "Reserved":0,
+                                   "CauseRequest":"No",
+                                   "SecuredIfAlarm":"No",
+                                   "Secured":"No",
+                                   "NoHeaderPort":"No",
+                                   "Batch":"No"
+                                }
+                             },
+                             {
+                                "ParameterID":"MinReport",
+                                "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+                                "editable":true,
+                                "type":"time",
+                                "comment":["---","---"],
+                                "range":[0,32767]
+                                
+                             },
+                             {
+                                "ParameterID":"MaxReport",
+                                "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+                                "editable":true,
+                                "type":"time",
+                                "comment":["---","---"],
+                                "range":[0,32767]
+                                
+                             },
+                             {
+                             "ParameterID": "Data",
+                             "editable": true,
+                             "type": "data",
+                             "subParameters": [
+                                 {
+                                    "ParameterID":"DataLength",
+                                    "name":["Length of the data","Longueur de la trame"],
+                                    "editable":false,
+                                    "comment":["---","---"],
+                                    "range":[0,13],
+                                    "multiplier": 1,
+                                    "type":"number"
+                                 },
+                                 {
+                                    "ParameterID":"ActiveEnergyPhaseA",
+                                    "fieldIndex": 0,
+                                    "name":["variation of summation of the active energy of phase A","variation de la somme de l'énergie active de la phase A"],
+                                    "editable":true,
+                                    "comment":["---","---"],
+                                    "range":[0,16777215],
+                                    "type":"number",
+                                    "mantissa": 1,
+                                    "multiplier": 1,
+                                    "unit":["W.h","W.h"]
+                                 },
+                                 {
+                                    "ParameterID":"ReActiveEnergyPhaseA",
+                                    "fieldIndex": 1,
+                                    "name":["variation of summation of the reactive energy of phase A","variation de la somme de l'énergie réactive de la phase A"],
+                                    "editable":true,
+                                    "comment":["---","---"],
+                                    "range":[0,16777215],
+                                    "type":"number",
+                                    "mantissa": 1,
+                                    "multiplier": 1,
+                                    "unit":["Var.h","Var.h"]
+                                 },
+                                 {
+                                     "ParameterID":"ActiveEnergyPhaseB",
+                                     "fieldIndex": 2,
+                                     "name":["variation of summation of the active energy of phase B","variation de la somme de l'énergie active de la phase B"],
+                                     "editable":true,
+                                     "comment":["---","---"],
+                                     "range":[0,16777215],
+                                     "type":"number",
+                                     "mantissa": 1,
+                                     "multiplier": 1,
+                                     "unit":["W.h","W.h"]
+                                  },
+                                  {
+                                     "ParameterID":"ReActiveEnergyPhaseB",
+                                     "fieldIndex": 3,
+                                     "name":["variation of summation of the reactive energy of phase B","variation de la somme de l'énergie réactive de la phase B"],
+                                     "editable":true,
+                                     "comment":["---","---"],
+                                     "range":[0,16777215],
+                                     "type":"number",
+                                     "mantissa": 1,
+                                     "multiplier": 1,
+                                     "unit":["Var.h","Var.h"]
+                                  },
+                                  {
+                                     "ParameterID":"ActiveEnergyPhaseC",
+                                     "fieldIndex": 4,
+                                     "name":["variation of summation of the active energy of phase C","variation de la somme de l'énergie active de la phase C"],
+                                     "editable":true,
+                                     "comment":["---","---"],
+                                     "range":[0,16777215],
+                                     "type":"number",
+                                     "mantissa": 1,
+                                     "multiplier": 1,
+                                     "unit":["W.h","W.h"]
+                                  },
+                                  {
+                                     "ParameterID":"ReActiveEnergyPhaseC",
+                                     "fieldIndex": 5,
+                                     "name":["variation of summation of the reactive energy of phase C","variation de la somme de l'énergie réactive de la phase C"],
+                                     "editable":true,
+                                     "comment":["---","---"],
+                                     "range":[0,16777215],
+                                     "type":"number",
+                                     "mantissa": 1,
+                                     "multiplier": 1,
+                                     "unit":["Var.h","Var.h"]
+                                  }
+                               ]
+                             }
+                          ]
+                       },
+                       {
+                         "parameters": [
+                             {
+                                 "ParameterID": "ReportParameters",
+                                 "editable": false,
+                                 "value": {
+                                     "New": "No",
+                                     "Size": 0,
+                                     "Batch": "Yes"
+                                 }
+                             },
+                             {
+                                 "ParameterID": "FieldIndex",
+                                 "name": ["Field(s)","Champ(s)"],
+                                 "editable": true,
+                                 "comment": ["---","---"],
+                                 "type": "select",
+                                 "options": [
+                                     {
+                                         "OptionID": 0,
+                                         "name": ["variation of summation of the active energy of phase A","variation de la somme de l'énergie active de la phase A"]
+                                     },
+                                     {
+                                         "OptionID": 1,
+                                         "name":["variation of summation of the reactive energy of phase A","variation de la somme de l'énergie positive réactive de la phase A"]
+                                     },
+                                     {
+                                         "OptionID": 2,
+                                         "name": ["variation of summation of the active energy of phase B","variation de la somme de l'énergie active de la phase B"]
+                                     },
+                                     {
+                                         "OptionID": 3,
+                                         "name":["variation of summation of the reactive energy of phase B","variation de la somme de l'énergie positive réactive de la phase B"]
+                                     },
+                                     {
+                                         "OptionID":4,
+                                         "name":["variation of summation of the active energy of phase C","variation de la somme de l'énergie active de la phase C"]
+                                     },
+                                     {
+                                         "OptionID":5,
+                                         "name":["variation of summation of the reactive energy of phase C","variation de la somme de l'énergie positive réactive de la phase C"]
+                                     }
+                                 ]
+                             },
+                             {
+                                 "ParameterID": "MinReport",
+                                 "name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+                                 "editable": true,
+                                 "comment": ["---","---"],
+                                 "range": [0,32767],
+                                 "type": "time"
+                             },
+                             {
+                                 "ParameterID": "MaxReport",
+                                 "name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+                                 "editable": true,
+                                 "comment": ["---","---"],
+                                 "range": [0,32767],
+                                 "type": "time"
+                             },
+                             {
+                                 "ParameterID": "Delta",
+                                 "name": ["Delta","Delta"],
+                                 "editable": true,
+                                 "comment": ["---","---"],
+                                 "range": [0,32767],
+                                 "type": "number",
+                                 "mantissa": 1,
+                                 "multiplier": 1,
+                                 "unit": ["",""]
+                             },
+                             {
+                                 "ParameterID": "Resolution",
+                                 "name": ["Resolution","Résolution"],
+                                 "editable": true,
+                                 "comment": ["---","---"],
+                                 "range": [0,32767],
+                                 "type": "number",
+                                 "mantissa": 1,
+                                 "multiplier": 1,
+                                 "unit": ["",""]
+                             },
+                             {
+                                 "ParameterID": "TagValue",
+                                 "editable": true,
+                                 "type": "data",
+                                 "subParameters": [
+                                     {
+                                         "ParameterID": "TagLabel",
+                                         "name": ["TagLabel","TagLabel"],
+                                         "editable": true,
+                                         "comment": ["---","---"],
+                                         "range": [0,31],
+                                         "type": "number",
+                                         "mantissa": 1,
+                                         "multiplier": 1,
+                                         "unit": ["",""]
+                                     },
+                                     {
+                                         "ParameterID": "TagSize",
+                                         "name": ["TagSize","TagSize"],
+                                         "editable": true,
+                                         "comment": ["---","---"],
+                                         "range": [1,7],
+                                         "type": "number",
+                                         "mantissa": 1,
+                                         "multiplier": 1,
+                                         "unit": ["",""]
+                                     }
+                                     
+                                 ]
+                             }
+                         ]
+                     }
+                    ]
+                 },				
+                 {
+                         "CommandID": "ReadReportingConfiguration",
+                         "name": ["EnergyCurrentMultiMetering - Read reporting configuration","Mesure courante de l'energie des trois phase - Lire la configuration des rapports"],
+                         "expert": false,
+                         "parameters": [
+                             {
+                                 "ParameterID": "ReportParameters",
+                                 "editable": false,
+                                 "value": {
+                                     "New": "No",
+                                     "Reserved": 0,
+                                     "CauseRequest": "No",
+                                     "SecuredIfAlarm": "No",
+                                     "Secured": "No",
+                                     "NoHeaderPort": "No",
+                                     "Batch": "No"
+                                 }
+                             }
+                         ]
+                 }
+                 ]
+                 },
+				 {
+					"AttributeID":"PowerPresentValues",
+					"commands":	[
+						{
+						"CommandID":"ConfigureReporting",
+						"name":["PowerCurrentMultiMetering - Configure reporting","Mesure courante de la puissance des trois phases - Configurer les rapports"],
+						"expert":false,
+						"ReportType":[
+							{
+							"parameters":[
+								{
+								   "ParameterID":"AttributeType",
+								   "editable":false,
+								   "value":"ByteString"
+								},
+								{
+								   "ParameterID":"ReportParameters",
+								   "editable":false,
+								   "value":{
+									  "New":"No",
+									  "Reserved":0,
+									  "CauseRequest":"No",
+									  "SecuredIfAlarm":"No",
+									  "Secured":"No",
+									  "NoHeaderPort":"No",
+									  "Batch":"No"
+								   }
+								},
+								{
+								   "ParameterID":"MinReport",
+								   "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+								   "editable":true,
+								   "type":"time",
+								   "comment":["---","---"],
+								   "range":[0,32767]
+								   
+								},
+								{
+								   "ParameterID":"MaxReport",
+								   "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+								   "editable":true,
+								   "type":"time",
+								   "comment":["---","---"],
+								   "range":[0,32767]
+								   
+								},
+								{
+								"ParameterID": "Data",
+								"editable": true,
+								"type": "data",
+								"subParameters": [
+									{
+									   "ParameterID":"DataLength",
+									   "name":["Length of the data","Longueur de la trame"],
+									   "editable":false,
+									   "comment":["---","---"],
+									   "range":[0,13],
+									   "multiplier": 1,
+									   "type":"number"
+									},
+									{
+									   "ParameterID":"ActivePowerPhaseA",
+									   "fieldIndex": 0,
+									   "name":["variation of summation of the active Power of phase A","variation de la somme de la puissance active de la phase A"],
+									   "editable":true,
+									   "comment":["---","---"],
+									   "range":[0,16777215],
+									   "type":"number",
+									   "mantissa": 1,
+									   "multiplier": 1,
+									   "unit":["W.h","W.h"]
+									},
+									{
+									   "ParameterID":"ReActivePowerPhaseA",
+									   "fieldIndex": 1,
+									   "name":["variation of summation of the reactive Power of phase A","variation de la somme de la puissance réactive de la phase A"],
+									   "editable":true,
+									   "comment":["---","---"],
+									   "range":[0,16777215],
+									   "type":"number",
+									   "mantissa": 1,
+									   "multiplier": 1,
+									   "unit":["Var.h","Var.h"]
+									},
+									{
+										"ParameterID":"ActivePowerPhaseB",
+										"fieldIndex": 2,
+										"name":["variation of summation of the active Power of phase B","variation de la somme de la puissance active de la phase B"],
+										"editable":true,
+										"comment":["---","---"],
+										"range":[0,16777215],
+										"type":"number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit":["W.h","W.h"]
+									 },
+									 {
+										"ParameterID":"ReActivePowerPhaseB",
+										"fieldIndex": 3,
+										"name":["variation of summation of the reactive Power of phase B","variation de la somme de la puissance réactive de la phase B"],
+										"editable":true,
+										"comment":["---","---"],
+										"range":[0,16777215],
+										"type":"number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit":["Var.h","Var.h"]
+									 },
+									 {
+										"ParameterID":"ActivePowerPhaseC",
+										"fieldIndex": 4,
+										"name":["variation of summation of the active Power of phase C","variation de la somme de la puissance active de la phase C"],
+										"editable":true,
+										"comment":["---","---"],
+										"range":[0,16777215],
+										"type":"number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit":["W.h","W.h"]
+									 },
+									 {
+										"ParameterID":"ReActivePowerPhaseC",
+										"fieldIndex": 5,
+										"name":["variation of summation of the reactive Power of phase C","variation de la somme de la puissance réactive de la phase C"],
+										"editable":true,
+										"comment":["---","---"],
+										"range":[0,16777215],
+										"type":"number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit":["Var.h","Var.h"]
+									 }
+								  ]
+								}
+							 ]
+						  },
+						  {
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Size": 0,
+										"Batch": "Yes"
+									}
+								},
+								{
+									"ParameterID": "FieldIndex",
+									"name": ["Field(s)","Champ(s)"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["variation of summation of the active power of phase A","variation de la somme de la puissance active de la phase A"]
+										},
+										{
+											"OptionID": 1,
+											"name":["variation of summation of the reactive power of phase A","variation de la somme de la puissance positive réactive de la phase A"]
+										},
+										{
+											"OptionID": 2,
+											"name": ["variation of summation of the active power of phase B","variation de la somme de la puissance active de la phase B"]
+										},
+										{
+											"OptionID": 3,
+											"name":["variation of summation of the reactive power of phase B","variation de la somme de la puissance positive réactive de la phase B"]
+										},
+										{
+											"OptionID":4,
+											"name":["variation of summation of the active power of phase C","variation de la somme de la puissance active de la phase C"]
+										},
+										{
+											"OptionID":5,
+											"name":["variation of summation of the reactive power of phase C","variation de la somme de la puissance positive réactive de la phase C"]
+										}
+									]
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Delta",
+									"name": ["Delta","Delta"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["",""]
+								},
+								{
+									"ParameterID": "Resolution",
+									"name": ["Resolution","Résolution"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["",""]
+								},
+								{
+									"ParameterID": "TagValue",
+									"editable": true,
+									"type": "data",
+									"subParameters": [
+										{
+											"ParameterID": "TagLabel",
+											"name": ["TagLabel","TagLabel"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,31],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										},
+										{
+											"ParameterID": "TagSize",
+											"name": ["TagSize","TagSize"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [1,7],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										}
+										
+									]
+								}
+							]
+						}
+					   ]
+					},				
+					{
+							"CommandID": "ReadReportingConfiguration",
+							"name": ["PowerCurrentMultiMetering - Read reporting configuration","Mesure courante de l'energie des trois phase - Lire la configuration des rapports"],
+							"expert": false,
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Reserved": 0,
+										"CauseRequest": "No",
+										"SecuredIfAlarm": "No",
+										"Secured": "No",
+										"NoHeaderPort": "No",
+										"Batch": "No"
+									}
+								}
+							]
+					}
+					]
+				 },
+                 {
+                     "AttributeID":"MeanPowerDelay",
+                     "commands":	[
+                         {
+                                 "CommandID": "WriteAttributeNoResponse",
+                                 "name": ["MeanPowerDelay - Write the periodicity on which the powers are averaged","Périodicité de la moyenne des puisssances - Ecrire la périodicité sur laquelle les puissances sont moyennées"],
+                                 "expert": false,
+                                 "parameters": [
+                                     {
+                                         "ParameterID": "AttributeType",
+                                         "editable": false,
+                                         "value": "UInt32"
+                                     },
+                                     {
+                                         "ParameterID": "Data",
+                                         "name": ["Periodictity power average","Périodicité de la moyenne des puissances"],
+                                         "editable": true,
+                                         "comment": ["periodicity on which the powers are averaged","périodicité sur laquelle les puissances sont moyennées"],
+                                         "range": [0,4000000000],
+                                         "type": "number",
+                                         "mantissa": 1,
+                                         "multiplier": 1,
+                                         "unit": ["sec","sec"]
+                                     }
+                                 ]
+                         },				
+                         {
+                                 "CommandID": "ReadAttribute",
+                                 "name": ["MeanPowerDelay - Read the periodicity on which the powers are averaged","Périodicité de la moyenne des puisssances -  Lire la périodicité sur laquelle les puissances sont moyennées"],
+                                 "expert": false
+                         }
+                     ]
+                 },
+                 {
+                     "AttributeID":"EnergiesUnit",
+                     "commands":	[
+                         {
+                                 "CommandID": "WriteAttributeNoResponse",
+                                 "name": ["EnergiesUnit - Write the unit of energies","Unités des énergies - Ecrire l'unité des énergies"],
+                                 "expert": false,
+                                 "parameters": [
+                                     {
+                                         "ParameterID": "AttributeType",
+                                         "editable": false,
+                                         "value": "UInt8"
+                                     },
+                                     {
+                                         "ParameterID": "Data",
+                                         "name": ["Energies Unit","Unité des énergies"],
+                                         "editable": true,
+                                         "comment": ["Unit of energies","Unité des énergies"],
+                                         "type": "select",
+                                         "options": [
+                                             {
+                                                 "OptionID": 0,
+                                                 "name": ["Wh/VARh","Wh/VARh"]
+                                             },
+                                             {
+                                                 "OptionID": 1,
+                                                 "name": ["kWh/kVARh","kWh/kVARh"]
+                                             }
+                                         ]
+                                     }
+                                 ]
+                         },				
+                         {
+                                 "CommandID": "ReadAttribute",
+                                 "name": ["EnergiesUnit - Read the unit of energies","Unités des énergies - Lire l'unité des énergies"],
+                                 "expert": false
+                         }
+                     ]
+                 },
+                 {
+                     "AttributeID":"ClusterSpecificCommand",
+                     "commands":[
+                             {
+                             "CommandID":"ClusterSpecificCommand",
+                             "name":["Reset the consumption of the device","Réinitialiser la consommation de l'appareil"],
+                             "expert":false,
+                             "parameters":[
+                                 {
+                                    "ParameterID":"Data",
+                                    "editable":false,
+                                    "value":[0]
+                                 }
+                                 ]
+                     }
+                     ]
+                 }
+     ]
+ }
+    
