@@ -12,14 +12,14 @@
 			"clusterID": "Configuration",
 			"endpoints": [0],
 			"endpointsComment": ["---","---"],
-			"availablePowerSource":[2],
+			"availablePowerSource":[1],
 			"threshold" : {
                 "available" : true,
                 "slot" : [
                     {
                      "attribute" : "NodePowerDescriptor", 
                       "numberSlot" : 1,
-                      "fieldindex" : [2]
+                      "fieldindex" : [1]
                       }
                   ]
 
@@ -71,13 +71,13 @@
                 "slot" : [
                     {
                      "attribute" : "EnergyPresentValues", 
-                      "numberSlot" : 6,
-                      "fieldindex" : [0,1,2,3,4,5]
+                      "numberSlot" : 8,
+                      "fieldindex" : [0,1,2,3,4,5,6,7]
 					},
 					{
 						"attribute" : "PowerPresentValues", 
-						"numberSlot" : 6,
-						"fieldindex" : [0,1,2,3,4,5]
+						"numberSlot" : 8,
+						"fieldindex" : [0,1,2,3,4,5,6,7]
 					}
                   ]
 
@@ -99,7 +99,7 @@
                 "slot" : [
                     {
                      "attribute" : "PresentValues", 
-                      "numberSlot" : 6,
+                      "numberSlot" : 3,
                       "fieldindex" : [0,1,2]
                       }
                   ]
@@ -135,7 +135,7 @@
 					"available" : true
 				}
 			]
-		}		
+		}	
 		
 	],
 	 "embeddedProductName": "ips-tri"

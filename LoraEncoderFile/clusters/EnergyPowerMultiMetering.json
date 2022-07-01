@@ -134,6 +134,30 @@
                                      "mantissa": 1,
                                      "multiplier": 1,
                                      "unit":["Var.h","Var.h"]
+                                  },
+                                  {
+                                     "ParameterID":"ActiveEnergyPhaseABC",
+                                     "fieldIndex": 6,
+                                     "name":["variation of summation of the active energy of phase A+B+C","variation de la somme de l'énergie active de la phase A+B+C"],
+                                     "editable":true,
+                                     "comment":["---","---"],
+                                     "range":[0,16777215],
+                                     "type":"number",
+                                     "mantissa": 1,
+                                     "multiplier": 1,
+                                     "unit":["W.h","W.h"]
+                                  },
+                                  {
+                                     "ParameterID":"ReActiveEnergyPhaseABC",
+                                     "fieldIndex": 7,
+                                     "name":["variation of summation of the reactive energy of phase A+B+C","variation de la somme de l'énergie réactive de la phase A+B+C"],
+                                     "editable":true,
+                                     "comment":["---","---"],
+                                     "range":[0,16777215],
+                                     "type":"number",
+                                     "mantissa": 1,
+                                     "multiplier": 1,
+                                     "unit":["Var.h","Var.h"]
                                   }
                                ]
                              }
@@ -180,6 +204,14 @@
                                      {
                                          "OptionID":5,
                                          "name":["variation of summation of the reactive energy of phase C","variation de la somme de l'énergie positive réactive de la phase C"]
+                                     },
+                                     {
+                                         "OptionID":6,
+                                         "name":["variation of summation of the active energy of phase A+B+C","variation de la somme de l'énergie active de la phase A+B+C"]
+                                     },
+                                     {
+                                         "OptionID":7,
+                                         "name":["variation of summation of the reactive energy of phase A+B+C","variation de la somme de l'énergie positive réactive de la phase A+B+C"]
                                      }
                                  ]
                              },
@@ -408,6 +440,30 @@
 										"mantissa": 1,
 										"multiplier": 1,
 										"unit":["Var.h","Var.h"]
+									 },
+									 {
+										"ParameterID":"ActivePowerPhaseABC",
+										"fieldIndex": 6,
+										"name":["variation of summation of the active Power of phase A+B+C","variation de la somme de la puissance active de la phase A+B+C"],
+										"editable":true,
+										"comment":["---","---"],
+										"range":[0,16777215],
+										"type":"number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit":["W.h","W.h"]
+									 },
+									 {
+										"ParameterID":"ReActivePowerPhaseABC",
+										"fieldIndex": 7,
+										"name":["variation of summation of the reactive Power of phase A+B+C","variation de la somme de la puissance réactive de la phase A+B+C"],
+										"editable":true,
+										"comment":["---","---"],
+										"range":[0,16777215],
+										"type":"number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit":["Var.h","Var.h"]
 									 }
 								  ]
 								}
@@ -454,6 +510,14 @@
 										{
 											"OptionID":5,
 											"name":["variation of summation of the reactive power of phase C","variation de la somme de la puissance positive réactive de la phase C"]
+										},
+										{
+											"OptionID":6,
+											"name":["variation of summation of the active power of phase A+B+C","variation de la somme de la puissance active de la phase A+B+C"]
+										},
+										{
+											"OptionID":7,
+											"name":["variation of summation of the reactive power of phase A+B+C","variation de la somme de la puissance positive réactive de la phase A+B+C"]
 										}
 									]
 								},
