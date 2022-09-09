@@ -41,7 +41,7 @@ var lang = getLang();
 // 	} else {
 // 		console.log('page was not reloaded');
 // 		if (gLocalConfiguration && !isSwitchingLang) {
-// 			navigator.sendBeacon("http://localhost:56700/System.txt","Action=Quit");
+// 			navigator.sendBeacon("https://localhost:56700/System.txt","Action=Quit");
 // 			console.log("Fermeture du logiciel");
 // 		}
 // 	}
@@ -488,7 +488,7 @@ function getAllAvailableProducts() {
 }
 
 function getEmbeddedProductName() {
-	getJSON(getRootUrl() + "LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -501,7 +501,7 @@ function getEmbeddedProductName() {
 }
 
 function getDefaultFrame() {
-	getJSON(getRootUrl() + "LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -518,7 +518,7 @@ function getDefaultFrame() {
 	)
 }
 function getDefaultAddresses() {
-	getJSON(getRootUrl() + "LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -597,7 +597,7 @@ function switchProduct() {
 	
 	}
 	
-	getJSON(getRootUrl() + "LoraEncoderFile/products/" + currentProduct + ".json?v=" + (new Date()).getTime(), //Récupération des données de ce produit à partir du fichier .json correspondant
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/" + currentProduct + ".json?v=" + (new Date()).getTime(), //Récupération des données de ce produit à partir du fichier .json correspondant
 		function(err, productData) { //Ces données sont enregistrées dans la variable "productData"
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -665,7 +665,7 @@ function populateSubParametersListTemplates(PopulatedClusterIndex, ClusterIndex,
 				SubParametersListTemplate = parameterData.SubParametersListTemplate.replace('&ClusterID',clusterData.clusterID);
 				SubParametersListTemplate = SubParametersListTemplate.replace('&AttributeID',clusterData.attributes[AttributeIndex].AttributeID);
 				// Look for specified template
-				getJSON2(getRootUrl() + "LoraEncoderFile/clusters/" + SubParametersListTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + SubParametersListTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, obj, params) { 
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -693,7 +693,7 @@ function populateCommandsTemplates(PopulatedClusterIndex, ClusterIndex,Attribute
 		attributeData = clusterData.attributes[AttributeIndex];
 		if (typeof(attributeData) !== 'undefined'){
 			if (typeof(attributeData.CommandsTemplate) !== 'undefined') {
-				getJSON2(getRootUrl() + "LoraEncoderFile/clusters/" + attributeData.CommandsTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + attributeData.CommandsTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, obj, params) { 
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -740,7 +740,7 @@ function populateProductClusters(ClusterIndex=0) {
 		currentCluster = currentProductData.clusters[ClusterIndex];
 		if (typeof(currentCluster) !== 'undefined'){
 			if ((typeof(currentCluster.subProductID) == 'undefined') || (currentCluster.subProductID.indexOf(currentSubProduct) > -1)) {
-				getJSON2(getRootUrl() + "LoraEncoderFile/clusters/" + currentCluster.clusterID + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + currentCluster.clusterID + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, clusterData,params) { //Ces données sont enregistrées dans la variable "clusterData"
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -1504,23 +1504,23 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 function selectSource(){
 	sourceSelecter = document.getElementById("parameter2");
 	if(sourceSelecter != null){
-	var allSource = [2,3,4];
-	var correspondanceBit = [1,2,4];
+		var allSource = [1,2,3,4,5];
+		var correspondanceBit = [1,2,4,8,10];
 
-	var ourSource = currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource;
-	var ourCorrespondanceBit = [];
+		var ourSource = currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource;
+		var ourCorrespondanceBit = [];
 
-	for(i in ourSource){
-		ourCorrespondanceBit[i] = correspondanceBit[allSource.indexOf(ourSource[i])]
-	}
-	var sum = ourCorrespondanceBit.reduce(function(a, b){return a + b;}, 0);
-
-	for(var i=0;i<sourceSelecter.options.length;i++){
-		if(Number(sourceSelecter.options[i].value) === sum){
-			sourceSelecter.selectedIndex = sourceSelecter.options[i].index;
+		for(i in ourSource){
+			ourCorrespondanceBit[i] = correspondanceBit[allSource.indexOf(ourSource[i])]
 		}
-	}
-	sourceSelecter.disabled = true;
+		var sum = ourCorrespondanceBit.reduce(function(a, b){return a + b;}, 0);
+
+		for(var i=0;i<sourceSelecter.options.length;i++){
+			if(Number(sourceSelecter.options[i].value) === sum){
+				sourceSelecter.selectedIndex = sourceSelecter.options[i].index;
+			}
+		}
+		sourceSelecter.disabled = true;
 	}
 }
 //--------------------------------------------------------------------------------------------------
@@ -1918,9 +1918,9 @@ function getEncoderFileLocation(callback) {
 			if (callback && typeof callback === 'function') {
 				var serverInfo = request.getResponseHeader("server").toLowerCase();
 				if(!!~serverInfo.indexOf("php")) {
-					callback(getRootUrl() + "LoraEncoderFile/cgi-bin/encoder.php");
+					callback(getRootUrl() + "/lora/LoraEncoderFile/cgi-bin/encoder.php");
 				} else if(!!~serverInfo.indexOf("python")) {
-					callback(getRootUrl() + "LoraEncoderFile/cgi-bin/encoder.py");
+					callback(getRootUrl() + "/lora/LoraEncoderFile/cgi-bin/encoder.py");
 				} else {
 					callback(null);
 				}
@@ -1976,7 +1976,7 @@ function showFinalTxt(checked,aButton){
 		showLocalConf();
 		fShowFile();
 	}
-
+	
 	var jsonOutput = generateJson();
 	
 	rndHex = rndHexValue(4);
@@ -2081,7 +2081,7 @@ function loadFile(files){
        only variable, hence immutable. To make any changes,  
        changing const to var, here and In the reader.onload  
        function would be advisible */
-	gDataConcatenation = "";
+	gDataConcatenation = "";   
 	const file = files[0]; 
 	var fileName;
 	if (file.name.includes("_") && file.name.split("_")[1].includes(".")){
@@ -2356,7 +2356,7 @@ function fShowFile() {
 //	PARTIE 9 : Fonctions permettant la récupération du fichier DeviceList et l'affichage de ses données dans un tableau
 //----------------------------------------------------------------------------------------------------------------------
 
-var scannedDevice = new Object();
+var scannedDevice = new Map();
 
 function callGetTXT(){
 	let xhr = new XMLHttpRequest();
@@ -3096,11 +3096,11 @@ function fromIhmToJson(){
 function beautify(STR){
 	var strList = (STR.toLowerCase()).split('');
 	var indices = [];
-	var élément = ' ';
-	var idx = STR.indexOf(élément);
+	var el = ' ';
+	var idx = STR.indexOf(el);
 	while (idx != -1) {
 	  indices.push(idx);
-	  idx = STR.indexOf(élément, idx + 1);
+	  idx = STR.indexOf(el, idx + 1);
 	}
 	
 	for (element in indices){
