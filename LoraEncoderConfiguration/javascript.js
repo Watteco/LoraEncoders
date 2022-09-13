@@ -358,7 +358,7 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 function postCom(){
 	
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", 'http://localhost:56700/System.txt', true);
+	xhr.open("POST", 'https://localhost:56700/System.txt', true);
 	//xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
 	//xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
 	//Envoie les informations du header adaptées avec la requête
@@ -862,7 +862,7 @@ function switchCategory(lCurrentReportType = 0) {
 	var attributeData = clusterData.attributes[currentAttributeIndex];
 	var commandData = attributeData.commands[currentCommandIndex];
 
-	if(currentCustomData != null){
+	if(currentCustomData != null && commandData.CommandID === "ConfigureReporting"){
 		if(commandData.ReportType == undefined){
 			if(currentCustomData["Data.range"] != undefined) commandData.parameters.find(parameter => parameter.ParameterID == "Data").range = currentCustomData["Data.range"][Number(document.getElementById("endpointSelect").selectedIndex)];
 			if(currentCustomData["Data.unit"] != undefined) commandData.parameters.find(parameter => parameter.ParameterID == "Data").unit = currentCustomData["Data.unit"][Number(document.getElementById("endpointSelect").selectedIndex)];
@@ -917,24 +917,31 @@ function switchCategory(lCurrentReportType = 0) {
 					
 		currentCommandParameters.forEach(function(element) {
 			//Pour chacun des paramètres de la commande comme variables locale "element"
-			if(element.editable) { //Si le paramètre est modifiable
+			selectable = (typeof(element.selectable)== 'undefined' ? false : element.selectable);
+			if ((element.editable) ||(selectable)) { //Si le paramètre est modifiable ou sélectionable on le montre
 				if(element.type == "data" || element.type == "array") {
 					element.subParameters.forEach(function(subParameter) {
-						selectable = (typeof(element.selectable)== 'undefined' ? false : element.selectable);
 						if(subParameter.editable) {
 							if(currentCluster == "Configuration" && currentReportType == 0 && !thresholdAvailable && subParameter.type == "number"){
 								if(currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource.indexOf(subParameter.fieldIndex) != -1){
 															
-									addParameterRow(body,i,parameterIndex,subParameter,selectable,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
+									addParameterRow(body,i,parameterIndex,subParameter); //Appel de notre fonction d'ajout de ligne
 									parameterIndex++; //On incrémente le numéro d'index du paramètre
 									i++; //On incrémente "i"
 								}
 							}
 							else{
-								addParameterRow(body,i,parameterIndex,subParameter,selectable,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
+								addParameterRow(body,i,parameterIndex,subParameter,selectable,undefined,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
 									parameterIndex++; //On incrémente le numéro d'index du paramètre
 									i++; //On incrémente "i"
 							}
+						}else if(subParameter.ParameterID == undefined){
+							subParameter.forEach(sub => {
+								addParameterRow(body,i,parameterIndex,sub,sub.selectable,sub.editable,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
+								parameterIndex++; //On incrémente le numéro d'index du paramètre
+								i++; //On incrémente "i"
+							});
+							
 						}
 						});
 				} else {
@@ -945,6 +952,8 @@ function switchCategory(lCurrentReportType = 0) {
 			}
 		});
 	}
+	
+	
 	if(currentCluster == "Configuration" && currentReportType == 0 && !thresholdAvailable){
 		selectSource();
 	}
@@ -1029,7 +1038,7 @@ function switchCategory(lCurrentReportType = 0) {
 	
 }	
 
-function getParameterInfos(parameter,infos) {
+function getParameterInfos(parameter,infos,selectable=false, InstanceRange=[0,0]) {
 	// Infos output will be :  infos = { unit: "", comment : "", range: [], EndPointDependant: false };
 	
 	infos.unit = parameter.unit[lang];
@@ -1048,7 +1057,7 @@ function getParameterInfos(parameter,infos) {
 	currentProductData.clusters.forEach(function(selectedCluster){
 		if (selectedCluster.clusterID == currentCluster) {
 			//Look for customAttributes by endpoint
-			if (Array.isArray(selectedCluster["customAttributes"]) && !(parameter.ParameterID).startsWith("Tag")) {
+			if (Array.isArray(selectedCluster["customAttributes"]) && !(parameter.ParameterID).startsWith("Tag") && parameter.type != "time") {
 				infos.EndPointDependant = true;
 				if(currentCustomData["Data.range"] != undefined) infos.range = currentCustomData["Data.range"][EndPointValue];
 				if(currentCustomData["Data.unit"] != undefined) infos.unit = currentCustomData["Data.unit"][EndPointValue][lang];
@@ -1108,12 +1117,24 @@ function getParameterInfos(parameter,infos) {
 }	
 
 
-function UpdateStdFields(parameter,infos) {
+function UpdateStdFields(parameter,infos, editable = true) {
+	if(editable){
+		parameter.row.cells[1].innerHTML = 
+		"<input type='number' step='" + (1/(parameter.mantissa)) + 
+			"' value='" + 
+			(Array.isArray(infos.range) ? infos.range[0]:0) + "' " +
+			(Array.isArray(infos.range) ? " min='" + infos.range[0] + "' max='" + infos.range[1] + "' "  : "") + 
+			"onchange='modifyParameter()' id='parameter" + parameter.index + 
+			"'> " + infos.unit ; //Insertion du champ pour rentrer la valeur correspondant à l'option
 		
-	parameter.row.cells[1].innerHTML = 
-		"<input type='number' step='" + (1/(parameter.mantissa)) + "' value='" + (Array.isArray(parameter.range[0]) ? parameter.range[0][0]:parameter.range[0]) + "' " +
-		(Array.isArray(infos.range) ? " min='" + infos.range[0] + "' max='" + infos.range[1] + "' "  : "") + 
-		"onchange='modifyParameter()' id='parameter" + parameter.index + "'> " + infos.unit ; //Insertion du champ pour rentrer la valeur correspondant à l'option
+		parameter.row.cells[2].outerHTML = 
+			"<td id='interval" + parameter.index + "'>" + infos.comment + 
+			(Array.isArray(infos.range) || (infos.unit[lang] != "") ?
+			" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1] + " " : "") +
+			infos.unit + ")</td>"
+			: "")
+	}else{
+		parameter.row.cells[1].innerHTML = "" ; //Insertion du champ pour rentrer la valeur correspondant à l'option
 	
 	parameter.row.cells[2].outerHTML = 
 		"<td id='interval" + parameter.index + "'>" + infos.comment + 
@@ -1121,6 +1142,7 @@ function UpdateStdFields(parameter,infos) {
 		" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1] + " " : "") +
 		infos.unit + ")</td>"
 		: "");
+	}	
 	
 }
 
@@ -1504,22 +1526,12 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 function selectSource(){
 	sourceSelecter = document.getElementById("parameter2");
 	if(sourceSelecter != null){
-		var allSource = [1,2,3,4,5];
-		var correspondanceBit = [1,2,4,8,10];
 
 		var ourSource = currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource;
-		var ourCorrespondanceBit = [];
 
-		for(i in ourSource){
-			ourCorrespondanceBit[i] = correspondanceBit[allSource.indexOf(ourSource[i])]
-		}
-		var sum = ourCorrespondanceBit.reduce(function(a, b){return a + b;}, 0);
+		var sum = ourSource.length === 1 ?  ourSource[0] :ourSource.reduce(function(a, b){return a + b;}, 0);
 
-		for(var i=0;i<sourceSelecter.options.length;i++){
-			if(Number(sourceSelecter.options[i].value) === sum){
-				sourceSelecter.selectedIndex = sourceSelecter.options[i].index;
-			}
-		}
+		sourceSelecter.options[sum-1].selected = true;
 		sourceSelecter.disabled = true;
 	}
 }
@@ -2167,7 +2179,7 @@ function fSelectCom(){
 		x.remove(x.length-1);
 	}
 	var availableCom;
-	$.get("http://localhost:56700/System.txt",function(data){
+	$.get("https://localhost:56700/System.txt",function(data){
 		availableCom = data;
 		data = data.replace(/\n|\r/g,'');
 		data = data.split("=")[1];
@@ -2184,7 +2196,7 @@ function fSelectCom(){
 	},"text");
 	selectCom.onfocus = function(){
 		
-		$.get("http://localhost:56700/System.txt",function(data){
+		$.get("https://localhost:56700/System.txt",function(data){
 		if(availableCom != data){
 			availableCom = data;
 			while(selectCom.options.length > 0){selectCom.remove(0);}
@@ -2361,7 +2373,7 @@ var scannedDevice = new Map();
 function callGetTXT(){
 	let xhr = new XMLHttpRequest();
 
-	xhr.open('GET', 'http://localhost:56700/DeviceList.txt');
+	xhr.open('GET', 'https://localhost:56700/DeviceList.txt');
 	xhr.responseType = 'text';
 	xhr.send();
 	xhr.onload = function() {
