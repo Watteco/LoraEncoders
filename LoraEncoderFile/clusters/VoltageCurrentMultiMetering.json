@@ -1,0 +1,326 @@
+{
+   "clusterID":"VoltageCurrentMultiMetering",
+   "clusterName":["Voltage And Current Multi Metering","Mesure Multiple des tensions et courants"],
+   "expert":false,
+   "attributes":[
+				{
+				"AttributeID":"PresentValues",
+				"commands":	[
+					{
+					"CommandID":"ConfigureReporting",
+					"name":["CurrentMultiMetering - Configure reporting","Multiple Mesure courante  - Configurer les rapports"],
+					"expert":false,
+					"ReportType":[
+						{
+						"parameters":[
+							{
+							   "ParameterID":"AttributeType",
+							   "editable":false,
+							   "value":"ByteString"
+							},
+							{
+							   "ParameterID":"ReportParameters",
+							   "editable":false,
+							   "value":{
+								  "New":"No",
+								  "Reserved":0,
+								  "CauseRequest":"No",
+								  "SecuredIfAlarm":"No",
+								  "Secured":"No",
+								  "NoHeaderPort":"No",
+								  "Batch":"No"
+							   }
+							},
+							{
+							   "ParameterID":"MinReport",
+							   "name":["Minimum reporting interval","Intervalle de rapport minimal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							   "ParameterID":"MaxReport",
+							   "name":["Maximum reporting interval","Intervalle de rapport maximal"],
+							   "editable":true,
+							   "type":"time",
+							   "comment":["---","---"],
+							   "range":[0,32767]
+							   
+							},
+							{
+							"ParameterID": "Data",
+							"editable": true,
+							"type": "data",
+							"subParameters": [
+								{
+								   "ParameterID":"DataLength",
+								   "name":["Length of the data","Longueur de la trame"],
+								   "editable":false,
+								   "comment":["---","---"],
+								   "range":[0,13],
+								   "multiplier": 1,
+								   "type":"number"
+								},
+								{
+								   "ParameterID":"VrmsA (V/10)",
+								   "fieldIndex": 0,
+								   "name":["variation of phase A's voltage","variation de tension de la phase A"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 10,
+								   "unit":["V","V"]
+								},
+																{
+								   "ParameterID":"IrmsA (A/10)",
+								   "fieldIndex": 1,
+								   "name":["variation of phase A's current","variation du courant de la phase A"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 10,
+								   "unit":["A","A"]
+								},
+								{
+								   "ParameterID":"AngleA (degrees)",
+								   "fieldIndex": 2,
+								   "name":["variation of phase A's angle ","variation de l'angle de la phase A"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["degrees","degrés"]
+								},{
+								   "ParameterID":"VrmsB (V/10)",
+								   "fieldIndex": 3,
+								   "name":["variation of phase B's voltage","variation de tension de la phase B"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 10,
+								   "unit":["V","V"]
+								},
+																{
+								   "ParameterID":"IrmsB (A/10)",
+								   "fieldIndex": 4,
+								   "name":["variation of phase B's current","variation du courant de la phase B"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 10,
+								   "unit":["A","A"]
+								},
+								{
+								   "ParameterID":"AngleB (degrees)",
+								   "fieldIndex": 5,
+								   "name":["variation of phase B's angle","variation de l'angle de la phase B"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["degrees","degrés"]
+								},{
+								   "ParameterID":"VrmsC (V/10)",
+								   "fieldIndex": 6,
+								   "name":["variation of phase C's oltage","variation de tension de la phase C"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 10,
+								   "unit":["V","V"]
+								},
+																{
+								   "ParameterID":"IrmsC (A/10)",
+								   "fieldIndex": 7,
+								   "name":["variation of phase C's current","variation du courant de la phase C"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 10,
+								   "unit":["A","A"]
+								},
+								{
+								   "ParameterID":"AngleC (degrees)",
+								   "fieldIndex": 8,
+								   "name":["variation of phase C's angle","variation de l'angle de la phase C"],
+								   "editable":true,
+								   "comment":["---","---"],
+								   "range":[0,65535],
+								   "type":"number",
+								   "mantissa": 1,
+								   "multiplier": 1,
+								   "unit":["degrees","degrés"]
+								}
+							  ]
+							}
+						 ]
+					  },
+					  {
+						"parameters": [
+							{
+								"ParameterID": "ReportParameters",
+								"editable": false,
+								"value": {
+									"New": "No",
+									"Size": 0,
+									"Batch": "Yes"
+								}
+							},
+							{
+								"ParameterID": "FieldIndex",
+								"name": ["Field(s)","Champ(s)"],
+								"editable": true,
+								"comment": ["---","---"],
+								"type": "select",
+								"options": [
+									{
+										"OptionID": 0,
+										"name": ["variation of phase A's voltage","variation de tension de la phase A"]
+									},
+									{
+										"OptionID": 1,
+										"name":["variation of phase A's current","variation du courant de la phase A"]
+									},
+									{
+										"OptionID": 2,
+										"name": ["variation of phase A's angle","variation de l'angle de la phase A"]
+									},{
+										"OptionID": 3,
+										"name": ["variation of phase B's voltage","variation de tension de la phase B"]
+									},
+									{
+										"OptionID": 4,
+										"name":["variation of phase B's current","variation du courant de la phase B"]
+									},
+									{
+										"OptionID": 5,
+										"name": ["variation of phase B's angle","variation de l'angle de la phase B"]
+									},{
+										"OptionID": 6,
+										"name": ["variation of phase C's voltage","variation de tension de la phase C"]
+									},
+									{
+										"OptionID": 7,
+										"name":["variation of phase C's current","variation du courant de la phase C"]
+									},
+									{
+										"OptionID": 8,
+										"name": ["variation of phase C's angle","variation de l'angle de la phase C"]
+									}
+								]
+							},
+							{
+								"ParameterID": "MinReport",
+								"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "time"
+							},
+							{
+								"ParameterID": "MaxReport",
+								"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "time"
+							},
+							{
+								"ParameterID": "Delta",
+								"name": ["Delta","Delta"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "number",
+								"mantissa": 1,
+								"multiplier": 1,
+								"unit": ["",""]
+							},
+							{
+								"ParameterID": "Resolution",
+								"name": ["Resolution","Résolution"],
+								"editable": true,
+								"comment": ["---","---"],
+								"range": [0,32767],
+								"type": "number",
+								"mantissa": 1,
+								"multiplier": 1,
+								"unit": ["",""]
+							},
+							{
+								"ParameterID": "TagValue",
+								"editable": true,
+								"type": "data",
+								"subParameters": [
+									{
+										"ParameterID": "TagLabel",
+										"name": ["TagLabel","TagLabel"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [0,31],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["",""]
+									},
+									{
+										"ParameterID": "TagSize",
+										"name": ["TagSize","TagSize"],
+										"editable": true,
+										"comment": ["---","---"],
+										"range": [1,7],
+										"type": "number",
+										"mantissa": 1,
+										"multiplier": 1,
+										"unit": ["",""]
+									}
+									
+								]
+							}
+						]
+					}
+				   ]
+				},				
+				{
+						"CommandID": "ReadReportingConfiguration",
+						"name": ["CurrentMultiMetering - Read reporting configuration","Multi Mesure courante - Lire la configuration des rapports"],
+						"expert": false,
+						"parameters": [
+							{
+								"ParameterID": "ReportParameters",
+								"editable": false,
+								"value": {
+									"New": "No",
+									"Reserved": 0,
+									"CauseRequest": "No",
+									"SecuredIfAlarm": "No",
+									"Secured": "No",
+									"NoHeaderPort": "No",
+									"Batch": "No"
+								}
+							}
+						]
+				}
+				]
+				}
+	]
+}
+   
