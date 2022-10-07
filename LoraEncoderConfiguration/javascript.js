@@ -366,7 +366,8 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 function postCom(){
 	
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", 'https://localhost:56700/System.txt', true);
+	//xhr.open("POST", 'https://localhost:56700/System.txt', true);
+	xhr.open("POST", 'http://localhost:56700/System.txt', true);
 	//xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
 	//xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
 	//Envoie les informations du header adaptées avec la requête
@@ -2185,7 +2186,8 @@ function fSelectCom(){
 		x.remove(x.length-1);
 	}
 	var availableCom;
-	$.get("https://localhost:56700/System.txt",function(data){
+	//$.get("https://localhost:56700/System.txt",function(data){
+	$.get("http://localhost:56700/System.txt",function(data){
 		availableCom = data;
 		data = data.replace(/\n|\r/g,'');
 		data = data.split("=")[1];
@@ -2202,7 +2204,8 @@ function fSelectCom(){
 	},"text");
 	selectCom.onfocus = function(){
 		
-		$.get("https://localhost:56700/System.txt",function(data){
+		//$.get("https://localhost:56700/System.txt",function(data){
+		$.get("http://localhost:56700/System.txt",function(data){
 		if(availableCom != data){
 			availableCom = data;
 			while(selectCom.options.length > 0){selectCom.remove(0);}
