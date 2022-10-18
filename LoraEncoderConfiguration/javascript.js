@@ -2581,7 +2581,8 @@ var scannedDevice = new Map();
 function callGetTXT(){
 	let xhr = new XMLHttpRequest();
 
-	xhr.open('GET', 'https://localhost:56700/DeviceList.txt');
+	xhr.open('GET', 'http://localhost:56700/DeviceList.txt');
+	//xhr.open('GET', 'https://localhost:56700/DeviceList.txt');
 	xhr.responseType = 'text';
 	xhr.send();
 	xhr.onload = function() {
@@ -3332,3 +3333,4 @@ function beautify(STR){
 	str=str.replace(/[,\\*-]/g,"");
 	return str;
 }
+
