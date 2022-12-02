@@ -1220,10 +1220,12 @@ function updateBatchData(){
 							}
 							// Si les des options ne sont pas dans les fiedIndex dispo on les enlève
 							var options = document.getElementById("parameter0").options;
-							for(let i=0;i<options.length;i++){
-								if(!availableField.includes(Number(options[i].value))){
-									document.getElementById("parameter0").removeChild(options[i]);
-									i--;
+							if (!(availableField.length == 1 && availableField[0] == 0)) { // Ne rien retirer si pas de config
+								for(let i=0;i<options.length;i++){
+									if(!availableField.includes(Number(options[i].value))){
+										document.getElementById("parameter0").removeChild(options[i]);
+										i--;
+									}
 								}
 							}
 						}
@@ -3333,4 +3335,3 @@ function beautify(STR){
 	str=str.replace(/[,\\*-]/g,"");
 	return str;
 }
-

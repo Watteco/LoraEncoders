@@ -25,12 +25,20 @@ function getLang() {
 	return 0;
 }
 
+
 //Variable contenant la langue actuelle
 var lang = getLang();
+var isSwitchingLang = false;
+window.addEventListener('beforeunload', (event) => {
+    if (gLocalConfiguration && !isSwitchingLang) {
+		navigator.sendBeacon("https://localhost:56700/System.txt","Action=Quit");
+		console.log("Fermeture du logiciel");
+    }
 
+});
 
 //Définition des constantes de langue
-var encoderLangData = {
+var langData = {
 	mainTitle: ["Local LoRaWAN frame encoder","Encodeur de trames LoRaWAN en local"],
 	toolDesc: ["This tool allows to generate frames for LoRaWAN sensors in a simplified way. It may be possible that your sensor is not in the list or that some options are not yet available.","Cet outil permet de générer des trames pour les capteurs LoRaWAN de façon simplifiée. Il est possible que votre capteur ne soit pas présent dans la liste ou que certaines options ne soient pas encore disponibles."],
 	frameEncoder: ["Frame encoder","Encodeur de trames"],
@@ -157,7 +165,7 @@ var gDataConcatenation = "";
 var gDataConcatenateLength = Number(gDataConcatenation.length);
 var gDeviceList = '';
 var gDeviceListName = '';
-
+var gFileLoaded = false;
 
 
 // Variable contenant la config de base des batchs
@@ -185,7 +193,9 @@ function rndHexValue(digit){
     }
     return number
 }
-
+function replaceAt(str, index, replacement) {
+    return str.substr(0, index) + replacement + str.substr(index + replacement.length);
+}
 // Foncion permettant de rajouter un 0 devant un chiffre ( twoDigit(1) --> 01 etc..)
 function twoDigit(n) {
   return (n.length === 1 ? '0' : '') + n
@@ -214,6 +224,7 @@ function formatBitmap(size,bit,x){
 	obj["b"+bit] = x;
 	return obj
 }
+
 // variable contenant une valeur aléatoire à ajouter à la trame
 var rndHex = rndHexValue(4);
 var rndHexToDec = parseInt("" + rndHex.slice(2,4) +rndHex.slice(0,2),16).toString(10);
@@ -221,8 +232,10 @@ var gRandValueConfig = currentDefaultAddresses[1] + addSpace(rndHex) + "\nq";
 
 function getRootUrl() {
 	return window.location.origin 
-		? window.location.origin + '/' + (hubo ? 'encoder/' : '')
-		: window.location.protocol + '/' + window.location.host + '/' + (hubo ? 'encoder/' : '');
+		? window.location.origin + '/'
+		: window.location.protocol + '/' + window.location.host + '/';
+	
+
 }
 
 function getBaseUrl() {
@@ -269,23 +282,28 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 	
 	dataFile = gDeviceList;
 
-	
+	postCom();
+
 	var date = formatDate();
 	var lrndHex = "" + rndHex.slice(2,4) +rndHex.slice(0,2);
 	
 	var xhr = new XMLHttpRequest();
 	
 	xhr.open("POST", path + 'C0.0.0.0_' + currentEmbeddedName + '.' + parseInt(lrndHex,16).toString(10) +'.' + date +'.txt', true);
+	//xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
+	//xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
 	xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
 	xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
 			if (this.readyState === XMLHttpRequest.DONE &&  ((this.status === 201) || (this.status === 200))) {
-				document.getElementById("postButtonResultId").innerHTML = '<b>' + encoderLangData.congratulation[lang] + '</b>' ;
+				document.getElementById("postButtonResultId").innerHTML = '<b>' + langData.congratulation[lang] + '</b>' ;
 				setTimeout(function(){ document.getElementById("postButtonResultId").innerHTML = ''; }, 8000);
 				
 				var xhr = new XMLHttpRequest();
 				
 				xhr.open("POST", path + gDeviceListName, true);
-				xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+				//fileFormat[0] === "txt" ? xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8") : xhr.setRequestHeader("Content-Type", "Application/octet-stream") ;
+				xhr.setRequestHeader("Content-Type", "text/plain");
+				xhr.setRequestHeader("Accept","*/*");
 				xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
 						if (this.readyState === XMLHttpRequest.DONE &&  (this.status === 200)) {
 							console.log('Your list of product has been sent');
@@ -296,9 +314,9 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 				xhr.send(dataFile);
 				
 			}  else if(this.status === 0){
-				alert(encoderLangData.errorFota[lang]);
+				alert(langData.errorFota[lang]);
 			}else if(this.readyState === XMLHttpRequest.DONE){
-				document.getElementById("postButtonResultId").innerHTML = encoderLangData.FichierKeyManquant[lang];
+				document.getElementById("postButtonResultId").innerHTML = langData.FichierKeyManquant[lang];
 				setTimeout(function(){ document.getElementById("postButtonResultId").innerHTML = ''; }, 3000);
 			}
 		}
@@ -310,7 +328,9 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 function postCom(){
 	
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", path + 'System.txt', true);
+	xhr.open("POST", 'https://localhost:56700/System.txt', true);
+	//xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
+	//xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
 	//Envoie les informations du header adaptées avec la requête
 	xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
 	xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
@@ -321,9 +341,9 @@ function postCom(){
 		
 		} else{
 			if (this.status === 0){
-			console.log(encoderLangData.errorFota[lang]);
+			console.log(langData.errorFota[lang]);
 			}else{
-			console.log(encoderLangData.errorMsg[lang]);
+			console.log(langData.errorMsg[lang]);
 			}
 		} 
 	}
@@ -381,26 +401,19 @@ function resetData(element) {
 
 //Changement de la langue utilisée
 function switchLang() {
-	lang = parseInt(document.getElementById('langSelect').value);
+	var selectedLang = parseInt(document.getElementById('langSelect').value);
 	
-	resetData("product");
-	resetData("subProduct");
-	resetData("category");
-
-	document.getElementById("mainTitle").innerHTML = '<span style="text-decoration: underline;">' + encoderLangData.mainTitle[lang];
-	document.getElementById("toolDesc").innerHTML =  encoderLangData.toolDesc[lang];
-	document.getElementById("frameEncoder").innerHTML =  encoderLangData.frameEncoder[lang];
-	document.getElementById("firstMsg").innerHTML =  encoderLangData.firstMsg[lang];
-	document.getElementById("chooseProductMsg").innerHTML =  encoderLangData.chooseProductMsg[lang];
-	document.getElementById("chooseSubProductMsg").innerHTML =  encoderLangData.chooseSubProductMsg[lang];
-	document.getElementById("finalSelectMsgCom").innerHTML =  encoderLangData.finalSelectMsgCom[lang];
-	document.getElementById("finalSelectMsgSelect").innerHTML =  encoderLangData.finalSelectMsgSelect[lang];
-	document.getElementById("finalConfButton").innerHTML =  encoderLangData.finalConfButton[lang] + rndHexToDec;
-	document.getElementById("downloadCodec").innerHTML = '<strong>' + encoderLangData.downloadCodec[lang] + '</strong> <a href="http://support.nke-watteco.com/downloads/">Downloads</a>';
+	if(gLocalConfiguration) isSwitchingLang = true;
+	var date = new Date();
+	date.setTime(date.getTime()+2500000000);
+	var expire = "; expire=" + date.toGMTString();
+	
+	document.cookie = "lang=" + selectedLang + expire + "; path=/";
+	document.location.reload(true);
 }
 
 //Obtenir la variable de local setu
-function getLocalConfiguration(callback) {
+function getLocalConfiguration() {
 	getJSON("configuration.json?v=" + (new Date()).getTime(),
 		function(err, LocalConfigurations) {
 			if (err !== null) {
@@ -409,12 +422,9 @@ function getLocalConfiguration(callback) {
 				gLocalConfiguration = LocalConfigurations.OutilLocalDeConfigurationOTA;
 				refreshTiming = LocalConfigurations.refreshTimingOnGet;
 				path = LocalConfigurations.pathPost;
-				hubo = LocalConfigurations.HubO;
+				}
 			}
-			
-			callback();
-		}
-	);
+			);
 }
 
 	
@@ -424,32 +434,31 @@ function getLocalConfiguration(callback) {
 var gLocalConfiguration = false;
 var refreshTiming = 100000;
 var path = "";
-var hubo = false;
 
 
 //Obtenir la liste des produits disponibles
 function getAllAvailableProducts() {
-	getLocalConfiguration(function() {
-		getJSON((hubo ? '/encoder/LoraEncoder/' : '') + "AvailableProductsList.json?v=" + (new Date()).getTime(),
-			function(err, availableProducts) {
-				if (err !== null) {
-					console.log('Une erreur est survenue : ' + err);
-				} else {
-					var selectProduct = document.getElementById("productSelect");
-					availableProducts.products.forEach(function(product){
-						var opt = document.createElement('option');
-						opt.appendChild(document.createTextNode((Array.isArray(product.name) ? product.name[lang] : product.name)));
-						opt.value = product.file;
-						selectProduct.appendChild(opt);
-					});
-				}
+	getLocalConfiguration();
+	
+	getJSON("AvailableProductsList.json?v=" + (new Date()).getTime(),
+		function(err, availableProducts) {
+			if (err !== null) {
+				console.log('Une erreur est survenue : ' + err);
+			} else {
+				var selectProduct = document.getElementById("productSelect");
+				availableProducts.products.forEach(function(product){
+					var opt = document.createElement('option');
+					opt.appendChild(document.createTextNode((Array.isArray(product.name) ? product.name[lang] : product.name)));
+					opt.value = product.file;
+					selectProduct.appendChild(opt);
+				});
 			}
-		);
-	});
+		}
+	);
 }
 
 function getEmbeddedProductName() {
-	getJSON(getRootUrl() + "LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -462,7 +471,7 @@ function getEmbeddedProductName() {
 }
 
 function getDefaultFrame() {
-	getJSON(getRootUrl() + "LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -479,7 +488,7 @@ function getDefaultFrame() {
 	)
 }
 function getDefaultAddresses() {
-	getJSON(getRootUrl() + "LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -508,7 +517,7 @@ function switchProduct() {
 	resetData("product"); //Nettoyage des données affichées concernant le précédent produit
 	currentProduct = document.getElementById("productSelect").value; //Récupération du nom du produit choisi
 	if (gLocalConfiguration){
-		var memoire = [];
+		gFileLoaded = false;
 		gDataConcatenation = ""; // nettoyage des données pour OTA précédente
 		gDataConcatenateLength = Number(gDataConcatenation.length) ; // Nettoyage de la longueur des données pour OTA
 		rndHex = rndHexValue(4);
@@ -527,11 +536,37 @@ function switchProduct() {
 
 		confButton();
 		setInterval("callGetTXT()", refreshTiming);
-		//callGetTXT(); 
+		callGetTXT(); 
 
+		if(document.getElementById("selectConfig") == null){
+			var selectConfigDiv = document.createElement("DIV");
+			selectConfigDiv.id = "selectConfig";
+			
+			var selectConfig = document.createElement("INPUT");
+			selectConfig.setAttribute("id", "selectFile");
+			selectConfig.setAttribute("type", "file");
+			selectConfig.setAttribute("multiple", "");
+			selectConfig.setAttribute("accept", ".txt");
+			selectConfig.onclick = function () {
+				selectConfig.value = null
+				showLocalBlock();
+				fShowFile();
+				showLocalConf();
+			};
+			selectConfig.onchange = function() {loadFile(selectConfig.files)};
+	
+			var labelSelectConfig = document.createElement("label");
+			labelSelectConfig.textContent = langData.finalConfigLoadFile[lang];
+			selectConfigDiv.appendChild(labelSelectConfig);
+	
+			selectConfigDiv.appendChild(selectConfig);
+			document.getElementById("localSetupConfig").appendChild(selectConfigDiv);
+		}
+		
+	
 	}
 	
-	getJSON(getRootUrl() + "LoraEncoderFile/products/" + currentProduct + ".json?v=" + (new Date()).getTime(), //Récupération des données de ce produit à partir du fichier .json correspondant
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/" + currentProduct + ".json?v=" + (new Date()).getTime(), //Récupération des données de ce produit à partir du fichier .json correspondant
 		function(err, productData) { //Ces données sont enregistrées dans la variable "productData"
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -599,7 +634,7 @@ function populateSubParametersListTemplates(PopulatedClusterIndex, ClusterIndex,
 				SubParametersListTemplate = parameterData.SubParametersListTemplate.replace('&ClusterID',clusterData.clusterID);
 				SubParametersListTemplate = SubParametersListTemplate.replace('&AttributeID',clusterData.attributes[AttributeIndex].AttributeID);
 				// Look for specified template
-				getJSON2(getRootUrl() + "LoraEncoderFile/clusters/" + SubParametersListTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + SubParametersListTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, obj, params) { 
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -627,7 +662,7 @@ function populateCommandsTemplates(PopulatedClusterIndex, ClusterIndex,Attribute
 		attributeData = clusterData.attributes[AttributeIndex];
 		if (typeof(attributeData) !== 'undefined'){
 			if (typeof(attributeData.CommandsTemplate) !== 'undefined') {
-				getJSON2(getRootUrl() + "LoraEncoderFile/clusters/" + attributeData.CommandsTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + attributeData.CommandsTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, obj, params) { 
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -674,7 +709,7 @@ function populateProductClusters(ClusterIndex=0) {
 		currentCluster = currentProductData.clusters[ClusterIndex];
 		if (typeof(currentCluster) !== 'undefined'){
 			if ((typeof(currentCluster.subProductID) == 'undefined') || (currentCluster.subProductID.indexOf(currentSubProduct) > -1)) {
-				getJSON2(getRootUrl() + "LoraEncoderFile/clusters/" + currentCluster.clusterID + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + currentCluster.clusterID + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, clusterData,params) { //Ces données sont enregistrées dans la variable "clusterData"
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -709,13 +744,11 @@ function populateProductClusters(ClusterIndex=0) {
 	updateFunctionsList(currentSelectedMode);
 }
 
-
-
 // Following function display Product Clusters Array 
 function updateFunctionsList(currentSelectedMode) { 
 	// Affichage de la liste finale des clusters
 
-	document.getElementById('functionContainer').innerHTML = "<div style='margin-bottom: 15px;'><label for='paramSelect' style='font-size: 16px;'>② <span style='font-size: 16px;'>" + encoderLangData.chooseFunctionMsg[lang] + "</span> </label><select onchange='switchCategory();' id='paramSelect' style='margin-right:10px;'><option value='' selected disabled >----</option></select><select onchange='switchMode();' id='modeSelect' style='width:100px;'><option value='0' " + (currentSelectedMode == 0 ? " selected" : "") + ">" + encoderLangData.simple[lang] + "</option><option value='1' " + (currentSelectedMode == 1 ? " selected" : "") + ">" + encoderLangData.advanced[lang] + "</option></select></div>"; //On crée le select pour les commandes disponibles
+	document.getElementById('functionContainer').innerHTML = "<div style='margin-bottom: 15px;'><label for='paramSelect' style='font-size: 16px;'>② <span style='font-size: 16px;'>" + langData.chooseFunctionMsg[lang] + "</span> </label><select onchange='switchCategory();' id='paramSelect' style='margin-right:10px;'><option value='' selected disabled >----</option></select><select onchange='switchMode();' id='modeSelect' style='width:100px;'><option value='0' " + (currentSelectedMode == 0 ? " selected" : "") + ">" + langData.simple[lang] + "</option><option value='1' " + (currentSelectedMode == 1 ? " selected" : "") + ">" + langData.advanced[lang] + "</option></select></div>"; //On crée le select pour les commandes disponibles
 	for(var clusterIndex in gProductClustersArray) {
 		currentCluster = gProductClustersArray[clusterIndex]; 
 		if(((currentSelectedMode == 0) && (!currentCluster.expert)) || (currentSelectedMode == 1)) {
@@ -744,7 +777,7 @@ function EndPointCallBack(obj) {
 	
 	UpdateFieldsOfEndPointDependantParameters();
 	
-	modifyEncoderParameter();
+	modifyParameter();
 }
 
 //Fonction appelée lors de la modification de la commande choisie par l'utilisateur
@@ -756,7 +789,6 @@ function switchCategory(lCurrentReportType = 0) {
 	currentAttributeIndex = parseInt(selected[1]); //Sauvegarde de l'attribut correspondant dans la variable globale "currentAttribute"
 	currentCommandIndex = parseInt(selected[2]); //Sauvegarde de la commande correspondante dans la variable globale "currentCommand"
 	currentReportType = lCurrentReportType;
-	
 	var clusterData = gProductClustersArray.find(clusterData => clusterData.clusterID === currentCluster);
 	currentAttributeName = clusterData.attributes[currentAttributeIndex].AttributeID;
 	
@@ -766,14 +798,14 @@ function switchCategory(lCurrentReportType = 0) {
 		currentCustomData = null;
 	}
 	currentClusterData = clusterData; //On enregistre les données du cluster dans la variable globale correspondante
-	document.getElementById('configContainer').innerHTML = "<p><span style='font-size: 16px;'>③ </span>" + encoderLangData.editParameterMsg[lang] + "</p><table id='configTable' class='tablepress'></table>"; //Création du tableau qui va contenir les paramètres modifiables
+	document.getElementById('configContainer').innerHTML = "<p><span style='font-size: 16px;'>③ </span>" + langData.editParameterMsg[lang] + "</p><table id='configTable' class='tablepress'></table>"; //Création du tableau qui va contenir les paramètres modifiables
 	var configTable = document.getElementById('configTable'); //On récupère l'élément tableau créé
 	
 	var header = configTable.createTHead(); //Création du header du tableau (contiendra les titres des colonnes)
 	var row = header.insertRow(0); //Insertion d'une ligne dans le header
-	row.insertCell(0).outerHTML = "<th>" + encoderLangData.parameter[lang] + "</th>"; //Insertion d'une cellule contenant le mot "Paramètre"
-	row.insertCell(1).outerHTML = "<th>" + encoderLangData.value[lang] + "</th>"; //Insertion d'une cellule contenant le mot "Valeur"
-	row.insertCell(2).outerHTML = "<th>" + encoderLangData.comment[lang] + "</th>"; //Insertion d'une cellule contenant le mot "Commentaire"
+	row.insertCell(0).outerHTML = "<th>" + langData.parameter[lang] + "</th>"; //Insertion d'une cellule contenant le mot "Paramètre"
+	row.insertCell(1).outerHTML = "<th>" + langData.value[lang] + "</th>"; //Insertion d'une cellule contenant le mot "Valeur"
+	row.insertCell(2).outerHTML = "<th>" + langData.comment[lang] + "</th>"; //Insertion d'une cellule contenant le mot "Commentaire"
 	
 	var body = configTable.createTBody(); //Création du contenu du tableau
 	
@@ -781,7 +813,7 @@ function switchCategory(lCurrentReportType = 0) {
 	
 	if (clusterData.endpoints != null) { //Si le cluster actuellement traité par la boucle est bien le cluster actuel
 		var row = body.insertRow(i); //Insérer une ligne dans le tableau créé précédemment
-		row.insertCell(0).innerHTML = encoderLangData.endpoint[lang]; //Insertion du texte dans la première cellule
+		row.insertCell(0).innerHTML = langData.endpoint[lang]; //Insertion du texte dans la première cellule
 		row.insertCell(1).innerHTML = "<select id='endpointSelect' onchange='EndPointCallBack(this)' ></select>"; //Insertion du choix de l'EndPoint dans la seconde cellule
 		
 		var select = document.getElementById("endpointSelect"); //On récupère l'élément select tout juste créé
@@ -825,7 +857,7 @@ function switchCategory(lCurrentReportType = 0) {
 		}
 	} else { //Sinon
 		var row = body.insertRow(i); //Insérer une nouvelle ligne dans le tableau
-		row.insertCell(0).innerHTML = encoderLangData.report[lang]; //Remplir la première cellule avec le label du type de rapport
+		row.insertCell(0).innerHTML = langData.report[lang]; //Remplir la première cellule avec le label du type de rapport
 		row.insertCell(1).innerHTML = "<select onchange='modifyReportType();' id='reportSelect'><option value='0'" + (currentReportType == 0 ? " selected" : "") + ">Standard</option>" + (typeof attributeData.commands[currentCommandIndex].ReportType[1] !== 'undefined' && checkBatchAvailability() ? ("<option value='1'" + (currentReportType == 1 ? " selected" : "") + ">Batch</option>") : "") + "</select>"; //On crée le sélecteur de type de rapport dans la seconde cellule
 		row.insertCell(2).innerHTML = "---"; //Remplissage de la troisième cellule
 		i++;
@@ -866,7 +898,8 @@ function switchCategory(lCurrentReportType = 0) {
 									parameterIndex++; //On incrémente le numéro d'index du paramètre
 									i++; //On incrémente "i"
 								}
-							}else{
+							}
+							else{
 								addParameterRow(body,i,parameterIndex,subParameter,selectable,undefined,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
 									parameterIndex++; //On incrémente le numéro d'index du paramètre
 									i++; //On incrémente "i"
@@ -900,18 +933,18 @@ function switchCategory(lCurrentReportType = 0) {
 		updateBatchData();
 	}
 	
-	document.getElementById('generateButtonContainer').innerHTML = "<p><span style='font-size: 16px;'>④ </span>" + encoderLangData.outputSelectMsg[lang] + "</p><table id='generateButtonTable' class='tablepress tablepress-id-11'></table>"; //On crée le tableau qui va contenir le choix du format de sortie
+	document.getElementById('generateButtonContainer').innerHTML = "<p><span style='font-size: 16px;'>④ </span>" + langData.outputSelectMsg[lang] + "</p><table id='generateButtonTable' class='tablepress tablepress-id-11'></table>"; //On crée le tableau qui va contenir le choix du format de sortie
 	
 	var generateButtonTable = document.getElementById('generateButtonTable'); //On récupère le tableau tout juste créé
 	
 	var header = generateButtonTable.createTHead(); //On crée l'en-tête du tableau
 	var row = header.insertRow(0); //On insère une ligne
 	row.insertCell(0).outerHTML = "<th></th>"; //Contenu de la première cellule vide
-	row.insertCell(1).outerHTML = "<th style='min-width:100px;'>" + encoderLangData.outputFormatTitle[lang] + "</th>"; //Contenu de la seconde cellule "Output format"
-	row.insertCell(2).outerHTML = "<th>" + encoderLangData.outputFormatDesc[lang] + "</th>"; //Contenu de la troisième cellule "Description"
-	row.insertCell(3).outerHTML = "<th>" + encoderLangData.addOutput[lang] + "</th>"; //Contenu de la quatrième cellule "Generate"
-	if(gLocalConfiguration) row.insertCell(4).outerHTML = "<th>" + encoderLangData.resetOutput[lang] + "</th>" ; //Contenu de la cinquième cellule "Reset"
-	if(gLocalConfiguration) row.insertCell(5).outerHTML = "<th>" + encoderLangData.resetConfFrame[lang] + "</th>"; //Contenu de la sixième cellule "ResetConfFrame"
+	row.insertCell(1).outerHTML = "<th style='min-width:100px;'>" + langData.outputFormatTitle[lang] + "</th>"; //Contenu de la seconde cellule "Output format"
+	row.insertCell(2).outerHTML = "<th>" + langData.outputFormatDesc[lang] + "</th>"; //Contenu de la troisième cellule "Description"
+	row.insertCell(3).outerHTML = "<th>" + langData.addOutput[lang] + "</th>"; //Contenu de la quatrième cellule "Generate"
+	if(gLocalConfiguration) row.insertCell(4).outerHTML = "<th>" + langData.resetOutput[lang] + "</th>" ; //Contenu de la cinquième cellule "Reset"
+	if(gLocalConfiguration) row.insertCell(5).outerHTML = "<th>" + langData.resetConfFrame[lang] + "</th>"; //Contenu de la sixième cellule "ResetConfFrame"
 	
 	var body = generateButtonTable.createTBody(); //On crée le corps du tableau
 	
@@ -920,65 +953,43 @@ function switchCategory(lCurrentReportType = 0) {
 		//Remplissage de la première ligne du tableau pour le format "Frame"
 		var row = body.insertRow(0); //On insère la première ligne
 		row.insertCell(0).innerHTML = "<span style='font-size: 16px;'>Ⓐ</span>"; //Esthétisme (A)
-		row.insertCell(1).innerHTML = encoderLangData.frame[lang]; //Nom du format de sortie
-		row.insertCell(2).innerHTML = encoderLangData.frameDesc[lang]; //Description du format de sortie
+		row.insertCell(1).innerHTML = langData.frame[lang]; //Nom du format de sortie
+		row.insertCell(2).innerHTML = langData.frameDesc[lang]; //Description du format de sortie
 		
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
-		generateButton.value = encoderLangData.chooseOutput[lang]; //Texte du bouton
+		generateButton.value = langData.chooseOutput[lang]; //Texte du bouton
 		generateButton.onclick = function() { showFinalFrame(); }; //Cliquer sur le bouton appelle la fonction d'affichage de la trame
 		row.insertCell(3).appendChild(generateButton); //Insertion du bouton dans la troisième cellule
 		
-		if (!hubo) {
-			//Remplissage de la deuxième ligne du tableau pour le format "JSON"
-			var row = body.insertRow(1); //On insère la deuxième ligne
-			row.insertCell(0).innerHTML = "<span style='font-size: 16px;'>Ⓑ</span>"; //Esthétisme (B)
-			row.insertCell(1).innerHTML = "JSON"; //Nom du format de sortie
-			row.insertCell(2).innerHTML = encoderLangData.jsonDesc[lang]; //Description du format de sortie
-			
-			var generateButton = document.createElement('input'); //Création d'un élément d'entrée
-			generateButton.type = "button"; //Définition de l'élément comme bouton
-			generateButton.value = encoderLangData.chooseOutput[lang]; //Texte du bouton
-			generateButton.onclick = function() { showFinalJson(); }; //Cliquer sur le bouton appelle la fonction d'affichage du JSON
-			row.insertCell(3).appendChild(generateButton); //Insertion du bouton dans la troisième cellule
-			
-		} else {
-			//Remplissage de la deuxième ligne du tableau pour l'envoi direct au capteur
-			var row = body.insertRow(1); //On insère la deuxième ligne
-			row.insertCell(0).innerHTML = "<span style='font-size: 16px;'>Ⓑ</span>"; //Esthétisme (B)
-			row.insertCell(1).innerHTML = encoderLangData.directSend[lang]; //Nom du format de sortie
-			row.insertCell(2).innerHTML = encoderLangData.directSendDesc[lang]; //Description du format de sortie
-			
-			var endDeviceSelect = document.createElement('select'); //Création d'un élément d'entrée
-			endDeviceSelect.id = "configEndDeviceSelect"; //Définition de l'id de l'élément
-			endDeviceSelect.innerHTML = "<option value='' selected disabled>----</option>"; //Option par défaut
-			row.insertCell(3).appendChild(endDeviceSelect); //Insertion du select dans la troisième cellule
-			listAvailableEndDevices(); //Remplissage du select (fonction définie sur Hub'O)
-			
-			var generateButton = document.createElement('input'); //Création d'un élément d'entrée
-			generateButton.type = "button"; //Définition de l'élément comme bouton
-			generateButton.value = encoderLangData.sendFrameOutput[lang]; //Texte du bouton
-			generateButton.onclick = function() { sendFrameToEndDevice(); }; //Cliquer sur le bouton permet d'envoyer la trame (fonction définie sur Hub'O)
-			row.cells[3].appendChild(generateButton); //Insertion du bouton dans la troisième cellule
-		}
+		//Remplissage de la deuxième ligne du tableau pour le format "JSON"
+		var row = body.insertRow(1); //On insère la deuxième ligne
+		row.insertCell(0).innerHTML = "<span style='font-size: 16px;'>Ⓑ</span>"; //Esthétisme (B)
+		row.insertCell(1).innerHTML = "JSON"; //Nom du format de sortie
+		row.insertCell(2).innerHTML = langData.jsonDesc[lang]; //Description du format de sortie
 		
+		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
+		generateButton.type = "button"; //Définition de l'élément comme bouton
+		generateButton.value = langData.chooseOutput[lang]; //Texte du bouton
+		generateButton.onclick = function() { showFinalJson(); }; //Cliquer sur le bouton appelle la fonction d'affichage du JSON
+		row.insertCell(3).appendChild(generateButton); //Insertion du bouton dans la troisième cellule
 	} else{
 		// Si nous sommes en local cela met le Texte
 		//Remplissage de la première ligne du tableau pour le format "Texte"
 		var row = body.insertRow(0); //On insère la première ligne
 		row.insertCell(0).innerHTML = "<span style='font-size: 16px;'>Ⓐ</span>"; //Esthétisme (C)
-		row.insertCell(1).innerHTML = encoderLangData.text[lang]; //Nom du format de sortie
-		row.insertCell(2).innerHTML = encoderLangData.txtDesc[lang]; //Description du format de sortie
+		row.insertCell(1).innerHTML = langData.text[lang]; //Nom du format de sortie
+		row.insertCell(2).innerHTML = langData.txtDesc[lang]; //Description du format de sortie
 
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
-		generateButton.value = encoderLangData.chooseOption[lang]; //Texte du bouton
+		generateButton.value = langData.chooseOption[lang]; //Texte du bouton
 		generateButton.onclick = function() { showFinalTxt(generateCheckbox.checked,true)}; //Cliquer sur le bouton appelle la fonction de création du fichier txt et du téléchargement de celui ci
 		row.insertCell(3).appendChild(generateButton); //Insertion du bouton dans la troisième cellule	
 		
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
-		generateButton.value = encoderLangData.chooseOption[lang]; //Texte du bouton
+		generateButton.value = langData.chooseOption[lang]; //Texte du bouton
 		generateButton.onclick = function() { resetShowFinalTxt(generateCheckbox.checked); }; //Cliquer sur le bouton appelle la fonction de création du fichier txt et du téléchargement de celui ci
 		row.insertCell(4).appendChild(generateButton); //Insertion du bouton dans la troisième cellule
 		
@@ -1049,25 +1060,26 @@ function getParameterInfos(parameter,infos,selectable=false, InstanceRange=[0,0]
 			};
 			// Look for RANGE defined by EndPoint or for all Enpoint or keep the one defined at parameter level
 			theID = parameter.ParameterID + ".range";
-			if (Array.isArray(selectedCluster[theID])) {
-				if (Array.isArray(selectedCluster[theID][0])) {
-					if (Array.isArray(selectedCluster[theID][EndPointValue])) { 
-						infos.range = selectedCluster[theID][EndPointValue];
-						infos.EndPointDependant = true;
-					} else { 
-						infos.range = selectedCluster[theID][0];
-					}
-				} else {
-					infos.range = selectedCluster[theID]; 
-				} 
-			};
+	
+			// 3 lignes Pas top pour TIC exclusivement à mieux réfléchir ...
+			if (parameter.ParameterID == "Instance" ) {
+				infos.range = InstanceRange;
+			} else {
+				if (Array.isArray(selectedCluster[theID])) {
+					if (Array.isArray(selectedCluster[theID][0])) {
+						if (Array.isArray(selectedCluster[theID][EndPointValue])) { 
+							infos.range = selectedCluster[theID][EndPointValue];
+							infos.EndPointDependant = true;
+						} else { 
+							infos.range = selectedCluster[theID][0];
+						}
+					} else {
+						infos.range = selectedCluster[theID]; 
+					} 
+				};
+			}
 		}
 	});
-	
-	// 3 lignes Pas top pour TIC exclusivement à mieux réfléchir ...
-	if (parameter.ParameterID == "Instance" ) {
-		infos.range = InstanceRange;
-	} 
 }	
 
 
@@ -1078,13 +1090,13 @@ function UpdateStdFields(parameter,infos, editable = true) {
 			"' value='" + 
 			(Array.isArray(infos.range) ? infos.range[0]:0) + "' " +
 			(Array.isArray(infos.range) ? " min='" + infos.range[0] + "' max='" + infos.range[1] + "' "  : "") + 
-			"onchange='modifyEncoderParameter()' id='parameter" + parameter.index + 
+			"onchange='modifyParameter()' id='parameter" + parameter.index + 
 			"'> " + infos.unit ; //Insertion du champ pour rentrer la valeur correspondant à l'option
 		
 		parameter.row.cells[2].outerHTML = 
 			"<td id='interval" + parameter.index + "'>" + infos.comment + 
 			(Array.isArray(infos.range) || (infos.unit[lang] != "") ?
-			" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + encoderLangData.to[lang] + " " + infos.range[1] + " " : "") +
+			" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1] + " " : "") +
 			infos.unit + ")</td>"
 			: "")
 	}else{
@@ -1093,7 +1105,7 @@ function UpdateStdFields(parameter,infos, editable = true) {
 	parameter.row.cells[2].outerHTML = 
 		"<td id='interval" + parameter.index + "'>" + infos.comment + 
 		(Array.isArray(infos.range) || (infos.unit[lang] != "") ?
-		" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + encoderLangData.to[lang] + " " + infos.range[1] + " " : "") +
+		" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1] + " " : "") +
 		infos.unit + ")</td>"
 		: "");
 	}	
@@ -1168,10 +1180,12 @@ function updateBatchData(){
 							}
 							// Si les des options ne sont pas dans les fiedIndex dispo on les enlève
 							var options = document.getElementById("parameter0").options;
-							for(let i=0;i<options.length;i++){
-								if(!availableField.includes(Number(options[i].value))){
-									document.getElementById("parameter0").removeChild(options[i]);
-									i--;
+							if (!(availableField.length == 1 && availableField[0] == 0)) { // Ne rien retirer si pas de config
+								for(let i=0;i<options.length;i++){
+									if(!availableField.includes(Number(options[i].value))){
+										document.getElementById("parameter0").removeChild(options[i]);
+										i--;
+									}
 								}
 							}
 						}
@@ -1241,6 +1255,80 @@ function updateBatchData(){
 	}
 }
 
+function updateBitfield(sub){
+
+	var lFields = sub; // Array avec tous les fields
+	var lBitFieldReport = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+	var lBitFieldData = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+	var lSelectedFields = []; // Array avec les fields selectionnes
+	var lEditableFields = [];
+
+	//On parcourt tous les fields selectionnes et on ajoute dans lSelectedFields ceux qu'on a coche
+	for(var i=0; i < lFields.length; i++){
+		if(isSelectedParam(i+3)) lSelectedFields.push(lFields[i]["ParameterID"]);
+		if(isEditedParam(lFields[i],i+3)) lEditableFields.push(lFields[i]["ParameterID"]);
+	} 
+			
+		
+	var lIndexReport = 0; // L'index du field selectionne dans tous les fields
+	var lIndexData = 0; // L'index du field selectionne dans tous les fields
+	for (var i=0; i<lSelectedFields.length ;i++) {
+		lIndexReport = lFields.findIndex(param => param.ParameterID == lSelectedFields[i]);
+		lBitFieldReport = replaceAt(lBitFieldReport,lIndexReport,"1");
+	}
+	for (var i=0; i<lEditableFields.length ;i++) {
+		lIndexData = lFields.findIndex(param => param.ParameterID == lEditableFields[i]);
+		lBitFieldData = replaceAt(lBitFieldData,lIndexData,"1");
+	}
+	
+	//On enleve tous les 0 a la fin
+	while(lBitFieldReport[lBitFieldReport.length-1] == "0") lBitFieldReport = lBitFieldReport.slice(0,lBitFieldReport.length-1);
+	while(lBitFieldData[lBitFieldData.length-1] == "0") lBitFieldData = lBitFieldData.slice(0,lBitFieldData.length-1);
+
+	//Si le BitField n'a pas un octet au complet alors on le complete avec des 0
+	while((lBitFieldReport.length%8) != 0) lBitFieldReport = lBitFieldReport + "0";
+	while((lBitFieldData.length%8) != 0) lBitFieldData = lBitFieldData + "0";
+
+
+	//On compte le nombre de 1 dans le BitField report
+	var lNbrOneReport = 0
+	for(el in lBitFieldReport){
+		if(lBitFieldReport[el] == "1") lNbrOneReport++;
+	}
+
+	//On compte le nombre de 1 dans le BitField Data
+	var lNbrOneData = 0
+	for(el in lBitFieldData){
+		if(lBitFieldData[el] == "1") lNbrOneData++;
+	}
+
+	//Variable avec le nombre d'octet du BitField Report
+	var lNbrByteBitFieldReport = lBitFieldReport.length/8;
+	var lPresentFieldReport = "";
+	var lSizeReport = 0;
+	if(lNbrOneReport > lNbrByteBitFieldReport){
+		lPresentFieldReport = "DescVarIndexes";
+		lSizeReport = lNbrOneReport + 1;
+	}else{
+		lPresentFieldReport = "DescVarBitfield";
+		lSizeReport = lNbrByteBitFieldReport + 1;
+	} 
+
+	//Variable avec le nombre d'octet du BitField Data
+	var lNbrByteBitFieldData = lBitFieldData.length/8;
+	var lPresentFieldData = "";
+	var lSizeData = 0;
+	if(lNbrOneData > lNbrByteBitFieldData){
+		lPresentFieldData = "DescVarIndexes";
+		lSizeData = lNbrOneData + 1;
+	}else{
+		lPresentFieldData = "DescVarBitfield";
+		lSizeData = lNbrByteBitFieldData + 1;
+	} 
+
+	return [[lBitFieldReport, lPresentFieldReport, lSizeReport],[lBitFieldData, lPresentFieldData, lSizeData]];
+}
+
 //Fonction permettant d'ajouter une nouvelle ligne de paramètre
 function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = false,editable=true, InstanceRange=[0,0]) {
 	var cellNum = 0;
@@ -1255,11 +1343,11 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 		// If not defined in json, by default a selectable parameter is not selected
 		checkedStr = (typeof(parameter.selected) == 'undefined' ? "" : (parameter.selected ? "checked" : "" )); 
 		cellHtml += "<div style='float: right;'> <input type='checkbox' " + 
-			checkedStr + " id='parameterSelect" + parameterIndex + "'>"+ "</div> ";
+			checkedStr + " id='parameterSelect" + parameterIndex + "'>"+ "</div> ";	
 	}
 	row.insertCell(cellNum++).innerHTML = cellHtml;
 
-
+	
 
 	// Set some default parameters for parameter in case not defined in JSON
 	if (! Array.isArray(parameter.unit)) parameter.unit = ["",""];
@@ -1278,7 +1366,7 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 			var cell = row.insertCell(cellNum++); //Insertion de la deuxième cellule
 			cell.innerHTML = "<input type='number' step='1' value='1' "+ 
 				" min='" +  parameter.range[0] + "' max='" + parameter.range[1] +"'" +
-				"onchange='modifyEncoderParameter()' id='parameter" + parameterIndex + "'" +
+				"onchange='modifyParameter()' id='parameter" + parameterIndex + "'" +
 				"style='margin-right:10px;'><select onchange='switchTimeUnit(" + parameterIndex + ");'" +
 				" id='unit" + parameterIndex + "'></select>"; //Insertion des champs d'indication du temps et du choix de l'unité
 			
@@ -1286,12 +1374,12 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 			unitSelect.style.width = "100px"; //On lui indique sa valeur
 			
 			var seconds = document.createElement('option'); //On crée une option qui correspondra aux secondes
-			seconds.appendChild(document.createTextNode(encoderLangData.seconds[lang])); //On lui donne le nom de l'unité
+			seconds.appendChild(document.createTextNode(langData.seconds[lang])); //On lui donne le nom de l'unité
 			seconds.value = "Seconds"; //On lui indique sa valeur
 			unitSelect.appendChild(seconds); //On ajoute l'option dans le sélecteur d'unité
 			
 			var minutes = document.createElement('option'); //On crée une option qui correspondra aux minutes
-			minutes.appendChild(document.createTextNode(encoderLangData.minutes[lang])); //On lui donne le nom de l'unité
+			minutes.appendChild(document.createTextNode(langData.minutes[lang])); //On lui donne le nom de l'unité
 			minutes.value = "Minutes"; //On lui indique sa valeur
 			unitSelect.appendChild(minutes); //On ajoute l'option dans le sélecteur d'unité
 			if(currentClusterData.minMaxReport != undefined){
@@ -1315,8 +1403,8 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 						
 			row.insertCell(cellNum++).outerHTML = "<td id='interval" + parameterIndex + "'>" + 
 				parameter.comment[lang] + 
-				" (" + parameter.range[0] + " " + encoderLangData.to[lang] + " " + parameter.range[1] + " " +
-				encoderLangData.seconds[lang] + ")</td>"; //On remplit la cellule décrivant l'intervalle avec l'unité correspondante
+				" (" + parameter.range[0] + " " + langData.to[lang] + " " + parameter.range[1] + " " +
+				langData.seconds[lang] + ")</td>"; //On remplit la cellule décrivant l'intervalle avec l'unité correspondante
 			
 		break;
 		
@@ -1340,9 +1428,56 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 			});
 			
 		break;
+
+		case "hexa":
+			var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
+			getParameterInfos(parameter,infos );
+			parameter.row = row;
+			parameter.index = parameterIndex;
+			if (infos.EndPointDependant) {
+				EndPointDependantParametersList.push(parameter);
+			}
+			row.insertCell(cellNum++);
+			row.insertCell(cellNum++);
+
+			parameter.row.cells[1].innerHTML = 
+			"<input type='string' value='' onchange='modifyParameter()' id='parameter" + parameter.index + "'> "; //Insertion du champ pour rentrer la valeur correspondant à l'option
+		
+			parameter.row.cells[2].outerHTML = 
+			"<td id='interval" + parameter.index + "'>" + infos.comment + 
+			(Array.isArray(infos.range) || (infos.unit[lang] != "") ?
+			" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1]  : "") +
+			infos.unit + ")</td>"
+			: "");
+			
+		break;
+
+		case "hexaArray":
+			var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
+			getParameterInfos(parameter,infos );
+			parameter.row = row;
+			parameter.index = parameterIndex;
+			if (infos.EndPointDependant) {
+				EndPointDependantParametersList.push(parameter);
+			}
+			row.insertCell(cellNum++);
+			row.insertCell(cellNum++);
+
+			parameter.row.cells[1].innerHTML = 
+			"<input type='string' value='' onchange='modifyParameter()' id='parameter" + parameter.index + "'> "; //Insertion du champ pour rentrer la valeur correspondant à l'option
+		
+			parameter.row.cells[2].outerHTML = 
+			"<td id='interval" + parameter.index + "'>" + infos.comment + 
+			(Array.isArray(infos.range) || (infos.unit[lang] != "") ?
+			" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1] : "") +
+			infos.unit + ")</td>"
+			: "");
+			
+		break;
+		
 		
 		default:
-		
+			
 			var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
 			getParameterInfos(parameter,infos,selectable, InstanceRange );
 			parameter.row = row;
@@ -1360,23 +1495,13 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 function selectSource(){
 	sourceSelecter = document.getElementById("parameter2");
 	if(sourceSelecter != null){
-	var allSource = [2,3,4];
-	var correspondanceBit = [1,2,4];
 
-	var ourSource = currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource;
-	var ourCorrespondanceBit = [];
+		var ourSource = currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource;
 
-	for(i in ourSource){
-		ourCorrespondanceBit[i] = correspondanceBit[allSource.indexOf(ourSource[i])]
-	}
-	var sum = ourCorrespondanceBit.reduce(function(a, b){return a + b;}, 0);
+		var sum = ourSource.length === 1 ?  ourSource[0] :ourSource.reduce(function(a, b){return a + b;}, 0);
 
-	for(var i=0;i<sourceSelecter.options.length;i++){
-		if(Number(sourceSelecter.options[i].value) === sum){
-			sourceSelecter.selectedIndex = sourceSelecter.options[i].index;
-		}
-	}
-	sourceSelecter.disabled = true;
+		sourceSelecter.options[sum-1].selected = true;
+		sourceSelecter.disabled = true;
 	}
 }
 //--------------------------------------------------------------------------------------------------
@@ -1389,8 +1514,10 @@ function checkDataValidity(element,parameter) {
 	var enteredValue = document.getElementById('parameter' + parameter).value; //On récupère la valeur saisie
 	var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
 	getParameterInfos(element,infos );		
-
-	if(enteredValue > infos.range[1]) { //Si la valeur est trop élevée
+	
+	if(element.type == "hexa" || element.type == "hexaArray") { //Si le paramètre est une donnée hexadécimal
+		document.getElementById('parameter' + parameter).value = isHexByte(enteredValue.trim()) && enteredValue.length < infos.range[1] ? enteredValue.trim() : "";
+	}else if(enteredValue > infos.range[1]) { //Si la valeur est trop élevée
 		document.getElementById('parameter' + parameter).value = infos.range[1]; //On la modifie par la valeur maximale
 	} else if(enteredValue < infos.range[0]) { //Si la valeur est trop faible
 		document.getElementById('parameter' + parameter).value = infos.range[0]; //On la modifie par la valeur minimale
@@ -1401,6 +1528,13 @@ function checkDataValidity(element,parameter) {
 	}
 }
 
+function isHexByte(str) {
+	if(str.length % 2 === 0){
+		return /^[A-F0-9]+$/i.test(str)
+	}else{
+		return false
+	}
+  }
 
 //Fonction permettant de modifier l'affichage lors d'un changement de type de rapport
 function modifyReportType() {
@@ -1415,15 +1549,15 @@ function switchTimeUnit(parameterIndex) {
 	var selectedUnit = document.getElementById('unit' + parameterIndex).value; //On récupère l'unité sélectionnée
 	
 	if(selectedUnit == "Seconds") { //Si l'unité sélectionnée est "secondes"
-		document.getElementById('interval' + parameterIndex).innerHTML = tdData.replace(encoderLangData.minutes[lang], encoderLangData.seconds[lang]); //On remplace l'unité actuelle par la nouvelle
+		document.getElementById('interval' + parameterIndex).innerHTML = tdData.replace(langData.minutes[lang], langData.seconds[lang]); //On remplace l'unité actuelle par la nouvelle
 	} else if(selectedUnit == "Minutes") { //Si l'unité sélectionnée est "minutes"
-		document.getElementById('interval' + parameterIndex).innerHTML = tdData.replace(encoderLangData.seconds[lang], encoderLangData.minutes[lang]); //On remplace l'unité actuelle par la nouvelle
+		document.getElementById('interval' + parameterIndex).innerHTML = tdData.replace(langData.seconds[lang], langData.minutes[lang]); //On remplace l'unité actuelle par la nouvelle
 	}
 }
 
 
 //Fonction appelée lors de la modification d'un paramètre par l'utilisateur
-function modifyEncoderParameter() {
+function modifyParameter() {
 	var i = 0; //Initialisation d'une variable d'index "i"
 	currentCommandParameters.forEach(function(element) { //Pour chacun des paramètres
 		if(element.editable) { //Si le paramètre est modifiable
@@ -1481,10 +1615,18 @@ function isSelectedParam(paramIndex) {
 	var paramSelectCheckBox = document.getElementById('parameterSelect' + paramIndex);
 	if (paramSelectCheckBox !== null) 
 		isSelected = (paramSelectCheckBox.checked);
-
 	return(isSelected);
 }
 
+function isEditedParam(param,paramIndex){
+	if(!param.editable) return false;
+	if(param.type == "select"){
+		return document.getElementById("parameter"+paramIndex).selectedIndex == 1 ? true : false;
+	}else if (param.type == "number"){
+		return document.getElementById("parameter"+paramIndex).value == 0 ? false : true;
+	}
+	
+}
 //Fonction permettant de générer les données sous format JSON
 function generateJson() {
 	var jsonObject = new Object(); //Création d'un objet JavaScript
@@ -1511,7 +1653,7 @@ function generateJson() {
 	
 	//Traitement du cluster correspondant (et sous produit s'il existe)
 	jsonObject.ClusterID = currentCluster;
-	if (typeof(clusterData.subProductID !== 'undefined')) jsonObject.subProductID = currentClusterData.subProductID;
+	//if (typeof(clusterData.subProductID !== 'undefined')) jsonObject.subProductID = currentClusterData.subProductID;
 	
 	//Traitement de l'attribut concerné
 	jsonObject.AttributeID = currentClusterData.attributes[currentAttributeIndex].AttributeID;
@@ -1560,8 +1702,15 @@ function generateJson() {
 					jsonObject[element.ParameterID] = new Array();
 					element.subParameters.forEach(function(subParameter) {
 						if(subParameter.editable) {
-							if (isSelectedParam(i))	jsonObject[element.ParameterID].push(formatParameterData(subParameter,i));
-							i++;
+							if(subParameter.type === "hexaArray"){
+								var hexaArrayData = formatParameterData(subParameter,i);
+								hexaArrayData.map(el => jsonObject[element.ParameterID].push(el));
+								i++;
+							}else{
+								if (isSelectedParam(i))	jsonObject[element.ParameterID].push(formatParameterData(subParameter,i));
+								i++;
+							}
+
 						} else {
 							jsonObject[element.ParameterID].push(subParameter.value);
 						}
@@ -1682,12 +1831,37 @@ function formatParameterData(parameter,parameterIndex) {
 			var selectedOption = document.getElementById('parameter' + parameterIndex).value;
 			if(isJson(selectedOption)) {
 				return JSON.parse(selectedOption);
-			} else {
+			} else if(parameter.selectable){
+				return parameter.options[1].OptionID;
+			}else{
 				intval = parseInt(selectedOption);
 				return (! isNaN(intval) ? intval : selectedOption);
 			}
 		break;
+
+		case "String":
+			var selectedOption = document.getElementById('parameter' + parameterIndex).value;
+			if(selectedOption.length % 2 != 0){
+				selectedOption = "0" + selectedOption
+			}
+			return selectedOption;
+		break;
+
+		case "hexa":
+			return document.getElementById('parameter' + parameterIndex).value.toString();
+		break;
 		
+		case "hexaArray":
+			var bytes = document.getElementById('parameter' + parameterIndex).value.toString();
+			var bytesArray = []
+			for(var i = 0; i< bytes.length; i+=2){
+				bytesArray.push(bytes.slice(i,i+2))
+			}
+			bytesArray.unshift(bytesArray.length)
+			bytesArray = bytesArray.map(el => parseInt(el,16))
+
+
+			return bytesArray;
 		default:
 			if(currentCommandParameters[0].value === "SinglePrecision"){
 				return Number(document.getElementById('parameter' + parameterIndex).value);
@@ -1705,7 +1879,7 @@ function showFinalJson() {
 	var jsonOutput = generateJson();
 	var outputLength = jsonOutput.split(/\r\n|\r|\n/).length; //On adapte la hauteur du bloc de sortie
 	if((thresholdAvailable && checkTresholdOnExceedOnFall()) || !thresholdAvailable){
-		document.getElementById('jsonOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + encoderLangData.finalJsonMsg[lang] + "</p><textarea rows='" + outputLength + "' cols='100' style='resize:none' readonly='readonly'>" + jsonOutput + "</textarea>";
+		document.getElementById('jsonOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalJsonMsg[lang] + "</p><textarea rows='" + outputLength + "' cols='100' style='resize:none' readonly='readonly'>" + jsonOutput + "</textarea>";
 	}
 }
 
@@ -1724,11 +1898,9 @@ function getEncoderFileLocation(callback) {
 			if (callback && typeof callback === 'function') {
 				var serverInfo = request.getResponseHeader("server").toLowerCase();
 				if(!!~serverInfo.indexOf("php")) {
-					callback(getRootUrl() + "LoraEncoderFile/cgi-bin/encoder.php");
+					callback(getRootUrl() + "/lora/LoraEncoderFile/cgi-bin/encoder.php");
 				} else if(!!~serverInfo.indexOf("python")) {
-					callback(getRootUrl() + "LoraEncoderFile/cgi-bin/encoder.py");
-				} else if(!!~serverInfo.indexOf("hubohttpserver")) {
-					callback("encodeFrame");
+					callback(getRootUrl() + "/lora/LoraEncoderFile/cgi-bin/encoder.py");
 				} else {
 					callback(null);
 				}
@@ -1751,16 +1923,19 @@ function showFinalFrame() {
 			if(scriptLocation != null) {
 				jQuery.get(scriptLocation + "?json=" + jsonOutput, function(data, status) {
 					if(status == "success" && !(!!~data.indexOf("errorMsg"))) {
-						document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + encoderLangData.finalFrameMsg[lang] + "</p><textarea rows='10' cols='100' style='resize:none' readonly='readonly'>" + data.trim() + "</textarea>";
+						document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalFrameMsg[lang] + "</p><textarea rows='10' cols='100' style='resize:none' readonly='readonly'>" + data.trim() + "</textarea>";
 					} else {
-						document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + encoderLangData.finalFrameMsg[lang] + "</p><textarea rows='10' cols='100' style='resize:none' readonly='readonly'>" + encoderLangData.errorMsg[lang] + "</textarea>";
+						document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalFrameMsg[lang] + "</p><textarea rows='1' cols='100' style='resize:none' readonly='readonly'>" + langData.errorMsg[lang] + "</textarea>";
 					}
 				});
 			} else {
-				document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + encoderLangData.finalFrameMsg[lang] + "</p><textarea rows='1' cols='100' style='resize:none' disabled>" + encoderLangData.errorMsg[lang] + "</textarea>";
+				document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalFrameMsg[lang] + "</p><textarea rows='1' cols='100' style='resize:none' disabled>" + langData.errorMsg[lang] + "</textarea>";
 			}
 		});
 	}
+	
+	
+	
 }
 
 
@@ -1768,6 +1943,8 @@ function showFinalFrame() {
 
 //Fonction permettant la récupération et l'affichage de la trame pour Fota
 function showFinalTxt(checked,aButton){
+
+	if(document.getElementById('parameter0') != null && document.getElementById('parameter0').value === '') return
 	
 	clearElement("jsonOutput");
 	clearElement("frameOutput");
@@ -1780,14 +1957,14 @@ function showFinalTxt(checked,aButton){
 		fShowFile();
 	}
 	
-	
-	var scriptLocation = getEncoderFileLocation();
 	var jsonOutput = generateJson();
 	
 	rndHex = rndHexValue(4);
 	gRandValueConfig = currentDefaultAddresses[1] + addSpace(rndHex) + "\nq";
 	rndHexToDec = parseInt("" + rndHex.slice(2,4) +rndHex.slice(0,2),16).toString(10);
-	document.getElementById('txtNbEight').innerHTML= encoderLangData.finalConfButton[lang] + '<b>' + rndHexToDec + '</b>';
+	
+	document.getElementById('txtNbEight').innerHTML= langData.finalConfButton[lang] + '<b>' + rndHexToDec + '' + '<br/> Mode configuration :</b>';
+	document.getElementById("txtNbEight").setAttribute("style","line-height: 32px;");
 	if((thresholdAvailable && checkTresholdOnExceedOnFall()) || !thresholdAvailable){
 
 			getEncoderFileLocation(function(scriptLocation) {
@@ -1813,16 +1990,16 @@ function showFinalTxt(checked,aButton){
 						
 						//Vérification de la taille de la trame
 						if ((checked? 6:0) + gDataConcatenateLength > 512){
-							alert(encoderLangData.errorTrame[lang]);
+							alert(langData.errorTrame[lang]);
 							gDataConcatenation = copiegDataConcatenation;
 						}
 
 						//Affichage des trames ou non
 						if(status == "success" && !(!!~data.indexOf("errorMsg"))) {
-							document.getElementById('txtOutput').innerHTML = "<p><span style='font-size: 16px;'> ⑤ </span>" + encoderLangData.finalConfMsg[lang] + "</p><textarea name ='textConf' id='textConfId' rows='5' cols='70' style='resize:none;' readonly='readonly'>" + currentDefaultAddresses[0] + (checked && !gDataConcatenation.startsWith(gDataReset.replace("\n", ''))? gDataReset +"\n" : "") + currentDefaultFrameConcatenated  + gDataConcatenation + gRandValueConfig + "</textarea>";
+							document.getElementById('txtOutput').innerHTML = "<p><span style='font-size: 16px;'> ⑤ </span>" + langData.finalConfMsg[lang] + "</p><textarea name ='textConf' id='textConfId' rows='5' cols='70' style='resize:none;' readonly='readonly'>" + currentDefaultAddresses[0] + (checked && !gDataConcatenation.startsWith(gDataReset.replace("\n", ''))? gDataReset +"\n" : "") + currentDefaultFrameConcatenated  + gDataConcatenation + gRandValueConfig + "</textarea>";
 						}
 						else {
-							document.getElementById('txtOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + encoderLangData.finalConfMsg[lang] + "</p><textarea rows='1' cols='100' style='resize:none' readonly='readonly'>" + encoderLangData.errorMsg[lang] + "</textarea>";
+							document.getElementById('txtOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalConfMsg[lang] + "</p><textarea rows='1' cols='100' style='resize:none' readonly='readonly'>" + langData.errorMsg[lang] + "</textarea>";
 						}
 
 						// Affichage d'un bloc de texte et d'un bouton pour sauvegarder sa configuration
@@ -1834,7 +2011,7 @@ function showFinalTxt(checked,aButton){
 
 										var labelNameFile = document.createElement("label");
 										labelNameFile.htmlFor = nameFile;
-										labelNameFile.textContent = encoderLangData.finalTxtMessLabelInput[lang];
+										labelNameFile.textContent = langData.finalTxtMessLabelInput[lang];
 										document.getElementById("outputContainer").appendChild(labelNameFile);
 										document.getElementById("outputContainer").appendChild(nameFile); 
 										
@@ -1844,37 +2021,18 @@ function showFinalTxt(checked,aButton){
 										downloadFile.id ="downloadFileId";
 										downloadFile.setAttribute("href", URL.createObjectURL(fileBlob));
 										downloadFile.setAttribute("download", "C0.0.0.0_" + currentEmbeddedName +"." + rndHexToDec + (nameFile.value == "" ? "" : "." + nameFile.value) +".txt");
-										downloadFile.appendChild(document.createTextNode(encoderLangData.finalTxtMessDownload[lang]));
+										downloadFile.appendChild(document.createTextNode(langData.finalTxtMessDownload[lang]));
 										downloadFile.style.marginLeft ="5%";
 
 										nameFile.onchange = function() {downloadFile.setAttribute("download", "C0.0.0.0_" + currentEmbeddedName +"." + rndHexToDec + (nameFile.value == "" ? "" + "" : "." + nameFile.value) +".txt")};
 
 										document.getElementById("outputContainer").appendChild(downloadFile);
 
-										var selectConfigDiv = document.createElement("DIV");
 										
-										
-
-										var selectConfig = document.createElement("INPUT");
-										selectConfig.setAttribute("id", "selectFile");
-										selectConfig.setAttribute("type", "file");
-										selectConfig.setAttribute("multiple", "");
-										selectConfig.setAttribute("accept", ".txt");
-										selectConfig.onclick = function () {selectConfig.value = null};
-										selectConfig.onchange = function() {loadFile(selectConfig.files)};
-
-										var labelSelectConfig = document.createElement("label");
-										labelSelectConfig.htmlFor = nameFile;
-										labelSelectConfig.textContent = encoderLangData.finalConfigLoadFile[lang];
-										selectConfigDiv.appendChild(labelSelectConfig);
-
-										selectConfigDiv.appendChild(selectConfig)
-										document.getElementById("outputContainer").appendChild(selectConfigDiv)
 
 									}else{
 										fileBlob = new Blob([document.getElementById('textConfId').value], {type: "application/octet-binary"})
 										document.getElementById("downloadFileId").setAttribute("href", URL.createObjectURL(fileBlob));
-										document.getElementById("downloadFileId").setAttribute("download", "C0.0.0.0_" + currentEmbeddedName +"." + rndHexToDec + (document.getElementById("nameFileId").value == "" ? "" : "." + document.getElementById("nameFileId").value) +".txt");
 									}
 					}
 					);
@@ -1910,7 +2068,7 @@ function loadFile(files){
 		
 	}else{
 		document.getElementById("selectFile").value = null;
-		alert(encoderLangData.errorLoadConf[lang]);
+		alert(langData.errorLoadConf[lang]);
 		return;
 	}
 	if(fileName == currentEmbeddedName){
@@ -1922,28 +2080,41 @@ function loadFile(files){
 			// Returns and line breaks 
 			const lines = file.split(/\r\n|\n/);
 			
-			document.getElementById('txtOutput').innerHTML = "<p><span style='font-size: 16px;'> ⑤ </span>" + encoderLangData.finalConfMsg[lang] + "</p><textarea name ='textConf' id='textConfId' rows='5' cols='70' style='resize:none;' readonly='readonly'>" + lines.join('\n') + "</textarea>";
+			document.getElementById('txtOutput').innerHTML = "<p><span style='font-size: 16px;'> ⑤ </span>" + langData.finalConfMsg[lang] + "</p><textarea name ='textConf' id='textConfId' rows='5' cols='70' style='resize:none;' readonly='readonly'>" + lines.join('\n') + "</textarea>";
 			if(currentDefaultFrame[0] == "0"){
-				var startIndex = lines.indexOf(currentDefaultAddresses[0])+1;
-				var lastIndex = lines.indexOf(currentDefaultAddresses[1]);
+				var startIndex = lines.indexOf(currentDefaultAddresses[0].slice(0,currentDefaultAddresses[0].length-1))+1;
+				var lastIndex = lines.indexOf(currentDefaultAddresses[1].slice(0,currentDefaultAddresses[0].length-1));
 				for(var i=startIndex ; i<lastIndex ; i++){
 					gDataConcatenation += lines[i] + "\n"; 
 				}
+				rndHex = lines[lastIndex+1].replace(" ","");
+				gRandValueConfig = currentDefaultAddresses[1] + addSpace(rndHex) + "\nq";
+				rndHexToDec = parseInt("" + rndHex.slice(2,4) +rndHex.slice(0,2),16).toString(10);
 			}else{
-				var startIndex = lines.indexOf(currentDefaultAddresses[0])+1 + currentDefaultFrame.length;
-				var lastIndex = lines.indexOf(currentDefaultAddresses[1]);
+				var startIndex = lines.indexOf(currentDefaultAddresses[0].slice(0,currentDefaultAddresses[0].length-1))+1 + currentDefaultFrame.length;
+				var lastIndex = lines.indexOf(currentDefaultAddresses[1].slice(0,currentDefaultAddresses[0].length-1));
 				for(var i=startIndex ; i<lastIndex ; i++){
 					gDataConcatenation += lines[i] + "\n"; 
 				}
+				rndHex =lines[lastIndex+1].replace(" ","");
+				gRandValueConfig = currentDefaultAddresses[1] + addSpace(rndHex) + "\nq";
+				rndHexToDec = parseInt("" + rndHex.slice(2,4) +rndHex.slice(0,2),16).toString(10);
 			}
-	}
+			document.getElementById('txtNbEight').innerHTML= langData.finalConfButton[lang] + '<b>' + rndHexToDec + '' + '<br/> Mode configuration :</b>';
+			document.getElementById("txtNbEight").setAttribute("style","line-height: 32px;");
 
-	reader.onerror = (e) => alert(e.target.error.name);  
+			document.getElementById("switchLabel").setAttribute("style","display: inline-block");
+			gFileLoaded = true;
+		}
 
-	reader.readAsText(file);
+		reader.onerror = (e) => alert(e.target.error.name);  
+
+		reader.readAsText(file);
 	}else{
 		document.getElementById("selectFile").value = null;
-		alert(encoderLangData.errorLoadConf[lang]);
+		alert(langData.errorLoadConf[lang]);
+		document.getElementById("switchLabel").setAttribute("style","display: none");
+		gFileLoaded = false;
 	}
 	
 }
@@ -1961,6 +2132,10 @@ function fSelectCom(){
     var selectCom = document.createElement("SELECT");
 	selectCom.setAttribute('id', 'selectCom');
 	selectCom.setAttribute('style','display:none;margin-left:10%;');
+	selectCom.onclick = function(){
+		selectedCom = selectCom.options[selectCom.selectedIndex].value;
+		postCom();
+	}
 	selectCom.onchange = function(){
 		selectedCom = selectCom.options[selectCom.selectedIndex].value;
 		postCom();
@@ -1971,7 +2146,7 @@ function fSelectCom(){
 		x.remove(x.length-1);
 	}
 	var availableCom;
-	$.get("http://localhost:56700/System.txt",function(data){
+	$.get("https://localhost:56700/System.txt",function(data){
 		availableCom = data;
 		data = data.replace(/\n|\r/g,'');
 		data = data.split("=")[1];
@@ -1988,7 +2163,7 @@ function fSelectCom(){
 	},"text");
 	selectCom.onfocus = function(){
 		
-		$.get("http://localhost:56700/System.txt",function(data){
+		$.get("https://localhost:56700/System.txt",function(data){
 		if(availableCom != data){
 			availableCom = data;
 			while(selectCom.options.length > 0){selectCom.remove(0);}
@@ -2012,7 +2187,6 @@ function fSelectFile(){
 	// On créé on bouton selectfile pour choisir un fichier à importer
 	var selectFile = document.createElement("INPUT");
 	selectFile.setAttribute("id", "selectFileId");
-	selectFile.setAttribute("id", "selectFileId");
 	selectFile.setAttribute("type", "file");
 	selectFile.setAttribute("accept", ".txt,.wttc");
 	selectFile.setAttribute('style','display:none;margin-bottom: 2%;margin-left:1%;');
@@ -2021,16 +2195,28 @@ function fSelectFile(){
 }
 
 function confButton(){
+
+	var switchLabel = document.createElement("LABEL");
+	switchLabel.setAttribute("class", "switch");
+	switchLabel.setAttribute("id","switchLabel")
+
 	// On créé un bouton pour envoyer la configuration
 	var postButton = document.createElement("INPUT");
-	postButton.setAttribute("type", "button");
+	postButton.setAttribute("type", "checkbox");
 	postButton.setAttribute("id", "postButton");
-	postButton.setAttribute("value", encoderLangData.click[lang]);
-	postButton.setAttribute("style","float:left;margin-bottom: 2%;");
-	postButton.setAttribute('style','display:none;');
+	postButton.setAttribute("style","float:left;margin-bottom: 2%;display:none;");
+	postButton.setAttribute('style','');
 	postButton.onclick = function() { postHTML(); };
-	document.getElementById("localSetupButton").appendChild(postButton);
 	
+	
+	var switchSlider = document.createElement("SPAN");
+	switchSlider.setAttribute("class", "slider round")
+
+	switchLabel.appendChild(postButton)
+	switchLabel.appendChild(switchSlider)
+
+	document.getElementById("localSetupButton").appendChild(switchLabel);
+
 	var postButtonResult = document.createElement("div");
 	postButtonResult.setAttribute('id','postButtonResultId');
 	postButtonResult.setAttribute('style','display:none;');
@@ -2041,13 +2227,13 @@ function confButton(){
 
 // On affiche les boutons et du texte après demande du text
 function showLocalBlock(){
-	document.getElementById("txtNbSix").setAttribute("style","display:bock;");
-	document.getElementById("selectCom").setAttribute("style","display:bock;");
-	document.getElementById("selectFileId").setAttribute("style","display:bock;");
-	document.getElementById("txtNbSeven").setAttribute("style","display:bock;");
-	document.getElementById("postButton").setAttribute("style","display:bock;");
-	document.getElementById("postButtonResultId").setAttribute("style","display:bock;");
-	document.getElementById("txtNbEight").setAttribute("style","display:bock;");
+	document.getElementById("txtNbSix").setAttribute("style","display:block;");
+	document.getElementById("selectCom").setAttribute("style","display:block;");
+	document.getElementById("selectFileId").setAttribute("style","display:block;");
+	document.getElementById("txtNbSeven").setAttribute("style","display:block;");
+	document.getElementById("switchLabel").setAttribute("style","display:inline-block;");
+	document.getElementById("postButtonResultId").setAttribute("style","display:block;");
+	document.getElementById("txtNbEight").setAttribute("style","display:block;");
 }
 
 
@@ -2060,7 +2246,7 @@ function showLocalConf(){
 	var header = generateTable.createTHead();
 	
 	var row = header.insertRow(0);
-	row.insertCell(0).outerHTML = "<th>" + encoderLangData.name[lang] + "</th>";
+	row.insertCell(0).outerHTML = "<th>" + langData.name[lang] + "</th>";
 	
 	var body = generateTable.createTBody();
 	body.setAttribute("id", "bodyFile");
@@ -2079,7 +2265,17 @@ function fReadAllFile(){
 	function setupReader(file) {
 		// C'est une fonction asynchrone
 		var reader = new FileReader();
-		gDeviceListName = file.name;  
+		gDeviceListName = file.name;
+		
+		// Check if gDeviceListName is correctly formatted for the LoraUpdater
+		let result = [...gDeviceListName.matchAll(/[_]/g)].map(a => a.index);
+
+		let firstCondition = gDeviceListName.startsWith("ListeProduits_"); // Must start with ListeProduits_
+		let secondCondition = !isNaN(gDeviceListName.slice(result[0]+1,result[1])); // Must be followed by numbers
+		
+		if(!(firstCondition && secondCondition)){
+			gDeviceListName = "ListeProduits_" + Math.floor(Math.random() * 10000) +"_" + gDeviceListName;
+		}
 		reader.onload = function(e) {   
 			var text = e.target.result;
 			gDeviceListTemp += text;
@@ -2117,39 +2313,42 @@ function fShow(selectFile) {
 	fShowFile();
 }
 
+var fileFormat;
 
 function fShowFile() {
 	
 	clearElement('bodyFile');
 	clearElement('selectFileId');
 	
+	fileFormat = [];
+
 	var selectFile = document.getElementById("selectFileId");
 	body = document.getElementById("bodyFile");
 	for (var i = 0; i < selectFile.files.length; i++) {
 		row = body.insertRow(i);
 		row.insertCell(0).innerHTML = "<span>" + selectFile.files[i].name + "</span>";
+		fileFormat.push(selectFile.files[i].name.substring(selectFile.files[i].name.indexOf(".")+1));
 	}
 }
 //----------------------------------------------------------------------------------------------------------------------
 //	PARTIE 9 : Fonctions permettant la récupération du fichier DeviceList et l'affichage de ses données dans un tableau
 //----------------------------------------------------------------------------------------------------------------------
 
-var memoireConf = [];
-var memoireTemps = [];
+var scannedDevice = new Map();
 
 function callGetTXT(){
 	let xhr = new XMLHttpRequest();
 
-	xhr.open('GET', 'http://localhost:56700/DeviceList.txt');
+	xhr.open('GET', 'https://localhost:56700/DeviceList.txt');
 	xhr.responseType = 'text';
 	xhr.send();
 	xhr.onload = function() {
 		let responseObj = xhr.response;
-		doThings(responseObj);
+		displayDeviceArray(responseObj);
 	};	
 }
 
-function doThings(fullTxt){
+function displayDeviceArray(fullTxt){
 	
 	var txt = fullTxt; // On récupère le contenu de la réponse get 
 	var l = txt.split('\r\n'); // On la sépare en ligne pour traiter chaque appareil
@@ -2157,7 +2356,7 @@ function doThings(fullTxt){
 	document.getElementById('localSetupTableByGet').innerHTML = "<table class='tablepress' id='tableau'></table>"; // On modofie le code HTML pour intégrer un tableau vierge
 	var tableau = document.getElementById('tableau');
 	var caption = tableau.createCaption();
-	caption.innerHTML = "<p style='font-size: 16px; float:left;'>⑨ <span style='font-size: 16px;'>" + encoderLangData.getDeviceList[lang] + "</span></p>";
+	caption.innerHTML = "<p style='font-size: 16px; float:left;'>⑨ <span style='font-size: 16px;'>" + langData.getDeviceList[lang] + "</span></p>";
 	var header = tableau.createTHead(); // On partitionne le tableau en 2 parties, le header et le body
 	
 	var ligne = header.insertRow(0); //On insère une ligne
@@ -2174,20 +2373,44 @@ function doThings(fullTxt){
 	var body = tableau.createTBody(); 
 	for (var i = 0; i < l.length-1; i++) {
 		ligne = body.insertRow(i);
-		var mot = l[i].split(';'); // On sépare la ligne de notre appareil en mot pour les insérer un par un dans le tableau
-		mot.splice(1,1);
-		for (var j = 0; j < mot.length; j++){
+		var infos = l[i].split(';'); // On sépare la ligne de notre appareil en mot pour les insérer un par un dans le tableau
+		infos.splice(1,1);
+		for (var j = 0; j < infos.length; j++){
+			if(rndHexToDec === 0){
+				ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
+				ligne.setAttribute('style','background-color: white ;'); // White
 
-			if (memoireConf.length != 0 && !memoireConf.includes(mot[7])){
-				ligne.insertCell(j).innerHTML = "<span>" +  mot[j] + "</span>";
-				ligne.setAttribute('style','background-color: #82feb7 ;');
 			}else{
-				ligne.insertCell(j).innerHTML = "<span>" + mot[j] + "</span>";
-				ligne.setAttribute('style','background-color:white;');
+				const wasInList = scannedDevice.has(infos[2])
+				const isSameAsCurrentConfig = infos[7] === rndHexToDec
+				const wasSameAsCurrentConfig = scannedDevice.get(infos[2]) === infos[7]
+				
+				if (scannedDevice.size != 0 && wasInList){
+					if(wasSameAsCurrentConfig && isSameAsCurrentConfig){
+						ligne.insertCell(j).innerHTML = "<span>" + infos[j] + "</span>";
+						ligne.setAttribute('style','background-color:#A4D8A1;');	// Green
+					}else if(isSameAsCurrentConfig){
+						ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
+						ligne.setAttribute('style','background-color: #2FDC26 ;'); // Green flashy
+					}else{
+						ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
+						ligne.setAttribute('style','background-color: white ;'); // White
+					}
+	
+				}else{
+					if(isSameAsCurrentConfig){
+						ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
+						ligne.setAttribute('style','background-color: #2FDC26 ;'); // Green flashy
+					}else{
+						ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
+						ligne.setAttribute('style','background-color: #F15050 ;'); // Red
+					}
+	
+				}
 			}
 
-		}	
-	memoireConf[i] = mot[7];
+		}
+		scannedDevice.set( infos[2], infos[7]);
 	}
 }
 
@@ -2388,7 +2611,7 @@ function checkTresholdOnExceedOnFall(){
 	var lObj = JSON.parse(JSON.stringify(allThreshold));
 	for(var i=0;i<allThreshold.length;i++){
 		if(!lObj[i]["On exceed"] && !lObj[i]["On fall"]){
-			alert(encoderLangData.onCheck[lang]);
+			alert(langData.onCheck[lang]);
 			return false;
 		}
 	}
@@ -2407,21 +2630,21 @@ function addParameterThresh(body) {
 	
 	//Le select Cause request
 	var row = body.insertRow(-1);
-	row.insertCell(0).innerHTML=  encoderLangData.causeRequest[lang];
+	row.insertCell(0).innerHTML=  langData.causeRequest[lang];
 	var selectCauseReq = document.createElement('select'); 
 	
 	var option = document.createElement("option");
-	option.text = encoderLangData.noCause[lang];
+	option.text = langData.noCause[lang];
 	option.value = "No";
 	selectCauseReq.add(option);
 	
 	option = document.createElement("option");
-	option.text = encoderLangData.shortCause[lang];
+	option.text = langData.shortCause[lang];
 	option.value = "Short";
 	selectCauseReq.add(option);
 	
 	option = document.createElement("option");
-	option.text = encoderLangData.longCause[lang];
+	option.text = langData.longCause[lang];
 	option.value = "Long";
 	selectCauseReq.add(option);
 	
@@ -2432,13 +2655,13 @@ function addParameterThresh(body) {
 	
 	};
 	row.insertCell(1).appendChild(selectCauseReq);
-	row.insertCell(2).innerHTML = encoderLangData["causeRequestCom"][lang];
+	row.insertCell(2).innerHTML = langData["causeRequestCom"][lang];
 	
 
 	
 	//La checkbox secured
 	var row = body.insertRow(-1);
-	row.insertCell(0).innerHTML= encoderLangData.secured[lang];
+	row.insertCell(0).innerHTML= langData.secured[lang];
 	var checkboxSecured = document.createElement('input'); 
 
 	checkboxSecured.type = "checkbox"; 
@@ -2447,13 +2670,13 @@ function addParameterThresh(body) {
 	};
 	currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[1].value.Secured = "No";
 	row.insertCell(1).appendChild(checkboxSecured);
-	row.insertCell(2).innerHTML = encoderLangData["securedCom"][lang];
+	row.insertCell(2).innerHTML = langData["securedCom"][lang];
 	
 
 	
 	//La checkbox secured if
 	var row = body.insertRow(-1);
-	row.insertCell(0).innerHTML= encoderLangData.securedIfAlarm[lang];
+	row.insertCell(0).innerHTML= langData.securedIfAlarm[lang];
 	var checkboxSecuredIfAlarm = document.createElement('input'); 
 
 	checkboxSecuredIfAlarm.type = "checkbox"; 
@@ -2462,23 +2685,23 @@ function addParameterThresh(body) {
 	};
 	currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[1].value.SecuredIfAlarm = "No";
 	row.insertCell(1).appendChild(checkboxSecuredIfAlarm);
-	row.insertCell(2).innerHTML = encoderLangData["securedIfAlarmCom"][lang];
+	row.insertCell(2).innerHTML = langData["securedIfAlarmCom"][lang];
 	
 	
 	var row = body.insertRow(-1);
-	row.insertCell(0).innerHTML = encoderLangData.addSlot[lang];
+	row.insertCell(0).innerHTML = langData.addSlot[lang];
 	row.id = "stopHere";
 	// Un bouton pour rajouter des indexs
 	var newCell = row.insertCell(1);
 	var addButton = document.createElement('button');
 	addButton.id = 'firstAddButton';
-	addButton.innerHTML = encoderLangData.add[lang];
+	addButton.innerHTML = langData.add[lang];
 	addButton.onclick = function(){
 		addAThresh(body);
 		addButton.disabled = true;
 	};
 	newCell.appendChild(addButton);
-	row.insertCell(2).innerHTML = encoderLangData["addSlotCom"][lang];
+	row.insertCell(2).innerHTML = langData["addSlotCom"][lang];
 			
 }
 
@@ -2501,7 +2724,7 @@ function setThresh(body){
 		//Un bouton pour supprimer des indexs
 		var newCell = separateRow.insertCell(2);
 		var deleteButton = document.createElement('button');
-		deleteButton.innerHTML = encoderLangData.del[lang];
+		deleteButton.innerHTML = langData.del[lang];
 		deleteButton.id = j;
 		deleteButton.onclick = function(){
 			deleteAThresh(body,this.id);
@@ -2518,7 +2741,7 @@ function setThresh(body){
 				  
 					var row = body.insertRow(-1);
 					row.id = "row_" +property+"_"+j;
-					row.insertCell(0).innerHTML= encoderLangData[propertyName][lang];
+					row.insertCell(0).innerHTML= langData[propertyName][lang];
 					var input = document.createElement('input'); 
 					input.type = "number";
 					input.min = 0;
@@ -2581,7 +2804,7 @@ function setThresh(body){
 					inputTout.appendChild(inputText);
 					
 					row.insertCell(1).appendChild(inputTout);
-					row.insertCell(2).innerHTML = encoderLangData[propertyName+"Com"][lang];
+					row.insertCell(2).innerHTML = langData[propertyName+"Com"][lang];
 					break;
 					
 					
@@ -2589,7 +2812,7 @@ function setThresh(body){
 					if(Array.isArray(allThreshold[j][property])){
 						var row = body.insertRow(-1);
 						row.id = "row_" +property+"_"+j;
-						row.insertCell(0).innerHTML= encoderLangData[propertyName][lang];
+						row.insertCell(0).innerHTML= langData[propertyName][lang];
 						var selection = document.createElement('select');
 						selection.id = property+"_"+j;
 						selection.name = property;		
@@ -2668,7 +2891,7 @@ function setThresh(body){
 						};
 						selection.selectedIndex = allThreshold[j]["selected"+property];
 						row.insertCell(1).appendChild(selection);
-						row.insertCell(2).innerHTML = encoderLangData[propertyName+"Com"][lang];
+						row.insertCell(2).innerHTML = langData[propertyName+"Com"][lang];
 						
 					} else{
 					   
@@ -2679,7 +2902,7 @@ function setThresh(body){
 				  case 'boolean':
 					var row = body.insertRow(-1);
 					row.id = "row_" +property+"_"+j;
-					row.insertCell(0).innerHTML= encoderLangData[propertyName][lang];
+					row.insertCell(0).innerHTML= langData[propertyName][lang];
 					var Checkbox = document.createElement('input'); 
 					Checkbox.type = "checkbox";
 					Checkbox.id = property+"_"+j;
@@ -2689,7 +2912,7 @@ function setThresh(body){
 						allThreshold[(this.id).split("_")[1]][this.name] = this.checked;
 					};
 					row.insertCell(1).appendChild(Checkbox);
-					row.insertCell(2).innerHTML = encoderLangData[propertyName+"Com"][lang];
+					row.insertCell(2).innerHTML = langData[propertyName+"Com"][lang];
 					break;
 				}
 			}
@@ -2710,10 +2933,10 @@ function setThresh(body){
 			separateRowCell2 = separateRow.insertCell(2);
 			
 			var dynamicButton = document.createElement("button");
-			dynamicButton.innerText = encoderLangData.add[lang];
+			dynamicButton.innerText = langData.add[lang];
 			dynamicButton.id = j;
 			dynamicButton.onclick = function(){
-				if(this.innerText === encoderLangData.add[lang]){
+				if(this.innerText === langData.add[lang]){
 					dynamicButton.onchange();
 					addAThresh(body);
 				}else{
@@ -2776,7 +2999,7 @@ function deleteAThresh (body,i){
 	}
 	setThresh(body);
 	if (allThreshold.length == 0){
-		alert(encoderLangData.warningSlot[lang]);
+		alert(langData.warningSlot[lang]);
 	}
 }
 
@@ -2856,11 +3079,11 @@ function fromIhmToJson(){
 function beautify(STR){
 	var strList = (STR.toLowerCase()).split('');
 	var indices = [];
-	var élément = ' ';
-	var idx = STR.indexOf(élément);
+	var el = ' ';
+	var idx = STR.indexOf(el);
 	while (idx != -1) {
 	  indices.push(idx);
-	  idx = STR.indexOf(élément, idx + 1);
+	  idx = STR.indexOf(el, idx + 1);
 	}
 	
 	for (element in indices){
