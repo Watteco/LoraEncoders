@@ -16,7 +16,7 @@
 								{
 									"ParameterID": "AttributeType",
 									"editable": false,
-									"value": "Int16"
+									"value": "UInt16"
 								},
 								{
 									"ParameterID": "ReportParameters",
