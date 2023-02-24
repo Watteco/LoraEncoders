@@ -21,7 +21,7 @@
 			"file": "50-70-098-Intenso"
 		},
 		{
-			"name": "Modbus (50-70-[080/109]) - under construction",
+			"name": "Modbus (50-70-[080/109])",
 			"file": "50-70-080-Modbus"
 		},		
 		{
@@ -111,6 +111,10 @@
 		{
 			"name": "Vaqa'O (50-70-168)",
 			"file": "50-70-168-VAQAO"
+		},
+		{
+			"name": "Flash'O 3 probes (50-70-206)",
+			"file": "50-70-206-Flash'O-3-probes"
 		}
 	],
 	"in_developpement_products": [

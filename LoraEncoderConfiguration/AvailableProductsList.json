@@ -63,6 +63,10 @@
 		{
 			"name": "Ventil'O (50-70-[064/101/166])",
 			"file": "50-70-064-Ventil'o"
+		},
+		{
+			"name": "Flash'O 3 probes (50-70-206)",
+			"file": "50-70-206-Flash'O-3-probes"
 		}
 	],
 	"in_developpement_products": [
