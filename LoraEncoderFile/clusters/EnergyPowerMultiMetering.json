@@ -1,6 +1,6 @@
 {
     "clusterID":"EnergyPowerMultiMetering",
-    "clusterName":["Energy And Power Multi Metering","Mesure multiples des énergies et puissances"],
+    "clusterName":["Energy And Power Multi Metering - Available since v3.5.2.6041","Mesure multiples des énergies et puissances - Disponible depuis la v3.5.2.6041"],
     "expert":false,
     "attributes":[
                  {
