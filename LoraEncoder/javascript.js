@@ -618,7 +618,7 @@ function switchMode() {
 }
 
 // ARRAY STORING ALL REQUIRED PRODUCT CLUSTERS.
-// This array is build from all different JSON descriptions taht can contains templates (populateXXXX functions below)
+// This array is build from all different JSON descriptions that can contain templates (populateXXXX functions below)
 gProductClustersArray = [];
 
 function populateSubParametersListTemplates(PopulatedClusterIndex, ClusterIndex,AttributeIndex,CommandIndex=0,ParameterIndex=0) {
@@ -926,7 +926,7 @@ function switchCategory(lCurrentReportType = 0) {
 	}
 	// Si on a le cluster choisis actuel qui permet le report Batch on lance la fonction updateBatchData
 	
-	if(currentReportType == 1 && checkBatchAvailability())
+	if(currentReportType == 1 && checkBatchAvailability() && currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].CommandID !== "ReadReportingConfiguration")
 	{
 
 		document.getElementById("parameter0").onchange = function(){updateBatchData()};
@@ -1591,18 +1591,16 @@ function modifyParameter() {
 
 function checkBatchAvailability(){
 	let lBool = false;
-	if(currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].CommandID === "ConfigureReporting"){
-		
-		currentProductData.clusters.forEach(function(cluster){
-			if(cluster.batch != undefined && cluster.clusterID === currentCluster){
-				cluster.batch.forEach(function(attributeBatch){
-					if(attributeBatch.attribute === currentClusterData.attributes[currentAttributeIndex].AttributeID && !(currentSelectedMode == 0 && attributeBatch.config == undefined)){
-						lBool = attributeBatch.available;
-					}
-				})
-			}
-		});
-	}
+ 
+	currentProductData.clusters.forEach(function(cluster){
+		if(cluster.batch != undefined && cluster.clusterID === currentCluster){
+			cluster.batch.forEach(function(attributeBatch){
+				if(attributeBatch.attribute === currentClusterData.attributes[currentAttributeIndex].AttributeID && !(currentSelectedMode == 0 && attributeBatch.config == undefined)){
+					lBool = attributeBatch.available;
+				}
+			})
+		}
+	});
 	return lBool;
 }
 

@@ -185,11 +185,7 @@
 									"editable": false,
 									"value": {
 										"New": "No",
-										"Reserved": 0,
-										"CauseRequest": "No",
-										"SecuredIfAlarm": "No",
-										"Secured": "No",
-										"NoHeaderPort": "No",
+										"Size": 0,
 										"Batch": "Yes"
 									}
 								}
