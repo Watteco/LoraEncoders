@@ -1,6 +1,6 @@
 {
    "clusterID":"VoltageCurrentMultiMetering",
-   "clusterName":["Voltage And Current Multi Metering","Mesure Multiple des tensions et courants"],
+   "clusterName":["Voltage And Current Multi Metering - Not available","Mesure Multiple des tensions et courants - Non Disponible"],
    "expert":false,
    "attributes":[
 				{
