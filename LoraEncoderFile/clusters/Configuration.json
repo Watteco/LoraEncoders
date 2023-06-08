@@ -469,6 +469,77 @@
             ]
         },
         {
+            "AttributeID": "Action0",
+            "commands": [
+                {
+                    "CommandID": "ReadAttribute",
+                    "name": [
+                        "Action0 - Read the application type of the remote sensor",
+                        "Action0 - Lire le type d'application du capteur distant"
+                    ],
+                    "expert": true
+                },
+                {
+                    "CommandID": "WriteAttributeNoResponse",
+                    "name": [
+                        "Action0 - Write attribute no response",
+                        "Action0 - Write attribute no response."
+                    ],
+                    "expert": true,
+                    "parameters": [
+                        {
+                            "ParameterID": "AttributeType",
+                            "editable": false,
+                            "value": "ByteString"
+                        },
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "type": "data",
+                            "subParameters": [
+                                {
+                                    "ParameterID": "DataLength",
+                                    "name": [
+                                        "Length of the data",
+                                        "Longueur de la trame"
+                                    ],
+                                    "editable": false,
+                                    "comment": [
+                                        "---",
+                                        "---"
+                                    ],
+                                    "range": [
+                                        0,
+                                        13
+                                    ],
+                                    "multiplier": 1,
+                                    "type": "number"
+                                },
+                                {
+                                    "ParameterID": "Bytes",
+                                    "fieldIndex": 0,
+                                    "name": [
+                                        "Set the current Request frame.",
+                                        "Définissez la trame de requête actuelle."
+                                    ],
+                                    "editable": true,
+                                    "comment": [
+                                        "Trame hexa",
+                                        "Trame hexa"
+                                    ],
+                                    "range": [
+                                        0,
+                                        80
+                                    ],
+                                    "type": "hexa"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "AttributeID": "Action1",
             "commands": [
                 {

@@ -65,3 +65,90 @@ fieldset {
   margin: 0;
   padding: 0;
 }
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+  transition: all ease-in-out 200ms;
+}
+
+/* The Close Button */
+.close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+
+#createFile {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.modal-title {
+  text-align: center;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.modal-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.modal-section .form{
+  display: flex;
+  flex-direction: column;
+  width:450px;
+}
+
+.modal-section .form input{
+ float: right;
+ width: 100%;
+}
+
+.modal-section .form label{
+  margin: 2px 0px;
+ }
+
+#createDevice {
+  background-color: #F0F0F0;
+  border: 1px solid;
+}
+ 
+.modal-section .devices{
+  display: flex;
+  flex-direction: column;
+
+  width: 300px;
+  min-height: 200px;
+  border: 1px solid black;
+}
+

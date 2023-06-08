@@ -68,8 +68,8 @@
                                      "fieldIndex" : 0,
                                      "name":["Report on slave modbus answer variation","Report sur variation de la réponse de l'esclave modbus"],
                                      "editable":true,
-                                     "comment":["0: no report on variation\n1: report on variation","0: pas de report sur variation\n1: report sur variation"],
-                                     "range":[0,1],
+                                     "comment":["0: no report on variation","0: pas de report sur variation"],
+                                     "range":[0,0],
                                      "type":"String"
                                   }
                                ]
@@ -105,9 +105,14 @@
                      "AttributeID":"HeaderOption",
                      "commands":[
                         {
+                            "CommandID": "ReadAttribute",
+                            "name": ["Header - Ask the current Header option of the cluster","En-tête - Demander l'option d'en-tête actuelle du cluster"],
+                            "expert": true
+                        },
+                        {
                             "CommandID": "WriteAttributeNoResponse",
                             "name": ["Header - Set the current value of the Header option","En-tête - Définir la valeur actuelle de l'option En-tête"],
-                            "expert": true,
+                            "expert": false,
                             "parameters": [
                                 {
                                     "ParameterID": "AttributeType",

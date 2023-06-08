@@ -199,11 +199,7 @@
 									"editable": false,
 									"value": {
 										"New": "No",
-										"Reserved": 0,
-										"CauseRequest": "No",
-										"SecuredIfAlarm": "No",
-										"Secured": "No",
-										"NoHeaderPort": "No",
+										"Size": 0,
 										"Batch": "Yes"
 									}
 								}
@@ -405,11 +401,7 @@
 									"editable": false,
 									"value": {
 										"New": "No",
-										"Reserved": 0,
-										"CauseRequest": "No",
-										"SecuredIfAlarm": "No",
-										"Secured": "No",
-										"NoHeaderPort": "No",
+										"Size": 0,
 										"Batch": "Yes"
 									}
 								}
@@ -619,6 +611,78 @@
 							"mantissa": 1,
 							"multiplier": 1,
 							"unit": ["ms","ms"]
+						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "PollPeriod",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["PollPeriod - Read the current debounce period","Période de sondage - Lire la durée d'anti rebond actuelle"],
+					"expert": false
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["PollPeriod - Write the debounce period of the remote sensor","Période de sondage - Définir la durée de l'anti rebond du capteur distant"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "UInt16"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Poll period to be set","Période de sondage à définir"],
+							"editable": true,
+							"comment": ["---","---"],
+							"range": [0,65535],
+							"type": "number",
+							"mantissa": 1,
+							"multiplier": 1,
+							"unit": ["ms","ms"]
+						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "ForceNotify",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["ForceNotify - Read the current polarity of the remote sensor","Forcer la notification - Lire la polarité actuelle du capteur distant"],
+					"expert": false
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["ForceNotify - Write the polarity of the remote sensor","Forcer la notification - Définir la polarité du capteur distant"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "Boolean"
+						},
+						{
+							"ParameterID": "Data",
+							"name": ["Force notify to be set","Forcer la notification à définir"],
+							"editable": true,
+							"comment": ["---","---"],
+							"type": "select",
+							"options": [
+								{
+									"OptionID": 0,
+									"name": ["Normal","Normale"]
+								},
+								{
+									"OptionID": 1,
+									"name": ["Reversed","Inversée"]
+								}
+							]
 						}
 					]
 				}

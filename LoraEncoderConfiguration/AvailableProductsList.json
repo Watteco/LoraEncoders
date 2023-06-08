@@ -9,7 +9,7 @@
 			"file": "50-70-016-Ino"
 		},		
 		{
-			"name": "Modbus (50-70-[080/109]) - under construction",
+			"name": "Modbus (50-70-[080/109])",
 			"file": "50-70-080-Modbus"
 		},
 		{
@@ -33,8 +33,12 @@
 			"file": "50-70-043-003-RT"
 		},
 		{
-			"name": "Remote Temperature 2CTN (50-70-[163/184)",
+			"name": "Remote temperature 2 CTN (50-70-[163/184])",
 			"file": "50-70-139-000-RT2CTN"
+		},
+		{
+			"name": "Remote temperature humidité (50-70-200)",
+			"file": "50-70-200-RTH"
 		},
 		{
 			"name": "Outdoor Temperature (50-70-164)",
@@ -53,12 +57,16 @@
 			"file": "50-70-085-T"
 		},
 		{
-			"name": "Triphaso (50-70-[105/145])",
+			"name": "Triphas'O (50-70-[105/145/146])",
 			"file": "50-70-105-Triphaso"
 		},
 		{
 			"name": "Ventil'O (50-70-[064/101/166])",
 			"file": "50-70-064-Ventil'o"
+		},
+		{
+			"name": "Flash'O 3 probes (50-70-206)",
+			"file": "50-70-206-Flash'O-3-probes"
 		}
 	],
 	"in_developpement_products": [

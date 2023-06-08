@@ -41,7 +41,7 @@ var lang = getLang();
 // 	} else {
 // 		console.log('page was not reloaded');
 // 		if (gLocalConfiguration && !isSwitchingLang) {
-// 			navigator.sendBeacon("http://localhost:56700/System.txt","Action=Quit");
+// 			navigator.sendBeacon("https://localhost:56700/System.txt","Action=Quit");
 // 			console.log("Fermeture du logiciel");
 // 		}
 // 	}
@@ -129,6 +129,10 @@ var langData = {
 	finalConfMsg: ["Your configuration is available below:","Votre configuration est disponible ci-dessous:"],
 	finalSelectMsgCom: ["Fill in your COM port.","Renseignez votre port COM."],
 	finalSelectMsgSelect: ["Select your DeviceList.","Sélectionner votre DeviceList."],
+	customFile: ["Custom your device list","Modifier votre liste d'appareils"],
+	listCustomDevice: ["Devices in list","Appareils dans la liste"],
+	addDevice: ["Add this device","Ajouter cet appareil"],
+	createFile: ["Create file","Créer ce fichier"],
 	finalConfButton:["⑧ Enter the configuration mode to send your configuration n°","⑧ Entrer en mode configuration pour envoyer votre configuration n°"],
 	errorLoadConf: ["The configuration you chose doesn't match with the selected device.","Vous avez sélectionné une configuration qui n'est pas valable pour ce capteur"],
 	errorMsg: ["An error has occurred ! Please try again.","Une erreur est survenue ! Veuillez réessayer."],
@@ -175,8 +179,9 @@ var gDataConcatenation = "";
 var gDataConcatenateLength = Number(gDataConcatenation.length);
 var gDeviceList = '';
 var gDeviceListName = '';
-var gFileLoaded = false;
-
+var gDeviceListCustom = [];
+var gDeviceTempListCustom = [];
+var gDeviceInputCorrect = {'addDevEUI' : false, 'addNwkSKeyABP' : false, 'addAppSKeyABP' : false, 'addAppKey' : false};
 
 // Variable contenant la config de base des batchs
 var configBatch = [];
@@ -293,8 +298,8 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 
 		document.getElementById("fieldset").setAttribute("disabled","true")
 		postCom();
-
-		dataFile = gDeviceList;
+		
+		let start = "DevEUI;ABP_DevAddr;ABP_NwkSKey;ABP_AppSKey;CodeFamille;Version;OTA_AppKey;OTA_AppEUI;Unconfirmed;CodeFamillePF;Synchro;Adr\n"
 
 		var date = formatDate();
 		var lrndHex = "" + rndHex.slice(2,4) +rndHex.slice(0,2);
@@ -310,7 +315,7 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 
 					var xhr = new XMLHttpRequest();
 					
-					xhr.open("POST", path + gDeviceListName, true);
+					xhr.open("POST", path + "ListeProduits_" + Math.floor(Math.random() * 10000) + ".txt" , true);
 					//fileFormat[0] === "txt" ? xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8") : xhr.setRequestHeader("Content-Type", "Application/octet-stream") ;
 					xhr.setRequestHeader("Content-Type", "text/plain");
 					xhr.setRequestHeader("Accept","*/*");
@@ -321,7 +326,10 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 								console.log('An error occured while transferring your list of product');
 							}
 						}
-					xhr.send(dataFile);
+						
+					xhr.send(createdFileFormatted())
+					
+
 					
 				}  else if(this.status === 0){
 					alert(langData.errorFota[lang]);
@@ -358,6 +366,7 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 function postCom(){
 	
 	var xhr = new XMLHttpRequest();
+	//xhr.open("POST", 'https://localhost:56700/System.txt', true);
 	xhr.open("POST", 'http://localhost:56700/System.txt', true);
 	//xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
 	//xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
@@ -488,7 +497,7 @@ function getAllAvailableProducts() {
 }
 
 function getEmbeddedProductName() {
-	getJSON(getRootUrl() + "LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -501,7 +510,7 @@ function getEmbeddedProductName() {
 }
 
 function getDefaultFrame() {
-	getJSON(getRootUrl() + "LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -518,7 +527,7 @@ function getDefaultFrame() {
 	)
 }
 function getDefaultAddresses() {
-	getJSON(getRootUrl() + "LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -597,7 +606,7 @@ function switchProduct() {
 	
 	}
 	
-	getJSON(getRootUrl() + "LoraEncoderFile/products/" + currentProduct + ".json?v=" + (new Date()).getTime(), //Récupération des données de ce produit à partir du fichier .json correspondant
+	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/" + currentProduct + ".json?v=" + (new Date()).getTime(), //Récupération des données de ce produit à partir du fichier .json correspondant
 		function(err, productData) { //Ces données sont enregistrées dans la variable "productData"
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -665,7 +674,7 @@ function populateSubParametersListTemplates(PopulatedClusterIndex, ClusterIndex,
 				SubParametersListTemplate = parameterData.SubParametersListTemplate.replace('&ClusterID',clusterData.clusterID);
 				SubParametersListTemplate = SubParametersListTemplate.replace('&AttributeID',clusterData.attributes[AttributeIndex].AttributeID);
 				// Look for specified template
-				getJSON2(getRootUrl() + "LoraEncoderFile/clusters/" + SubParametersListTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + SubParametersListTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, obj, params) { 
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -693,7 +702,7 @@ function populateCommandsTemplates(PopulatedClusterIndex, ClusterIndex,Attribute
 		attributeData = clusterData.attributes[AttributeIndex];
 		if (typeof(attributeData) !== 'undefined'){
 			if (typeof(attributeData.CommandsTemplate) !== 'undefined') {
-				getJSON2(getRootUrl() + "LoraEncoderFile/clusters/" + attributeData.CommandsTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + attributeData.CommandsTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, obj, params) { 
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -740,7 +749,7 @@ function populateProductClusters(ClusterIndex=0) {
 		currentCluster = currentProductData.clusters[ClusterIndex];
 		if (typeof(currentCluster) !== 'undefined'){
 			if ((typeof(currentCluster.subProductID) == 'undefined') || (currentCluster.subProductID.indexOf(currentSubProduct) > -1)) {
-				getJSON2(getRootUrl() + "LoraEncoderFile/clusters/" + currentCluster.clusterID + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + currentCluster.clusterID + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, clusterData,params) { //Ces données sont enregistrées dans la variable "clusterData"
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -862,7 +871,7 @@ function switchCategory(lCurrentReportType = 0) {
 	var attributeData = clusterData.attributes[currentAttributeIndex];
 	var commandData = attributeData.commands[currentCommandIndex];
 
-	if(currentCustomData != null){
+	if(currentCustomData != null && commandData.CommandID === "ConfigureReporting"){
 		if(commandData.ReportType == undefined){
 			if(currentCustomData["Data.range"] != undefined) commandData.parameters.find(parameter => parameter.ParameterID == "Data").range = currentCustomData["Data.range"][Number(document.getElementById("endpointSelect").selectedIndex)];
 			if(currentCustomData["Data.unit"] != undefined) commandData.parameters.find(parameter => parameter.ParameterID == "Data").unit = currentCustomData["Data.unit"][Number(document.getElementById("endpointSelect").selectedIndex)];
@@ -917,24 +926,31 @@ function switchCategory(lCurrentReportType = 0) {
 					
 		currentCommandParameters.forEach(function(element) {
 			//Pour chacun des paramètres de la commande comme variables locale "element"
-			if(element.editable) { //Si le paramètre est modifiable
+			selectable = (typeof(element.selectable)== 'undefined' ? false : element.selectable);
+			if ((element.editable) ||(selectable)) { //Si le paramètre est modifiable ou sélectionable on le montre
 				if(element.type == "data" || element.type == "array") {
 					element.subParameters.forEach(function(subParameter) {
-						selectable = (typeof(element.selectable)== 'undefined' ? false : element.selectable);
 						if(subParameter.editable) {
 							if(currentCluster == "Configuration" && currentReportType == 0 && !thresholdAvailable && subParameter.type == "number"){
 								if(currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource.indexOf(subParameter.fieldIndex) != -1){
 															
-									addParameterRow(body,i,parameterIndex,subParameter,selectable,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
+									addParameterRow(body,i,parameterIndex,subParameter); //Appel de notre fonction d'ajout de ligne
 									parameterIndex++; //On incrémente le numéro d'index du paramètre
 									i++; //On incrémente "i"
 								}
 							}
 							else{
-								addParameterRow(body,i,parameterIndex,subParameter,selectable,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
+								addParameterRow(body,i,parameterIndex,subParameter,selectable,undefined,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
 									parameterIndex++; //On incrémente le numéro d'index du paramètre
 									i++; //On incrémente "i"
 							}
+						}else if(subParameter.ParameterID == undefined){
+							subParameter.forEach(sub => {
+								addParameterRow(body,i,parameterIndex,sub,sub.selectable,sub.editable,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
+								parameterIndex++; //On incrémente le numéro d'index du paramètre
+								i++; //On incrémente "i"
+							});
+							
 						}
 						});
 				} else {
@@ -1029,7 +1045,7 @@ function switchCategory(lCurrentReportType = 0) {
 	
 }	
 
-function getParameterInfos(parameter,infos) {
+function getParameterInfos(parameter,infos,selectable=false, InstanceRange=[0,0]) {
 	// Infos output will be :  infos = { unit: "", comment : "", range: [], EndPointDependant: false };
 	
 	infos.unit = parameter.unit[lang];
@@ -1048,7 +1064,7 @@ function getParameterInfos(parameter,infos) {
 	currentProductData.clusters.forEach(function(selectedCluster){
 		if (selectedCluster.clusterID == currentCluster) {
 			//Look for customAttributes by endpoint
-			if (Array.isArray(selectedCluster["customAttributes"]) && !(parameter.ParameterID).startsWith("Tag")) {
+			if (Array.isArray(selectedCluster["customAttributes"]) && !(parameter.ParameterID).startsWith("Tag") && parameter.type != "time") {
 				infos.EndPointDependant = true;
 				if(currentCustomData["Data.range"] != undefined) infos.range = currentCustomData["Data.range"][EndPointValue];
 				if(currentCustomData["Data.unit"] != undefined) infos.unit = currentCustomData["Data.unit"][EndPointValue][lang];
@@ -1108,12 +1124,24 @@ function getParameterInfos(parameter,infos) {
 }	
 
 
-function UpdateStdFields(parameter,infos) {
+function UpdateStdFields(parameter,infos, editable = true) {
+	if(editable){
+		parameter.row.cells[1].innerHTML = 
+		"<input type='number' step='" + (1/(parameter.mantissa)) + 
+			"' value='" + 
+			(Array.isArray(infos.range) ? infos.range[0]:0) + "' " +
+			(Array.isArray(infos.range) ? " min='" + infos.range[0] + "' max='" + infos.range[1] + "' "  : "") + 
+			"onchange='modifyParameter()' id='parameter" + parameter.index + 
+			"'> " + infos.unit ; //Insertion du champ pour rentrer la valeur correspondant à l'option
 		
-	parameter.row.cells[1].innerHTML = 
-		"<input type='number' step='" + (1/(parameter.mantissa)) + "' value='" + (Array.isArray(parameter.range[0]) ? parameter.range[0][0]:parameter.range[0]) + "' " +
-		(Array.isArray(infos.range) ? " min='" + infos.range[0] + "' max='" + infos.range[1] + "' "  : "") + 
-		"onchange='modifyParameter()' id='parameter" + parameter.index + "'> " + infos.unit ; //Insertion du champ pour rentrer la valeur correspondant à l'option
+		parameter.row.cells[2].outerHTML = 
+			"<td id='interval" + parameter.index + "'>" + infos.comment + 
+			(Array.isArray(infos.range) || (infos.unit[lang] != "") ?
+			" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1] + " " : "") +
+			infos.unit + ")</td>"
+			: "")
+	}else{
+		parameter.row.cells[1].innerHTML = "" ; //Insertion du champ pour rentrer la valeur correspondant à l'option
 	
 	parameter.row.cells[2].outerHTML = 
 		"<td id='interval" + parameter.index + "'>" + infos.comment + 
@@ -1121,6 +1149,7 @@ function UpdateStdFields(parameter,infos) {
 		" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1] + " " : "") +
 		infos.unit + ")</td>"
 		: "");
+	}	
 	
 }
 
@@ -1191,10 +1220,12 @@ function updateBatchData(){
 							}
 							// Si les des options ne sont pas dans les fiedIndex dispo on les enlève
 							var options = document.getElementById("parameter0").options;
-							for(let i=0;i<options.length;i++){
-								if(!availableField.includes(Number(options[i].value))){
-									document.getElementById("parameter0").removeChild(options[i]);
-									i--;
+							if (!(availableField.length == 1 && availableField[0] == 0)) { // Ne rien retirer si pas de config
+								for(let i=0;i<options.length;i++){
+									if(!availableField.includes(Number(options[i].value))){
+										document.getElementById("parameter0").removeChild(options[i]);
+										i--;
+									}
 								}
 							}
 						}
@@ -1504,23 +1535,13 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 function selectSource(){
 	sourceSelecter = document.getElementById("parameter2");
 	if(sourceSelecter != null){
-	var allSource = [2,3,4];
-	var correspondanceBit = [1,2,4];
 
-	var ourSource = currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource;
-	var ourCorrespondanceBit = [];
+		var ourSource = currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource;
 
-	for(i in ourSource){
-		ourCorrespondanceBit[i] = correspondanceBit[allSource.indexOf(ourSource[i])]
-	}
-	var sum = ourCorrespondanceBit.reduce(function(a, b){return a + b;}, 0);
+		var sum = ourSource.length === 1 ?  ourSource[0] :ourSource.reduce(function(a, b){return a + b;}, 0);
 
-	for(var i=0;i<sourceSelecter.options.length;i++){
-		if(Number(sourceSelecter.options[i].value) === sum){
-			sourceSelecter.selectedIndex = sourceSelecter.options[i].index;
-		}
-	}
-	sourceSelecter.disabled = true;
+		sourceSelecter.options[sum-1].selected = true;
+		sourceSelecter.disabled = true;
 	}
 }
 //--------------------------------------------------------------------------------------------------
@@ -1918,9 +1939,9 @@ function getEncoderFileLocation(callback) {
 			if (callback && typeof callback === 'function') {
 				var serverInfo = request.getResponseHeader("server").toLowerCase();
 				if(!!~serverInfo.indexOf("php")) {
-					callback(getRootUrl() + "LoraEncoderFile/cgi-bin/encoder.php");
+					callback(getRootUrl() + "/lora/LoraEncoderFile/cgi-bin/encoder.php");
 				} else if(!!~serverInfo.indexOf("python")) {
-					callback(getRootUrl() + "LoraEncoderFile/cgi-bin/encoder.py");
+					callback(getRootUrl() + "/lora/LoraEncoderFile/cgi-bin/encoder.py");
 				} else {
 					callback(null);
 				}
@@ -1976,7 +1997,7 @@ function showFinalTxt(checked,aButton){
 		showLocalConf();
 		fShowFile();
 	}
-
+	
 	var jsonOutput = generateJson();
 	
 	rndHex = rndHexValue(4);
@@ -2081,7 +2102,7 @@ function loadFile(files){
        only variable, hence immutable. To make any changes,  
        changing const to var, here and In the reader.onload  
        function would be advisible */
-	gDataConcatenation = "";
+	gDataConcatenation = "";   
 	const file = files[0]; 
 	var fileName;
 	if (file.name.includes("_") && file.name.split("_")[1].includes(".")){
@@ -2167,6 +2188,7 @@ function fSelectCom(){
 		x.remove(x.length-1);
 	}
 	var availableCom;
+	//$.get("https://localhost:56700/System.txt",function(data){
 	$.get("http://localhost:56700/System.txt",function(data){
 		availableCom = data;
 		data = data.replace(/\n|\r/g,'');
@@ -2184,6 +2206,7 @@ function fSelectCom(){
 	},"text");
 	selectCom.onfocus = function(){
 		
+		//$.get("https://localhost:56700/System.txt",function(data){
 		$.get("http://localhost:56700/System.txt",function(data){
 		if(availableCom != data){
 			availableCom = data;
@@ -2205,15 +2228,199 @@ function fSelectCom(){
 
 
 function fSelectFile(){
-	// On créé on bouton selectfile pour choisir un fichier à importer
+	// On créé on bouton selectfile pour choisir un fichier à importer, ou le créer
 	var selectFile = document.createElement("INPUT");
 	selectFile.setAttribute("id", "selectFileId");
 	selectFile.setAttribute("type", "file");
 	selectFile.setAttribute("accept", ".txt,.wttc");
 	selectFile.setAttribute('style','display:none;margin-bottom: 2%;margin-left:1%;');
 	selectFile.onchange = function() { fShow(selectFile); };
+
+	var textBetween = document.createElement('div')
+	textBetween.setAttribute("id", "selectFileTextId");
+	textBetween.setAttribute('style','display:none; margin-top: 10px;');
+	textBetween.innerHTML = langData.or[lang]
+
+	var createFileModal = document.createElement("INPUT");
+	createFileModal.setAttribute("id", "customFile");
+	createFileModal.setAttribute("type", "button");
+	createFileModal.setAttribute('style','display:none;');
+	createFileModal.value = langData.customFile[lang];
+
+	// Get the modal
+	var modal = document.getElementById("myModal");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks on the button, open the modal
+	createFileModal.onclick = function() {
+		modal.style.display = "block";
+		displayCustomDeviceList();
+		gDeviceTempListCustom = [...gDeviceListCustom]
+
+		if(gDeviceTempListCustom.length === 0) document.getElementById('createFile').disabled = true
+	}
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+
+	fModalFunction()
+	
 	document.getElementById("localSetupDownload").appendChild(selectFile);
+	document.getElementById("localSetupDownload").appendChild(textBetween);
+	document.getElementById("localSetupDownload").appendChild(createFileModal);
 }
+
+function checkInput(event){
+	let target = event.target
+	
+	const regex = new RegExp(target.minLength === 16 ? /\b[0-9A-F]{16}\b/gi : /\b[0-9A-F]{32}\b/gi)
+	
+	if(!regex.test(target.value)){
+		document.getElementById(target.id).style.color = 'red'
+		gDeviceInputCorrect[target.id] = false
+	}else {
+		document.getElementById(target.id).style.color = 'black'
+		gDeviceInputCorrect[target.id] = true
+	}
+
+	for(let [key, value] of Object.entries(gDeviceInputCorrect)){
+		if(!value){
+			document.getElementById('createDevice').disabled = true
+			return
+		}
+	}
+	document.getElementById('createDevice').disabled = false
+}
+
+function fModalFunction(){
+	var createDeviceButton = document.getElementById('createDevice')
+	createDeviceButton.value = langData.addDevice[lang]
+	createDeviceButton.addEventListener("click", (event) => {
+		event.preventDefault()
+		addDeviceInTempList()
+		document.querySelector('form').reset()
+	  });
+
+	var createFile = document.getElementById('createFile')
+	createFile.value = langData.createFile[lang]
+	createFile.addEventListener('click', () => {
+		addDeviceInList()
+		fShowFileCreated()
+		document.getElementById("myModal").style.display = 'none'
+	})  
+}
+
+function addDeviceInList(){
+	gDeviceListCustom = [...gDeviceTempListCustom]
+}
+
+function addDeviceInTempList(){
+	const formData = new FormData(document.querySelector('form'))
+	var newDevice = {}
+	for (var pair of formData.entries()) {
+		newDevice[pair[0]] = pair[1]
+	}
+
+	gDeviceTempListCustom.push(newDevice)
+	addRowInModal(newDevice)
+	document.getElementById('createFile').disabled = false
+	document.getElementById('createDevice').disabled = true
+	gDeviceInputCorrect = {'addDevEUI' : false, 'addNwkSKeyABP' : false, 'addAppSKeyABP' : false, 'addAppKey' : false};
+}
+
+function addDeviceInListFromSelect(){
+	let listUnformattedDevice = gDeviceList.split('\n');
+
+	listUnformattedDevice.forEach(device => {
+		if(device.length > 1){
+			let temp = device.split(';')
+			gDeviceListCustom.push({
+				'DevEUI' : temp[0],
+				'ABP_NwkSKey' : temp[2],
+				'ABP_AppSKey' : temp[3],
+				'OTA_AppKey' : temp[6]
+			})
+		}
+	})
+
+}
+
+function deleteDeviceInList(deveui){
+	let indexToRemove = gDeviceTempListCustom.findIndex(device => {
+		return device['DevEUI'] === deveui
+	})
+
+	gDeviceTempListCustom.splice(indexToRemove, 1)
+
+	if(gDeviceTempListCustom.length === 0) document.getElementById('createFile').disabled = true
+	document.getElementById('createDevice').disabled = true
+}
+
+function displayCustomDeviceList(){
+	// Clear the device list before populate it
+	var table = document.getElementById('modalTableBody')
+	for(row of table.children){
+		table.deleteRow(0)
+	}
+
+	gDeviceListCustom.forEach(device => {
+		addRowInModal(device);
+	})
+}
+
+function addRowInModal(device){
+
+	//Check if device not already in the table
+	var table = document.getElementById('modalTableBody')
+
+	
+	for(row of table.children){
+		if(row.cells[0].innerHTML === device['DevEUI']) return
+	}
+
+
+
+
+	var row = table.insertRow(0);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	cell1.innerHTML = device['DevEUI'];
+	cell2.innerHTML = 'x';
+
+	cell2.addEventListener("mouseover", function (event) {
+		event.target.style.color = 'red'
+	  }, false);
+	cell2.addEventListener("mouseout", function (event) {
+		event.target.style.color = "black";
+	}, false);
+
+	cell2.onclick = (event) => {
+		table.deleteRow(event.target.parentNode.rowIndex-1);
+		deleteDeviceInList(cell1.textContent)
+	}
+}
+
+function createdFileFormatted(){
+	let result = "DevEUI;ABP_DevAddr;ABP_NwkSKey;ABP_AppSKey;CodeFamille;Version;OTA_AppKey;OTA_AppEUI;Unconfirmed;CodeFamillePF;Synchro;Adr;SN;NumBL;NumCde;DevEUI2\n"
+	gDeviceListCustom.forEach((value) => {
+		result+=`${value['DevEUI']};;${value['ABP_NwkSKey']};${value['ABP_AppSKey']};;;${value['OTA_AppKey']};;;;;;;;;\n`
+	})
+	return result
+}
+
+
+//
 
 function confButton(){
 
@@ -2251,7 +2458,9 @@ function showLocalBlock(){
 	document.getElementById("txtNbSix").setAttribute("style","display:block;");
 	document.getElementById("selectCom").setAttribute("style","display:block;");
 	document.getElementById("selectFileId").setAttribute("style","display:block;");
+	document.getElementById("selectFileTextId").setAttribute("style","display:block;margin-top: 15px;");
 	document.getElementById("txtNbSeven").setAttribute("style","display:block;");
+	document.getElementById("customFile").setAttribute("style","display:block; margin: 2% 0;");
 	document.getElementById("switchLabel").setAttribute("style","display:inline-block;");
 	document.getElementById("postButtonResultId").setAttribute("style","display:block;");
 	document.getElementById("txtNbEight").setAttribute("style","display:block;");
@@ -2280,8 +2489,8 @@ function fReadAllFile(){
 	
 	selectFile = document.getElementById('selectFileId').files;
 
-	start = "DevEUI;ABP_DevAddr;ABP_NwkSKey;ABP_AppSKey;CodeFamille;Version;OTA_AppKey;OTA_AppEUI;Unconfirmed;CodeFamillePF;Synchro;Adr"
-	var gDeviceListTemp = '';
+	let start = "DevEUI;ABP_DevAddr;ABP_NwkSKey;ABP_AppSKey;CodeFamille;Version;OTA_AppKey;OTA_AppEUI;Unconfirmed;CodeFamillePF;Synchro;Adr"
+	var gDeviceListTemp = [];
 	//On va lire un document et concaténer le contenu dans une variable gDeviceList qui est globale  
 	function setupReader(file) {
 		// C'est une fonction asynchrone
@@ -2299,8 +2508,10 @@ function fReadAllFile(){
 		}
 		reader.onload = function(e) {   
 			var text = e.target.result;
-			gDeviceListTemp += text;
+			gDeviceListTemp = text.split("\n").slice(1).join("\n");
 			gDeviceList =  gDeviceListTemp;
+
+			addDeviceInListFromSelect()
 		}
 
 		reader.readAsText(file, "UTF-8");
@@ -2326,8 +2537,6 @@ function fShow(selectFile) {
 	clearElement('bodyFile');
 	clearElement('selectFileId');
 	
-	
-	
 	fReadAllFile();
 	
 	body = document.getElementById("bodyFile");
@@ -2352,16 +2561,30 @@ function fShowFile() {
 		fileFormat.push(selectFile.files[i].name.substring(selectFile.files[i].name.indexOf(".")+1));
 	}
 }
+
+function fShowFileCreated() {
+	
+	clearElement('bodyFile');
+	clearElement('selectFileId');
+	
+	fileFormat = [];
+
+	
+	body = document.getElementById("bodyFile");
+	row = body.insertRow(0);
+	row.insertCell(0).innerHTML = "<span>" + 'Custom_device_list.txt' + "</span>";
+}
 //----------------------------------------------------------------------------------------------------------------------
 //	PARTIE 9 : Fonctions permettant la récupération du fichier DeviceList et l'affichage de ses données dans un tableau
 //----------------------------------------------------------------------------------------------------------------------
 
-var scannedDevice = new Object();
+var scannedDevice = new Map();
 
 function callGetTXT(){
 	let xhr = new XMLHttpRequest();
 
 	xhr.open('GET', 'http://localhost:56700/DeviceList.txt');
+	//xhr.open('GET', 'https://localhost:56700/DeviceList.txt');
 	xhr.responseType = 'text';
 	xhr.send();
 	xhr.onload = function() {
@@ -3096,11 +3319,11 @@ function fromIhmToJson(){
 function beautify(STR){
 	var strList = (STR.toLowerCase()).split('');
 	var indices = [];
-	var élément = ' ';
-	var idx = STR.indexOf(élément);
+	var el = ' ';
+	var idx = STR.indexOf(el);
 	while (idx != -1) {
 	  indices.push(idx);
-	  idx = STR.indexOf(élément, idx + 1);
+	  idx = STR.indexOf(el, idx + 1);
 	}
 	
 	for (element in indices){

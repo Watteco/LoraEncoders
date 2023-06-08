@@ -12,14 +12,14 @@
 			"clusterID": "Configuration",
 			"endpoints": [0],
 			"endpointsComment": ["---","---"],
-			"availablePowerSource":[2],
+			"availablePowerSource":[1],
 			"threshold" : {
                 "available" : true,
                 "slot" : [
                     {
                      "attribute" : "NodePowerDescriptor", 
                       "numberSlot" : 1,
-                      "fieldindex" : [2]
+                      "fieldindex" : [1]
                       }
                   ]
 
@@ -63,6 +63,34 @@
 			]
 		},
 		{
+			"clusterID": "EnergyPowerMultiMetering",
+			"endpoints": [0],
+			"endpointsComment": ["phase's A,B,C","phase's A,B,C"],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "EnergyPresentValues", 
+                      "numberSlot" : 8,
+                      "fieldindex" : [0,1,2,3,4,5,6,7]
+					},
+					{
+						"attribute" : "PowerPresentValues", 
+						"numberSlot" : 8,
+						"fieldindex" : [0,1,2,3,4,5,6,7]
+					}
+                  ]
+
+            },
+			"batch":
+			[
+				{
+					"attribute" : "EnergyPresentValues",
+					"available" : true
+				}
+			]
+		},
+		{
 			"clusterID": "VoltageCurrentMetering",
 			"endpoints": [0,1,2],
 			"endpointsComment": [["phase A","phase A"],["phase B","phase B"],["phase C","phase C"],["phase A+b+C","phase A+b+C"]],
@@ -71,8 +99,31 @@
                 "slot" : [
                     {
                      "attribute" : "PresentValues", 
-                      "numberSlot" : 6,
+                      "numberSlot" : 3,
                       "fieldindex" : [0,1,2]
+                      }
+                  ]
+
+            },
+			"batch":
+			[
+				{
+					"attribute" : "PresentValues",
+					"available" : true
+				}
+			]
+		},
+		{
+			"clusterID": "VoltageCurrentMultiMetering",
+			"endpoints": [0],
+			"endpointsComment": ["phase's A,B,C","phase's A,B,C"],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "PresentValues", 
+                      "numberSlot" : 9,
+                      "fieldindex" : [0,1,2,3,4,5,6,7,8]
                       }
                   ]
 

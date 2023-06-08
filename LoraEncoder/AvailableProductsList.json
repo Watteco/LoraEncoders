@@ -1,13 +1,8 @@
 {
 	"products": [
 		{
-
 			"name": "Atm'O (50-70-099)",
 			"file": "50-70-099-Atmo"
-		},
-		{
-			"name": "Batt'O (50-70-141)",
-			"file": "50-70-141-Batto"
 		},
 		{
 			"name": "Cels'O (50-70-049)",
@@ -26,12 +21,16 @@
 			"file": "50-70-098-Intenso"
 		},
 		{
-			"name": "Modbus (50-70-[080/109]) - under construction",
+			"name": "Modbus (50-70-[080/109])",
 			"file": "50-70-080-Modbus"
 		},		
 		{
 			"name": "Monit'O (50-70-141)",
 			"file": "50-70-141-Batto"
+		},
+		{
+			"name": "Move'O (50-70-220-000)",
+			"file": "50-70-220-000-Move'o"
 		},
 		{
 			"name": "Outdoor Temperature (50-70-164)",
@@ -54,7 +53,7 @@
 			"file": "50-70-130-000-Presso-0-10V-2CTN"
 		},
 		{
-			"name": "Pulse Sens'O Atex zone 1 (50-70-[123/152])",
+			"name": "Pulse Sens'O Atex zone 1 (50-70-123)",
 			"file": "50-70-123-PulseSenso"
 		},
 		{
@@ -72,6 +71,10 @@
 		{
 			"name": "Remote temperature 2 CTN (50-70-[163/184])",
 			"file": "50-70-139-000-RT2CTN"
+		},
+		{
+			"name": "Remote temperature humidité (50-70-200)",
+			"file": "50-70-200-RTH"
 		},
 		{
 			"name": "SkyDome (50-70-143)",
@@ -98,7 +101,7 @@
 			"file": "50-70-124-Torano"
 		},
 		{
-			"name": "Triphas'O (50-70-[105/145])",
+			"name": "Triphas'O (50-70-[105/145/146])",
 			"file": "50-70-105-Triphaso"
 		},
 		{
@@ -112,6 +115,10 @@
 		{
 			"name": "Vaqa'O (50-70-168)",
 			"file": "50-70-168-VAQAO"
+		},
+		{
+			"name": "Flash'O 3 probes (50-70-206)",
+			"file": "50-70-206-Flash'O-3-probes"
 		}
 	],
 	"in_developpement_products": [
