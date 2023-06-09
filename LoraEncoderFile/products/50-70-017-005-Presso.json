@@ -12,14 +12,14 @@
 			"clusterID": "Configuration",
 			"endpoints": [0],
 			"endpointsComment": ["---","---"],
-			"availablePowerSource":[2,4],
+			"availablePowerSource":[1,4],
 			"threshold" : {
                 "available" : true,
                 "slot" : [
                     {
                      "attribute" : "NodePowerDescriptor", 
                       "numberSlot" : 3,
-                      "fieldindex" : [2,4]
+                      "fieldindex" : [1,4]
                       }
                   ]
 

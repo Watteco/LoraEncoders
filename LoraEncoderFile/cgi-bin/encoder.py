@@ -8,7 +8,9 @@ import sys
 # BUT would be beter to make a python package from wtc-codec
 # sys.path += ["../../../../wtc-codec/src"]
 
-from codec_Watteco.Decoding_Functions import *
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..\..\cgi-bin\src'))
+from Decoding_Functions import *
 
 #Fonction permettant de verifier la validite du JSON recupere
 def isValidJSON(dataString):
@@ -17,7 +19,6 @@ def isValidJSON(dataString):
   except:
     return False
   return True
-
 #Determination de l'environnement de lancement du script
 if 'REQUEST_METHOD' in os.environ :
 	#On ajoute les headers HTML necessaires
@@ -33,8 +34,8 @@ if 'REQUEST_METHOD' in os.environ :
 		if isValidJSON(jsonString):
 			try:
 				Encoding_JSON(jsonString)
-			except:
-				print ("errorMsg")
+			except Exception as e:
+				print ("errorMsg: " + str(e))
 		else:
 			print ("errorMsg")
 	else:
@@ -46,8 +47,8 @@ else :
 		if isValidJSON(jsonString):
 			try:
 				Encoding_JSON(jsonString)
-			except:
-				print ("errorMsg")
+			except Exception as e:
+				print ("errorMsg :" + str(e))
 		else:
 			print ("errorMsg")
 	else:

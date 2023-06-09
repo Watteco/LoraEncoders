@@ -477,7 +477,7 @@
                         "Action0 - Read the application type of the remote sensor",
                         "Action0 - Lire le type d'application du capteur distant"
                     ],
-                    "expert": true
+                    "expert": false
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
@@ -485,7 +485,7 @@
                         "Action0 - Write attribute no response",
                         "Action0 - Write attribute no response."
                     ],
-                    "expert": true,
+                    "expert": false,
                     "parameters": [
                         {
                             "ParameterID": "AttributeType",
@@ -548,7 +548,7 @@
                         "Action1 - Read the application type of the remote sensor",
                         "Action1 - Lire le type d'application du capteur distant"
                     ],
-                    "expert": false
+                    "expert": true
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
@@ -556,7 +556,7 @@
                         "Action1 - Write attribute no response",
                         "Action1 - Write attribute no response."
                     ],
-                    "expert": false,
+                    "expert": true,
                     "parameters": [
                         {
                             "ParameterID": "AttributeType",

@@ -171,7 +171,7 @@
 											"fieldIndex" : 0,
 											"name":["Set the current Request frame used for the Serial Master/Slave exchange.","Définissez la trame de requête actuelle utilisée pour l'échange Serial Master/Slave."],
 											"editable":true,
-											"comment":["Trame hexa","Trame hexa"],
+											"comment":["Hex frame","Trame hexa"],
 											"range":[0,80],
 											"type":"hexaArray"
 										}

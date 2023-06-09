@@ -115,14 +115,14 @@
 			"clusterID": "Configuration",
 			"endpoints": [0],
 			"endpointsComment": ["---","---"],
-			"availablePowerSource":[4,2],
+			"availablePowerSource":[4,1],
 			"threshold" : {
 				"available" : false,
 				"slot" : [
 					{
 						"attribute" : "NodePowerDescriptor", 
 						"numberSlot" : 1,
-						"fieldindex" : [4,2]
+						"fieldindex" : [4,1]
 					}
 				]
 			}

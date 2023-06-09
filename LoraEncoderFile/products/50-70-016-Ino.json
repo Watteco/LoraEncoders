@@ -45,7 +45,7 @@
 			"clusterID": "Configuration",
 			"endpoints": [0],
 			"endpointsComment": ["---","---"],
-			"availablePowerSource":[4,2],
+			"availablePowerSource":[4,1],
 			"threshold" : {
 				"available" : false
 			},
@@ -53,7 +53,7 @@
 				{
 					"attribute" : "NodePowerDescriptor",
 					"available" : true,
-					"config" : [[[4,100,10,4],[2,100,11,4]]]
+					"config" : [[[4,100,10,4],[1,100,11,4]]]
 				}
 				]
 		},
