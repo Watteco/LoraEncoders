@@ -56,8 +56,7 @@ if(isset($_GET['json']) && !empty($_GET['json'])) {
 	if(isValidJSON($jsonString)) {
 		
 		$jsonData = json_decode($jsonString, true);
-
-		$output = shell_exec($path.' '.__DIR__.'/encoder.py '.escapeshellarg(base64_encode($jsonString)));		
+		$output = shell_exec($path.' '.__DIR__.'/encoder.py '.escapeshellarg(base64_encode($jsonString)));
 		// supprime les 2 premiers caractères b'
 		$output = substr( $output, 2, -1);
 		// supprime le dernier caractère '

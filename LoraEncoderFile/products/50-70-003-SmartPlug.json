@@ -12,7 +12,7 @@
 			"clusterID": "Configuration",
 			"endpoints": [0],
 			"endpointsComment": ["---","---"],
-			"availablePowerSource":[2],
+			"availablePowerSource":[1],
 			"threshold" : {
 				"available" : false
 			},
