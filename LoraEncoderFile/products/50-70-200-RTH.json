@@ -1,0 +1,94 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "NodePowerDescriptor", 
+                      "numberSlot" : 4,
+                      "fieldindex" : [4]
+                      }
+                  ]
+
+            },
+			"batch" : 
+			[
+				{
+					"attribute" : "NodePowerDescriptor",	
+					"available" : true,
+					"config" : [[[4,1,2,2]]] 	
+				}
+			]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Temperature",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "MeasuredValue", 
+                      "numberSlot" : 4,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : 
+			[
+			{
+				"attribute" : "MeasuredValue",
+				"available" : true,
+				"config" : [[[0,0.1,0,2]]]
+			}
+			]
+		},
+		{
+			"clusterID": "RelativeHumidity",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "MeasuredValue", 
+                      "numberSlot" : 4,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : 
+			[
+			{	
+				"attribute" : "MeasuredValue",
+				"available" : true,
+				"config" : [[[0,1,1,2]]] 	
+			}
+			]
+		}
+	],
+	"embeddedProductName": "ips-4ctn"
+}
