@@ -8,7 +8,7 @@
 			"commands": [
 				{
 					"CommandID": "ConfigureReporting",
-					"name": ["Occupancy - Configure reporting","Présence - Configurer les rapports"],
+					"name": ["Configure reporting","Configurer les rapports"],
 					"expert": false,
 					"ReportType": [
 						{
@@ -53,10 +53,13 @@
 									"editable": true,
 									"comment": ["---","---"],
 									"type": "select",
+									"unit": ["",""],
+									"range": [0,1],
+									"multiplier": 1,
 									"options": [
 										{
 											"OptionID": 0,
-											"name": ["No report on state variation","Pas de Rapport sur changement d'état"]
+											"name": ["No Report on state variation","Pas de rapport sur changement d'état"]
 										},
 										{
 											"OptionID": 1,
@@ -70,7 +73,7 @@
 				},
 				{
 					"CommandID": "ReadReportingConfiguration",
-					"name": ["Occupancy - Read reporting configuration","Présence - Lire la configuration des rapports"],
+					"name": ["Read reporting configuration","Lire la configuration des rapports"],
 					"expert": false,
 					"ReportType": [
 						{
@@ -107,7 +110,7 @@
 				},
 				{
 					"CommandID": "ReadAttribute",
-					"name": ["Occupancy - Read current state","Présence - Lire l'état actuel"],
+					"name": ["Read current state","Présence - Lire l'état actuel"],
 					"expert": true
 				}
 			]
@@ -117,7 +120,7 @@
 			"commands": [
 				{
 					"CommandID": "ReadAttribute",
-					"name": ["Occupancy - Read the sensing type","Présence - Lire le type de capteur"],
+					"name": ["Read the sensing type","Présence - Lire le type de capteur"],
 					"expert": true
 				}
 			]
@@ -127,13 +130,13 @@
 			"commands": [
 				{
 					"CommandID": "ReadAttribute",
-					"name": ["Occupancy - Read the delay without move to accept Unoccupied state","Présence - Lire le délai nécessaire sans détection pour passer en non occupé"],
-					"expert": true
+					"name": ["Read delay without move trigging 'Unoccupied state'","Lire le délai de calme déclenchant l'état 'Non occupé'"],
+					"expert": false
 				},
 				{
 					"CommandID": "WriteAttributeNoResponse",
-					"name": ["Write the delay without move to accept Unoccupied state","Ecrire le délai nécessaire sans détection pour passer en non occupé"],
-					"expert": true,
+					"name": ["Write delay without move trigging 'Unoccupied state'","Ecrire le délai de calme déclenchant l'état 'Non occupé'"],
+					"expert": false,
 					"parameters": [
 						{
 							"ParameterID": "AttributeType",

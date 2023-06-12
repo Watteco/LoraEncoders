@@ -220,7 +220,7 @@
 			"commands": [
 				{
 					"CommandID": "ReadAttribute",
-					"name": ["Read the application type of the remote sensor","Lire le type d'application du capteur distant"],
+					"name": ["Power Duration - Read current value","Power duration - Lire la valeur actuelle"],
 					"expert": true
 				},
 				{
@@ -244,6 +244,95 @@
 							"multiplier": 1,
 							"unit": ["ms","ms"]
 						}
+					]
+				}
+			]
+		},
+		{
+			"AttributeID": "AccelerometerConfig1",
+			"commands": [
+				{
+					"CommandID": "ReadAttribute",
+					"name": ["Chocks measurement parameters - Read current value","Paramètres de mesure de chocs - Lecture des paramètres courants"],
+					"expert": true
+				},
+				{
+					"CommandID": "WriteAttributeNoResponse",
+					"name": ["Chocks measurement parameters - Write current value","Paramètres de mesure de chocs - Définir la valeur actuelle"],
+					"expert": false,
+					"parameters": [
+						{
+							"ParameterID": "AttributeType",
+							"editable": false,
+							"value": "Bitmap16"
+						},
+						{
+							"ParameterID": "Data",
+							"editable": true,
+							"type": "data",
+							"subParameters": [
+								{
+								   "ParameterID":"TCfg_Type",
+								   "name":["Chocks type", "Type de chocs"],
+								   "editable":true,
+								   "comment":["---","---"],
+									"type": "select",
+									"options": [
+										{ "OptionID": 0, "name": [ "None",   "Aucun" ] },
+										{ "OptionID": 1, "name": [ "Chocks", "Chocs" ] },
+										{ "OptionID": 2, "name": [ "Clicks", "Clics" ] }
+									]
+								},
+								{
+								   "ParameterID":"TCfg_Freq",
+								   "fieldIndex" : 0,
+								   "name":["Measurement frequency","Fréquence de mesure"],
+								   "editable":true,
+								   "comment":["Prefer from  100 to 400 Hz","Préférer 100 à 400 Hz"],
+									"type": "select",
+									"options": [
+										{ "OptionID": 0, "name": [ "   Idle (+  0 uA)", "Inactif (+  0 uA)" ] },
+										{ "OptionID": 1, "name": [ "   1 Hz (+  2 uA)", "   1 Hz (+  2 uA)" ] },
+										{ "OptionID": 2, "name": [ "  10 Hz (+  3 uA)", "  10 Hz (+  3 uA)" ] },
+										{ "OptionID": 3, "name": [ "  25 Hz (+  4 uA)", "  25 Hz (+  4 uA)" ] },
+										{ "OptionID": 4, "name": [ "  50 Hz (+  6 uA)", "  50 Hz (+  6 uA)" ] },
+										{ "OptionID": 5, "name": [ " 100 Hz (+ 10 uA)", " 100 Hz (+ 10 uA)" ] },
+										{ "OptionID": 6, "name": [ " 200 Hz (+ 18 uA)", " 200 Hz (+ 18 uA)" ] },
+										{ "OptionID": 7, "name": [ " 400 Hz (+ 36 uA)", " 400 Hz (+ 36 uA)" ] },
+										{ "OptionID": 8, "name": [ "1620 Hz (+100 uA)", "1620 Hz (+100 uA)" ] },
+										{ "OptionID": 9, "name": [ "5376 Hz (+185 uA)", "5376 Hz (+185 uA)" ] }
+									]
+								},
+								{
+								   "ParameterID":"TCfg_FullScale",
+								   "fieldIndex" : 1,
+								   "name":["Full scale (g)","Pleine échelle (g)"],
+								   "editable":true,
+								   "comment":["---","---"],
+									"type": "select",
+									"options": [
+										{ "OptionID": 0, "name": [ " +/-  2 g (LSb= 16mg)", " +/-  2g (LSb= 16mg)" ] },
+										{ "OptionID": 1, "name": [ " +/-  4 g (LSb= 32mg)", " +/-  4g (LSb= 32mg)" ] },
+										{ "OptionID": 2, "name": [ " +/-  8 g (LSb= 62mg)", " +/-  8g (LSb= 62mg)" ] },
+										{ "OptionID": 3, "name": [ " +/- 16 g (LSb=186mg)", " +/- 16g (LSb=186mg)" ] }
+									]
+								},
+								{
+								   "ParameterID":"TCfg_ThrshLSBNb",
+								   "fieldIndex" : 2,
+								   "name":["Thresold in Nb of LSb","Seuil en Nb de LSb"],
+								   "editable":true,
+									"comment": [" < 3 not advised (false detetcion)"," < 3 déconseillé (risque de fausse détection)"],
+									"comment": [" < 3 not advised (false detetcion)"," < 3 déconseillé (risque de fausse détection)"],
+									"range": [1,32767],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["LSb","LSb"]
+								}
+							]
+						}
+						
 					]
 				}
 			]
