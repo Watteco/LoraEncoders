@@ -1,0 +1,193 @@
+{
+	"clusters": [
+		{
+			"clusterID": "Basic",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Configuration",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"availablePowerSource":[4],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : [
+				{
+					"attribute" : "NodePowerDescriptor",
+					"available" : true
+				}
+				]
+		},
+		{
+			"clusterID": "BinaryInput",
+			"customName": ["Open/close alarm","Alarme anti-arrachement"],
+			"endpoints": [1],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch" : 
+			[
+				{
+					"attribute":"PresentValue",
+					"available" : true,
+					"config" : [[[0,1,3,2]]]
+				},
+				{
+					"attribute":"Count",
+					"available":true
+				}
+			]
+		},
+		{
+			"clusterID": "LoRaWAN",
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+				"available" : false
+			}
+		},
+		{
+			"clusterID": "Temperature",
+			"endpoints": [1],
+			"endpointsComment": [["Accuracy: +/-0.5°","Précision: +/-0.2°"]],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "MeasuredValue", 
+                      "numberSlot" : 2,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : [
+				{
+					"attribute" : "MeasuredValue",
+					"available" : true,
+					"config": [[[0,0.1,1,3]]] 	
+				}
+				]
+		},
+		{
+			"clusterID": "RelativeHumidity",
+			"endpoints": [1],
+			"endpointsComment": [["Accuracy: +/-2%","Précision: +/-2%"]],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "MeasuredValue", 
+                      "numberSlot" : 2,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : [
+				{
+					"attribute" : "MeasuredValue",
+					"available" : true,
+					"config":[[[0,1,2,3]]]	
+				}
+				]
+		},
+		{
+			"clusterID": "Pressure",
+			"endpoints": [0],
+			"endpointsComment": ["mBar(hPa)","mBar(hPa)"],
+			"Data.range": [[300,1100]],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "MeasuredValue", 
+                      "numberSlot" : 2,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : [
+				{
+					"attribute" : "MeasuredValue",
+					"available" : true,
+					"config":[[[0,10,6,3]]]	
+				}
+				]
+		},
+		{
+			"clusterID": "Illuminance",
+			"customName": ["Illuminance measure","Mesure de luminosité"],
+			"endpoints": [0,1],
+			"endpointsComment": ["---","---"],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "MeasuredValue", 
+                      "numberSlot" : 2,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch":[
+				{
+					"attribute":"MeasuredValue",
+					"available":true,
+					"config":[[[0,10,5,3]],[[0,10,5,3]]]
+				}
+			]
+		},
+		{
+			"clusterID": "Occupancy",
+			"endpoints": [0],
+			"endpointsComment": ["Presence detection","Détection de présence"],
+			"threshold" : {
+				"available" : false
+			},
+			"batch":[
+				{
+					"attribute":"Occupancy",
+					"available":true,
+					"config" : [[[0,1,0,3]]]
+				}
+			]
+		},
+		{
+			"clusterID": "AnalogInput",
+			"customName": ["Displacement angle measurement","Mesure de deplacement angulaire"],
+			"endpoints": [0],
+			"endpointsComment": ["---","---"],
+			"Data.unit": [["°","°"]],
+			"Data.comment":[["---","---"]],
+			"Data.range": [[0,360]],
+			"threshold" : {
+                "available" : true,
+                "slot" : [
+                    {
+                     "attribute" : "PresentValue", 
+                      "numberSlot" : 2,
+                      "fieldindex" : [0]
+                      }
+                  ]
+
+            },
+			"batch" : [
+				{
+					"attribute" : "PresentValue",
+					"available" : true	
+				}
+				]
+
+		}
+	],
+	 "embeddedProductName": "ips-vaqao"
+}
