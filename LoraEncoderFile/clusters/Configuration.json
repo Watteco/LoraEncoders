@@ -470,16 +470,16 @@
                 {
                     "CommandID": "ReadAttribute",
                     "name": [
-                        "Action0 - Read the application type of the remote sensor",
-                        "Action0 - Lire le type d'application du capteur distant"
+                        "Action0 - Read the ZCL commande",
+                        "Action0 - Lire la commande ZCL"
                     ],
                     "expert": false
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
                     "name": [
-                        "Action0 - Write attribute no response",
-                        "Action0 - Write attribute no response."
+                        "Action0 - Write ZCL commande (no response)",
+                        "Action0 - Ecrire la commande ZCL (sans réponse)"
                     ],
                     "expert": false,
                     "parameters": [
@@ -541,16 +541,16 @@
                 {
                     "CommandID": "ReadAttribute",
                     "name": [
-                        "Action1 - Read the application type of the remote sensor",
-                        "Action1 - Lire le type d'application du capteur distant"
+                        "Action1 - Read the ZCL command",
+                        "Action1 - Lire la commande ZCL"
                     ],
                     "expert": true
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
                     "name": [
-                        "Action1 - Write attribute no response",
-                        "Action1 - Write attribute no response."
+                        "Action1 - Write ZCL commande (no response)",
+                        "Action1 - Ecrire la commande ZCL (sans réponse)"
                     ],
                     "expert": true,
                     "parameters": [
@@ -613,16 +613,16 @@
                 {
                     "CommandID": "ReadAttribute",
                     "name": [
-                        "Action2 - Read the application type of the remote sensor",
-                        "Action2 - Lire le type d'application du capteur distant"
+                        "Action2 - Read the ZCL command",
+                        "Action2 - Lire la commande ZCL"
                     ],
                     "expert": true
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
                     "name": [
-                        "Action2 - Write attribute no response",
-                        "Action2 - Write attribute no response."
+                        "Action2 - Write ZCL commande (no response)",
+                        "Action2 - Ecrire la commande ZCL (sans réponse)"
                     ],
                     "expert": true,
                     "parameters": [
@@ -684,16 +684,16 @@
                 {
                     "CommandID": "ReadAttribute",
                     "name": [
-                        "Action3 - Read the application type of the remote sensor",
-                        "Action3 - Lire le type d'application du capteur distant"
+                        "Action3 - Read the ZCL command",
+                        "Action3 - Lire la commande ZCL"
                     ],
                     "expert": true
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
                     "name": [
-                        "Action3 - Write attribute no response",
-                        "Action3 - Write attribute no response."
+                        "Action3 - Write ZCL commande (no response)",
+                        "Action3 - Ecrire la commande ZCL (sans réponse)"
                     ],
                     "expert": true,
                     "parameters": [
@@ -755,16 +755,16 @@
                 {
                     "CommandID": "ReadAttribute",
                     "name": [
-                        "Action4 - Read the application type of the remote sensor",
-                        "Action4 - Lire le type d'application du capteur distant"
+                        "Action4 - Read the ZCL command",
+                        "Action4 - Lire la commande ZCL"
                     ],
                     "expert": true
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
                     "name": [
-                        "Action4 - Write attribute no response",
-                        "Action4 - Write attribute no response."
+                        "Action4 - Write ZCL commande (no response)",
+                        "Action4 - Ecrire la commande ZCL (sans réponse)"
                     ],
                     "expert": true,
                     "parameters": [
@@ -826,16 +826,16 @@
                 {
                     "CommandID": "ReadAttribute",
                     "name": [
-                        "Action5 - Read the application type of the remote sensor",
-                        "Action5 - Lire le type d'application du capteur distant"
+                        "Action5 - Read the ZCL command",
+                        "Action5 - Lire la commande ZCL"
                     ],
                     "expert": true
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
                     "name": [
-                        "Action5 - Write attribute no response",
-                        "Action5 - Write attribute no response."
+                        "Action5 - Write ZCL commande (no response)",
+                        "Action5 - Ecrire la commande ZCL (sans réponse)"
                     ],
                     "expert": true,
                     "parameters": [
@@ -897,16 +897,16 @@
                 {
                     "CommandID": "ReadAttribute",
                     "name": [
-                        "Action6 - Read the application type of the remote sensor",
-                        "Action6 - Lire le type d'application du capteur distant"
+                        "Action6 - Read the ZCL command",
+                        "Action6 - Lire la commande ZCL"
                     ],
                     "expert": true
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
                     "name": [
-                        "Action6 - Write attribute no response",
-                        "Action6 - Write attribute no response."
+                        "Action6 - Write ZCL commande (no response)",
+                        "Action6 - Ecrire la commande ZCL (sans réponse)"
                     ],
                     "expert": true,
                     "parameters": [
@@ -968,16 +968,16 @@
                 {
                     "CommandID": "ReadAttribute",
                     "name": [
-                        "Action7 - Read the application type of the remote sensor",
-                        "Action7 - Lire le type d'application du capteur distant"
+                        "Action7 - Read the ZCL command",
+                        "Action7 - Lire la commande ZCL"
                     ],
                     "expert": true
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
                     "name": [
-                        "Action7 - Write attribute no response",
-                        "Action7 - Write attribute no response."
+                        "Action7 - Write ZCL commande (no response)",
+                        "Action7 - Ecrire la commande ZCL (sans réponse)"
                     ],
                     "expert": true,
                     "parameters": [
@@ -1039,16 +1039,16 @@
                 {
                     "CommandID": "ReadAttribute",
                     "name": [
-                        "Action8 - Read the application type of the remote sensor",
-                        "Action8 - Lire le type d'application du capteur distant"
+                        "Action8 - Read the ZCL command",
+                        "Action8 - Lire la commande ZCL"
                     ],
                     "expert": true
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
                     "name": [
-                        "Action8 - Write attribute no response",
-                        "Action8 - Write attribute no response."
+                        "Action8 - Write ZCL commande (no response)",
+                        "Action8 - Ecrire la commande ZCL (sans réponse)"
                     ],
                     "expert": true,
                     "parameters": [
@@ -1110,16 +1110,16 @@
                 {
                     "CommandID": "ReadAttribute",
                     "name": [
-                        "Action9 - Read the application type of the remote sensor",
-                        "Action9 - Lire le type d'application du capteur distant"
+                        "Action9 - Read the ZCL command",
+                        "Action9 - Lire la commande ZCL"
                     ],
                     "expert": true
                 },
                 {
                     "CommandID": "WriteAttributeNoResponse",
                     "name": [
-                        "Action9 - Write attribute no response",
-                        "Action9 - Write attribute no response."
+                        "Action9 - Write ZCL commande (no response)",
+                        "Action9 - Ecrire la commande ZCL (sans réponse)"
                     ],
                     "expert": true,
                     "parameters": [

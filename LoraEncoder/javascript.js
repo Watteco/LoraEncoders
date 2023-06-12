@@ -761,10 +761,21 @@ function updateFunctionsList(currentSelectedMode) {
 					currentCommand = currentAttribute.commands[commandIndex];
 					//  si mode d'affichage simple et cluster de niveau expert OU si niveau d'affichage avancé
 					if(((currentSelectedMode == 0) && (!currentCommand.expert)) || (currentSelectedMode == 1)) {
-						var opt = document.createElement('option'); //Création d'une option
-						opt.appendChild(document.createTextNode(currentCommand.name[lang])); //Donner à cette option le nom de la commande correspondante
-						opt.value = currentCluster.clusterID + "\t" + attributeIndex + "\t" + commandIndex; //Affectation à cette option d'une valeur du type : clusterID_AttributeIndex_CommandIndex
-						optgroup.appendChild(opt); //Ajout de cette option dans le groupe d'options précédemment créé
+						// currentCluster.customAttributes.
+						disabled = 0;
+						if(typeof(currentCluster["customAttributes"]) !== 'undefined') {
+							CustAttr = currentCluster.customAttributes.find( record => record.attribute === currentAttribute.AttributeID);
+							if(typeof(CustAttr) !== 'undefined')
+								if(typeof(CustAttr["disabled"]) !== 'undefined') {
+									disabled = CustAttr.disabled;
+								}
+						}
+						if (!disabled) {
+							var opt = document.createElement('option'); //Création d'une option
+							opt.appendChild(document.createTextNode(currentCommand.name[lang])); //Donner à cette option le nom de la commande correspondante
+							opt.value = currentCluster.clusterID + "\t" + attributeIndex + "\t" + commandIndex; //Affectation à cette option d'une valeur du type : clusterID_AttributeIndex_CommandIndex
+							optgroup.appendChild(opt); //Ajout de cette option dans le groupe d'options précédemment créé
+						}
 					}
 				}
 			}
@@ -1896,9 +1907,9 @@ function getEncoderFileLocation(callback) {
 			if (callback && typeof callback === 'function') {
 				var serverInfo = request.getResponseHeader("server").toLowerCase();
 				if(!!~serverInfo.indexOf("php")) {
-					callback(getRootUrl() + "/lora/LoraEncoderFile/cgi-bin/encoder.php");
+					callback(getRootUrl() + "/Lora/LoraEncoderFile/cgi-bin/encoder.php");
 				} else if(!!~serverInfo.indexOf("python")) {
-					callback(getRootUrl() + "/lora/LoraEncoderFile/cgi-bin/encoder.py");
+					callback(getRootUrl() + "/Lora/LoraEncoderFile/cgi-bin/encoder.py");
 				} else {
 					callback(null);
 				}
