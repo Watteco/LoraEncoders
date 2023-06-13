@@ -1,0 +1,161 @@
+div#trame {
+
+ background-color: LIGHTGRAY;
+ border-width:1px;
+ border-style:solid; 
+ border-color:#c6c5c5;
+}
+
+#onglets
+{
+	position : absolute;
+	border : 1px solid transparent;
+	padding : 0;
+	font : bold 14px arial;
+	list-style-type : none;
+	left : 50%;
+	margin-top : 0;
+	width : 600px;
+	margin-left : -215px;
+	/* la moitié de width */
+}
+
+#onglets li
+{
+	float : left;
+	height : 21px;
+	/* à modifier suivant la taille de la police pour centrer le texte dans l'onglet */
+	background-color: #F4F9FD;
+	margin : 2px 2px 0 2px !important;
+	/* Pour les navigateurs autre que IE */
+	margin : 1px 2px 0 2px;
+	/* Pour IE  */
+	border : 1px solid #9EA0A1;
+}
+
+#onglets li.active
+{
+	border-bottom: 1px solid #fff;
+	background-color: #fff;
+}
+
+#onglets a
+{
+	display : block;
+	color : orange;
+	/*#666;
+	*/
+	text-decoration : none;
+	padding : 4px 10px;
+}
+
+#onglets a:hover
+{
+	background : #fff;
+}
+
+#menu
+{
+	border-bottom : 1px solid #9EA0A1;
+	padding-bottom : 25px;
+}
+
+body
+{
+	text-align:left;
+	font-family:arial;
+}
+
+.tooltip {
+position: relative;
+display: inline-block;
+border-bottom: 1px dotted black;
+}
+.tooltip .tooltiptext {
+visibility: hidden;
+width: 350px;
+background-color: #555;
+color: #fff;
+text-align: left;
+border-radius: 6px;
+padding: 5px 0;
+position: absolute;
+z-index: 1;
+top: 0;
+left: 0;
+margin-left: 10px;
+opacity: 0;
+transition: opacity 0.3s;
+}
+.tooltip .tooltiptext::after {
+content: "";
+position: absolute;
+top: 50%;
+right: 50%;
+margin-left: 35px;
+border-width: 5px;
+border-style: solid;
+border-color: #555 transparent transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+visibility: visible;
+opacity: 1;
+}
+/*----- Tabs -----*/
+.tabs {
+width:100%;
+display:inline-block;
+}
+/*----- Tab Links -----*/
+/* Clearfix */
+.tab-links:after {
+display:block;
+clear:both;
+content:'';
+}
+.tab-links li {
+margin:0px 5px;
+float:left;
+list-style:none;
+}
+.tab-links a {
+padding:9px 15px;
+display:inline-block;
+border-radius:3px 3px 0px 0px;
+background:#7FB5DA;
+font-size:16px;
+font-weight:600;
+color:#4c4c4c;
+transition:all linear 0.15s;
+}
+.tab-links a:hover {
+background:#a7cce5;
+text-decoration:none;
+}
+
+li.active a, li.active a:hover {
+background:#fff;
+color:#4c4c4c;
+}
+
+/*----- Content of Tabs -----*/
+.tab-content {
+padding:15px;
+border-radius:3px;
+box-shadow:-1px 1px 1px rgba(0,0,0,0.15);
+background:#fff;
+border-color:#4c4c4c
+border-width: 5px;
+}
+.tab {
+display:none;
+}
+.tab.active {
+display:block;
+}
+
+h2
+{
+	font-size: 16px;
+	color: orange
+}
