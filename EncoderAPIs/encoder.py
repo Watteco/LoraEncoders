@@ -4,12 +4,18 @@ import base64
 import json
 import sys
 
-# Completing systeme path (as below), ould be a solution to avoid copying files from wtc-codec.
-# BUT would be beter to make a python package from wtc-codec
-# sys.path += ["../../../../wtc-codec/src"]
+# Create path to get codec srcs
+installDir=os.path.dirname(__file__)+"/../"
+f = open (installDir + 'install.json', "r")
+data = json.loads(f.read())
+pathPythonStdCodecDir=os.path.dirname(data["pathPythonStdCodec"])
+if len(pathPythonStdCodecDir) > 0:
+	if (pathPythonStdCodecDir[0] != '/'):
+		pathPythonStdCodecDir = installDir + pathPythonStdCodecDir 
+f.close()
 
-import os, sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..\..\cgi-bin\src'))
+sys.path.append(pathPythonStdCodecDir)
+
 from Decoding_Functions import *
 
 #Fonction permettant de verifier la validite du JSON recupere

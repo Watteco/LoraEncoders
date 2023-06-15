@@ -479,17 +479,23 @@ var path = "";
 function getAllAvailableProducts() {
 	getLocalConfiguration();
 	
-	getJSON("AvailableProductsList.json?v=" + (new Date()).getTime(),
+	getJSON("/Lora/WattecoSensors/AvailableProductsList.json?v=" + (new Date()).getTime(),
 		function(err, availableProducts) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
 			} else {
 				var selectProduct = document.getElementById("productSelect");
 				availableProducts.products.forEach(function(product){
-					var opt = document.createElement('option');
-					opt.appendChild(document.createTextNode((Array.isArray(product.name) ? product.name[lang] : product.name)));
-					opt.value = product.file;
-					selectProduct.appendChild(opt);
+					displayed = 1;
+					if(typeof(product["apps"]) !== 'undefined') {
+						displayed = product.apps.includes("LoraEncoderConfiguration");
+					}
+					if (displayed) {
+						var opt = document.createElement('option');
+						opt.appendChild(document.createTextNode((Array.isArray(product.name) ? product.name[lang] : product.name)));
+						opt.value = product.file;
+						selectProduct.appendChild(opt);
+					}	
 				});
 			}
 		}
@@ -497,7 +503,7 @@ function getAllAvailableProducts() {
 }
 
 function getEmbeddedProductName() {
-	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/WattecoSensors/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -510,7 +516,7 @@ function getEmbeddedProductName() {
 }
 
 function getDefaultFrame() {
-	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/WattecoSensors/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -527,7 +533,7 @@ function getDefaultFrame() {
 	)
 }
 function getDefaultAddresses() {
-	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
+	getJSON(getRootUrl() + "/lora/WattecoSensors/products/"+ currentProduct + ".json?v=" + (new Date()).getTime(),
 		function(err, currentProduct) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -606,7 +612,7 @@ function switchProduct() {
 	
 	}
 	
-	getJSON(getRootUrl() + "/lora/LoraEncoderFile/products/" + currentProduct + ".json?v=" + (new Date()).getTime(), //Récupération des données de ce produit à partir du fichier .json correspondant
+	getJSON(getRootUrl() + "/lora/WattecoSensors/products/" + currentProduct + ".json?v=" + (new Date()).getTime(), //Récupération des données de ce produit à partir du fichier .json correspondant
 		function(err, productData) { //Ces données sont enregistrées dans la variable "productData"
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -674,7 +680,7 @@ function populateSubParametersListTemplates(PopulatedClusterIndex, ClusterIndex,
 				SubParametersListTemplate = parameterData.SubParametersListTemplate.replace('&ClusterID',clusterData.clusterID);
 				SubParametersListTemplate = SubParametersListTemplate.replace('&AttributeID',clusterData.attributes[AttributeIndex].AttributeID);
 				// Look for specified template
-				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + SubParametersListTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/WattecoSensors/clusters/" + SubParametersListTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, obj, params) { 
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -702,7 +708,7 @@ function populateCommandsTemplates(PopulatedClusterIndex, ClusterIndex,Attribute
 		attributeData = clusterData.attributes[AttributeIndex];
 		if (typeof(attributeData) !== 'undefined'){
 			if (typeof(attributeData.CommandsTemplate) !== 'undefined') {
-				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + attributeData.CommandsTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/WattecoSensors/clusters/" + attributeData.CommandsTemplate + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, obj, params) { 
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -749,7 +755,7 @@ function populateProductClusters(ClusterIndex=0) {
 		currentCluster = currentProductData.clusters[ClusterIndex];
 		if (typeof(currentCluster) !== 'undefined'){
 			if ((typeof(currentCluster.subProductID) == 'undefined') || (currentCluster.subProductID.indexOf(currentSubProduct) > -1)) {
-				getJSON2(getRootUrl() + "/lora/LoraEncoderFile/clusters/" + currentCluster.clusterID + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
+				getJSON2(getRootUrl() + "/lora/WattecoSensors/clusters/" + currentCluster.clusterID + ".json?v=" + (new Date()).getTime(), //Récupération des données du cluster
 					function(err, clusterData,params) { //Ces données sont enregistrées dans la variable "clusterData"
 						if (err !== null) {
 							console.log('Une erreur est survenue : ' + err); //Affiché dans la console en cas d'erreur de récupération des données
@@ -801,10 +807,21 @@ function updateFunctionsList(currentSelectedMode) {
 					currentCommand = currentAttribute.commands[commandIndex];
 					//  si mode d'affichage simple et cluster de niveau expert OU si niveau d'affichage avancé
 					if(((currentSelectedMode == 0) && (!currentCommand.expert)) || (currentSelectedMode == 1)) {
-						var opt = document.createElement('option'); //Création d'une option
-						opt.appendChild(document.createTextNode(currentCommand.name[lang])); //Donner à cette option le nom de la commande correspondante
-						opt.value = currentCluster.clusterID + "\t" + attributeIndex + "\t" + commandIndex; //Affectation à cette option d'une valeur du type : clusterID_AttributeIndex_CommandIndex
-						optgroup.appendChild(opt); //Ajout de cette option dans le groupe d'options précédemment créé
+						// currentCluster.customAttributes.
+						disabled = 0;
+						if(typeof(currentCluster["customAttributes"]) !== 'undefined') {
+							CustAttr = currentCluster.customAttributes.find( record => record.attribute === currentAttribute.AttributeID);
+							if(typeof(CustAttr) !== 'undefined')
+								if(typeof(CustAttr["disabled"]) !== 'undefined') {
+									disabled = CustAttr.disabled;
+								}
+						}
+						if (!disabled) {
+							var opt = document.createElement('option'); //Création d'une option
+							opt.appendChild(document.createTextNode(currentCommand.name[lang])); //Donner à cette option le nom de la commande correspondante
+							opt.value = currentCluster.clusterID + "\t" + attributeIndex + "\t" + commandIndex; //Affectation à cette option d'une valeur du type : clusterID_AttributeIndex_CommandIndex
+							optgroup.appendChild(opt); //Ajout de cette option dans le groupe d'options précédemment créé
+						}
 					}
 				}
 			}
@@ -1939,9 +1956,9 @@ function getEncoderFileLocation(callback) {
 			if (callback && typeof callback === 'function') {
 				var serverInfo = request.getResponseHeader("server").toLowerCase();
 				if(!!~serverInfo.indexOf("php")) {
-					callback(getRootUrl() + "/lora/LoraEncoderFile/cgi-bin/encoder.php");
+					callback(getRootUrl() + "/Lora/EncoderAPIs/encoder.php");
 				} else if(!!~serverInfo.indexOf("python")) {
-					callback(getRootUrl() + "/lora/LoraEncoderFile/cgi-bin/encoder.py");
+					callback(getRootUrl() + "/Lora/EncoderAPIs/encoder.py");
 				} else {
 					callback(null);
 				}

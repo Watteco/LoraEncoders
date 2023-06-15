@@ -1,5 +1,6 @@
 {
 "OutilLocalDeConfigurationOTA" :false,
 "refreshTimingOnGet" : 5000,
-"pathPost":"https://localhost:56700/"
+"pathPost":"http://localhost:56700/",
+"HubO" : false
 }

@@ -1,7 +1,0 @@
-{
-"OutilLocalDeConfigurationOTA" :false,
-"refreshTimingOnGet" : 5000,
-"pathPost":"https://localhost:56700/",
-"pathPython": "C:\\Users\\administrateur.MICREL\\AppData\\Local\\Programs\\Python\\Python36\\python.exe",
-"HubO" : false
-}

@@ -1,0 +1,5 @@
+{
+    "pathPython": "python.exe",
+    "pathPythonStdCodec":"./cgi-bin/src/Main.py",
+    "pathPythonBatchDecoder":"./cgi-bin/br_uncompress.py"
+}

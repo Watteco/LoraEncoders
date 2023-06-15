@@ -46,17 +46,17 @@ function isValidJSON($dataString) {
     return (json_last_error() === JSON_ERROR_NONE);
 }
 //On vient lire le fichier configuration pour associer le chemin de python.exe à la variable $path
-$strJsonFileContents = file_get_contents(__DIR__."/../configuration.json");
+$strJsonFileContents = file_get_contents(__DIR__."/../install.json");
 $array = json_decode($strJsonFileContents, true); // show contents
+$Python = $array["pathPython"];
 
-$path = $array["pathPython"];
 //Verification de l'argument et lancement du script
 if(isset($_GET['json']) && !empty($_GET['json'])) {
     $jsonString = $_GET['json'];
 	if(isValidJSON($jsonString)) {
 		
 		$jsonData = json_decode($jsonString, true);
-		$output = shell_exec($path.' '.__DIR__.'/encoder.py '.escapeshellarg(base64_encode($jsonString)));
+		$output = shell_exec($Python.' '.__DIR__.'/encoder.py '.escapeshellarg(base64_encode($jsonString)));
 		// supprime les 2 premiers caractères b'
 		$output = substr( $output, 2, -1);
 		// supprime le dernier caractère '
