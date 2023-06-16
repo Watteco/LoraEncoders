@@ -2276,7 +2276,8 @@ function fSelectFile(){
 		displayCustomDeviceList();
 		gDeviceTempListCustom = [...gDeviceListCustom]
 
-		if(gDeviceTempListCustom.length === 0) document.getElementById('createFile').disabled = true
+		document.getElementById('createFile').disabled = (gDeviceTempListCustom.length === 0);
+
 	}
 
 	// When the user clicks on <span> (x), close the modal
