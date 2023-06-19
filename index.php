@@ -5,6 +5,15 @@
         <meta charset="utf-8"/>
         <TITLE>Watteco - Décodeur de trames ZCL</TITLE>
         <link rel="shortcut icon" href="Common/cropped-cropped-favicon-300x300-1-32x32.png">
+
+		<script type="text/javascript">
+            function TabSelect(id) {
+                document.getElementById("Decoders").className="";
+                document.getElementById("JSONTohexFrame").className="";
+                document.getElementById("Encoders").className="";
+                document.getElementById(id).className="active";
+            }
+        </script>
     </HEAD>
     <BODY>  
         <header id="header">
@@ -17,13 +26,14 @@
         </header>
 		<div id="menu">
 			<ul id="onglets">
-				<li class="active"><a href="Decoders/index.php" target="iframe_a">  Decoders  </a></li>
-				<li><a href="LoraEncoder/JSONTohexFrame.php" target="iframe_a">  JSON to Hex encoder</a></li>
-				<li><a href="LoraEncoder/index.html" target="iframe_a">  Encoder assistant  </a></li>
+				<li id="Decoders" class="active" ><a href="Decoders/index.php" target="iframe_a" onClick="TabSelect('Decoders');">  Decoders  </a></li>
+				<li id="JSONTohexFrame" ><a href="LoraEncoder/JSONTohexFrame.php" target="iframe_a" onClick="TabSelect('JSONTohexFrame');">  JSON to Hex encoder</a></li>
+				<li id="Encoders" ><a href="LoraEncoder/index.html" target="iframe_a" onClick="TabSelect('Encoders');">  Encoder assistant  </a></li>
 			</ul>
 		</div>
         <div id="wrapper" style="position:relative">
-            <iframe style="position:absolute;top:0px;width:100%;height:100vh;" name="iframe_a" title="Iframe container" src="Decoders/index.php"></iframe>
+            <iframe style="position:absolute;top:0px;width:100%;height:calc( 100vh - 81px); border: 1px solid gray;border-top: none;" 
+                    name="iframe_a" title="Iframe container" src="Decoders/index.php"></iframe>
         </div>
     </BODY>
 </HTML>
