@@ -24,7 +24,7 @@
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"]
 		},
 		{
-			"name": "Inclin'O (50-70-201-000)",
+			"name": "Inclin'O (50-70-201)",
 			"file": "50-70-201-Inclino",
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
 			"BatchUncompressParams": "3 0,1,6,ACCmg 1,0.1,12,Deg"
