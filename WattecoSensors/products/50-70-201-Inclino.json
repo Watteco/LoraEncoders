@@ -87,7 +87,7 @@
 			"clusterID": "Number",
 			"customName": ["Chocks measurement","Mesure de chocs"],
 			"endpoints": [0],
-			"endpointsComment": ["CHOCKS : Maximum acceleration","CHOCS: Acceleration maximum"],
+			"endpointsComment": ["CHOCKS : Maximum acceleration during Min report interval when chocks occure","CHOCS: Acceleration maximum dans le délai Min report quand des chocs interviennent"],
 			"customAttributes":
                 [
 					{

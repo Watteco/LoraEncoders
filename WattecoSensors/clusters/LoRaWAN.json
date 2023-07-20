@@ -25,16 +25,16 @@
 							"ParameterID": "Data",
 							"name": ["Message type","Type de message"],
 							"editable": true,
-							"comment": ["---","---"],
+							"comment": ["Note: Confirmed mode also activate the automatic reassociation process on multiple missed acknowledges<br><br>WARNING: Carefully read the <a href=https://support.watteco.com/lorawan-cluster/#Messagetype  target=_blank>MESSAGE TYPE </a>documentation","Remarque : le mode confirmé active également le processus de réassociation automatique sur plusieurs accusés de réception manqués<br><br>ATTENTION: Lire attentivement la documentation de <a href=https://support.watteco.com/lorawan-cluster/#Messagetype   target=_blank>MESSAGE TYPE</a>"],
 							"type": "select",
 							"options": [
 								{
 									"OptionID": 0,
-									"name": ["All frames unconfirmed","Toutes les trames non confirmées"]
+									"name": ["Applicative uplink frames UNCONFIRMED by default","Trames applicative montantes NON CONFIRMEES par défaut"]
 								},
 								{
 									"OptionID": 1,
-									"name": ["All frames confirmed","Toutes les trames confirmées"]
+									"name": ["Applicative uplink frames CONFIRMED by default","Trames applicative montantes CONFIRMEES par défaut"]
 								}
 							]
 						}
