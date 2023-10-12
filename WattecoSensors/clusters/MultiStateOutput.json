@@ -213,15 +213,15 @@
 							"options": [
 								{
 									"OptionID": 0,
-									"name": ["Comfort","Comfort"]
+									"name": ["Comfort (OFF if used with relay)","Confort (OFF si utilisé avec un relais)"]
 								},
 								{
 									"OptionID": 1,
-									"name": ["Economic","Economic"]
+									"name": ["Economic (ON if used with relay)","Économique (ON s'il est utilisé avec un relais)"]
 								},
 								{
 									"OptionID": 2,
-									"name": ["Antifreeze","Antifreeze"]
+									"name": ["Antifreeze","Hors-gel"]
 								},
 								{
 									"OptionID": 3,
@@ -229,11 +229,11 @@
 								},
 								{
 									"OptionID": 4,
-									"name": ["Comfort-1°C","Comfort-1°C"]
+									"name": ["Comfort-1°C","Confort-1°C"]
 								},
 								{
 									"OptionID": 5,
-									"name": ["Comfort-2°C","Comfort-2°C"]
+									"name": ["Comfort-2°C","Confort-2°C"]
 								}
 							]
 						}
