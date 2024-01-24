@@ -1,6 +1,7 @@
 {
+    "clusterSpecificJS": "function updateThresholdSelect(parameterRange, parameterThrsh) { beforeThrsh = parameterThrsh.value / 100; newThrsh = 0; theRangeCG = parameterRange.value; removeAllChildNodes(parameterThrsh); bitVal = (theRangeCG * 1.0) / 12800.0; for (let i = 0; i < 128; i++) { var opt = document.createElement('option'); theThrsh = Math.round((i * (bitVal)) * 10.0) / 10; if ((newThrsh == 0) && (theThrsh >= beforeThrsh)) newThrsh = theThrsh; opt.appendChild(document.createTextNode(theThrsh + ' G')); opt.value = (theThrsh * 100.0); parameterThrsh.appendChild(opt); } parameterThrsh.value = (newThrsh * 100.0); }",
     "clusterID":"XYZAcceleration",
-    "clusterName":["XYZAcceleration","XYZAcceleration"],
+    "clusterName":["XYZAcceleration [beta]","XYZAcceleration [beta]"],
     "expert":false,
     "attributes":[
                 {
@@ -1561,28 +1562,46 @@
                                            "type":"number"
                                         },
                                         {
-                                           "ParameterID":"WaitFreq",
-                                           "fieldIndex" : 0,
-                                           "name":["WaitFreq","WaitFreq"],
-                                           "editable":true,
-                                           "comment":["---","---"],
-                                           "range":[0,65535],
-                                           "type":"number",
-                                           "mantissa": 10,
-                                           "multiplier": 10,
-                                           "unit":["Hz","Hz"]
+                                            "ParameterID":"WaitFreq",
+                                            "fieldIndex" : 0,
+                                            "name":["Wait Freq","Freq veille"],
+                                            "editable":true,
+                                            "comment":["Idle Measurement frequency waiting for a trig (Estimated life expectancy)","Fréquence de mesure de veille en attente de déclenchement (Estimation de durée de vie)"],
+                                            "type": "select",
+                                            "multiplier": 10,
+                                            "options": [
+                                                { "OptionID": 0,    "name": [ "      OFF ( > 10   years )" ] },
+                                                { "OptionID": 5,    "name": [ "   0,5 Hz ( > 10   years)" ] },
+                                                { "OptionID": 10,   "name": [ "   1   Hz ( > 10   years)" ] },
+                                                { "OptionID": 50,   "name": [ "   5   Hz (    7   years)" ] },
+                                                { "OptionID": 100,  "name": [ "  10   Hz (    4   years)" ] },
+                                                { "OptionID": 500,  "name": [ "  50   Hz (    2   years)" ] },
+                                                { "OptionID": 1000, "name": [ " 100   Hz (    1,5 year )" ] },
+                                                { "OptionID": 4000, "name": [ " 400   Hz (    1   year )" ] },
+                                                { "OptionID": 10000,"name": [ "1000   Hz ( <  0,8 year )" ] }
+                                            ],
+                                            "value": 100
                                         },
                                         {
-                                           "ParameterID":"AcqFreq",
-                                           "fieldIndex" : 1,
-                                           "name":["AcqFreq","AcqFreq"],
-                                           "editable":true,
-                                           "comment":["---","---"],
-                                           "range":[0,65535],
-                                           "type":"number",
-                                           "mantissa": 10,
-                                           "multiplier": 10,
-                                           "unit":["Hz","Hz"]
+                                            "ParameterID":"AcqFreq",
+                                            "fieldIndex" : 1,
+                                            "name":["Meas Freq","Freq mesure"],
+                                            "editable":true,
+                                            "comment":["Measurement frequency after trigg","Fréquence de mesure activée après déclenchement"],
+                                            "type": "select",
+                                            "multiplier": 10,
+                                            "options": [
+                                                { "OptionID": 0,    "name": [ "      OFF" ] },
+                                                { "OptionID": 5,    "name": [ "   0,5 Hz" ] },
+                                                { "OptionID": 10,   "name": [ "   1   Hz" ] },
+                                                { "OptionID": 50,   "name": [ "   5   Hz" ] },
+                                                { "OptionID": 100,  "name": [ "  10   Hz" ] },
+                                                { "OptionID": 500,  "name": [ "  50   Hz" ] },
+                                                { "OptionID": 1000, "name": [ " 100   Hz" ] },
+                                                { "OptionID": 4000, "name": [ " 400   Hz" ] },
+                                                { "OptionID": 10000,"name": [ "1000   Hz" ] }
+                                            ],
+                                            "value": 1000
                                         },
                                         {
                                            "ParameterID":"NewWaitDelay",
@@ -1594,16 +1613,9 @@
                                            "type":"time",
                                            "mantissa": 1,
                                            "multiplier": 1,
-                                           "unit":["",""]
+                                           "unit":["",""],
+                                           "value": "0s"
                                         },
-                                        {
-                                            "ParameterID":"MinReport",
-                                            "name":["Minimum reporting interval","Intervalle de rapport minimal"],
-                                            "editable":true,
-                                            "type":"time",
-                                            "comment":["---","---"],
-                                            "range":[0,32767]
-                                         },
                                         {
                                            "ParameterID":"MaxAcqDuration",
                                            "fieldIndex" : 3,
@@ -1614,148 +1626,153 @@
                                            "type":"number",
                                            "mantissa": 1,
                                            "multiplier": 1,
-                                           "unit":["ms","ms"]
+                                           "unit":["ms","ms"],
+                                           "value": 4000
                                         },
-                                        
-                                        {
-                                           "ParameterID":"Threshold_X",
-                                           "fieldIndex" : 4,
-                                           "name":["Threshold_X","Threshold_X"],
-                                           "editable":true,
-                                           "comment":["---","---"],
-                                           "range":[2,40000],
-                                           "type":"number",
-                                           "mantissa": 100,
-                                           "multiplier": 100,
-                                           "unit":["G","G"]
-                                        },
-                                        
-                                        {
-                                           "ParameterID":"Threshold_Y",
-                                           "fieldIndex" : 5,
-                                           "name":["Threshold_Y","Threshold_Y"],
-                                           "editable":true,
-                                           "comment":["---","---"],
-                                           "range":[2,40000],
-                                           "type":"number",
-                                           "mantissa": 100,
-                                           "multiplier": 100,
-                                           "unit":["G","G"]
-                                        },
-                                        
-                                        {
-                                           "ParameterID":"Threshold_Z",
-                                           "fieldIndex" : 6,
-                                           "name":["Threshold_Z","Threshold_Z"],
-                                           "editable":true,
-                                           "comment":["---","---"],
-                                           "range":[2,40000],
-                                           "type":"number",
-                                           "mantissa": 100,
-                                           "multiplier": 100,
-                                           "unit":["G","G"]
-                                        },
-                                        
                                         {
                                            "ParameterID":"OverThrshDt",
                                            "fieldIndex" : 7,
                                            "name":["OverThrshDt","OverThrshDt"],
-                                           "editable":false,
-                                           "comment":["---","---"],
+                                           "editable":true,
+                                           "comment":["START measurement after this delay OVER threshold","DEMARRE la mesure après ce délai au dessus du seuil"],
                                            "range":[0,65535],
                                            "type":"number",
                                            "mantissa": 1,
                                            "multiplier": 1,
-                                           "unit":["ms","ms"]
+                                           "unit":["ms","ms"],
+                                           "value": 0
                                         },
-                                        
                                         {
                                            "ParameterID":"UnderThrshDt",
                                            "fieldIndex" : 8,
                                            "name":["UnderThrshDt","UnderThrshDt"],
                                            "editable":true,
-                                           "comment":["---","---"],
+                                           "comment":["STOP measurement after this delay UNDER threshold","ARRET mesure après ce délai sous le seuil"],
                                            "range":[0,65535],
                                            "type":"number",
                                            "mantissa": 1,
                                            "multiplier": 1,
-                                           "unit":["ms","ms"]
+                                           "unit":["ms","ms"],
+                                           "value": 500
                                         },
                                         {
-                                           "ParameterID":"Range",
-                                           "fieldIndex" : 9,
-                                           "name":["Range","Range"],
-                                           "editable":true,
-                                           "comment":["---","---"],
-                                           "range":[0,40000],
-                                           "type":"number",
-                                           "mantissa": 100,
-                                           "multiplier": 100,
-                                           "unit":["G","G"]
+                                            "ParameterID":"Range",
+                                            "fieldIndex" : 9,
+                                            "name":["Range","Pleine échelle"],
+                                            "editable":true,
+                                            "comment":["Trhesholds below are coerced to closer ([0-127] * LSb).<br>WARNING: <2 LSb threshold may lead to permanent trigging.",
+                                                       "Les seuils ci-dessous sont contraints au plus proche ([0-127] * LSb.<br>ATTENTION: Un seuil < 2 LSb est source de déclenchement permanent.)","---"],
+                                            "type": "select",
+                                            "options": [
+                                                { "OptionID": 10000, "name": [ "100 G [LSb = 0,8 G]" ] },
+                                                { "OptionID": 20000, "name": [ "200 G [LSb = 1,6 G]" ] },
+                                                { "OptionID": 40000, "name": [ "400 G [LSb = 3,1 G]" ] }
+                                            ],
+                                            "value": 10000,
+                                            "onChange": "updateThresholdSelect(parameter6, parameter7);updateThresholdSelect(parameter6, parameter8);updateThresholdSelect(parameter6, parameter9);"
+                                        },
+                                        {
+                                            "ParameterID":"Threshold_X",
+                                            "fieldIndex" : 4,
+                                            "name":["Threshold_X","Seuil_X"],
+                                            "editable":true,
+                                            "comment":["Note: The minimal value the 3 thresholds(X,Y,Z) will be used to trigg the measurement",
+                                                       "Note: Le minimum des 3 seuils (X,Y,Z) est utilisé pour déclencher l'acquisition"],
+                                            "type": "select",
+                                            "options": [],
+                                            "value": 160,
+                                            "onChange":"parameter8.value = parameter7.value; parameter9.value = parameter7.value; ",
+                                            "populate": "updateThresholdSelect(parameter6, parameter7);"
+                                        },
+                                        {
+                                            "ParameterID":"Threshold_Y",
+                                            "fieldIndex" : 5,
+                                            "name":["Threshold_Y","Seuil_Y"],
+                                            "editable":true,
+                                            "comment":["---","---"],
+                                            "type": "select",
+                                            "options": [],
+                                            "value": 160,
+                                            "populate": "updateThresholdSelect(parameter6, parameter8);"
+                                        },
+                                        {
+                                            "ParameterID":"Threshold_Z",
+                                            "fieldIndex" : 46,
+                                            "name":["Threshold_Z","Seuil_Z"],
+                                            "editable":true,
+                                            "comment":["---","---"],
+                                            "type": "select",
+                                            "options": [],
+                                            "value": 160,
+                                            "populate": "updateThresholdSelect(parameter6, parameter9);"
                                         },
                                         {
                                             "ParameterID":"FilterSmoothCoef",
                                             "fieldIndex" : 10,
-                                            "name":["FilterSmoothCoef","FilterSmoothCoef"],
+                                            "name":["FilterSmoothCoef (A)","FilterSmoothCoef (A)"],
                                             "editable":true,
                                             "comment":["---","---"],
                                             "range":[0,255],
                                             "type":"number",
                                             "mantissa": 1,
                                             "multiplier": 1,
-                                            "unit":["",""]
+                                            "unit":["",""],
+                                            "value": 0
                                          },
                                          {
                                             "ParameterID":"FilterGainCoef",
                                             "fieldIndex" : 11,
-                                            "name":["FilterGainCoef","FilterGainCoef"],
+                                            "name":["FilterGainCoef (B)","FilterGainCoef (B)"],
                                             "editable":true,
-                                            "comment":["---","---"],
-                                            "range":[0,255],
+                                            "comment":["S[n] = [(abs(En)*B) + (S[n-1] * A)] / (A + 1))<br>","S[n] = [(abs(En)*B) + (S[n-1] * A)] / (A + 1))<br>"],
+                                            "range":[1,255],
                                             "type":"number",
                                             "mantissa": 1,
                                             "multiplier": 1,
-                                            "unit":["",""]
+                                            "unit":["",""],
+                                            "value": 1
                                          },
                                         {
-                                        "ParameterID": "WM_SignalEachAcq",
-                                        "fieldIndex" : 12,
-                                        "name": ["WM_SignalEachAcq","WM_SignalEachAcq"],
-                                        "editable": true,
-                                        "comment": ["---","---"],
-                                        "type": "select",
-                                        "unit": ["",""],
-                                        "range": [0,1],
-                                        "multiplier": 1,
-                                        "options": [
-                                            {
-                                                "OptionID": 0,
-                                                "name": ["No","Non"]
-                                            },
-                                            {
-                                                "OptionID": 1,
-                                                "name": ["Yes","Oui"]
-                                            }
-                                        ]
+                                            "ParameterID": "WM_SignalEachAcq",
+                                            "fieldIndex" : 12,
+                                            "name": ["WM_SignalEachAcq","WM_SignalEachAcq"],
+                                            "editable": true,
+                                            "comment": ["[Debug] Blink Red LED (or beep) for each trigged meas","[Debug] DEL rouge clignote (ou bip) pour chaque acquisition"],
+                                            "type": "select",
+                                            "unit": ["",""],
+                                            "range": [0,1],
+                                            "multiplier": 1,
+                                            "options": [
+                                                {
+                                                    "OptionID": 0,
+                                                    "name": ["No","Non"]
+                                                },
+                                                {
+                                                    "OptionID": 1,
+                                                    "name": ["Yes","Oui"]
+                                                }
+                                            ],
+                                            "value": 0
                                         },
                                         {                                            
                                             "ParameterID":"WM_Reserved",
                                             "fieldIndex" : 13,
                                             "name":["WM_Reserved","WM_Reserved"],
-                                            "editable": true,
+                                            "editable": false,
                                             "comment":["---","---"],
                                             "range":[0,31],
                                             "type":"number",
                                             "mantissa": 1,
                                             "multiplier": 1,
-                                            "unit":["",""]
+                                            "unit":["",""],
+                                            "value": 0
                                         },
                                         {
                                             "ParameterID": "WM_RstAftStdRpt_X",
                                             "fieldIndex" : 14,
                                             "name": ["WM_RstAftStdRpt_X","WM_RstAftStdRpt_X"],
                                             "editable": true,
-                                            "comment": ["---","---"],
+                                            "comment": ["Reset X Statistic cluster when reported","Réinitialise le cluster de statistique X quand reporté"],
                                             "type": "select",
                                             "unit": ["",""],
                                             "range": [0,1],
@@ -1769,14 +1786,15 @@
                                                     "OptionID": 1,
                                                     "name": ["Yes","Oui"]
                                                 }
-                                            ]
+                                            ],
+                                            "value": 1
                                         },
                                         {
                                             "ParameterID": "WM_RstAftStdRpt_Y",
                                             "fieldIndex" : 15,
                                             "name": ["WM_RstAftStdRpt_Y","WM_RstAftStdRpt_Y"],
                                             "editable": true,
-                                            "comment": ["---","---"],
+                                            "comment": ["Reset Y Statistic cluster when reported","Réinitialise le cluster de statistique Y quand reporté"],
                                             "type": "select",
                                             "unit": ["",""],
                                             "range": [0,1],
@@ -1790,14 +1808,15 @@
                                                     "OptionID": 1,
                                                     "name": ["Yes","Oui"]
                                                 }
-                                            ]
+                                            ],
+                                            "value": 1
                                         },
                                         {
                                             "ParameterID": "WM_RstAftStdRpt_Z",
                                             "fieldIndex" : 16,
                                             "name": ["WM_RstAftStdRpt_Z","WM_RstAftStdRpt_Z"],
                                             "editable": true,
-                                            "comment": ["---","---"],
+                                            "comment": ["Reset Z Statistic cluster when reported","Réinitialise le cluster de statistique Z quand reporté"],
                                             "type": "select",
                                             "unit": ["",""],
                                             "range": [0,1],
@@ -1811,11 +1830,9 @@
                                                     "OptionID": 1,
                                                     "name": ["Yes","yes"]
                                                 }
-                                            ]
+                                            ],
+                                            "value": 1
                                         }
-                                            
-                                        
-                                         
                                       ]
                                     }
                             ]

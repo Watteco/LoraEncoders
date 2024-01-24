@@ -757,6 +757,9 @@ function updateFunctionsList(currentSelectedMode) {
 	document.getElementById('functionContainer').innerHTML = "<div style='margin-bottom: 15px;'><label for='paramSelect' style='font-size: 16px;'>② <span style='font-size: 16px;'>" + langData.chooseFunctionMsg[lang] + "</span> </label><select onchange='switchCategory();' id='paramSelect' style='margin-right:10px;'><option value='' selected disabled >----</option></select><select onchange='switchMode();' id='modeSelect' style='width:100px;'><option value='0' " + (currentSelectedMode == 0 ? " selected" : "") + ">" + langData.simple[lang] + "</option><option value='1' " + (currentSelectedMode == 1 ? " selected" : "") + ">" + langData.advanced[lang] + "</option></select></div>"; //On crée le select pour les commandes disponibles
 	for(var clusterIndex in gProductClustersArray) {
 		currentCluster = gProductClustersArray[clusterIndex]; 
+		
+		if ("clusterSpecificJS" in currentCluster) window.eval(currentCluster.clusterSpecificJS);
+
 		if(((currentSelectedMode == 0) && (!currentCluster.expert)) || (currentSelectedMode == 1)) {
 			var optgroup = document.createElement('optgroup'); //Création d'un groupe d'options
 			optgroup.label = (typeof currentCluster.customName !== 'undefined' ? currentCluster.customName[lang] : currentCluster.clusterName[lang]); //Affectation du nom du cluster actuel comme nom de ce groupe d'options
@@ -1104,8 +1107,7 @@ function UpdateStdFields(parameter,infos, editable = true) {
 	if(editable){
 		parameter.row.cells[1].innerHTML = 
 		"<input type='number' step='" + (1/(parameter.mantissa)) + 
-			"' value='" + 
-			(Array.isArray(infos.range) ? infos.range[0]:0) + "' " +
+			"' value='" + ("value" in parameter ? parameter.value : (Array.isArray(infos.range) ? infos.range[0]:0)) + "' " +
 			(Array.isArray(infos.range) ? " min='" + infos.range[0] + "' max='" + infos.range[1] + "' "  : "") + 
 			"onchange='modifyParameter()' id='parameter" + parameter.index + 
 			"'> " + infos.unit ; //Insertion du champ pour rentrer la valeur correspondant à l'option
@@ -1345,6 +1347,11 @@ function updateBitfield(sub){
 
 	return [[lBitFieldReport, lPresentFieldReport, lSizeReport],[lBitFieldData, lPresentFieldData, lSizeData]];
 }
+function removeAllChildNodes(parent) {
+	while (parent.firstChild) {
+	  parent.removeChild(parent.firstChild);
+	}
+ }
 
 //Fonction permettant d'ajouter une nouvelle ligne de paramètre
 function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = false,editable=true, InstanceRange=[0,0]) {
@@ -1381,6 +1388,24 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 			} 
 			
 			var cell = row.insertCell(cellNum++); //Insertion de la deuxième cellule
+
+			var tvalue = -1;
+			var tunitindex = 0;
+			if ("value" in parameter) {
+				try {
+					var str = parameter.value;
+					match = str.match(/\d*/);
+					if (!(typeof match === 'undefined')) _tvalue = parseInt(match[0], 10);
+					match = str.match(/[sSmM]/);
+					if (!(typeof match === 'undefined')) _tunit = match[0];
+
+					if (_tunit.length > 0) {
+						tunitindex = (_tunit[0].toUpperCase() == "M" ? 1 : 0);
+					}
+					tvalue = _tvalue;
+				}
+				catch (error) {	}
+			}
 			cell.innerHTML = "<input type='number' step='1' value='1' "+ 
 				" min='" +  parameter.range[0] + "' max='" + parameter.range[1] +"'" +
 				"onchange='modifyParameter()' id='parameter" + parameterIndex + "'" +
@@ -1399,21 +1424,29 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 			minutes.appendChild(document.createTextNode(langData.minutes[lang])); //On lui donne le nom de l'unité
 			minutes.value = "Minutes"; //On lui indique sa valeur
 			unitSelect.appendChild(minutes); //On ajoute l'option dans le sélecteur d'unité
-			if(currentClusterData.minMaxReport != undefined){
-				if (parameter.ParameterID === 'MinReport'){
-					document.getElementById("parameter" + parameterIndex).value = currentClusterData.minMaxReport[0][0];
-					unitSelect.selectedIndex = currentClusterData.minMaxReport[0][1];
-				} else if(parameter.ParameterID === 'MaxReport'){
-					document.getElementById("parameter" + parameterIndex).value = currentClusterData.minMaxReport[1][0];
-					unitSelect.selectedIndex = currentClusterData.minMaxReport[1][1];
-				}
+
+			var valueinput = document.getElementById("parameter" + parameterIndex)
+			
+			if (tvalue >= 0) {
+				valueinput.value = tvalue;
+				unitSelect.selectedIndex = tunitindex;
 			}else{
-				if (parameter.ParameterID === 'MinReport'){
-					document.getElementById("parameter" + parameterIndex).value = 60;
-					unitSelect.selectedIndex = 1;
-				} else if(parameter.ParameterID === 'MaxReport'){
-					document.getElementById("parameter" + parameterIndex).value = 60;
-					unitSelect.selectedIndex = 1;
+				if(currentClusterData.minMaxReport != undefined){
+					if (parameter.ParameterID === 'MinReport'){
+						document.getElementById("parameter" + parameterIndex).value = currentClusterData.minMaxReport[0][0];
+						unitSelect.selectedIndex = currentClusterData.minMaxReport[0][1];
+					} else if(parameter.ParameterID === 'MaxReport'){
+						document.getElementById("parameter" + parameterIndex).value = currentClusterData.minMaxReport[1][0];
+						unitSelect.selectedIndex = currentClusterData.minMaxReport[1][1];
+					}
+				}else{
+					if (parameter.ParameterID === 'MinReport'){
+						document.getElementById("parameter" + parameterIndex).value = 60;
+						unitSelect.selectedIndex = 1;
+					} else if(parameter.ParameterID === 'MaxReport'){
+						document.getElementById("parameter" + parameterIndex).value = 60;
+						unitSelect.selectedIndex = 1;
+					} 
 				}
 			}
 			
@@ -1427,22 +1460,36 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 		
 		case "select":
 			
-			row.insertCell(cellNum++).innerHTML = "<select id='parameter" + parameterIndex + "'></select>";
+			row.insertCell(cellNum++).innerHTML = 
+			"<select id='parameter" + parameterIndex + "'" +
+			("onChange" in parameter ? "onchange='" + parameter.onChange +"'" : "") +
+			"></select>";
 			
 			var select = document.getElementById("parameter" + parameterIndex); //On récupère l'élément select tout juste créé
-			
-			parameter.options.forEach(function(currentOption) {
-				var opt = document.createElement('option'); //On ajoute une nouvelle option
-				opt.appendChild(document.createTextNode(currentOption.name === undefined ? currentOption.comment[1] :currentOption.name[lang]));
-				opt.value = currentOption.OptionID;
-				select.appendChild(opt); //On ajoute notre option à la liste select précédente
-			});
+
+			if ("populate" in parameter) {
+				removeAllChildNodes(select);
+				eval(parameter.populate);
+			}
+			else
+			{
+				parameter.options.forEach(function(currentOption) {
+					var opt = document.createElement('option'); //On ajoute une nouvelle option
+					opt.appendChild(document.createTextNode(currentOption.name === undefined ? currentOption.comment[1] :currentOption.name[lang]));
+					opt.value = currentOption.OptionID;
+					select.appendChild(opt); //On ajoute notre option à la liste select précédente
+				});
+			}
 			
 			currentProductData.clusters.forEach(function(selectedCluster){
 				if(selectedCluster.clusterID == currentCluster) {
 					row.insertCell(cellNum++).innerHTML = (typeof selectedCluster[parameter.ParameterID + ".comment"] !== 'undefined' ? selectedCluster[parameter.ParameterID + ".comment"][lang] : parameter.comment[lang]); //Remplissage de la troisième cellule
 				}
 			});
+
+			if ("value" in parameter) {
+				select.value = parameter.value;
+			}
 			
 		break;
 
