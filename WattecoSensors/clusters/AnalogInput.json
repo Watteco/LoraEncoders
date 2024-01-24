@@ -323,7 +323,6 @@
 								   "name":["Thresold in Nb of LSb","Seuil en Nb de LSb"],
 								   "editable":true,
 									"comment": [" < 3 not advised (false detetcion)"," < 3 déconseillé (risque de fausse détection)"],
-									"comment": [" < 3 not advised (false detetcion)"," < 3 déconseillé (risque de fausse détection)"],
 									"range": [1,32767],
 									"type": "number",
 									"mantissa": 1,

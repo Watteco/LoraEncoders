@@ -7,6 +7,11 @@
 			"BatchUncompressParams": "3 0,1,7,Temperature 1,1,6,RelativeHumidity 2,1,7,Pressure 3,1,10,Index1 4,1,10,Index2 5,1,6,BatteryLevel"
 		},
 		{
+			"name": "Accelero (50-70-197) [beta]",
+			"file": "50-70-197-Accelero",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"]
+		},
+		{
 			"name": "Cels'O (50-70-049)",
 			"file": "50-70-049-Celso",
 			"apps": ["LoraEncoder","Decoder"],
