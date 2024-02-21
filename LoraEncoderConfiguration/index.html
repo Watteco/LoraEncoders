@@ -39,8 +39,11 @@
 		
 		<link rel="shortcut icon" href="../Common/cropped-cropped-favicon-300x300-1-32x32.png">
 		<link rel="icon" href="../Common/cropped-cropped-favicon-300x300-1-32x32.png"  sizes="32x32">
-
-		<script type="text/javascript" src="javascript.js?v=0.1"></script>
+		<!--
+		BELOW: loraEncoderType defines the dedicated functionnal requirement in ../Common/javascript.js (LoraEncoder or LoraEncoderConfiguration)
+		-->
+		<script>var loraEncoderType = "LoraEncoderConfiguration";</script>
+		<script type="text/javascript" src="../Common/javascript.js?v=0.1"></script>
 		<link rel="stylesheet" href="style.css">
 	</head>
 

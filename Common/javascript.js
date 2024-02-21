@@ -28,6 +28,23 @@ function getLang() {
 
 //Variable contenant la langue actuelle
 var lang = getLang();
+
+// Une fonction qui permet de fermer le logiciel LoraUpdater.exe à la fermeture de la page 
+// var isSwitchingLang = false;
+
+// sessionStorage.setItem('reloaded', 'yes');
+
+// window.addEventListener('beforeunload', (event) => {
+// 	if (sessionStorage.getItem('reloaded') != null) {
+// 		console.log('page was reloaded');
+// 	} else {
+// 		console.log('page was not reloaded');
+// 		if (gLocalConfiguration && !isSwitchingLang) {
+// 			navigator.sendBeacon("https://localhost:56700/System.txt","Action=Quit");
+// 			console.log("Fermeture du logiciel");
+// 		}
+// 	}
+// });
 var isSwitchingLang = false;
 window.addEventListener('beforeunload', (event) => {
     if (gLocalConfiguration && !isSwitchingLang) {
@@ -39,7 +56,7 @@ window.addEventListener('beforeunload', (event) => {
 
 //Définition des constantes de langue
 var langData = {
-	mainTitle: ["Local LoRaWAN frame encoder","Encodeur de trames LoRaWAN en local"],
+	mainTitle: ["LoRaWAN frame encoder","Encodeur de trames LoRaWAN"],
 	toolDesc: ["This tool allows to generate frames for LoRaWAN sensors in a simplified way. It may be possible that your sensor is not in the list or that some options are not yet available.","Cet outil permet de générer des trames pour les capteurs LoRaWAN de façon simplifiée. Il est possible que votre capteur ne soit pas présent dans la liste ou que certaines options ne soient pas encore disponibles."],
 	frameEncoder: ["Frame encoder","Encodeur de trames"],
 	firstMsg: ["First choose the sensor model, then select a command and edit the available parameters.","Choisissez tout d'abord le modèle de capteur, puis sélectionnez une commande et éditez les paramètres disponibles."],
@@ -119,7 +136,11 @@ var langData = {
 	finalConfMsg: ["Your configuration is available below:","Votre configuration est disponible ci-dessous:"],
 	finalSelectMsgCom: ["Fill in your COM port.","Renseignez votre port COM."],
 	finalSelectMsgSelect: ["Select your DeviceList.","Sélectionner votre DeviceList."],
-	finalConfButton:["Click on 'Configuration' button to send your configuration n°","Cliquer sur le bouton 'Configuration' pour envoyer votre configuration n°"],
+	customFile: ["Custom your device list","Modifier votre liste d'appareils"],
+	listCustomDevice: ["Devices in list","Appareils dans la liste"],
+	addDevice: ["Add this device","Ajouter cet appareil"],
+	createFile: ["Create file","Créer ce fichier"],
+	finalConfButton:["⑧ Enter the configuration mode to send your configuration n°","⑧ Entrer en mode configuration pour envoyer votre configuration n°"],
 	errorLoadConf: ["The configuration you chose doesn't match with the selected device.","Vous avez sélectionné une configuration qui n'est pas valable pour ce capteur"],
 	errorMsg: ["An error has occurred ! Please try again.","Une erreur est survenue ! Veuillez réessayer."],
 	errorTrame:["Your frame contain too many bytes","Ta trame contient trop d'octets"],
@@ -165,6 +186,12 @@ var gDataConcatenation = "";
 var gDataConcatenateLength = Number(gDataConcatenation.length);
 var gDeviceList = '';
 var gDeviceListName = '';
+
+// 3 Lines for FOTA LEC 
+var gDeviceListCustom = [];
+var gDeviceTempListCustom = [];
+var gDeviceInputCorrect = {'addDevEUI' : false, 'addNwkSKeyABP' : false, 'addAppSKeyABP' : false, 'addAppKey' : false};
+
 var gFileLoaded = false;
 
 
@@ -227,7 +254,8 @@ function formatBitmap(size,bit,x){
 
 // variable contenant une valeur aléatoire à ajouter à la trame
 var rndHex = rndHexValue(4);
-var rndHexToDec = parseInt("" + rndHex.slice(2,4) +rndHex.slice(0,2),16).toString(10);
+var rndHexToDec = 0; // From FOTA LEC set to 0
+//var rndHexToDec = parseInt("" + rndHex.slice(2,4) +rndHex.slice(0,2),16).toString(10);
 var gRandValueConfig = currentDefaultAddresses[1] + addSpace(rndHex) + "\nq";
 
 function getRootUrl() {
@@ -279,56 +307,80 @@ var getJSON2 = function(url, callback, extraParameters = null) {
 
 
  function postHTML(){
-	
-	dataFile = gDeviceList;
+	if(document.getElementById("postButton").checked){
 
-	postCom();
+		document.getElementById("fieldset").setAttribute("disabled","true")
+		postCom();
+		
+		let start = "DevEUI;ABP_DevAddr;ABP_NwkSKey;ABP_AppSKey;CodeFamille;Version;OTA_AppKey;OTA_AppEUI;Unconfirmed;CodeFamillePF;Synchro;Adr\n"
 
-	var date = formatDate();
-	var lrndHex = "" + rndHex.slice(2,4) +rndHex.slice(0,2);
-	
-	var xhr = new XMLHttpRequest();
-	
-	xhr.open("POST", path + 'C0.0.0.0_' + currentEmbeddedName + '.' + parseInt(lrndHex,16).toString(10) +'.' + date +'.txt', true);
-	//xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
-	//xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-	xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-	xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
-			if (this.readyState === XMLHttpRequest.DONE &&  ((this.status === 201) || (this.status === 200))) {
-				document.getElementById("postButtonResultId").innerHTML = '<b>' + langData.congratulation[lang] + '</b>' ;
-				setTimeout(function(){ document.getElementById("postButtonResultId").innerHTML = ''; }, 8000);
-				
-				var xhr = new XMLHttpRequest();
-				
-				xhr.open("POST", path + gDeviceListName, true);
-				//fileFormat[0] === "txt" ? xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8") : xhr.setRequestHeader("Content-Type", "Application/octet-stream") ;
-				xhr.setRequestHeader("Content-Type", "text/plain");
-				xhr.setRequestHeader("Accept","*/*");
-				xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
-						if (this.readyState === XMLHttpRequest.DONE &&  (this.status === 200)) {
-							console.log('Your list of product has been sent');
-						} else if(this.readyState === XMLHttpRequest.DONE){
-							console.log('An error occured while transferring your list of product');
+		var date = formatDate();
+		var lrndHex = "" + rndHex.slice(2,4) +rndHex.slice(0,2);
+		
+		var xhr = new XMLHttpRequest();
+		
+		xhr.open("POST", path + 'C0.0.0.0_' + currentEmbeddedName + '.' + parseInt(lrndHex,16).toString(10) +'.' + date +'.txt', true);
+
+		xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+		xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
+				if (this.readyState === XMLHttpRequest.DONE &&  ((this.status === 201) || (this.status === 200))) {
+					document.getElementById("postButtonResultId").innerHTML = '<b>' + langData.congratulation[lang] + '</b>' ;
+
+					var xhr = new XMLHttpRequest();
+					
+					xhr.open("POST", path + "ListeProduits_" + Math.floor(Math.random() * 10000) + ".txt" , true);
+					//fileFormat[0] === "txt" ? xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8") : xhr.setRequestHeader("Content-Type", "Application/octet-stream") ;
+					xhr.setRequestHeader("Content-Type", "text/plain");
+					xhr.setRequestHeader("Accept","*/*");
+					xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
+							if (this.readyState === XMLHttpRequest.DONE &&  (this.status === 200)) {
+								console.log('Your list of product has been sent');
+							} else if(this.readyState === XMLHttpRequest.DONE){
+								console.log('An error occured while transferring your list of product');
+							}
 						}
-					}
-				xhr.send(dataFile);
-				
-			}  else if(this.status === 0){
-				alert(langData.errorFota[lang]);
-			}else if(this.readyState === XMLHttpRequest.DONE){
-				document.getElementById("postButtonResultId").innerHTML = langData.FichierKeyManquant[lang];
-				setTimeout(function(){ document.getElementById("postButtonResultId").innerHTML = ''; }, 3000);
-			}
-		}
-	
-	xhr.send(currentDefaultAddresses[0]  + (gLocalConfiguration   ? gDataReset +"\n" : "") +gDataConcatenation +gRandValueConfig);
+						
+					xhr.send(createdFileFormatted())
+					
 
+					
+				}  else if(this.status === 0){
+					alert(langData.errorFota[lang]);
+				}else if(this.readyState === XMLHttpRequest.DONE){
+					document.getElementById("postButtonResultId").innerHTML = langData.FichierKeyManquant[lang];
+					setTimeout(function(){ document.getElementById("postButtonResultId").innerHTML = ''; }, 3000);
+				}
+			}
+		
+		xhr.send(currentDefaultAddresses[0]  + (gLocalConfiguration   ? gDataReset +"\n" : "") +gDataConcatenation +gRandValueConfig);
+	}else{
+		document.getElementById("postButtonResultId").innerHTML = '';
+
+		document.getElementById("fieldset").removeAttribute("disabled")
+
+		var xhr = new XMLHttpRequest();
+					
+		xhr.open("POST", path + gDeviceListName, true);
+		xhr.setRequestHeader("Content-Type", "text/plain");
+		xhr.setRequestHeader("Accept","*/*");
+		xhr.onreadystatechange = function() { //Appelle une fonction au changement d'état.
+				if (this.readyState === XMLHttpRequest.DONE &&  (this.status === 200)) {
+					console.log('Your empty list of product has been sent');
+				} else if(this.readyState === XMLHttpRequest.DONE){
+					console.log('An error occured while transferring your empty list of product');
+				}
+			}
+	xhr.send("DevEUI;ABP_DevAddr;ABP_NwkSKey;ABP_AppSKey;CodeFamille;Version;OTA_AppKey;OTA_AppEUI;Unconfirmed;CodeFamillePF;Synchro;Adr;SN;NumBL;NumCde;DevEUI2");
+		
+	}
+	
 }
 
 function postCom(){
 	
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", 'https://localhost:56700/System.txt', true);
+	//xhr.open("POST", 'https://localhost:56700/System.txt', true);
+	xhr.open("POST", 'http://localhost:56700/System.txt', true);
 	//xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
 	//xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
 	//Envoie les informations du header adaptées avec la requête
@@ -440,7 +492,9 @@ var path = "";
 function getAllAvailableProducts() {
 	getLocalConfiguration();
 	
-	getJSON(getRootUrl() + "/Lora/WattecoSensors/AvailableProductsList.json?v=" + (new Date()).getTime(),
+  // Use 2nd line from FOTA LEC
+	//getJSON(getRootUrl() + "/Lora/WattecoSensors/AvailableProductsList.json?v=" + (new Date()).getTime(),
+  getJSON("/Lora/WattecoSensors/AvailableProductsList.json?v=" + (new Date()).getTime(),
 		function(err, availableProducts) {
 			if (err !== null) {
 				console.log('Une erreur est survenue : ' + err);
@@ -449,7 +503,8 @@ function getAllAvailableProducts() {
 				availableProducts.products.forEach(function(product){
 					displayed = 1;
 					if(typeof(product["apps"]) !== 'undefined') {
-						displayed = product.apps.includes("LoraEncoder");
+            // loraEncoderType defined in calling index.html ("LoraEncoder" or "LoraEncoderConfiguration")
+						displayed = product.apps.includes(loraEncoderType);
 					}
 					if (displayed) {
 						var opt = document.createElement('option');
@@ -558,6 +613,7 @@ function switchProduct() {
 				showLocalBlock();
 				fShowFile();
 				showLocalConf();
+				document.getElementById("switchLabel").setAttribute("style", "display:none")
 			};
 			selectConfig.onchange = function() {loadFile(selectConfig.files)};
 	
@@ -1003,12 +1059,14 @@ function switchCategory(lCurrentReportType = 0) {
 
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
+    generateButton.id = "addFrameButton"; // Mise en place d'un id
 		generateButton.value = langData.chooseOption[lang]; //Texte du bouton
 		generateButton.onclick = function() { showFinalTxt(generateCheckbox.checked,true)}; //Cliquer sur le bouton appelle la fonction de création du fichier txt et du téléchargement de celui ci
 		row.insertCell(3).appendChild(generateButton); //Insertion du bouton dans la troisième cellule	
 		
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
+    generateButton.id = "resetFrameButton"; // Mise en place d'un id
 		generateButton.value = langData.chooseOption[lang]; //Texte du bouton
 		generateButton.onclick = function() { resetShowFinalTxt(generateCheckbox.checked); }; //Cliquer sur le bouton appelle la fonction de création du fichier txt et du téléchargement de celui ci
 		row.insertCell(4).appendChild(generateButton); //Insertion du bouton dans la troisième cellule
@@ -1351,7 +1409,7 @@ function removeAllChildNodes(parent) {
 	while (parent.firstChild) {
 	  parent.removeChild(parent.firstChild);
 	}
- }
+}
 
 //Fonction permettant d'ajouter une nouvelle ligne de paramètre
 function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = false,editable=true, InstanceRange=[0,0]) {
@@ -1367,11 +1425,11 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 		// If not defined in json, by default a selectable parameter is not selected
 		checkedStr = (typeof(parameter.selected) == 'undefined' ? "" : (parameter.selected ? "checked" : "" )); 
 		cellHtml += "<div style='float: right;'> <input type='checkbox' " + 
-			checkedStr + " id='parameterSelect" + parameterIndex + "'>"+ "</div> ";	
+			checkedStr + " id='parameterSelect" + parameterIndex + "'>"+ "</div> ";
 	}
 	row.insertCell(cellNum++).innerHTML = cellHtml;
 
-	
+
 
 	// Set some default parameters for parameter in case not defined in JSON
 	if (! Array.isArray(parameter.unit)) parameter.unit = ["",""];
@@ -1655,16 +1713,20 @@ function modifyParameter() {
 
 function checkBatchAvailability(){
 	let lBool = false;
- 
-	currentProductData.clusters.forEach(function(cluster){
-		if(cluster.batch != undefined && cluster.clusterID === currentCluster){
-			cluster.batch.forEach(function(attributeBatch){
-				if(attributeBatch.attribute === currentClusterData.attributes[currentAttributeIndex].AttributeID && !(currentSelectedMode == 0 && attributeBatch.config == undefined)){
-					lBool = attributeBatch.available;
-				}
-			})
-		}
-	});
+  // Following if comes from FOTA LEC
+	if(currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].CommandID === "ConfigureReporting"){
+		
+		currentProductData.clusters.forEach(function(cluster){
+			if(cluster.batch != undefined && cluster.clusterID === currentCluster){
+				cluster.batch.forEach(function(attributeBatch){
+					if(attributeBatch.attribute === currentClusterData.attributes[currentAttributeIndex].AttributeID && !(currentSelectedMode == 0 && attributeBatch.config == undefined)){
+						lBool = attributeBatch.available;
+					}
+				})
+			}
+		});
+		
+	}
 	return lBool;
 }
 
@@ -1985,7 +2047,11 @@ function showFinalFrame() {
 			if(scriptLocation != null) {
 				jQuery.get(scriptLocation + "?json=" + jsonOutput, function(data, status) {
 					if(status == "success" && !(!!~data.indexOf("errorMsg"))) {
-						document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalFrameMsg[lang] + "</p><textarea rows='10' cols='100' style='resize:none' readonly='readonly'>" + data.trim() + "</textarea>";
+            if (loraEncoderType == "LoraEncoderConfiguration") {
+   						document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalFrameMsg[lang] + "</p><textarea rows='1' cols='100' style='resize:none' readonly='readonly'>" + data.trim() + "</textarea>";
+            }else{
+						  document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalFrameMsg[lang] + "</p><textarea rows='10' cols='100' style='resize:none' readonly='readonly'>" + data.trim() + "</textarea>";
+            }
 					} else {
 						document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalFrameMsg[lang] + "</p><textarea rows='1' cols='100' style='resize:none' readonly='readonly'>" + langData.errorMsg[lang] + "</textarea>";
 					}
@@ -2076,7 +2142,7 @@ function showFinalTxt(checked,aButton){
 										labelNameFile.textContent = langData.finalTxtMessLabelInput[lang];
 										document.getElementById("outputContainer").appendChild(labelNameFile);
 										document.getElementById("outputContainer").appendChild(nameFile); 
-										
+
 										var fileBlob = new Blob([document.getElementById('textConfId').value], {type: "application/octet-binary"});
 
 										var downloadFile = document.createElement("a");
@@ -2123,6 +2189,7 @@ function loadFile(files){
        only variable, hence immutable. To make any changes,  
        changing const to var, here and In the reader.onload  
        function would be advisible */
+	gDataConcatenation = "";   
 	const file = files[0]; 
 	var fileName;
 	if (file.name.includes("_") && file.name.split("_")[1].includes(".")){
@@ -2208,7 +2275,8 @@ function fSelectCom(){
 		x.remove(x.length-1);
 	}
 	var availableCom;
-	$.get("https://localhost:56700/System.txt",function(data){
+	//$.get("https://localhost:56700/System.txt",function(data){
+	$.get("http://localhost:56700/System.txt",function(data){
 		availableCom = data;
 		data = data.replace(/\n|\r/g,'');
 		data = data.split("=")[1];
@@ -2225,7 +2293,8 @@ function fSelectCom(){
 	},"text");
 	selectCom.onfocus = function(){
 		
-		$.get("https://localhost:56700/System.txt",function(data){
+		//$.get("https://localhost:56700/System.txt",function(data){
+		$.get("http://localhost:56700/System.txt",function(data){
 		if(availableCom != data){
 			availableCom = data;
 			while(selectCom.options.length > 0){selectCom.remove(0);}
@@ -2246,15 +2315,200 @@ function fSelectCom(){
 
 
 function fSelectFile(){
-	// On créé on bouton selectfile pour choisir un fichier à importer
+	// On créé on bouton selectfile pour choisir un fichier à importer, ou le créer
 	var selectFile = document.createElement("INPUT");
 	selectFile.setAttribute("id", "selectFileId");
 	selectFile.setAttribute("type", "file");
 	selectFile.setAttribute("accept", ".txt,.wttc");
 	selectFile.setAttribute('style','display:none;margin-bottom: 2%;margin-left:1%;');
 	selectFile.onchange = function() { fShow(selectFile); };
+
+	var textBetween = document.createElement('div')
+	textBetween.setAttribute("id", "selectFileTextId");
+	textBetween.setAttribute('style','display:none; margin-top: 10px;');
+	textBetween.innerHTML = langData.or[lang]
+
+	var createFileModal = document.createElement("INPUT");
+	createFileModal.setAttribute("id", "customFile");
+	createFileModal.setAttribute("type", "button");
+	createFileModal.setAttribute('style','display:none;');
+	createFileModal.value = langData.customFile[lang];
+
+	// Get the modal
+	var modal = document.getElementById("myModal");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks on the button, open the modal
+	createFileModal.onclick = function() {
+		modal.style.display = "block";
+		displayCustomDeviceList();
+		gDeviceTempListCustom = [...gDeviceListCustom]
+
+		document.getElementById('createFile').disabled = (gDeviceTempListCustom.length === 0);
+
+	}
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+
+	fModalFunction()
+	
 	document.getElementById("localSetupDownload").appendChild(selectFile);
+	document.getElementById("localSetupDownload").appendChild(textBetween);
+	document.getElementById("localSetupDownload").appendChild(createFileModal);
 }
+
+function checkInput(event){
+	let target = event.target
+	
+	const regex = new RegExp(target.minLength === 16 ? /\b[0-9A-F]{16}\b/gi : /\b[0-9A-F]{32}\b/gi)
+	
+	if(!regex.test(target.value)){
+		document.getElementById(target.id).style.color = 'red'
+		gDeviceInputCorrect[target.id] = false
+	}else {
+		document.getElementById(target.id).style.color = 'black'
+		gDeviceInputCorrect[target.id] = true
+	}
+
+	for(let [key, value] of Object.entries(gDeviceInputCorrect)){
+		if(!value){
+			document.getElementById('createDevice').disabled = true
+			return
+		}
+	}
+	document.getElementById('createDevice').disabled = false
+}
+
+function fModalFunction(){
+	var createDeviceButton = document.getElementById('createDevice')
+	createDeviceButton.value = langData.addDevice[lang]
+	createDeviceButton.addEventListener("click", (event) => {
+		event.preventDefault()
+		addDeviceInTempList()
+		document.querySelector('form').reset()
+	  });
+
+	var createFile = document.getElementById('createFile')
+	createFile.value = langData.createFile[lang]
+	createFile.addEventListener('click', () => {
+		addDeviceInList()
+		fShowFileCreated()
+		document.getElementById("myModal").style.display = 'none'
+	})  
+}
+
+function addDeviceInList(){
+	gDeviceListCustom = [...gDeviceTempListCustom]
+}
+
+function addDeviceInTempList(){
+	const formData = new FormData(document.querySelector('form'))
+	var newDevice = {}
+	for (var pair of formData.entries()) {
+		newDevice[pair[0]] = pair[1]
+	}
+
+	gDeviceTempListCustom.push(newDevice)
+	addRowInModal(newDevice)
+	document.getElementById('createFile').disabled = false
+	document.getElementById('createDevice').disabled = true
+	gDeviceInputCorrect = {'addDevEUI' : false, 'addNwkSKeyABP' : false, 'addAppSKeyABP' : false, 'addAppKey' : false};
+}
+
+function addDeviceInListFromSelect(){
+	let listUnformattedDevice = gDeviceList.split('\n');
+
+	listUnformattedDevice.forEach(device => {
+		if(device.length > 1){
+			let temp = device.split(';')
+			gDeviceListCustom.push({
+				'DevEUI' : temp[0],
+				'ABP_NwkSKey' : temp[2],
+				'ABP_AppSKey' : temp[3],
+				'OTA_AppKey' : temp[6]
+			})
+		}
+	})
+
+}
+
+function deleteDeviceInList(deveui){
+	let indexToRemove = gDeviceTempListCustom.findIndex(device => {
+		return device['DevEUI'] === deveui
+	})
+
+	gDeviceTempListCustom.splice(indexToRemove, 1)
+
+	if(gDeviceTempListCustom.length === 0) document.getElementById('createFile').disabled = true
+	document.getElementById('createDevice').disabled = true
+}
+
+function displayCustomDeviceList(){
+	// Clear the device list before populate it
+	var table = document.getElementById('modalTableBody')
+	for(row of table.children){
+		table.deleteRow(0)
+	}
+
+	gDeviceListCustom.forEach(device => {
+		addRowInModal(device);
+	})
+}
+
+function addRowInModal(device){
+
+	//Check if device not already in the table
+	var table = document.getElementById('modalTableBody')
+
+	
+	for(row of table.children){
+		if(row.cells[0].innerHTML === device['DevEUI']) return
+	}
+
+
+
+
+	var row = table.insertRow(0);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	cell1.innerHTML = device['DevEUI'];
+	cell2.innerHTML = 'x';
+
+	cell2.addEventListener("mouseover", function (event) {
+		event.target.style.color = 'red'
+	  }, false);
+	cell2.addEventListener("mouseout", function (event) {
+		event.target.style.color = "black";
+	}, false);
+
+	cell2.onclick = (event) => {
+		table.deleteRow(event.target.parentNode.rowIndex-1);
+		deleteDeviceInList(cell1.textContent)
+	}
+}
+
+function createdFileFormatted(){
+	let result = "DevEUI;ABP_DevAddr;ABP_NwkSKey;ABP_AppSKey;CodeFamille;Version;OTA_AppKey;OTA_AppEUI;Unconfirmed;CodeFamillePF;Synchro;Adr;SN;NumBL;NumCde;DevEUI2\n"
+	gDeviceListCustom.forEach((value) => {
+		result+=`${value['DevEUI']};;${value['ABP_NwkSKey']};${value['ABP_AppSKey']};;;${value['OTA_AppKey']};;;;;;;;;\n`
+	})
+	return result
+}
+
+
+//
 
 function confButton(){
 
@@ -2292,7 +2546,9 @@ function showLocalBlock(){
 	document.getElementById("txtNbSix").setAttribute("style","display:block;");
 	document.getElementById("selectCom").setAttribute("style","display:block;");
 	document.getElementById("selectFileId").setAttribute("style","display:block;");
+	document.getElementById("selectFileTextId").setAttribute("style","display:block;margin-top: 15px;");
 	document.getElementById("txtNbSeven").setAttribute("style","display:block;");
+	document.getElementById("customFile").setAttribute("style","display:block; margin: 2% 0;");
 	document.getElementById("switchLabel").setAttribute("style","display:inline-block;");
 	document.getElementById("postButtonResultId").setAttribute("style","display:block;");
 	document.getElementById("txtNbEight").setAttribute("style","display:block;");
@@ -2321,8 +2577,8 @@ function fReadAllFile(){
 	
 	selectFile = document.getElementById('selectFileId').files;
 
-	start = "DevEUI;ABP_DevAddr;ABP_NwkSKey;ABP_AppSKey;CodeFamille;Version;OTA_AppKey;OTA_AppEUI;Unconfirmed;CodeFamillePF;Synchro;Adr"
-	var gDeviceListTemp = '';
+	let start = "DevEUI;ABP_DevAddr;ABP_NwkSKey;ABP_AppSKey;CodeFamille;Version;OTA_AppKey;OTA_AppEUI;Unconfirmed;CodeFamillePF;Synchro;Adr"
+	var gDeviceListTemp = [];
 	//On va lire un document et concaténer le contenu dans une variable gDeviceList qui est globale  
 	function setupReader(file) {
 		// C'est une fonction asynchrone
@@ -2340,9 +2596,12 @@ function fReadAllFile(){
 		}
 		reader.onload = function(e) {   
 			var text = e.target.result;
-			gDeviceListTemp += text;
+			gDeviceListTemp = text.split("\n").slice(1).join("\n");
 			gDeviceList =  gDeviceListTemp;
+
+			addDeviceInListFromSelect()
 		}
+
 		reader.readAsText(file, "UTF-8");
 		
 	}
@@ -2365,8 +2624,6 @@ function fShow(selectFile) {
 	
 	clearElement('bodyFile');
 	clearElement('selectFileId');
-	
-	
 	
 	fReadAllFile();
 	
@@ -2392,6 +2649,19 @@ function fShowFile() {
 		fileFormat.push(selectFile.files[i].name.substring(selectFile.files[i].name.indexOf(".")+1));
 	}
 }
+
+function fShowFileCreated() {
+	
+	clearElement('bodyFile');
+	clearElement('selectFileId');
+	
+	fileFormat = [];
+
+	
+	body = document.getElementById("bodyFile");
+	row = body.insertRow(0);
+	row.insertCell(0).innerHTML = "<span>" + 'Custom_device_list.txt' + "</span>";
+}
 //----------------------------------------------------------------------------------------------------------------------
 //	PARTIE 9 : Fonctions permettant la récupération du fichier DeviceList et l'affichage de ses données dans un tableau
 //----------------------------------------------------------------------------------------------------------------------
@@ -2401,7 +2671,8 @@ var scannedDevice = new Map();
 function callGetTXT(){
 	let xhr = new XMLHttpRequest();
 
-	xhr.open('GET', 'https://localhost:56700/DeviceList.txt');
+	xhr.open('GET', 'http://localhost:56700/DeviceList.txt');
+	//xhr.open('GET', 'https://localhost:56700/DeviceList.txt');
 	xhr.responseType = 'text';
 	xhr.send();
 	xhr.onload = function() {
@@ -2437,42 +2708,37 @@ function displayDeviceArray(fullTxt){
 		ligne = body.insertRow(i);
 		var infos = l[i].split(';'); // On sépare la ligne de notre appareil en mot pour les insérer un par un dans le tableau
 		infos.splice(1,1);
-		for (var j = 0; j < infos.length; j++){
-			if(rndHexToDec === 0){
-				ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
-				ligne.setAttribute('style','background-color: white ;'); // White
 
-			}else{
-				const wasInList = scannedDevice.has(infos[2])
-				const isSameAsCurrentConfig = infos[7] === rndHexToDec
-				const wasSameAsCurrentConfig = scannedDevice.get(infos[2]) === infos[7]
-				
-				if (scannedDevice.size != 0 && wasInList){
-					if(wasSameAsCurrentConfig && isSameAsCurrentConfig){
-						ligne.insertCell(j).innerHTML = "<span>" + infos[j] + "</span>";
-						ligne.setAttribute('style','background-color:#A4D8A1;');	// Green
-					}else if(isSameAsCurrentConfig){
-						ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
-						ligne.setAttribute('style','background-color: #2FDC26 ;'); // Green flashy
-					}else{
-						ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
-						ligne.setAttribute('style','background-color: white ;'); // White
-					}
-	
+		var color = 'white';
+
+		const wasInList = scannedDevice.hasOwnProperty(infos[2])
+		const isSameAsCurrentConfig = infos[7] === rndHexToDec
+		const wasSameAsSavedConfig = wasInList ? scannedDevice[infos[2]]["config"] === infos[7] : false
+
+		if(rndHexToDec === 0){
+			color = 'white' // White
+		}else{
+			if (Object.keys(scannedDevice).length != 0 && wasInList){
+				if(wasSameAsSavedConfig && isSameAsCurrentConfig){
+					color = "#A4D8A1" // Green
+				}else if(isSameAsCurrentConfig){
+					color = "#2FDC26" // Green flashy
 				}else{
-					if(isSameAsCurrentConfig){
-						ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
-						ligne.setAttribute('style','background-color: #2FDC26 ;'); // Green flashy
-					}else{
-						ligne.insertCell(j).innerHTML = "<span>" +  infos[j] + "</span>";
-						ligne.setAttribute('style','background-color: #F15050 ;'); // Red
-					}
-	
+					color = "white" // White
+				}
+			}else{
+				if(isSameAsCurrentConfig){
+					color = "#2FDC26" // Green flashy
+				}else{
+					color = 'white'
 				}
 			}
-
 		}
-		scannedDevice.set( infos[2], infos[7]);
+		for (var j = 0; j < infos.length; j++){
+			ligne.insertCell(j).innerHTML = "<span>" + infos[j] + "</span>";
+			ligne.setAttribute('style','background-color:'+ color+';');
+		}
+		scannedDevice[infos[2]] = {"config" : infos[7]};
 	}
 }
 
