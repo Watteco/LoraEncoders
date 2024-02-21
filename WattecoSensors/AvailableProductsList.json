@@ -1,15 +1,15 @@
 {
 	"products": [
 		{
+			"name": "Acceler'O (50-70-197) [beta]",
+			"file": "50-70-197-Accelero",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"]
+		},
+		{
 			"name": "Atm'O (50-70-099)",
 			"file": "50-70-099-Atmo",
 			"apps": ["LoraEncoder","Decoder"],
 			"BatchUncompressParams": "3 0,1,7,Temperature 1,1,6,RelativeHumidity 2,1,7,Pressure 3,1,10,Index1 4,1,10,Index2 5,1,6,BatteryLevel"
-		},
-		{
-			"name": "Accelero (50-70-197) [beta]",
-			"file": "50-70-197-Accelero",
-			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"]
 		},
 		{
 			"name": "Cels'O (50-70-049)",
@@ -22,6 +22,18 @@
 			"file": "50-70-071-Flasho",
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
 			"BatchUncompressParams": "1 0,1,10,Index 1,100,6,BatteryLevel"
+		},	
+		{
+			"name": "Flash'O 3 probes (50-70-206)",
+			"file": "50-70-206-Flash'O-3-probes",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"BatchUncompressParams": "4 0,1,10,Index1 1,1,10,Index2 2,1,10,Index3 3,1,1,State1 4,1,1,State2 5,1,1,State3 6,100,6,BatteryLevel 7,1,6,MultiState"
+		},
+		{
+			"name": "HygroTemp'O (50-70-[205/232])",
+			"file": "50-70-205-232-HygroTemp'O",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"BatchUncompressParams": "2 0,10,7,Temperature 1,100,6,RelativeHumidity 2,1,6,BatteryLevel 3,1,1,OpenCase"
 		},
 		{
 			"name": "In'O (50-70-016-005)",
@@ -52,9 +64,15 @@
 			"BatchUncompressParams": "3 0,0.02,12,0-100mV 1,17,12,0-70V 2,100,6,BatteryLevel 3,100,6,ExternalLevel"
 		},
 		{
+			"name": "Move'O (50-70-220)",
+			"file": "50-70-220-000-Move'o",
+			"apps": ["LoraEncoder","Decoder"],
+			"BatchUncompressParams": "3 0,1,4,OCC 1,10,7,T 2,100,6,H 5,10,6,LUX"
+		},
+		{
 			"name": "Outdoor Temperature (50-70-164)",
 			"file": "50-70-164-RT",
-			"apps": ["LoraEncoder","Decoder"],
+			"apps": ["LoraEncoder","Decoder","LoraEncoderConfiguration"],
 			"BatchUncompressParams": "3 0,10,7,Temperature 5,100,6,BatteryLevel"
 		},
 		{
@@ -105,25 +123,15 @@
 			"BatchUncompressParams": "1 0,10,7,Temperature 1,100,6,BatteryLevel"
 		},
 		{
-			"name": "Remote temperature 2 CTN (50-70-[139/163/184])",
+			"name": "Remote temperature 2CTN (50-70-[139/163/184])",
 			"file": "50-70-139-000-RT2CTN",
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
 			"BatchUncompressParams": "3 0,10,7,Temperature1 1,10,7,Temperature2 5,100,6,BatteryLevel"
 		},
 		{
-			"name": "Remote temperature humidité (50-70-200)",
+			"name": "Remote temperature humidity (50-70-200)",
 			"file": "50-70-200-RTH",
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"]
-		},
-		{
-			"name": "Outdoor Temperature (50-70-164)",
-			"file": "50-70-164-RT",
-			"apps": ["LoraEncoderConfiguration"]
-		},
-		{
-			"name": "Toran'O Atex zone 1(50-70-124)",
-			"file": "50-70-124-Torano",
-			"apps": ["LoraEncoderConfiguration"]
 		},
 		{
 			"name": "SkyDome (50-70-143)",
@@ -143,16 +151,22 @@
 			"BatchUncompressParams": "1 0,1,10,Index1 1,100,6,BatteryLevel"
 		},
 		{
-			"name": "TH (50-70-[053/162])",
-			"file": "50-70-053-TH",
-			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
-			"BatchUncompressParams": "2 0,10,7,Temperature 1,100,6,RelativeHumidity 2,1,6,BatteryLevel 3,1,1,OpenCase"
-		},
-		{
 			"name": "T (50-70-[085/167])",
 			"file": "50-70-085-T",
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
 			"BatchUncompressParams": "2 0,10,7,Temperature  2,1,6,BatteryLevel 3,1,1,OpenCase"
+		},
+		{
+			"name": "Temp'O (50-70-231)",
+			"file": "50-70-231-Temp'O",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"BatchUncompressParams": "2 0,10,7,Temperature 1,100,6,RelativeHumidity 2,1,6,BatteryLevel 3,1,1,OpenCase"
+		},
+		{
+			"name": "TH (50-70-[053/162])",
+			"file": "50-70-053-TH",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"BatchUncompressParams": "2 0,10,7,Temperature 1,100,6,RelativeHumidity 2,1,6,BatteryLevel 3,1,1,OpenCase"
 		},
 		{
 			"name": "THr (50-70-007 [deprecated])",
@@ -172,12 +186,6 @@
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"]
 		},
 		{
-			"name": "Ventil'O (50-70-[064/101/166])",
-			"file": "50-70-064-Ventil'o",
-			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
-			"BatchUncompressParams": "3 0,1,7,Mean_differential_pressure_since_last_report 1,1,7,Minimal_differential_pressure_since_last_report 2,1,7,Maximal_differential_pressure_since_last_report  3,1,6,BatteryLevel 4,10,7,Temperature 5,1,7,DifferentialPressure 6,1,10,Index 7,1,1,State"
-		},	
-		{
 			"name": "Vaqa'O + Plus (50-70-074)",
 			"file": "50-70-074-VAQAO+Plus",
 			"apps": ["LoraEncoder","Decoder"],
@@ -190,16 +198,10 @@
 			"BatchUncompressParams": "3 1,10,7,T 2,100,6,H 3,10,6,CO2 4,10,6,COV"
 		},
 		{
-			"name": "Flash'O 3 probes (50-70-206)",
-			"file": "50-70-206-Flash'O-3-probes",
+			"name": "Ventil'O (50-70-[064/101/166])",
+			"file": "50-70-064-Ventil'o",
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
-			"BatchUncompressParams": "4 0,1,10,Index1 1,1,10,Index2 2,1,10,Index3 3,1,1,State1 4,1,1,State2 5,1,1,State3 6,100,6,BatteryLevel 7,1,6,MultiState"
-		},
-		{
-			"name": "Move'O (50-70-220)",
-			"file": "50-70-220-000-Move'o",
-			"apps": ["LoraEncoder","Decoder"],
-			"BatchUncompressParams": "3 0,1,4,OCC 1,10,7,T 2,100,6,H 5,10,6,LUX"
+			"BatchUncompressParams": "3 0,1,7,Mean_differential_pressure_since_last_report 1,1,7,Minimal_differential_pressure_since_last_report 2,1,7,Maximal_differential_pressure_since_last_report  3,1,6,BatteryLevel 4,10,7,Temperature 5,1,7,DifferentialPressure 6,1,10,Index 7,1,1,State"
 		}
 
 	],
