@@ -1,0 +1,11 @@
+name: Display Message
+
+on:
+  workflow_dispatch:
+
+jobs:
+  message:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Display a message
+      run: echo "Hello, world! This is a custom message displayed by your GitHub Action."
