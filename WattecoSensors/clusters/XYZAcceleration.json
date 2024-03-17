@@ -375,7 +375,7 @@
                         },
                         {
                             "CommandID": "ReadAttribute",
-                            "name": ["Read current value","Lire la valeur actuelle"],
+                            "name": ["Stats_X - Read current value","Stats_X - Lire la valeur actuelle"],
                             "expert": true
                         }
                     ]
@@ -751,7 +751,7 @@
                         },
                         {
                             "CommandID": "ReadAttribute",
-                            "name": ["Read current value","Lire la valeur actuelle"],
+                            "name": ["Stats_Y - Read current value","Stats_Y - Lire la valeur actuelle"],
                             "expert": true
                         }
                     ]
@@ -1128,7 +1128,7 @@
                         },
                         {
                             "CommandID": "ReadAttribute",
-                            "name": ["Read current value","Lire la valeur actuelle"],
+                            "name": ["Stats_Z - Read current value","Stats_Z - Lire la valeur actuelle"],
                             "expert": true
                         }
                     ]
@@ -1534,8 +1534,8 @@
                     "commands":[
                         {
                             "CommandID": "ReadAttribute",
-                            "name": ["State - Read current state","Etat - Lire l'état actuel"],
-                            "expert": true
+                            "name": ["Params - Read current parameters","Params - Lire les paramètres actuels"],
+                            "expert": false
                         },
                         {
                             "CommandID": "WriteAttributeNoResponse",
