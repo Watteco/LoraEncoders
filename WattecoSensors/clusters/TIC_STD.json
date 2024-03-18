@@ -1,0 +1,12 @@
+{
+   "clusterID":"TIC_STD",
+   "clusterName":["TIC STD","TIC STD"],
+   "expert":false,
+   "attributes":[
+		{
+			"AttributeID":"General",
+			"CommandsTemplate":"TICs/TIC_AttributeCommandsTemplate"
+		}
+	]
+}
+   

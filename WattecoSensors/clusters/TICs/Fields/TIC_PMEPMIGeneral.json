@@ -2,26 +2,29 @@
 	"parameters": [
 		{
 			"ParameterID":"TRAME",
-			"comment":["","TEST"],
-			"editable":false,"selectable":true
+			"comment":["","Mot clef 'TEST' debug TIV v/203 "],
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
+			]
 		},
 		{
 			"ParameterID":"ADS",
-			"comment":["","Chaîne de 12 caractères contenant l'identifiant du compteur (ADS)"],
-			"editable":false,"selectable":true
+			"comment":["","Chaîne de 12 caractères (hexadécimale) contenant l'identifiant du compteur (ADS)"],
+			"editable":true, "type":"string","selectable":true
 		},
 		{
 			"ParameterID":"MESURES1",
 			"comment":["","Chaîne indiquant le nom du traitement tarifaire associé au calendrier n°1"],
 			"editable":true, "type":"select","selectable":true, "options": [
 				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
-				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
 			]
-		},		
+		},
 		{
 			"ParameterID":"DATE",
-			"comment":["","Date et heure courante (JJ/MM/AA HH:MM:SS)===(DMYhms)"],
-			"editable":false, "selectable":true
+			"comment":["","Date et heure courante (JJ/MM/AA HH:MM:SS) chaque element xx non '00' will trigg report on modulo xx"],
+			"editable":true, "type":"string", "placeholder":"jj/mm/aa hh:mm:ss","dataslots":"jmahs", "selectable":true, "value":"00/00/00 00:00:00"
 		},
 		{
 			"ParameterID":"EA_s",
@@ -68,7 +71,7 @@
 			"comment":["","Période tarifaire courante (chaîne associée de 3 caractères alphanumériques)"],
 			"editable":true, "type":"select","selectable":true, "options": [
 				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
-				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
 			]
 		},
 		{
@@ -81,7 +84,7 @@
 			"comment":["","Libellé de la période tarifaire de la période dynamique en cours(chaîne associée de 3 caractères alphanumériques)"],
 			"editable":true, "type":"select","selectable":true, "options": [
 				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
-				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
 			]
 		},
 		{
@@ -89,7 +92,7 @@
 			"comment":["","Libellé de la période tarifaire faisant l'objet du préavis en cours"],
 			"editable":true, "type":"select","selectable":true, "options": [
 				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
-				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
 			]
 		},
 		{
@@ -332,7 +335,7 @@
 			"comment":["","Période tarifaire courante (chaîne associée de 3 caractères alphanumériques)"],
 			"editable":true, "type":"select","selectable":true, "options": [
 				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
-				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
 			]
 		},
 		{
@@ -340,7 +343,7 @@
 			"comment":["","Libellé de la période tarifaire de la période dynamique en cours (chaîne associée de 3 caractères alphanumériques)"],
 			"editable":true, "type":"select","selectable":true, "options": [
 				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
-				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
 			]
 		},
 		{
@@ -348,7 +351,7 @@
 			"comment":["","Libellé de la période tarifaire faisant l'objet du préavis en cours "],
 			"editable":true, "type":"select","selectable":true, "options": [
 				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
-				{ "OptionID": {"IsString": false,"Value": "_AnyChange"},"name": ["Any change","Toute variation"] }
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
 			]
 		},
 		{

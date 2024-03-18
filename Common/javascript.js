@@ -5,6 +5,41 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+// TOOLS
+//--------------------------------------------------------------------------------------------------
+// This code empowers all input tags having a placeholder and data-slots attribute
+
+function SetInputMaskMngt() {
+	//document.addEventListener('DOMContentLoaded', () => {
+		for (const el of document.querySelectorAll("[placeholder][data-slots]")) {
+			const pattern = el.getAttribute("placeholder"),
+				slots = new Set(el.dataset.slots || "_"),
+				prev = (j => Array.from(pattern, (c,i) => slots.has(c)? j=i+1: j))(0),
+				first = [...pattern].findIndex(c => slots.has(c)),
+				accept = new RegExp(el.dataset.accept || "\\d", "g"),
+				clean = input => {
+					input = input.match(accept) || [];
+					return Array.from(pattern, c =>
+						input[0] === c || slots.has(c) ? input.shift() || c : c
+					);
+				},
+				format = () => {
+					const [i, j] = [el.selectionStart, el.selectionEnd].map(i => {
+						i = clean(el.value.slice(0, i)).findIndex(c => slots.has(c));
+						return i<0? prev[prev.length-1]: back? prev[i-1] || first: i;
+					});
+					el.value = clean(el.value).join``;
+					el.setSelectionRange(i, j);
+					back = false;
+				};
+			let back = false;
+			el.addEventListener("keydown", (e) => back = e.key === "Backspace");
+			el.addEventListener("input", format);
+			el.addEventListener("focus", format);
+			el.addEventListener("blur", () => el.value === pattern && (el.value=""));
+		}
+	//});
+}
 //--------------------------------------------------------------------------------------------------
 //	PARTIE 1 : Définition des différentes variables pour la suite du programme
 //--------------------------------------------------------------------------------------------------
@@ -68,6 +103,8 @@ var langData = {
 	editParameterMsg: ["Modify the following parameters to generate the desired frame :","Modifiez les paramètres suivants afin de générer la trame souhaitée :"],
 	parameter: ["Parameter","Paramètre"],
 	value: ["Value","Valeur"],
+	TICHeaderSelect: ["Field to report ?", "Champ à reporter"],
+	TypeString: ["Characters string", "Chaine de caractères"],
 	valueCom:["A report will be sent on crossing this value","Un rapport sera envoyé sur franchissement de cette valeur. En mode Threshold la valeur de franchissement prise en compte est Valeur +- Hystérésis"],
 	comment: ["Comment","Commentaire"],
 	endpoint: ["EndPoint","EndPoint"],
@@ -76,6 +113,7 @@ var langData = {
 	or: ["OR\n","OU\n"],
 	seconds: ["seconds","secondes"],
 	minutes: ["minutes","minutes"],
+	secondsOrMinutes: ["seconds or minutes","secondes ou minutes"],
 	size:["Size","Taille"],
 	name: ["Name","Nom"],
 	read: ["Read","Lire"],
@@ -746,21 +784,23 @@ function populateCommandsTemplates(PopulatedClusterIndex, ClusterIndex,Attribute
 	populateProductClusters(ClusterIndex + 1);
 }
 function populateFieldIndexList(){
-	var lAllFields = currentClusterData.attributes[0].commands[0].ReportType[0].parameters[5].subParameters[2];
+	var lAllFields = currentClusterData.attributes[0].commands[0].ReportType[0].parameters[5].subParameters[1];
 	
 	var select = document.getElementById("parameter0");
 	select.remove(select.options[0]);
 
 	for(var i = 0; i < lAllFields.length ; i++){
-		var option = document.createElement("OPTION");
-		option.text = [lAllFields[i]["ParameterID"]];
-		option.value = i;
+		if (lAllFields[i]["type"] == "number") {
+			var option = document.createElement("OPTION");
+			option.text = [lAllFields[i]["ParameterID"] + " : " + (lAllFields[i]["comment"][lang]=="" ? lAllFields[i]["comment"][1] : lAllFields[i]["comment"][lang])];
+			option.value = i;
 
-		var optionObject = lAllFields[i];
-		optionObject.FieldIndex = i;
-		currentClusterData.attributes[0].commands[0].ReportType[1].parameters[1].options[i] = optionObject;
-		
-		select.add(option);
+			var optionObject = lAllFields[i];
+			optionObject.FieldIndex = i;
+			currentClusterData.attributes[0].commands[0].ReportType[1].parameters[1].options[i] = optionObject;
+			
+			select.add(option);
+		}
 	}
 
 	
@@ -837,7 +877,7 @@ function updateFunctionsList(currentSelectedMode) {
 						}
 						if (!disabled) {
 							var opt = document.createElement('option'); //Création d'une option
-							opt.appendChild(document.createTextNode(currentCommand.name[lang])); //Donner à cette option le nom de la commande correspondante
+							opt.appendChild(document.createTextNode(currentCommand.name[lang].replace('&AttributeID',currentAttribute.AttributeID))); //Donner à cette option le nom de la commande correspondante
 							opt.value = currentCluster.clusterID + "\t" + attributeIndex + "\t" + commandIndex; //Affectation à cette option d'une valeur du type : clusterID_AttributeIndex_CommandIndex
 							optgroup.appendChild(opt); //Ajout de cette option dans le groupe d'options précédemment créé
 						}
@@ -879,8 +919,12 @@ function switchCategory(lCurrentReportType = 0) {
 	
 	var header = configTable.createTHead(); //Création du header du tableau (contiendra les titres des colonnes)
 	var row = header.insertRow(0); //Insertion d'une ligne dans le header
+
 	row.insertCell(0).outerHTML = "<th>" + langData.parameter[lang] + "</th>"; //Insertion d'une cellule contenant le mot "Paramètre"
-	row.insertCell(1).outerHTML = "<th>" + langData.value[lang] + "</th>"; //Insertion d'une cellule contenant le mot "Valeur"
+	zeValueHeader="<div style='float: left;'>"+langData.value[lang]+"</div>";
+	if(currentCluster.startsWith("TIC"))
+		zeValueHeader+="<div style='float: right;'>"+langData.TICHeaderSelect[lang]+"</div>";
+	row.insertCell(1).outerHTML = "<th>" + zeValueHeader + "</th>"; //Insertion d'une cellule contenant le mot "Valeur"
 	row.insertCell(2).outerHTML = "<th>" + langData.comment[lang] + "</th>"; //Insertion d'une cellule contenant le mot "Commentaire"
 	
 	var body = configTable.createTBody(); //Création du contenu du tableau
@@ -976,13 +1020,14 @@ function switchCategory(lCurrentReportType = 0) {
 								}
 							}
 							else{
-								addParameterRow(body,i,parameterIndex,subParameter,selectable,undefined,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
+								addParameterRow(body,i,parameterIndex,subParameter,selectable,undefined); //Appel de notre fonction d'ajout de ligne
 									parameterIndex++; //On incrémente le numéro d'index du paramètre
 									i++; //On incrémente "i"
 							}
 						}else if(subParameter.ParameterID == undefined){
+							// TIC case
 							subParameter.forEach(sub => {
-								addParameterRow(body,i,parameterIndex,sub,sub.selectable,sub.editable,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
+								addParameterRow(body,i,parameterIndex,sub,sub.selectable,sub.editable); //Appel de notre fonction d'ajout de ligne
 								parameterIndex++; //On incrémente le numéro d'index du paramètre
 								i++; //On incrémente "i"
 							});
@@ -990,7 +1035,10 @@ function switchCategory(lCurrentReportType = 0) {
 						}
 						});
 				} else {
-					addParameterRow(body,i,parameterIndex,element,undefined,undefined,clusterData.TICAttributeInstances); //Appel de notre fonction d'ajout de ligne
+					if (element.ParameterID == "Instance" ) {
+						element.range = clusterData.TICAttributeInstances;
+					} 
+					addParameterRow(body,i,parameterIndex,element,undefined,undefined); //Appel de notre fonction d'ajout de ligne
 					parameterIndex++; //On incrémente le numéro d'index du paramètre
 					i++; //On incrémente "i"
 				}
@@ -1078,10 +1126,12 @@ function switchCategory(lCurrentReportType = 0) {
 		generateCheckbox.onclick = function() { showFinalTxt(generateCheckbox.checked,false); }; //Cliquer sur le bouton appelle la fonction de création du fichier txt et du téléchargement de celui ci
 		row.insertCell(5).appendChild(generateCheckbox); //Insertion du bouton dans la troisième cellule
 	}
+
+	SetInputMaskMngt();
 	
 }	
 
-function getParameterInfos(parameter,infos,selectable=false, InstanceRange=[0,0]) {
+function getParameterInfos(parameter,infos) {
 	// Infos output will be :  infos = { unit: "", comment : "", range: [], EndPointDependant: false };
 	
 	infos.unit = parameter.unit[lang];
@@ -1139,23 +1189,18 @@ function getParameterInfos(parameter,infos,selectable=false, InstanceRange=[0,0]
 			// Look for RANGE defined by EndPoint or for all Enpoint or keep the one defined at parameter level
 			theID = parameter.ParameterID + ".range";
 	
-			// 3 lignes Pas top pour TIC exclusivement à mieux réfléchir ...
-			if (parameter.ParameterID == "Instance" ) {
-				infos.range = InstanceRange;
-			} else {
-				if (Array.isArray(selectedCluster[theID])) {
-					if (Array.isArray(selectedCluster[theID][0])) {
-						if (Array.isArray(selectedCluster[theID][EndPointValue])) { 
-							infos.range = selectedCluster[theID][EndPointValue];
-							infos.EndPointDependant = true;
-						} else { 
-							infos.range = selectedCluster[theID][0];
-						}
-					} else {
-						infos.range = selectedCluster[theID]; 
-					} 
-				};
-			}
+			if (Array.isArray(selectedCluster[theID])) {
+				if (Array.isArray(selectedCluster[theID][0])) {
+					if (Array.isArray(selectedCluster[theID][EndPointValue])) { 
+						infos.range = selectedCluster[theID][EndPointValue];
+						infos.EndPointDependant = true;
+					} else { 
+						infos.range = selectedCluster[theID][0];
+					}
+				} else {
+					infos.range = selectedCluster[theID]; 
+				} 
+			};
 		}
 	});
 }	
@@ -1332,79 +1377,6 @@ function updateBatchData(){
 	}
 }
 
-function updateBitfield(sub){
-
-	var lFields = sub; // Array avec tous les fields
-	var lBitFieldReport = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-	var lBitFieldData = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-	var lSelectedFields = []; // Array avec les fields selectionnes
-	var lEditableFields = [];
-
-	//On parcourt tous les fields selectionnes et on ajoute dans lSelectedFields ceux qu'on a coche
-	for(var i=0; i < lFields.length; i++){
-		if(isSelectedParam(i+3)) lSelectedFields.push(lFields[i]["ParameterID"]);
-		if(isEditedParam(lFields[i],i+3)) lEditableFields.push(lFields[i]["ParameterID"]);
-	} 
-			
-		
-	var lIndexReport = 0; // L'index du field selectionne dans tous les fields
-	var lIndexData = 0; // L'index du field selectionne dans tous les fields
-	for (var i=0; i<lSelectedFields.length ;i++) {
-		lIndexReport = lFields.findIndex(param => param.ParameterID == lSelectedFields[i]);
-		lBitFieldReport = replaceAt(lBitFieldReport,lIndexReport,"1");
-	}
-	for (var i=0; i<lEditableFields.length ;i++) {
-		lIndexData = lFields.findIndex(param => param.ParameterID == lEditableFields[i]);
-		lBitFieldData = replaceAt(lBitFieldData,lIndexData,"1");
-	}
-	
-	//On enleve tous les 0 a la fin
-	while(lBitFieldReport[lBitFieldReport.length-1] == "0") lBitFieldReport = lBitFieldReport.slice(0,lBitFieldReport.length-1);
-	while(lBitFieldData[lBitFieldData.length-1] == "0") lBitFieldData = lBitFieldData.slice(0,lBitFieldData.length-1);
-
-	//Si le BitField n'a pas un octet au complet alors on le complete avec des 0
-	while((lBitFieldReport.length%8) != 0) lBitFieldReport = lBitFieldReport + "0";
-	while((lBitFieldData.length%8) != 0) lBitFieldData = lBitFieldData + "0";
-
-
-	//On compte le nombre de 1 dans le BitField report
-	var lNbrOneReport = 0
-	for(el in lBitFieldReport){
-		if(lBitFieldReport[el] == "1") lNbrOneReport++;
-	}
-
-	//On compte le nombre de 1 dans le BitField Data
-	var lNbrOneData = 0
-	for(el in lBitFieldData){
-		if(lBitFieldData[el] == "1") lNbrOneData++;
-	}
-
-	//Variable avec le nombre d'octet du BitField Report
-	var lNbrByteBitFieldReport = lBitFieldReport.length/8;
-	var lPresentFieldReport = "";
-	var lSizeReport = 0;
-	if(lNbrOneReport > lNbrByteBitFieldReport){
-		lPresentFieldReport = "DescVarIndexes";
-		lSizeReport = lNbrOneReport + 1;
-	}else{
-		lPresentFieldReport = "DescVarBitfield";
-		lSizeReport = lNbrByteBitFieldReport + 1;
-	} 
-
-	//Variable avec le nombre d'octet du BitField Data
-	var lNbrByteBitFieldData = lBitFieldData.length/8;
-	var lPresentFieldData = "";
-	var lSizeData = 0;
-	if(lNbrOneData > lNbrByteBitFieldData){
-		lPresentFieldData = "DescVarIndexes";
-		lSizeData = lNbrOneData + 1;
-	}else{
-		lPresentFieldData = "DescVarBitfield";
-		lSizeData = lNbrByteBitFieldData + 1;
-	} 
-
-	return [[lBitFieldReport, lPresentFieldReport, lSizeReport],[lBitFieldData, lPresentFieldData, lSizeData]];
-}
 function removeAllChildNodes(parent) {
 	while (parent.firstChild) {
 	  parent.removeChild(parent.firstChild);
@@ -1412,24 +1384,16 @@ function removeAllChildNodes(parent) {
 }
 
 //Fonction permettant d'ajouter une nouvelle ligne de paramètre
-function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = false,editable=true, InstanceRange=[0,0]) {
+function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = false,editable=true) {
 	var cellNum = 0;
 	var row = body.insertRow(rowIndex); //Insertion d'une nouvelle ligne dans le tableau
-
+	parameter.row = row;
 
 	 //Indication du nom du paramètre dans la première cellule avec éventuelle checkbox de sélection
 	cellHtml = "<div style='float: left; text-align: left'>" +
 		((typeof(parameter.name) == 'undefined') ? parameter.ParameterID : parameter.name[lang]) + "</div>"
-		
-	if (selectable) {
-		// If not defined in json, by default a selectable parameter is not selected
-		checkedStr = (typeof(parameter.selected) == 'undefined' ? "" : (parameter.selected ? "checked" : "" )); 
-		cellHtml += "<div style='float: right;'> <input type='checkbox' " + 
-			checkedStr + " id='parameterSelect" + parameterIndex + "'>"+ "</div> ";
-	}
+
 	row.insertCell(cellNum++).innerHTML = cellHtml;
-
-
 
 	// Set some default parameters for parameter in case not defined in JSON
 	if (! Array.isArray(parameter.unit)) parameter.unit = ["",""];
@@ -1439,9 +1403,7 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 	
 	switch(parameter.type) {
 		case "time":
-			if (parameter.ParameterID == "Instance" ) {
-				parameter.range = InstanceRange;
-			} else if (! Array.isArray(parameter.range)) {
+			if (! Array.isArray(parameter.range)) {
 				parameter.range = [0,32767];
 			} 
 			
@@ -1512,7 +1474,7 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 			row.insertCell(cellNum++).outerHTML = "<td id='interval" + parameterIndex + "'>" + 
 				parameter.comment[lang] + 
 				" (" + parameter.range[0] + " " + langData.to[lang] + " " + parameter.range[1] + " " +
-				langData.seconds[lang] + ")</td>"; //On remplit la cellule décrivant l'intervalle avec l'unité correspondante
+				langData.secondsOrMinutes[lang] + ")</td>"; //On remplit la cellule décrivant l'intervalle avec l'unité correspondante
 			
 		break;
 		
@@ -1551,10 +1513,43 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 			
 		break;
 
+		case "string":
+			var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
+			getParameterInfos(parameter,infos );
+			parameter.index = parameterIndex;
+			if (infos.EndPointDependant) {
+				EndPointDependantParametersList.push(parameter);
+			}
+			row.insertCell(cellNum++);
+			row.insertCell(cellNum++);
+
+			maskParams="";
+			if (typeof (parameter.placeholder) != 'undefined') {
+				maskParams="placeholder='" + parameter.placeholder +"' data-slots='" + parameter.dataslots + "'";
+			}
+
+			parameter.row.cells[1].innerHTML = 
+			"<input type='string' value='' onchange='modifyParameter()' id='parameter" + parameter.index + "' " + maskParams + "> "; 
+			
+			tmpstr = "<td id='interval" + parameter.index + "'>" + infos.comment; 
+			if (currentCluster.startsWith("TIC")) {
+				if (editable) {
+					tmpstr += 
+						" (" + langData.TypeString[lang] + ". Cf: <a href='https://support.watteco.com/wp-content/uploads/2020/04/TIC_Application_Layer_Description_1.2.pdf'  target='_blank'>TIC Application Layer, §4 & §6 </a>)"
+				} 
+			} else {
+				tmpstr += (Array.isArray(infos.range) || (infos.unit[lang] != "") ?
+				" (" + (Array.isArray(infos.range) ? infos.range[0] + " " + langData.to[lang] + " " + infos.range[1]  : "") + ")" +
+				infos.unit 
+				: "");
+			}
+			parameter.row.cells[2].outerHTML = tmpstr + "</td>";
+			
+		break;
+
 		case "hexa":
 			var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
 			getParameterInfos(parameter,infos );
-			parameter.row = row;
 			parameter.index = parameterIndex;
 			if (infos.EndPointDependant) {
 				EndPointDependantParametersList.push(parameter);
@@ -1577,7 +1572,6 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 		case "hexaArray":
 			var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
 			getParameterInfos(parameter,infos );
-			parameter.row = row;
 			parameter.index = parameterIndex;
 			if (infos.EndPointDependant) {
 				EndPointDependantParametersList.push(parameter);
@@ -1599,10 +1593,8 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 		
 		
 		default:
-			
 			var infos = { unit: "", comment : "", range: [], EndPointDependant: false  };
-			getParameterInfos(parameter,infos,selectable, InstanceRange );
-			parameter.row = row;
+			getParameterInfos(parameter,infos);
 			parameter.index = parameterIndex;
 			if (infos.EndPointDependant) {
 				EndPointDependantParametersList.push(parameter);
@@ -1612,6 +1604,13 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 			UpdateStdFields(parameter,infos,editable);
 			
 			
+	}
+	// If required add a checkbox right indented  
+	if (selectable) {
+		// If not defined in json, by default a selectable parameter is not selected
+		checkedStr = (typeof(parameter.selected) == 'undefined' ? "" : (parameter.selected ? "checked" : "" )); 
+		parameter.row.cells[1].innerHTML += "<div style='float: right;'> <input type='checkbox' " + 
+			checkedStr + " id='parameterSelect" + parameterIndex + "'>"+ "</div> ";
 	}
 }
 function selectSource(){
@@ -1734,7 +1733,7 @@ function checkBatchAvailability(){
 //	PARTIE 5 : Fonctions permettant la génération et l'affichage du format .json correspondant
 //--------------------------------------------------------------------------------------------------
 
-function isSelectedParam(paramIndex) {
+function isSelectedParam(param,paramIndex) {
 	var isSelected=true;
 	var paramSelectCheckBox = document.getElementById('parameterSelect' + paramIndex);
 	if (paramSelectCheckBox !== null) 
@@ -1748,6 +1747,8 @@ function isEditedParam(param,paramIndex){
 		return document.getElementById("parameter"+paramIndex).selectedIndex == 1 ? true : false;
 	}else if (param.type == "number"){
 		return document.getElementById("parameter"+paramIndex).value == 0 ? false : true;
+	}else if (param.type == "string"){
+		return document.getElementById("parameter"+paramIndex).value == "" ? false : true;
 	}
 	
 }
@@ -1789,8 +1790,13 @@ function generateJson() {
 			if(element.editable) {
 				if(element.type == "data") {
 					var dataParameter = new Object();
+					var tmpTICReportType ="Standard";
 					element.subParameters.forEach(function(subParameter) {
 						if(subParameter.editable) {
+							if (subParameter.ParameterID == "_TICDataSelector_Report") {
+								tmpTICReportType = formatParameterData(subParameter,i);
+								i++;
+							} else 
 							if(currentCluster == "Configuration" && currentReportType == 0 && !thresholdAvailable && subParameter.type == "number"){
 								if(currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource.indexOf(subParameter.fieldIndex) != -1){
 									if (isSelectedParam(i))	dataParameter[subParameter.ParameterID] = formatParameterData(subParameter,i);
@@ -1803,20 +1809,36 @@ function generateJson() {
 							
 						}else if(subParameter.ParameterID == undefined){
 							// On est dans les datas du TIC, je n'ai pas trouve mieux
+							const TICReportSelector = {
+								BitField: "",
+								DescHeader: {
+									Obsolete: "No",
+									Report: "Standard",
+									PresentField: "DescVarBitfield",
+									Size: 1
+								}
+							};
+							let TICDataSelector = JSON.parse(JSON.stringify(TICReportSelector));
+							dataParameter.TICReportSelector = TICReportSelector;
+							dataParameter.TICDataSelector = TICDataSelector;
+							dataParameter["TICDataSelector"]["DescHeader"]["Report"] = tmpTICReportType;
+
 							var dataParameterTic = new Object();
 							subParameter.forEach(sub => {
-								if (isEditedParam(sub,i))	dataParameterTic[sub.ParameterID] = formatParameterData(sub,i);
+								if (isSelectedParam(sub,i) || isEditedParam(sub,i)) {
+									dataParameterTic[sub.ParameterID]=new Object();
+									dataParameterTic[sub.ParameterID]["IsReported"] = (isSelectedParam(sub,i) ? "Yes" : "No");
+									if (isEditedParam(sub,i)) {
+										dataParameterTic[sub.ParameterID]["IsCriteria"] = "Yes";
+										dataParameterTic[sub.ParameterID]["Value"] = formatParameterData(sub,i);
+									} else {
+										dataParameterTic[sub.ParameterID]["IsCriteria"] = "No";
+									}
+								}
 								i++
 							});
 							
-							dataParameter["TICCriteriaFields"] = dataParameterTic;
-							var lRes = updateBitfield(subParameter);
-							dataParameter["TICReportSelector"]["BitField"] = lRes[0][0];
-							dataParameter["TICReportSelector"]["DescHeader"]["PresentField"] = lRes[0][1];
-							dataParameter["TICReportSelector"]["DescHeader"]["Size"] = lRes[0][2];
-							dataParameter["TICDataSelector"]["BitField"] = lRes[1][0];
-							dataParameter["TICDataSelector"]["DescHeader"]["PresentField"] = lRes[1][1];
-							dataParameter["TICDataSelector"]["DescHeader"]["Size"] = lRes[1][2];
+							Object.assign(dataParameter,dataParameterTic);
 						} else {
 							dataParameter[subParameter.ParameterID] = subParameter.value;
 						}
@@ -1955,24 +1977,23 @@ function formatParameterData(parameter,parameterIndex) {
 			var selectedOption = document.getElementById('parameter' + parameterIndex).value;
 			if(isJson(selectedOption)) {
 				return JSON.parse(selectedOption);
-			} else if(parameter.selectable){
-				return parameter.options[1].OptionID;
 			}else{
 				intval = parseInt(selectedOption);
 				return (! isNaN(intval) ? intval : selectedOption);
 			}
 		break;
 
-		case "String":
-			var selectedOption = document.getElementById('parameter' + parameterIndex).value;
-			if(selectedOption.length % 2 != 0){
-				selectedOption = "0" + selectedOption
-			}
-			return selectedOption;
+		case "numberToHexByte":
+			var val = document.getElementById('parameter' + parameterIndex).value;
+			return (val).toString(16).padStart(2, '0');
 		break;
 
 		case "hexa":
 			return document.getElementById('parameter' + parameterIndex).value.toString();
+		break;
+
+		case "string":
+			return document.getElementById('parameter' + parameterIndex).value;
 		break;
 		
 		case "hexaArray":

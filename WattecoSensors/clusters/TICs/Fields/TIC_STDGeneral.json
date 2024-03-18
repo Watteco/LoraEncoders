@@ -3,7 +3,7 @@
 		{
 			"ParameterID":"ADSC",
 			"comment":["","Adresse Secondaire du Compteur"],
-			"editable":false,"selectable":true
+			"editable":true, "type":"string","selectable":true
 		},
 		{
 			"ParameterID":"VTIC",
@@ -12,18 +12,24 @@
 		},
 		{
 			"ParameterID":"DATE",
-			"comment":["","Date et heure courante"],
-			"editable":false, "selectable":true
+			"comment":["","Date et heure courante (JJ/MM/AA HH:MM:SS) chaque element xx non '00' will trigg report on modulo xx"],
+			"editable":true, "type":"string", "placeholder":"jj/mm/aa hh:mm:ss","dataslots":"jmahs", "selectable":true, "value":"00/00/00 00:00:00"
 		},
 		{
 			"ParameterID":"NGTF",
 			"comment":["","Nom de la grille tarifaire fournisseur"],
-			"editable":false,"selectable":true
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
+			]
 		},
 		{
 			"ParameterID":"LTARF",
 			"comment":["","Libellé tarif fournisseur en cours"],
-			"editable":false,"selectable":true
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
+			]
 		},
 		{
 			"ParameterID":"EAST",
@@ -338,17 +344,17 @@
         {
 			"ParameterID":"MSG1",
 			"comment":["","Message court"],
-			"editable":false, "selectable":true
+			"editable":true, "type":"string", "selectable":true
         },
         {
 			"ParameterID":"MSG2",
 			"comment":["","Message ultra court"],
-			"editable":false, "selectable":true
+			"editable":true, "type":"string", "selectable":true
         },
         {
 			"ParameterID":"PRM",
 			"comment":["","Point de délivrance "],
-			"editable":false, "selectable":true
+			"editable":true, "type":"string", "selectable":true
         },
         {
 			"ParameterID":"RELAIS",

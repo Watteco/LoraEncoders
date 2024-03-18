@@ -19,12 +19,12 @@
 		{
 			"ParameterID":"ADCO",
 			"comment":["","Adresse compteur"],
-			"editable":false,"selectable":true
+			"editable":true, "type":"string", "selectable":true
 		},
 		{
 			"ParameterID":"OPTARIF",
 			"comment":["","Option tarif"],
-			"editable":false,"selectable":true
+			"editable":true, "type":"string", "selectable":true
 		},
 		{
 			"ParameterID":"ISOUSC",
@@ -104,12 +104,12 @@
 		{
 			"ParameterID":"PTEC",
 			"comment":["","Période Tarifaire en cours"],
-			"editable":false,"selectable":true
+			"editable":true, "type": "string","selectable":true
 		},
 		{
 			"ParameterID":"DEMAIN",
 			"comment":["","Couleur du lendemain"],
-			"editable":false,"selectable":true
+			"editable":true, "type": "string", "selectable":true
 		},
 		{
 			"ParameterID":"IINST",
@@ -169,17 +169,17 @@
 		{
 			"ParameterID":"HHPHC",
 			"comment":["","Horaire Heure Pleine/creuse"],
-			"editable":false,"selectable":true
+			"editable":true, "type": "string","selectable":true
 		},
 		{
 			"ParameterID":"MOTDETAT",
 			"comment":["","Mot d'état du compteur"],
-			"editable":false,"selectable":true
+			"editable":true, "type": "string","selectable":true
 		},
 		{
 			"ParameterID":"PPOT",
 			"comment":["","Présence des potentiels "],
-			"editable":false,"selectable":true
+			"editable":true, "type": "string","selectable":true
 		}
 	]
 }

@@ -7,31 +7,31 @@
 		},
 		{
 			"ParameterID":"DATECOUR",
-			"comment":["","Date courante"],
-			"editable":false,"selectable":true
+			"comment":["","Date et heure courante (JJ/MM/AA HH:MM:SS) chaque element xx non '00' will trigg report on modulo xx"],
+			"editable":true, "type":"string", "placeholder":"jj/mm/aa hh:mm:ss","dataslots":"jmahs", "selectable":true, "value":"00/00/00 00:00:00"
 		},
 		{
 			"ParameterID":"DATE",
-			"comment":["","Date courante"],
-			"editable":false,"selectable":true
+			"comment":["","[v2.4] Date et heure courante (JJ/MM/AA HH:MM:SS) chaque element xx non '00' will trigg report on modulo xx"],
+			"editable":true, "type":"string", "placeholder":"jj/mm/aa hh:mm:ss","dataslots":"jmahs", "selectable":true, "value":"00/00/00 00:00:00"
 		},
 		{
 			"ParameterID":"EA",
-			"comment":["","Energie active depuis le dernier top Td minutes "],
+			"comment":["","[v2.4] Energie active depuis le dernier top Td minutes "],
 			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
 		},
 		{
 			"ParameterID":"ERP",
-			"comment":["","Energie réactive positive depuis le dernier top Td minutes"],
-			"editable":false, "type":"number","selectable":true, "unit":["varh","varh"]
+			"comment":["","[v2.4] Energie réactive positive depuis le dernier top Td minutes"],
+			"editable":true, "type":"number","selectable":true, "unit":["varh","varh"]
 		},
 		{
-			"ParameterID":"PTCOUR",
+			"ParameterID":"[v2.4] PTCOUR",
 			"comment":["","Période tarifaire courante "],
 			"editable":false,"selectable":true
 		},
 		{
-			"ParameterID":"PREAVIS",
+			"ParameterID":"[v2.4] PREAVIS",
 			"comment":["","Chaîne 'DEP', 'EJP', 'HM', 'DSM' ou 'SCM'"],
 			"editable":false, "selectable":true
 		},
@@ -101,98 +101,93 @@
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
-			"ParameterID":"*p* ",
-			"comment":["","Chanp générique de basculement vers les energ/période "],
-			"editable":false, "selectable":true
-		},
-		{
 			"ParameterID":"KDC",
-			"comment":["","Coefficient de préavis de dépassement"],
+			"comment":["","[v2.4] Coefficient de préavis de dépassement"],
 			"editable":true, "type":"number","selectable":true, "unit":["%","%"]
 		},
 		{
 			"ParameterID":"KDCD",
-			"comment":["","Coefficient de dégagement de préavis de dépassement"],
+			"comment":["","[v2.4] Coefficient de dégagement de préavis de dépassement"],
 			"editable":true, "type":"number","selectable":true, "unit":["%","%"]
 		},
 		{
 			"ParameterID":"TGPHI",
-			"comment":["","Tangente phi moyenne 10 minutes (2.4) "],
+			"comment":["","[v2.4] Tangente phi moyenne 10 minutes (2.4) "],
 			"editable":false, "selectable":true
 		},
 		{
 			"ParameterID":"PSP",
-			"comment":["","Puissance souscrite de la période tarifaire P"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire P"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSPM",
-			"comment":["","Puissance souscrite de la période tarifaire PM"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire PM"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSHPH",
-			"comment":["","Puissance souscrite de la période tarifaire HPH"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire HPH"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSHPD",
-			"comment":["","Puissance souscrite de la période tarifaire HPD"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire HPD"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSHCH",
-			"comment":["","Puissance souscrite de la période tarifaire HCH"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire HCH"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSHCD",
-			"comment":["","Puissance souscrite de la période tarifaire HCD"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire HCD"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSHPE",
-			"comment":["","Puissance souscrite de la période tarifaire HPE"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire HPE"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSHCE",
-			"comment":["","Puissance souscrite de la période tarifaire HCE"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire HCE"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSJA",
-			"comment":["","Puissance souscrite de la période tarifaire JA"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire JA"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSHH",
-			"comment":["","Puissance souscrite de la période tarifaire HH"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire HH"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSHD",
-			"comment":["","Puissance souscrite de la période tarifaire HD"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire HD"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSHM",
-			"comment":["","Puissance souscrite de la période tarifaire HM"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire HM"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSDSM",
-			"comment":["","Puissance souscrite de la période tarifaire DSM"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire DSM"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"PSSCM",
-			"comment":["","Puissance souscrite de la période tarifaire SCM"],
+			"comment":["","[v2.4] Puissance souscrite de la période tarifaire SCM"],
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
 			"ParameterID":"MODE",
-			"comment":["","Chaîne 'CONTROLE' "],
+			"comment":["","[v2.4] Chaîne 'CONTROLE' "],
 			"editable":false, "selectable":true
 		},
 		{

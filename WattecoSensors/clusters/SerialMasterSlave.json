@@ -70,7 +70,7 @@
 									"editable":true,
 									"comment":["0: no report on variation\n1: report on variation","0: pas de report sur variation\n1: report sur variation"],
 									"range":[0,1],
-									"type":"String"
+									"type":"numberToHexByte"
 								 }
 							  ]
 							}

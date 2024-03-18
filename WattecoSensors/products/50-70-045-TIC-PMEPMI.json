@@ -51,7 +51,13 @@
 			"endpointsComment": ["---","---"],
 			"threshold" : {
 				"available" : false
-			}
+			},
+			"batch" : [
+				{
+					"attribute" : "General",
+					"available" : true
+				}
+			]
 		},
 		{
 			"clusterID": "TIC_STD",
@@ -61,7 +67,13 @@
 			"endpointsComment": ["---","---"],
 			"threshold" : {
 				"available" : false
-			}
+			},
+			"batch" : [
+				{
+					"attribute" : "General",
+					"available" : true
+				}
+			]
 		},
 		{
 			"clusterID": "TIC_PMEPMI",
@@ -82,12 +94,18 @@
 		{
 			"clusterID": "TIC_ICE",
 			"subProductID": ["MT_ICE"],
-			"TICAttributeInstances": [0,2],
+			"TICAttributeInstances": [0,1],
 			"endpoints": [0],
 			"endpointsComment": ["---","---"],
 			"threshold" : {
 				"available" : false
-			}
+			},
+			"batch" : [
+				{
+					"attribute" : "General",
+					"available" : true
+				}
+			]
 		},
 		{
 			"clusterID": "SimpleMetering",

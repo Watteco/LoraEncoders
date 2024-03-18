@@ -2,7 +2,7 @@
 	"commands":	[
 		{
 			"CommandID":"ConfigureReporting",
-			"name":["TIC - Configure reporting","TIC - Configurer les rapports"],
+			"name":["&AttributeID - Configure reporting","&AttributeID - Configurer les rapports"],
 			"expert":false,
 			"ReportType":[
 				{
@@ -23,6 +23,7 @@
 						{
 							"ParameterID":"Instance",
 							"name":["Attribute report instance","Instance de report pour l'attribut"],
+							"comment": ["Allow to configure several independant reports on the same attribute","Permet de configurer plusieurs rapports independants sur un même attribut"],
 							"editable":true,
 							"type":"number"
 						},
@@ -31,7 +32,6 @@
 							"editable":false,
 							"value":"ByteString"
 						},
-						
 						{
 							"ParameterID": "MinReport",
 							"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
@@ -54,42 +54,13 @@
 							"type": "data",
 							"subParameters":[
 								{
-									"ParameterID":"TICReportSelector",
-									"editable":false,
-									"value":{
-										"DescHeader":{	
-												"Obsolete":"No",
-												"Report":"Standard",
-												"PresentField":"DescVarIndexes",
-												"Size":0
-											}
-										},
-										"BitField":{
-											"editable":false,
-											"type":"number",
-											"comment":["---","---"],
-											"value":0 
-										}
-										
-								},
-								{
-									"ParameterID":"TICDataSelector",
-									"editable":false,
-									"value":{
-										"DescHeader":{	
-												"Obsolete":"No",
-												"Report":"Standard",
-												"PresentField":"DescVarIndexes",
-												"Size":0
-											}
-										},
-										"BitField":{
-											"editable":false,
-											"type":"number",
-											"comment":["---","---"],
-											"value":0 
-										}
-										
+									"ParameterID":"_TICDataSelector_Report",
+									"comment":["Reports selected values AFTER or just BEFORE a change on criteria defined below occured",
+									           "Reporte les données sélectionnées APRES ou juste AVANT le (ou les) changement(s) sur les critères ci-dessous"],
+									"editable":true, "type":"select","selectable":true, "options": [
+										{ "OptionID": "Standard", "name": ["Report AFTER change","Reporte APRES changement"] },
+										{ "OptionID": "Decale", "name": ["Report BEFORE change","Reporte AVANT changement"] }
+									]
 								},
 								{
 									"ParameterID": "TICCriteriaFields",
@@ -127,12 +98,6 @@
 							]
 						},
 						{
-							"ParameterID":"Instance",
-							"name":["Attribute report instance","Instance de report pour l'attribut"],
-							"editable":true,
-							"type":"number"
-						},
-						{
 							"ParameterID": "MinReport",
 							"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
 							"editable": true,
@@ -153,7 +118,6 @@
 							"name": ["Delta","Delta"],
 							"editable": true,
 							"comment": ["---","---"],
-							"range": [0,1],
 							"type": "number",
 							"mantissa": 1,
 							"multiplier": 1,
@@ -164,7 +128,6 @@
 							"name": ["Resolution","Résolution"],
 							"editable": true,
 							"comment": ["---","---"],
-							"range": [1,1],
 							"type": "number",
 							"mantissa": 1,
 							"multiplier": 1,
@@ -206,7 +169,7 @@
 		},				
 		{
 			"CommandID": "ReadReportingConfiguration",
-			"name": ["State - Read reporting configuration","Etat - Lire la configuration des rapports"],
+			"name": ["&AttributeID - Read reporting configuration","&AttributeID - Lire la configuration des rapports"],
 			"expert": false,
 			"parameters": [
 				{
