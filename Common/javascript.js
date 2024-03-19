@@ -784,6 +784,7 @@ function populateCommandsTemplates(PopulatedClusterIndex, ClusterIndex,Attribute
 	populateProductClusters(ClusterIndex + 1);
 }
 function populateFieldIndexList(){
+	// Specific for TIC batches dynamically created list of available fields
 	var lAllFields = currentClusterData.attributes[0].commands[0].ReportType[0].parameters[5].subParameters[1];
 	
 	var select = document.getElementById("parameter0");
@@ -791,12 +792,18 @@ function populateFieldIndexList(){
 
 	for(var i = 0; i < lAllFields.length ; i++){
 		if (lAllFields[i]["type"] == "number") {
+
+			// Populate TIC Batch HMI fieldIndex (first refresh)
 			var option = document.createElement("OPTION");
 			option.text = [lAllFields[i]["ParameterID"] + " : " + (lAllFields[i]["comment"][lang]=="" ? lAllFields[i]["comment"][1] : lAllFields[i]["comment"][lang])];
 			option.value = i;
 
+			// Store TIC specific option list for Batch for next refresh (change reportType/addParameterRow)
 			var optionObject = lAllFields[i];
 			optionObject.FieldIndex = i;
+			optionObject.name = ["",""]; // Keep the label as formated before for next refreshs (Cf addParameterRow, from select ReportType)
+			optionObject.name[lang] = option.text;
+			optionObject.OptionID = i; // keep also the option ID also as used later for select fields
 			currentClusterData.attributes[0].commands[0].ReportType[1].parameters[2].options[i] = optionObject;
 			
 			select.add(option);
