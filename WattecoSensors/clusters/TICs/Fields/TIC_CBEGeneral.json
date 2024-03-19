@@ -29,7 +29,7 @@
 		{
 			"ParameterID":"ISOUSC",
 			"comment":["","Intensité souscrite"],
-			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
+			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
 		},
 		{
 			"ParameterID":"BASE",
@@ -44,7 +44,7 @@
 		{
 			"ParameterID":"HCHP",
 			"comment":["","Index Heures pleines"],
-			"editable":true, "type":"number","selectable":true, "unit":["A","A"]
+			"editable":true, "type":"number","selectable":true, "unit":["Wh","Wh"]
 		},
 		{
 			"ParameterID":"EJPHN",

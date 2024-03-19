@@ -85,6 +85,14 @@
 							}
 						},
 						{
+							"ParameterID":"Instance",
+							"name":["Attribute report instance","Instance de report pour l'attribut"],
+							"comment": ["Allow to configure several independant reports on the same attribute","Permet de configurer plusieurs rapports independants sur un même attribut"],
+							"editable":false,
+							"type":"number",
+							"value":0
+						},
+						{
 							"ParameterID": "FieldIndex",
 							"name": ["Field(s)","Champ(s)"],
 							"editable": true,

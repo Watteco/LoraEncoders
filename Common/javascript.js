@@ -797,7 +797,7 @@ function populateFieldIndexList(){
 
 			var optionObject = lAllFields[i];
 			optionObject.FieldIndex = i;
-			currentClusterData.attributes[0].commands[0].ReportType[1].parameters[1].options[i] = optionObject;
+			currentClusterData.attributes[0].commands[0].ReportType[1].parameters[2].options[i] = optionObject;
 			
 			select.add(option);
 		}
@@ -978,7 +978,12 @@ function switchCategory(lCurrentReportType = 0) {
 	} else { //Sinon
 		var row = body.insertRow(i); //Insérer une nouvelle ligne dans le tableau
 		row.insertCell(0).innerHTML = langData.report[lang]; //Remplir la première cellule avec le label du type de rapport
-		row.insertCell(1).innerHTML = "<select onchange='modifyReportType();' id='reportSelect'><option value='0'" + (currentReportType == 0 ? " selected" : "") + ">Standard</option>" + (typeof attributeData.commands[currentCommandIndex].ReportType[1] !== 'undefined' && checkBatchAvailability() ? ("<option value='1'" + (currentReportType == 1 ? " selected" : "") + ">Batch</option>") : "") + "</select>"; //On crée le sélecteur de type de rapport dans la seconde cellule
+		row.insertCell(1).innerHTML = 
+			"<select onchange='modifyReportType();' id='reportSelect'>"+
+		    	"<option value='0'" + (currentReportType == 0 ? " selected" : "") + ">Standard</option>" +
+				(typeof attributeData.commands[currentCommandIndex].ReportType[1] !== 'undefined' && checkBatchAvailability() ?
+				   ("<option value='1'" + (currentReportType == 1 ? " selected" : "") + ">Batch</option>") : "") +
+			"</select>"; //On crée le sélecteur de type de rapport dans la seconde cellule
 		row.insertCell(2).innerHTML = "---"; //Remplissage de la troisième cellule
 		i++;
 		
@@ -1330,13 +1335,17 @@ function updateBatchData(){
 	// Si une range et une unité ont été définis dans le cluster du produit alors on les récupères, ou si il y a plusieurs fieldIndex 
 	if(currentClusterData.unit !== undefined || currentClusterData.range !== undefined){
 		var currentField = {};
-		currentClusterData.range != undefined ? currentField.range = currentClusterData.range[Number(document.getElementById("endpointSelect").selectedIndex)] : currentField.range =currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[4].range;
-		currentClusterData.unit != undefined ? currentField.unit = currentClusterData.unit[Number(document.getElementById("endpointSelect").selectedIndex)] : currentField.range =currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[4].unit;
+		currentClusterData.range != undefined ? 
+			currentField.range = currentClusterData.range[Number(document.getElementById("endpointSelect").selectedIndex)] :
+			currentField.range = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[4].range;
+		currentClusterData.unit != undefined ? 
+			currentField.unit = currentClusterData.unit[Number(document.getElementById("endpointSelect").selectedIndex)] : 
+			currentField.unit = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[4].unit;
 		currentField.mantissa = 1;
 		currentField.multiplier = 1;
 	}else if(document.getElementById("parameter0").options.length > 1 || (document.getElementById("parameter0").options.length == 1 && document.getElementById("parameter0").options[0].textContent !="none")){
 		if(currentCluster.startsWith("TIC")){
-			var currentField = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters.length-1].subParameters[2].find(element => element.FieldIndex == document.getElementById("parameter0").value);
+			var currentField = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters.length-1].subParameters[1].find(element => element.FieldIndex == document.getElementById("parameter0").value);
 		}else{
 			var currentField = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters.length-1].subParameters.find(element => element.FieldIndex == document.getElementById("parameter0").value);
 		}
@@ -1346,9 +1355,15 @@ function updateBatchData(){
 		for(let i=3;i<5;i++){
 			document.getElementById('parameter'+i).mantissa = currentField.mantissa;
 			document.getElementById('parameter'+i).multiplier = currentField.multiplier;
-			document.getElementById('parameter'+i).min = currentField.range[0];
-			document.getElementById('parameter'+i).max = currentField.range[1];
 			document.getElementById('parameter'+i).nextSibling.textContent = currentField.unit[lang];
+			if (currentField.range !== undefined) {
+				document.getElementById('parameter'+i).min = currentField.range[0];
+				document.getElementById('parameter'+i).max = currentField.range[1];
+				document.getElementById('interval'+i).textContent = "--- (" + currentField.range[0] +", "+currentField.range[0] + ")";
+			} 
+			else {
+				document.getElementById('interval'+i).textContent = "--- ()";
+			}
 		}
 	}
 	
@@ -1638,9 +1653,9 @@ function checkDataValidity(element,parameter) {
 	
 	if(element.type == "hexa" || element.type == "hexaArray") { //Si le paramètre est une donnée hexadécimal
 		document.getElementById('parameter' + parameter).value = isHexByte(enteredValue.trim()) && enteredValue.length < infos.range[1] ? enteredValue.trim() : "";
-	}else if(enteredValue > infos.range[1]) { //Si la valeur est trop élevée
+	}else if ((infos.range !== undefined) && (enteredValue > infos.range[1])) { //Si la valeur est trop élevée
 		document.getElementById('parameter' + parameter).value = infos.range[1]; //On la modifie par la valeur maximale
-	} else if(enteredValue < infos.range[0]) { //Si la valeur est trop faible
+	} else if((infos.range !== undefined) && (enteredValue < infos.range[0])) { //Si la valeur est trop faible
 		document.getElementById('parameter' + parameter).value = infos.range[0]; //On la modifie par la valeur minimale
 	} else if(element.type == "time") { //Si le paramètre est une donnée de temps
 		document.getElementById('parameter' + parameter).value = parseInt(enteredValue); //On l'oblige à être une valeur entière
@@ -1892,8 +1907,7 @@ function generateJson() {
 				jsonObject[element.ParameterID] = element.value;
 			}
 			else if(element.ParameterID === "Instance"){
-				jsonObject[element.ParameterID] = formatParameterData(element,i);
-				i++;
+				jsonObject[element.ParameterID] = element.value;
 			}
 			else{
 				if(element.editable) {
