@@ -55,8 +55,8 @@
 							"subParameters":[
 								{
 									"ParameterID":"_TICDataSelector_Report",
-									"comment":["Reports selected values AFTER or just BEFORE a change on criteria defined below occured",
-									           "Reporte les données sélectionnées APRES ou juste AVANT le (ou les) changement(s) sur les critères ci-dessous"],
+									"comment":["Reports selected values AFTER or just BEFORE a change on criteria defined below occured.</br></br><b>From this line, all fields below can be 'checked' to be reported. (Beware of resulting report size)</br>A value can also be entered (not 0 neither empty), to trigg a report on, the corresponding variation.</b>",
+									"Reporte les données sélectionnées APRES ou juste AVANT le (ou les) changement(s) sur les critères ci-dessous.</br></br><b>À partir de cette ligne, n'importe quel champ ci-dessous peut être 'coché' pour être reporté. (Attention à la taille du report résultant)</br>Une valeur peut également être saisie (ni 0 ni vide) pour déclencher un report sur la variation correspondante.</b>"],
 									"editable":true, "type":"select","selectable":true, "options": [
 										{ "OptionID": "Standard", "name": ["Report AFTER change","Reporte APRES changement"] },
 										{ "OptionID": "Decale", "name": ["Report BEFORE change","Reporte AVANT changement"] }
@@ -99,10 +99,6 @@
 							"comment": ["---","---"],
 							"type": "select",
 							"options": [
-								{
-									"OptionID": 0,
-									"name": ["none","none"]
-								}
 							]
 						},
 						{

@@ -8,11 +8,11 @@
 			"CommandsTemplate":"TICs/TIC_AttributeCommandsTemplate"
 		},
 		{
-			"AttributeID":"ICEp [TODO]",
+			"AttributeID":"ICEp",
 			"CommandsTemplate":"TICs/TIC_AttributeCommandsTemplate"
 		},
 		{
-			"AttributeID":"ICEpm1 [TODO]",
+			"AttributeID":"ICEpm1",
 			"CommandsTemplate":"TICs/TIC_AttributeCommandsTemplate"
 		}
 	]

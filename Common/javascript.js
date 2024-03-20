@@ -785,10 +785,10 @@ function populateCommandsTemplates(PopulatedClusterIndex, ClusterIndex,Attribute
 }
 function populateFieldIndexList(){
 	// Specific for TIC batches dynamically created list of available fields
-	var lAllFields = currentClusterData.attributes[0].commands[0].ReportType[0].parameters[5].subParameters[1];
+	var lAllFields = currentClusterData.attributes[currentAttributeIndex].commands[0].ReportType[0].parameters[5].subParameters[1];
 	
 	var select = document.getElementById("parameter0");
-	select.remove(select.options[0]);
+	select.options.length = 0;
 
 	for(var i = 0; i < lAllFields.length ; i++){
 		if ((lAllFields[i].selectable || lAllFields[i].editable)) {
@@ -805,7 +805,7 @@ function populateFieldIndexList(){
 				optionObject.name = ["",""]; // Keep the label as formated before for next refreshs (Cf addParameterRow, from select ReportType)
 				optionObject.name[lang] = option.text;
 				optionObject.OptionID = i; // keep also the option ID also as used later for select fields
-				currentClusterData.attributes[0].commands[0].ReportType[1].parameters[2].options[i] = optionObject;
+				currentClusterData.attributes[currentAttributeIndex].commands[0].ReportType[1].parameters[2].options[i] = optionObject;
 				
 				select.add(option);
 			}

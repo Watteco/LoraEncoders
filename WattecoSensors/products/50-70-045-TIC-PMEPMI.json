@@ -104,6 +104,14 @@
 				{
 					"attribute" : "General",
 					"available" : true
+				},
+				{
+					"attribute" : "ICEp",
+					"available" : true
+				},
+				{
+					"attribute" : "ICEpm1",
+					"available" : true
 				}
 			]
 		},

@@ -1,0 +1,244 @@
+{
+	"parameters": [
+		{
+			"ParameterID":"DEBUTp",
+			"comment":["","Début période p (JJ/MM/AA HH:MM:SS) chaque element xx non '00' will trigg report on modulo xx"],
+			"editable":true, "type":"string", "placeholder":"jj/mm/aa hh:mm:ss","dataslots":"jmahs", "selectable":true, "value":"00/00/00 00:00:00"
+		},
+		{
+			"ParameterID":"FINp",
+			"comment":["","Fin période p (JJ/MM/AA HH:MM:SS) chaque element xx non '00' will trigg report on modulo xx"],
+			"editable":true, "type":"string", "placeholder":"jj/mm/aa hh:mm:ss","dataslots":"jmahs", "selectable":true, "value":"00/00/00 00:00:00"
+		},
+		{
+			"ParameterID":"CAFp",
+			"comment":["","Code Action Facturation période p"],
+			"unit":["",""],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"DATE_EAp",
+			"comment":["","Date réception Actif période p (JJ/MM/AA HH:MM:SS) chaque element xx non '00' will trigg report on modulo xx"],
+			"editable":true, "type":"string", "placeholder":"jj/mm/aa hh:mm:ss","dataslots":"jmahs", "selectable":true, "value":"00/00/00 00:00:00"
+		},
+		{
+			"ParameterID":"EApP",
+			"comment":["","Index énergie active P période p kWh"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApPM",
+			"comment":["","Index énergie active PM période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApHCE",
+			"comment":["","Index énergie active HCE période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApHCH",
+			"comment":["","Index énergie active HCH période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApHH",
+			"comment":["","Index énergie active HH période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApHCD",
+			"comment":["","Index énergie active HCD période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApHD",
+			"comment":["","Index énergie active HD période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApJA",
+			"comment":["","Index énergie active JA période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApHPE",
+			"comment":["","Index énergie active HPE période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApHPH",
+			"comment":["","Index énergie active HPH période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApHPD",
+			"comment":["","Index énergie active HPD période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApSCM",
+			"comment":["","Index énergie active SCM période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApHM",
+			"comment":["","Index énergie active HM période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"EApDSM",
+			"comment":["","Index énergie active DSM période p"],
+			"unit":["kWh","kWh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"DATE_ERPp",
+			"comment":["","Date réception Réactif Positif période p (JJ/MM/AA HH:MM:SS) chaque element xx non '00' will trigg report on modulo xx"],
+			"editable":true, "type":"string", "placeholder":"jj/mm/aa hh:mm:ss","dataslots":"jmahs", "selectable":true, "value":"00/00/00 00:00:00"
+		},
+		{
+			"ParameterID":"ERPpP",
+			"comment":["","Index énergie réac. pos. P période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpPM",
+			"comment":["","Index énergie réac. pos. PM période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpHCE",
+			"comment":["","Index énergie réac. pos. HCE période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpHCH",
+			"comment":["","Index énergie réac. pos. HCH période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpHH",
+			"comment":["","Index énergie réac. pos. HH période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpHCD",
+			"comment":["","Index énergie réac. pos. HCD période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpHD",
+			"comment":["","Index énergie réac. pos. HD période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpJA",
+			"comment":["","Index énergie réac. pos. JA période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpHPE",
+			"comment":["","Index énergie réac. pos. HPE période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpHPH",
+			"comment":["","Index énergie réac. pos. HPH période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpHPD",
+			"comment":["","Index énergie réac. pos. HPD période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpSCM",
+			"comment":["","Index énergie réac. pos. SCM période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpHM",
+			"comment":["","Index énergie réac. pos. HM période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERPpDSM",
+			"comment":["","Index énergie réac. pos. DSM période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"DATE_ERNp",
+			"comment":["","Date réception Réactif Negatif période p (JJ/MM/AA HH:MM:SS) chaque element xx non '00' will trigg report on modulo xx"],
+			"editable":true, "type":"string", "placeholder":"jj/mm/aa hh:mm:ss","dataslots":"jmahs", "selectable":true, "value":"00/00/00 00:00:00"
+		},
+		{
+			"ParameterID":"ERNpP",
+			"comment":["","Index énergie réac. neg. P période p kWh"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpPM",
+			"comment":["","Index énergie réac. neg. PM période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpHCE",
+			"comment":["","Index énergie réac. neg. HCE période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpHCH",
+			"comment":["","Index énergie réac. neg. HCH période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpHH",
+			"comment":["","Index énergie réac. neg. HH période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpHCD",
+			"comment":["","Index énergie réac. neg. HCD période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpHD",
+			"comment":["","Index énergie réac. neg. HD période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpJA",
+			"comment":["","Index énergie réac. neg. JA période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpHPE",
+			"comment":["","Index énergie réac. neg. HPE période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpHPH",
+			"comment":["","Index énergie réac. neg. HPH période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpHPD",
+			"comment":["","Index énergie réac. neg. HPD période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpSCM",
+			"comment":["","Index énergie réac. neg. SCM période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpHM",
+			"comment":["","Index énergie réac. neg. HM période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		},
+		{
+			"ParameterID":"ERNpDSM",
+			"comment":["","Index énergie réac. neg. DSM période p"],
+			"unit":["kVArh","kVArh"],"type":"number","selectable":"true","editable":"true"
+		}
+	]
+}
