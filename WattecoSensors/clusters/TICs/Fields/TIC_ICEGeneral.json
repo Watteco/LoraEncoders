@@ -28,17 +28,26 @@
 		{
 			"ParameterID":"[v2.4] PTCOUR",
 			"comment":["","Période tarifaire courante "],
-			"editable":false,"selectable":true
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
+			]
 		},
 		{
 			"ParameterID":"[v2.4] PREAVIS",
 			"comment":["","Chaîne 'DEP', 'EJP', 'HM', 'DSM' ou 'SCM'"],
-			"editable":false, "selectable":true
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
+			]
 		},
 		{
 			"ParameterID":"MODE",
 			"comment":["","Chaîne 'CONTROLE'"],
-			"editable":false, "selectable":true
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
+			]
 		},
 		{
 			"ParameterID":"DATEPA1",
@@ -101,6 +110,11 @@
 			"editable":true, "type":"number","selectable":true, "unit":["kW","kW"]
 		},
 		{
+			"ParameterID":"*p*",
+			"comment":["","Champ réservé. ne pas utiliser"],
+			"editable":false, "type":"number","selectable":false, "unit":["",""]
+		},
+		{
 			"ParameterID":"KDC",
 			"comment":["","[v2.4] Coefficient de préavis de dépassement"],
 			"editable":true, "type":"number","selectable":true, "unit":["%","%"]
@@ -113,7 +127,8 @@
 		{
 			"ParameterID":"TGPHI",
 			"comment":["","[v2.4] Tangente phi moyenne 10 minutes (2.4) "],
-			"editable":false, "selectable":true
+			"editable":true, "type":"number", "selectable":true,
+			"mantissa": 100, "multiplier": 1
 		},
 		{
 			"ParameterID":"PSP",
@@ -188,7 +203,10 @@
 		{
 			"ParameterID":"MODE",
 			"comment":["","[v2.4] Chaîne 'CONTROLE' "],
-			"editable":false, "selectable":true
+			"editable":true, "type":"select","selectable":true, "options": [
+				{ "OptionID": 0, "name": ["No Trigger","Pas de déclencheur"] },
+				{ "OptionID": "_AnyChange","name": ["Any change","Toute variation"] }
+			]
 		},
 		{
 			"ParameterID":"PA1MN",
@@ -213,7 +231,8 @@
 		{
 			"ParameterID":"TGPHI",
 			"comment":["","Tangente phi moyenne 10 minutes"],
-			"editable":false, "selectable":true
+			"editable":true,"type":"number", "selectable":true,
+			"mantissa": 100, "multiplier": 1
 		},
 		{
 			"ParameterID":"U10MN",

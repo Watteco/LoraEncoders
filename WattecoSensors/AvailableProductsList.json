@@ -175,7 +175,7 @@
 			"BatchUncompressParams": "3 0,10,7,Temperature 1,100,6,RelativeHumidity 2,10,12,Luminosity 3,100,6,Disposable_BatteryLevel 4,100,6,Rechargeable_BatteryLevel"
 		},
 		{
-			"name": "TICs'O (50-70-045) [EXPERIMENTAL/DEV]",
+			"name": "TICs'O (50-70-045) [beta]",
 			"file": "50-70-045-TIC-PMEPMI",
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"]
 		},

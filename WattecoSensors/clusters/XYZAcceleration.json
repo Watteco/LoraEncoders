@@ -280,22 +280,14 @@
                                             "name": ["Delta","Delta"],
                                             "editable": true,
                                             "comment": ["---","---"],
-                                            "range": [0,32767],
-                                            "type": "number",
-                                            "mantissa": 1000,
-                                            "multiplier": 1,
-                                            "unit": ["",""]
+                                            "type": "number"
                                         },
                                         {
                                             "ParameterID": "Resolution",
                                             "name": ["Resolution","Résolution"],
                                             "editable": true,
                                             "comment": ["---","---"],
-                                            "range": [0,32767],
-                                            "type": "number",
-                                            "mantissa": 1000,
-                                            "multiplier": 1,
-                                            "unit": ["",""]
+                                            "type": "number"
                                         },
                                         {
                                             "ParameterID": "TagValue",
@@ -309,7 +301,7 @@
                                                     "comment": ["---","---"],
                                                     "range": [0,31],
                                                     "type": "number",
-                                                    "mantissa": 100,
+                                                    "mantissa": 1,
                                                     "multiplier": 1,
                                                     "unit": ["",""]
                                                 },
@@ -320,7 +312,7 @@
                                                     "comment": ["---","---"],
                                                     "range": [1,7],
                                                     "type": "number",
-                                                    "mantissa": 100,
+                                                    "mantissa": 1,
                                                     "multiplier": 1,
                                                     "unit": ["",""]
                                                 }
@@ -392,6 +384,11 @@
                                 {
                                     "parameters":[
                                         {
+                                            "ParameterID":"AttributeType",
+                                            "editable":false,
+                                            "value":"ByteString"
+                                        },
+                                        {
                                            "ParameterID":"ReportParameters",
                                            "editable":false,
                                            "value":{
@@ -403,11 +400,6 @@
                                               "NoHeaderPort":"No",
                                               "Batch":"No"
                                            }
-                                        },
-                                        {
-                                           "ParameterID":"AttributeType",
-                                           "editable":false,
-                                           "value":"ByteString"
                                         },
                                         {
                                            "ParameterID":"MinReport",
@@ -656,22 +648,14 @@
                                             "name": ["Delta","Delta"],
                                             "editable": true,
                                             "comment": ["---","---"],
-                                            "range": [0,32767],
-                                            "type": "number",
-                                            "mantissa": 1000,
-                                            "multiplier": 1,
-                                            "unit": ["",""]
+                                            "type": "number"
                                         },
                                         {
                                             "ParameterID": "Resolution",
                                             "name": ["Resolution","Résolution"],
                                             "editable": true,
                                             "comment": ["---","---"],
-                                            "range": [0,32767],
-                                            "type": "number",
-                                            "mantissa": 1000,
-                                            "multiplier": 1,
-                                            "unit": ["",""]
+                                            "type": "number"
                                         },
                                         {
                                             "ParameterID": "TagValue",
@@ -685,7 +669,7 @@
                                                     "comment": ["---","---"],
                                                     "range": [0,31],
                                                     "type": "number",
-                                                    "mantissa": 100,
+                                                    "mantissa": 1,
                                                     "multiplier": 1,
                                                     "unit": ["",""]
                                                 },
@@ -696,7 +680,7 @@
                                                     "comment": ["---","---"],
                                                     "range": [1,7],
                                                     "type": "number",
-                                                    "mantissa": 100,
+                                                    "mantissa": 1,
                                                     "multiplier": 1,
                                                     "unit": ["",""]
                                                 }
@@ -768,6 +752,11 @@
                                 {
                                     "parameters":[
                                         {
+                                            "ParameterID":"AttributeType",
+                                            "editable":false,
+                                            "value":"ByteString"
+                                        },
+                                        {
                                            "ParameterID":"ReportParameters",
                                            "editable":false,
                                            "value":{
@@ -779,11 +768,6 @@
                                               "NoHeaderPort":"No",
                                               "Batch":"No"
                                            }
-                                        },
-                                        {
-                                           "ParameterID":"AttributeType",
-                                           "editable":false,
-                                           "value":"ByteString"
                                         },
                                         {
                                            "ParameterID":"MinReport",
@@ -1033,22 +1017,14 @@
                                             "name": ["Delta","Delta"],
                                             "editable": true,
                                             "comment": ["---","---"],
-                                            "range": [0,32767],
-                                            "type": "number",
-                                            "mantissa": 1000,
-                                            "multiplier": 1,
-                                            "unit": ["",""]
+                                            "type": "number"
                                         },
                                         {
                                             "ParameterID": "Resolution",
                                             "name": ["Resolution","Résolution"],
                                             "editable": true,
                                             "comment": ["---","---"],
-                                            "range": [0,32767],
-                                            "type": "number",
-                                            "mantissa": 1000,
-                                            "multiplier": 1,
-                                            "unit": ["",""]
+                                            "type": "number"
                                         },
                                         {
                                             "ParameterID": "TagValue",
@@ -1062,7 +1038,7 @@
                                                     "comment": ["---","---"],
                                                     "range": [0,31],
                                                     "type": "number",
-                                                    "mantissa": 100,
+                                                    "mantissa": 1,
                                                     "multiplier": 1,
                                                     "unit": ["",""]
                                                 },
@@ -1073,7 +1049,7 @@
                                                     "comment": ["---","---"],
                                                     "range": [1,7],
                                                     "type": "number",
-                                                    "mantissa": 100,
+                                                    "mantissa": 1,
                                                     "multiplier": 1,
                                                     "unit": ["",""]
                                                 }
@@ -1145,6 +1121,11 @@
                                 {
                                     "parameters":[
                                         {
+                                            "ParameterID":"AttributeType",
+                                            "editable":false,
+                                            "value":"ByteString"
+                                        },
+                                        {
                                            "ParameterID":"ReportParameters",
                                            "editable":false,
                                            "value":{
@@ -1156,11 +1137,6 @@
                                               "NoHeaderPort":"No",
                                               "Batch":"No"
                                            }
-                                        },
-                                        {
-                                           "ParameterID":"AttributeType",
-                                           "editable":false,
-                                           "value":"ByteString"
                                         },
                                         {
                                            "ParameterID":"MinReport",
@@ -1429,22 +1405,14 @@
                                             "name": ["Delta","Delta"],
                                             "editable": true,
                                             "comment": ["---","---"],
-                                            "range": [0,32767],
-                                            "type": "number",
-                                            "mantissa": 1000,
-                                            "multiplier": 1,
-                                            "unit": ["",""]
+                                            "type": "number"
                                         },
                                         {
                                             "ParameterID": "Resolution",
                                             "name": ["Resolution","Résolution"],
                                             "editable": true,
                                             "comment": ["---","---"],
-                                            "range": [0,32767],
-                                            "type": "number",
-                                            "mantissa": 1000,
-                                            "multiplier": 1,
-                                            "unit": ["",""]
+                                            "type": "number"
                                         },
                                         {
                                             "ParameterID": "TagValue",
@@ -1458,7 +1426,7 @@
                                                     "comment": ["---","---"],
                                                     "range": [0,31],
                                                     "type": "number",
-                                                    "mantissa": 100,
+                                                    "mantissa": 1,
                                                     "multiplier": 1,
                                                     "unit": ["",""]
                                                 },
@@ -1469,7 +1437,7 @@
                                                     "comment": ["---","---"],
                                                     "range": [1,7],
                                                     "type": "number",
-                                                    "mantissa": 100,
+                                                    "mantissa": 1,
                                                     "multiplier": 1,
                                                     "unit": ["",""]
                                                 }

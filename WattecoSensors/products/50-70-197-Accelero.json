@@ -8,7 +8,22 @@
                 "available" : true,
                 "slot" : [
                     {
+                     "attribute" : "Last", 
+                      "numberSlot" : 10,
+                      "fieldindex" : [0,1,2,3,4,5,6,7,8,9]
+                    },
+                    {
                      "attribute" : "Stats_X", 
+                      "numberSlot" : 10,
+                      "fieldindex" : [0,1,2,3,4,5,6,7,8,9]
+                    },
+                    {
+                     "attribute" : "Stats_Y", 
+                      "numberSlot" : 10,
+                      "fieldindex" : [0,1,2,3,4,5,6,7,8,9]
+                    },
+                    {
+                     "attribute" : "Stats_Z", 
                       "numberSlot" : 10,
                       "fieldindex" : [0,1,2,3,4,5,6,7,8,9]
                     }

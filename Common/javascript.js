@@ -791,22 +791,24 @@ function populateFieldIndexList(){
 	select.remove(select.options[0]);
 
 	for(var i = 0; i < lAllFields.length ; i++){
-		if (lAllFields[i]["type"] == "number") {
+		if ((lAllFields[i].selectable || lAllFields[i].editable)) {
+			if (lAllFields[i]["type"] == "number") {
 
-			// Populate TIC Batch HMI fieldIndex (first refresh)
-			var option = document.createElement("OPTION");
-			option.text = [lAllFields[i]["ParameterID"] + " : " + (lAllFields[i]["comment"][lang]=="" ? lAllFields[i]["comment"][1] : lAllFields[i]["comment"][lang])];
-			option.value = i;
+				// Populate TIC Batch HMI fieldIndex (first refresh)
+				var option = document.createElement("OPTION");
+				option.text = [lAllFields[i]["ParameterID"] + " : " + (lAllFields[i]["comment"][lang]=="" ? lAllFields[i]["comment"][1] : lAllFields[i]["comment"][lang])];
+				option.value = i;
 
-			// Store TIC specific option list for Batch for next refresh (change reportType/addParameterRow)
-			var optionObject = lAllFields[i];
-			optionObject.FieldIndex = i;
-			optionObject.name = ["",""]; // Keep the label as formated before for next refreshs (Cf addParameterRow, from select ReportType)
-			optionObject.name[lang] = option.text;
-			optionObject.OptionID = i; // keep also the option ID also as used later for select fields
-			currentClusterData.attributes[0].commands[0].ReportType[1].parameters[2].options[i] = optionObject;
-			
-			select.add(option);
+				// Store TIC specific option list for Batch for next refresh (change reportType/addParameterRow)
+				var optionObject = lAllFields[i];
+				optionObject.fieldIndex = i;
+				optionObject.name = ["",""]; // Keep the label as formated before for next refreshs (Cf addParameterRow, from select ReportType)
+				optionObject.name[lang] = option.text;
+				optionObject.OptionID = i; // keep also the option ID also as used later for select fields
+				currentClusterData.attributes[0].commands[0].ReportType[1].parameters[2].options[i] = optionObject;
+				
+				select.add(option);
+			}
 		}
 	}
 
@@ -1039,9 +1041,11 @@ function switchCategory(lCurrentReportType = 0) {
 						}else if(subParameter.ParameterID == undefined){
 							// TIC case
 							subParameter.forEach(sub => {
-								addParameterRow(body,i,parameterIndex,sub,sub.selectable,sub.editable); //Appel de notre fonction d'ajout de ligne
-								parameterIndex++; //On incrémente le numéro d'index du paramètre
-								i++; //On incrémente "i"
+								if (sub.selectable || sub.editable) {
+									addParameterRow(body,i,parameterIndex,sub,sub.selectable,sub.editable); //Appel de notre fonction d'ajout de ligne
+									parameterIndex++; //On incrémente le numéro d'index du paramètre
+									i++; //On incrémente "i"
+								}
 							});
 							
 						}
@@ -1352,24 +1356,33 @@ function updateBatchData(){
 		currentField.multiplier = 1;
 	}else if(document.getElementById("parameter0").options.length > 1 || (document.getElementById("parameter0").options.length == 1 && document.getElementById("parameter0").options[0].textContent !="none")){
 		if(currentCluster.startsWith("TIC")){
-			var currentField = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters.length-1].subParameters[1].find(element => element.FieldIndex == document.getElementById("parameter0").value);
+			var currentField = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters.length-1].subParameters[1].find(element => element.fieldIndex == document.getElementById("parameter0").value);
 		}else{
-			var currentField = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters.length-1].subParameters.find(element => element.FieldIndex == document.getElementById("parameter0").value);
+			var currentField = currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters[currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].ReportType[0].parameters.length-1].subParameters.find(element => element.fieldIndex == document.getElementById("parameter0").value);
 		}
 	}
 	// Si une des deux conditions précédentes a été réalisées alors on fait les modifications adéquates
 	if(currentField !== undefined){
 		for(let i=3;i<5;i++){
-			document.getElementById('parameter'+i).mantissa = currentField.mantissa;
-			document.getElementById('parameter'+i).multiplier = currentField.multiplier;
-			document.getElementById('parameter'+i).nextSibling.textContent = currentField.unit[lang];
+			// On met à jour les paramètres d'IHM et des paramètres Delta and Resolution information car utilisés après (modifyParameter, generate JSON, ...)
+			//idxCmdParam = ((currentCluster.startsWith("TIC")) ? i + 2 : i + 1); // + Instance in TIC parameters
+			idxCmdParam = i+2;
+			currentCommandParameters[idxCmdParam].mantissa = currentField.mantissa;
+			currentCommandParameters[idxCmdParam].multiplier = currentField.multiplier;
+			theElement = document.getElementById('parameter'+i);
+			//theElement.mantissa = currentField.mantissa;
+			//theElement.multiplier = currentField.multiplier;
+			theElement.nextSibling.textContent = currentField.unit[lang];
+			theElement.step=1/(currentField.mantissa);
 			if (currentField.range !== undefined) {
-				document.getElementById('parameter'+i).min = currentField.range[0];
-				document.getElementById('parameter'+i).max = currentField.range[1];
+				theElement.min = currentField.range[0];
+				theElement.max = currentField.range[1];
+				currentCommandParameters[idxCmdParam]["range"] = [currentField.range[0],currentField.range[1]];
 				document.getElementById('interval'+i).textContent = "--- (" + currentField.range[0] +", "+currentField.range[0] + ")";
 			} 
 			else {
-				document.getElementById('interval'+i).textContent = "--- ()";
+				currentCommandParameters[idxCmdParam]["range"]= [0,Infinity];
+				document.getElementById('interval'+i).textContent = "--- (>=0)";
 			}
 		}
 	}
@@ -1847,17 +1860,19 @@ function generateJson() {
 
 							var dataParameterTic = new Object();
 							subParameter.forEach(sub => {
-								if (isSelectedParam(sub,i) || isEditedParam(sub,i)) {
-									dataParameterTic[sub.ParameterID]=new Object();
-									dataParameterTic[sub.ParameterID]["IsReported"] = (isSelectedParam(sub,i) ? "Yes" : "No");
-									if (isEditedParam(sub,i)) {
-										dataParameterTic[sub.ParameterID]["IsCriteria"] = "Yes";
-										dataParameterTic[sub.ParameterID]["Value"] = formatParameterData(sub,i);
-									} else {
-										dataParameterTic[sub.ParameterID]["IsCriteria"] = "No";
+								if (sub.selectable || sub.editable) {
+									if (isSelectedParam(sub,i) || isEditedParam(sub,i)) {
+										dataParameterTic[sub.ParameterID]=new Object();
+										dataParameterTic[sub.ParameterID]["IsReported"] = (isSelectedParam(sub,i) ? "Yes" : "No");
+										if (isEditedParam(sub,i)) {
+											dataParameterTic[sub.ParameterID]["IsCriteria"] = "Yes";
+											dataParameterTic[sub.ParameterID]["Value"] = formatParameterData(sub,i);
+										} else {
+											dataParameterTic[sub.ParameterID]["IsCriteria"] = "No";
+										}
 									}
+									i++;
 								}
-								i++
 							});
 							
 							Object.assign(dataParameter,dataParameterTic);
@@ -2029,10 +2044,16 @@ function formatParameterData(parameter,parameterIndex) {
 
 			return bytesArray;
 		default:
+			theHMIElement=document.getElementById('parameter' + parameterIndex);
+			theMantissa=parameter.mantissa;
+			theMultiplier=parameter.multiplier;
 			if(currentCommandParameters[0].value === "SinglePrecision"){
-				return Number(document.getElementById('parameter' + parameterIndex).value);
-			}else{
-				return Math.round((parseInt((document.getElementById('parameter' + parameterIndex).value)*(parameter.mantissa))/(parameter.mantissa))*(parameter.multiplier)*(parameter.multiplier))/(parameter.multiplier);
+				return Number(theHMIElement.value);
+			}else if(theMantissa > theMultiplier){// assume float expected (for now used in TIC multi fields, wher attribute datatype is ByteString (notSinglePrecision))
+				return (Math.round(Number(theHMIElement.value)*(theMantissa))/(theMantissa))*(theMultiplier);
+			}else
+			{
+				return Math.round((parseInt((theHMIElement.value)*(theMantissa))/(theMantissa))*(theMultiplier)*(theMultiplier))/(theMultiplier);
 			}
 	}
 }
