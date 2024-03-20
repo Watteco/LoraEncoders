@@ -1361,26 +1361,6 @@
                                                 {
                                                     "OptionID": 9,
                                                     "name": ["Dt_Z","Dt_Z"]
-                                                },
-                                                {
-                                                    "OptionID": 10,
-                                                    "name": ["SignalEachAcq","SignalEachAcq"]
-                                                },
-                                                {
-                                                    "OptionID": 11,
-                                                    "name": ["Reserved","Reserved"]
-                                                },
-                                                {
-                                                    "OptionID": 12,
-                                                    "name": ["RstAftStdRpt_X","RstAftStdRpt_X"]
-                                                },
-                                                {
-                                                    "OptionID": 13,
-                                                    "name": ["RstAftStdRpt_Y","RstAftStdRpt_Y"]
-                                                },
-                                                {
-                                                    "OptionID": 14,
-                                                    "name": ["RstAftStdRpt_Z","RstAftStdRpt_Z"]
                                                 }
                                             ]
                                         },
