@@ -2038,8 +2038,8 @@ function formatParameterData(parameter,parameterIndex) {
 			for(var i = 0; i< bytes.length; i+=2){
 				bytesArray.push(bytes.slice(i,i+2))
 			}
-			bytesArray.unshift(bytesArray.length)
 			bytesArray = bytesArray.map(el => parseInt(el,16))
+			bytesArray.unshift(bytesArray.length)
 
 
 			return bytesArray;
