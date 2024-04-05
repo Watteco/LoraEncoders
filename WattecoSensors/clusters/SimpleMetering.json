@@ -66,7 +66,7 @@
 								{
 								   "ParameterID":"ActiveEnergy",
 								   "fieldIndex" : 0,
-								   "name":["variation of summation of the active energy","variation de la somme de l'énergie active"],
+								   "name":["active energy","énergie active"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,16777215],
@@ -78,7 +78,7 @@
 								{
 								   "ParameterID":"ReactiveEnergy",
 								   "fieldIndex" : 1,
-								   "name":["variation of summation of the reactive energy","variation de la somme de l'énergie réactive"],
+								   "name":["reactive energy","énergie réactive"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,16777215],
@@ -90,7 +90,7 @@
 								{
 								   "ParameterID":"NbMinutes",
 								   "fieldIndex" : 2,
-								   "name":["variation of number of sample","variation du nombre d'échantillon"],
+								   "name":["number of sample","variation du nombre d'échantillon"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -102,7 +102,7 @@
 								{
 								   "ParameterID":"ActivePower",
 								   "fieldIndex" : 3,
-								   "name":["variation of active power ","variation de l'énergie active"],
+								   "name":["active power ","énergie active"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -115,7 +115,7 @@
 								{
 								   "ParameterID":"ReactivePower",
 								   "fieldIndex" : 4,
-								   "name":["variation of reactive power","variation de l'énergie réactive"],
+								   "name":["reactive power","énergie réactive"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -153,23 +153,23 @@
 								"options": [
 									{
 										"OptionID": 0,
-										"name": ["variation of summation of the active energy","variation de la somme de l'énergie active"]
+										"name": ["active energy","énergie active"]
 									},
 									{
 										"OptionID": 1,
-										"name": ["variation of summation of the reactive energy","variation de la somme de l'énergie réactive"]
+										"name": ["reactive energy","énergie réactive"]
 									},
 									{
 										"OptionID": 2,
-										"name": ["variation of number of sample","variation du nombre d'échantillon"]
+										"name": ["number of sample","variation du nombre d'échantillon"]
 									},
 									{
 										"OptionID": 3,
-										"name":["variation of active power ","variation de l'énergie active"]
+										"name":["active power ","énergie active"]
 									},
 									{
 										"OptionID": 4,
-										"name": ["variation of reactive power","variation de l'énergie réactive"]
+										"name": ["reactive power","énergie réactive"]
 									}
 								]
 							},

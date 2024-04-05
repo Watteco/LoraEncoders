@@ -66,7 +66,7 @@
 								{
 								   "ParameterID":"VrmsA (V/10)",
 								   "fieldIndex": 0,
-								   "name":["variation of phase A's voltage","variation de tension de la phase A"],
+								   "name":["phase A's voltage","tension de la phase A"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -78,7 +78,7 @@
 																{
 								   "ParameterID":"IrmsA (A/10)",
 								   "fieldIndex": 1,
-								   "name":["variation of phase A's current","variation du courant de la phase A"],
+								   "name":["phase A's current","variation du courant de la phase A"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -90,7 +90,7 @@
 								{
 								   "ParameterID":"AngleA (degrees)",
 								   "fieldIndex": 2,
-								   "name":["variation of phase A's angle ","variation de l'angle de la phase A"],
+								   "name":["phase A's angle ","angle de la phase A"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -101,7 +101,7 @@
 								},{
 								   "ParameterID":"VrmsB (V/10)",
 								   "fieldIndex": 3,
-								   "name":["variation of phase B's voltage","variation de tension de la phase B"],
+								   "name":["phase B's voltage","tension de la phase B"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -113,7 +113,7 @@
 																{
 								   "ParameterID":"IrmsB (A/10)",
 								   "fieldIndex": 4,
-								   "name":["variation of phase B's current","variation du courant de la phase B"],
+								   "name":["phase B's current","variation du courant de la phase B"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -125,7 +125,7 @@
 								{
 								   "ParameterID":"AngleB (degrees)",
 								   "fieldIndex": 5,
-								   "name":["variation of phase B's angle","variation de l'angle de la phase B"],
+								   "name":["phase B's angle","angle de la phase B"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -136,7 +136,7 @@
 								},{
 								   "ParameterID":"VrmsC (V/10)",
 								   "fieldIndex": 6,
-								   "name":["variation of phase C's oltage","variation de tension de la phase C"],
+								   "name":["phase C's oltage","tension de la phase C"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -148,7 +148,7 @@
 																{
 								   "ParameterID":"IrmsC (A/10)",
 								   "fieldIndex": 7,
-								   "name":["variation of phase C's current","variation du courant de la phase C"],
+								   "name":["phase C's current","variation du courant de la phase C"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -160,7 +160,7 @@
 								{
 								   "ParameterID":"AngleC (degrees)",
 								   "fieldIndex": 8,
-								   "name":["variation of phase C's angle","variation de l'angle de la phase C"],
+								   "name":["phase C's angle","angle de la phase C"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,65535],
@@ -193,37 +193,37 @@
 								"options": [
 									{
 										"OptionID": 0,
-										"name": ["variation of phase A's voltage","variation de tension de la phase A"]
+										"name": ["phase A's voltage","tension de la phase A"]
 									},
 									{
 										"OptionID": 1,
-										"name":["variation of phase A's current","variation du courant de la phase A"]
+										"name":["phase A's current","variation du courant de la phase A"]
 									},
 									{
 										"OptionID": 2,
-										"name": ["variation of phase A's angle","variation de l'angle de la phase A"]
+										"name": ["phase A's angle","angle de la phase A"]
 									},{
 										"OptionID": 3,
-										"name": ["variation of phase B's voltage","variation de tension de la phase B"]
+										"name": ["phase B's voltage","tension de la phase B"]
 									},
 									{
 										"OptionID": 4,
-										"name":["variation of phase B's current","variation du courant de la phase B"]
+										"name":["phase B's current","variation du courant de la phase B"]
 									},
 									{
 										"OptionID": 5,
-										"name": ["variation of phase B's angle","variation de l'angle de la phase B"]
+										"name": ["phase B's angle","angle de la phase B"]
 									},{
 										"OptionID": 6,
-										"name": ["variation of phase C's voltage","variation de tension de la phase C"]
+										"name": ["phase C's voltage","tension de la phase C"]
 									},
 									{
 										"OptionID": 7,
-										"name":["variation of phase C's current","variation du courant de la phase C"]
+										"name":["phase C's current","variation du courant de la phase C"]
 									},
 									{
 										"OptionID": 8,
-										"name": ["variation of phase C's angle","variation de l'angle de la phase C"]
+										"name": ["phase C's angle","angle de la phase C"]
 									}
 								]
 							},

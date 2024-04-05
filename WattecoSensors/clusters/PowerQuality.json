@@ -238,52 +238,52 @@
 									"options": [
 										{
                                             "OptionID": 0,
-                                            "name": ["variation of frequence","variation de la somme de l'énergie active"]
+                                            "name": ["variation of frequence","variation de la fréquence"]
                                         },
                                         {
                                             "OptionID": 1,
-                                            "name": ["variation of minimal frequence","variation de la somme de l'énergie réactive"]
+                                            "name": ["variation of minimal frequence","variation de la fréquence minimale"]
                                         },
                                         {
                                             "OptionID": 2,
-                                            "name": ["variation of maximal frequence","variation du nombre d'échantillon"]
+                                            "name": ["variation of maximal frequence","variation  de la fréquence maximale"]
                                         },
                                         {
                                             "OptionID": 3,
-                                            "name":["variation of vrms ","variation de l'énergie active"]
+                                            "name":["variation of vrms ","variation de la vrms"]
                                         },
                                         {
                                             "OptionID": 4,
-                                            "name": ["variation of minimal vrms","variation de l'énergie réactive"]
+                                            "name": ["variation of minimal vrms","variation de la vrms"]
                                         },
                                         {
                                             "OptionID": 5,
-                                            "name": ["variation of maximal vrms","variation de la somme de l'énergie active"]
+                                            "name": ["variation of maximal vrms","variation de la vrms maximale"]
                                         },
                                         {
                                             "OptionID": 6,
-                                            "name": ["variation of vpeak","variation de la somme de l'énergie réactive"]
+                                            "name": ["variation of vpeak","variation de vpeak"]
                                         },
                                         {
                                             "OptionID": 7,
-                                            "name": ["variation of minimal vpeak","variation du nombre d'échantillon"]
+                                            "name": ["variation of minimal vpeak","variation de la vpeak minimale"]
                                         },
                                         {
                                             "OptionID": 8,
-                                            "name":["variation of maximal vpea","variation de l'énergie active"]
+                                            "name":["variation of maximal vpeak","variation de la vpeak maximale"]
                                         },
                                         {
-                                            "OptionID": 9,
-                                            "name": ["variation of over voltage number","variation de l'énergie réactive"]
-                                        },
-                                        {
-                                            "OptionID": 10,
-                                            "name": ["variation of sag number","variation de la somme de l'énergie active"]
-                                        },
-                                        {
-                                            "OptionID": 11,
-                                            "name": ["variation of brownout number","variation de la somme de l'énergie réactive"]
-                                        }
+											"OptionID": 9,
+											"name": ["variation of over voltage number", "variation du nombre de surtensions"]
+										},
+										{
+											"OptionID": 10,
+											"name": ["variation of sag number", "variation du nombre de creux de tension"]
+										},
+										{
+											"OptionID": 11,
+											"name": ["variation of brownout number", "variation du nombre de baisses de tension"]
+										}
 									]
 								},
 								{

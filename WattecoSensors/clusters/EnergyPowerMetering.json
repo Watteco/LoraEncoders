@@ -66,7 +66,7 @@
 								{
 								   "ParameterID":"PositiveActiveEnergy",
 								   "fieldIndex": 0,
-								   "name":["variation of summation of the positive active energy","variation de la somme de l'énergie positive active"],
+								   "name":["positive active energy","énergie positive active"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,16777215],
@@ -78,7 +78,7 @@
 																{
 								   "ParameterID":"NegativeActiveEnergy",
 								   "fieldIndex": 1,
-								   "name":["variation of summation of the negative active energy","variation de la somme de l'énergie négative active"],
+								   "name":["negative active energy","énergie négative active"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,16777215],
@@ -90,7 +90,7 @@
 								{
 								   "ParameterID":"PositiveReActiveEnergy",
 								   "fieldIndex": 2,
-								   "name":["variation of summation of the positive reactive energy","variation de la somme de l'énergie positive réactive"],
+								   "name":["positive reactive energy","énergie positive réactive"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,16777215],
@@ -102,7 +102,7 @@
 								{
 								   "ParameterID":"NegativeReActiveEnergy",
 								   "fieldIndex": 3,
-								   "name":["variation of summation of the negative reactive energy","variation de la somme de l'énergie négative réactive"],
+								   "name":["negative reactive energy","énergie négative réactive"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,16777215],
@@ -114,7 +114,7 @@
 								{
 								   "ParameterID":"PositiveActivePower",
 								   "fieldIndex": 4,
-								   "name":["variation of positive active power ","variation de l'énergie positive active"],
+								   "name":["positive active power ","énergie positive active"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,16777215],
@@ -126,7 +126,7 @@
 								{
 								   "ParameterID":"NegativeActivePower",
 								   "fieldIndex": 5,
-								   "name":["variation of negative active power ","variation de l'énergie négative active"],
+								   "name":["negative active power ","énergie négative active"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,16777215],
@@ -138,7 +138,7 @@
 								{
 								   "ParameterID":"PositiveReActivePower",
 								   "fieldIndex": 6,
-								   "name":["variation of positive reactive power","variation de l'énergie positive réactive"],
+								   "name":["positive reactive power","énergie positive réactive"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,16777215],
@@ -150,7 +150,7 @@
 								{
 								   "ParameterID":"NegativeReActivePower",
 								   "fieldIndex": 7,
-								   "name":["variation of negative reactive power","variation de l'énergie négative réactive"],
+								   "name":["negative reactive power","énergie négative réactive"],
 								   "editable":true,
 								   "comment":["---","---"],
 								   "range":[0,16777215],
@@ -183,35 +183,35 @@
 								"options": [
 									{
 										"OptionID": 0,
-										"name": ["variation of summation of the positive active energy","variation de la somme de l'énergie positive active"]
+										"name": ["positive active energy","énergie positive active"]
 									},
 									{
 										"OptionID": 1,
-										"name":["variation of summation of the negative active energy","variation de la somme de l'énergie négative active"]
+										"name":["negative active energy","énergie négative active"]
 									},
 									{
 										"OptionID": 2,
-										"name": ["variation of summation of the positive reactive energy","variation de la somme de l'énergie positive réactive"]
+										"name": ["positive reactive energy","énergie positive réactive"]
 									},
 									{
 										"OptionID": 3,
-										"name":["variation of summation of the negative reactive energy","variation de la somme de l'énergie négative réactive"]
+										"name":["negative reactive energy","énergie négative réactive"]
 									},
 									{
 										"OptionID":4,
-										"name":["variation of positive active power ","variation de l'énergie positive active"]
+										"name":["positive active power ","énergie positive active"]
 									},
 									{
 										"OptionID":5,
-										"name":["variation of negative active power ","variation de l'énergie négative active"]
+										"name":["negative active power ","énergie négative active"]
 									},
 									{
 										"OptionID":6,
-										"name":["variation of positive reactive power","variation de l'énergie positive réactive"]
+										"name":["positive reactive power","énergie positive réactive"]
 									},
 									{
 										"OptionID":7,
-										"name":["variation of negative reactive power","variation de l'énergie négative réactive"]
+										"name":["negative reactive power","énergie négative réactive"]
 									}
 								]
 							},
