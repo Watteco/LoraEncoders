@@ -55,7 +55,7 @@
 		{
 			"clusterID": "Temperature",
 			"endpoints": [1],
-			"endpointsComment": [["Accuracy: +/-0.5°","Précision: +/-0.2°"]],
+			"endpointsComment": ["Accuracy: +/-0.5°","Précision: +/-0.2°"],
 			"threshold" : {
                 "available" : true,
                 "slot" : [
@@ -78,7 +78,7 @@
 		{
 			"clusterID": "RelativeHumidity",
 			"endpoints": [1],
-			"endpointsComment": [["Accuracy: +/-2%","Précision: +/-2%"]],
+			"endpointsComment": ["Accuracy: +/-2%","Précision: +/-2%"],
 			"threshold" : {
                 "available" : true,
                 "slot" : [
