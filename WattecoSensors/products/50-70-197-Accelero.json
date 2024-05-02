@@ -52,5 +52,6 @@
             ]
 		}
 	],
-	 "embeddedProductName": "ips-accelero"
+	 "embeddedProductName": "ips-accelero",
+     "addresses":["@803a800","@803abfe"]
 }

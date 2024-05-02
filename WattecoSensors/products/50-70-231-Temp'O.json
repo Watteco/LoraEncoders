@@ -111,5 +111,6 @@
 			]
 		}
 	],
-	"embeddedProductName": "ips-thpl"
+	"embeddedProductName": "ips-thpl",
+	"addresses":["@803a800","@803abfe"]
 }
