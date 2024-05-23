@@ -1314,6 +1314,23 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "CommandID": "ClusterSpecificCommand",
+                    "name": [
+                        "Factory Reset",
+                        "Réinitialisation État d'Usine"
+                    ],
+                    "expert": false,
+                    "parameters": [
+                        {
+                            "ParameterID": "Data",
+                            "editable": false,
+                            "value": [
+                                7
+                            ]
+                        }
+                    ]
                 }
             ]
         }
