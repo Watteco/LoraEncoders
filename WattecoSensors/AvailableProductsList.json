@@ -131,7 +131,8 @@
 		{
 			"name": "Remote temperature humidity (50-70-200)",
 			"file": "50-70-200-RTH",
-			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"]
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"BatchUncompressParams": "2 0,10,7,Temperature 1,100,6,RelativeHumidity 2,1,6,BatteryLevel"
 		},
 		{
 			"name": "SkyDome (50-70-143)",
