@@ -68,6 +68,100 @@
 									]
 								}
 							]
+						},
+						{
+							"parameters": [
+								{
+									"ParameterID": "ReportParameters",
+									"editable": false,
+									"value": {
+										"New": "No",
+										"Size": 0,
+										"Batch": "Yes"
+									}
+								},
+								{
+									"ParameterID": "FieldIndex",
+									"name": ["Field(s)","Champ(s)"],
+									"editable": true,
+									"comment": ["---","---"],
+									"type": "select",
+									"options": [
+										{
+											"OptionID": 0,
+											"name": ["none","none"]
+										}
+									]
+								},
+								{
+									"ParameterID": "MinReport",
+									"name": ["Minimum reporting interval","Intervalle de rapport minimal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "MaxReport",
+									"name": ["Maximum reporting interval","Intervalle de rapport maximal"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,32767],
+									"type": "time"
+								},
+								{
+									"ParameterID": "Delta",
+									"name": ["Delta","Delta"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,255],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["",""]
+								},
+								{
+									"ParameterID": "Resolution",
+									"name": ["Resolution","Résolution"],
+									"editable": true,
+									"comment": ["---","---"],
+									"range": [0,255],
+									"type": "number",
+									"mantissa": 1,
+									"multiplier": 1,
+									"unit": ["",""]
+								},
+								{
+									"ParameterID": "TagValue",
+									"editable": true,
+									"type": "data",
+									"subParameters": [
+										{
+											"ParameterID": "TagLabel",
+											"name": ["TagLabel","TagLabel"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [0,31],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										},
+										{
+											"ParameterID": "TagSize",
+											"name": ["TagSize","TagSize"],
+											"editable": true,
+											"comment": ["---","---"],
+											"range": [1,7],
+											"type": "number",
+											"mantissa": 1,
+											"multiplier": 1,
+											"unit": ["",""]
+										}
+										
+									]
+								}
+							]
 						}
 					]
 				},
