@@ -1530,7 +1530,9 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 			{
 				parameter.options.forEach(function(currentOption) {
 					var opt = document.createElement('option'); //On ajoute une nouvelle option
-					opt.appendChild(document.createTextNode(currentOption.name === undefined ? currentOption.comment[1] :currentOption.name[lang]));
+					const zeName = (currentOption.name === undefined ? "" : (Array.isArray(currentOption.name) ? 
+						currentOption.name[(currentOption.name.length > 1 ? lang : 0)] : currentOption.name));
+					opt.appendChild(document.createTextNode(currentOption.name === undefined ? currentOption.comment[1] : zeName));
 					opt.value = currentOption.OptionID;
 					select.appendChild(opt); //On ajoute notre option à la liste select précédente
 				});
