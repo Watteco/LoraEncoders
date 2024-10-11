@@ -1331,6 +1331,41 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "CommandID": "ClusterSpecificCommand",
+                    "name": [
+                        "Set Alternate configuration (rev trunk > 5365)",
+                        "Choisir une configuration alternative (rev trunk > 5365)"
+                    ],
+                    "expert": true,
+                    "parameters": [
+                        {
+                            "ParameterID": "Data",
+                            "editable": true,
+                            "comment": [
+                                "Last byte (Alternate CFG Nb) of generated frame can be modified manually after frame generation according to your sensor capabilities",
+                                "Le dernier octet (N° de configuration alternative) de la trame générée peut-être modifié en fonction des capacités relles de votre capteur"
+                            ],
+                            "type": "select",
+                            "options": [
+                                {
+                                    "OptionID": "[241,0]",
+                                    "name": [
+                                        "Alternate config 0 (Factory Cfg)",
+                                        "Config alternative 0 (Cfg Usine)"
+                                    ]
+                                },
+                                {
+                                    "OptionID": "[241,1]",
+                                    "name": [
+                                        "Alternate config 1",
+                                        "Config alternative 1 "
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }

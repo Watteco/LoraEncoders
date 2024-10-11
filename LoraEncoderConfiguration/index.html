@@ -65,9 +65,18 @@
 									<fieldset id="fieldset"><div id="productContainer">
 										<div style="margin-bottom: 15px;">
 											<label for="productSelect" style="font-size: 16px;">① <span style="font-size: 16px;"><script type="text/javascript">document.write(langData.chooseProductMsg[lang])</script></span></label>
-											<select onchange="switchProduct();" id="productSelect">
-												<option value="" selected disabled >----</option>
-											</select>
+											<div id="productContainer">
+												<div style="margin-bottom: 15px;">
+													<label for="productSelect" style="font-size: 16px;">① <span style="font-size: 16px;" id="chooseProductMsg"><script type="text/javascript">document.write(langData.chooseProductMsg[lang])</script></span></label>
+													<select onchange="switchProduct();" id="productSelect">
+														<option value="" selected disabled >----</option>
+													</select>
+													<label  id="productSubSelectLabel" for="productSubSelect" style="font-size: 16px; display:none;"><span style="font-size: 14px;" id="chooseSubProductMsg"><script type="text/javascript">document.write(langData.chooseSubProductMsg[lang])</script></span></label>
+													<select onchange="switchSubProduct();" id="productSubSelect" style="display:none;">
+													</select>
+												</div>
+											</div>
+											<div id="tooltip"></div>
 											<label  id="productSubSelectLabel" for="productSubSelect" style="font-size: 16px; display:none;"><span style="font-size: 14px;"><script type="text/javascript">document.write(langData.chooseSubProductMsg[lang])</script></span></label>
 											<select onchange="switchSubProduct();" id="productSubSelect" style="display:none;">
 											</select>

@@ -91,7 +91,7 @@
 		},
 		{
 			"clusterID": "BinaryInput",
-			"customName": ["Open/close alarm","Alarme anti-arrachement"],
+			"customName": ["Break-in alarm","Alarme anti-effraction"],
 			"endpoints": [0],
 			"endpointsComment": ["---","---"],
 			"threshold" : {

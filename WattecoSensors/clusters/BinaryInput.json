@@ -412,12 +412,12 @@
 				{
 					"CommandID": "ReadAttribute",
 					"name": ["Count - Read current value","Comptage - Lire la valeur actuelle du compteur de changements d'état"],
-					"expert": true
+					"expert": false
 				},
 				{
 					"CommandID": "WriteAttributeNoResponse",
 					"name": ["Count - Write current value","Comptage - Définir la valeur actuelle du compteur de changements d'état"],
-					"expert": false,
+					"expert": true,
 					"parameters": [
 						{
 							"ParameterID": "AttributeType",
@@ -589,12 +589,12 @@
 				{
 					"CommandID": "ReadAttribute",
 					"name": ["DebouncePeriod - Read the current debounce period","Antirebond - Lire la durée d'anti rebond actuelle"],
-					"expert": false
+					"expert": true
 				},
 				{
 					"CommandID": "WriteAttributeNoResponse",
 					"name": ["DebouncePeriod - Write the debounce period of the remote sensor","Antirebond - Définir la durée de l'anti rebond du capteur distant"],
-					"expert": false,
+					"expert": true,
 					"parameters": [
 						{
 							"ParameterID": "AttributeType",
@@ -622,12 +622,12 @@
 				{
 					"CommandID": "ReadAttribute",
 					"name": ["PollPeriod - Read the current debounce period","Période de sondage - Lire la durée d'anti rebond actuelle"],
-					"expert": false
+					"expert": true
 				},
 				{
 					"CommandID": "WriteAttributeNoResponse",
 					"name": ["PollPeriod - Write the debounce period of the remote sensor","Période de sondage - Définir la durée de l'anti rebond du capteur distant"],
-					"expert": false,
+					"expert": true,
 					"parameters": [
 						{
 							"ParameterID": "AttributeType",
@@ -654,13 +654,13 @@
 			"commands": [
 				{
 					"CommandID": "ReadAttribute",
-					"name": ["ForceNotify - Read the current polarity of the remote sensor","Forcer la notification - Lire la polarité actuelle du capteur distant"],
-					"expert": false
+					"name": ["ForceNotify - Read the current value","Forcer la notification - Lire la valeur actuelle"],
+					"expert": true
 				},
 				{
 					"CommandID": "WriteAttributeNoResponse",
-					"name": ["ForceNotify - Write the polarity of the remote sensor","Forcer la notification - Définir la polarité du capteur distant"],
-					"expert": false,
+					"name": ["ForceNotify - Write current value","Forcer la notification - Ecrire la nouvelle valeur"],
+					"expert": true,
 					"parameters": [
 						{
 							"ParameterID": "AttributeType",
@@ -676,11 +676,11 @@
 							"options": [
 								{
 									"OptionID": 0,
-									"name": ["Normal","Normale"]
+									"name": ["On poll with state change only","Sur 'polling' avec changement d'état"]
 								},
 								{
 									"OptionID": 1,
-									"name": ["Reversed","Inversée"]
+									"name": ["On each polling","Sur chaque 'polling'"]
 								}
 							]
 						}

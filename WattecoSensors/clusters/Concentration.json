@@ -206,12 +206,12 @@
 				{
 					"CommandID": "ReadAttribute",
 					"name": ["Concentration - Read expected minimal level","Concentration - Lire la valeur minimale attendue"],
-					"expert": false
+					"expert": true
 				},
 				{
 					"CommandID": "WriteAttributeNoResponse",
 					"name": ["Concentration - Write expected minimal level","Concentration - Ecrire la valeur minimale attendue"],
-					"expert": false,
+					"expert": true,
 					"parameters": [
 						{
 							"ParameterID": "AttributeType",
