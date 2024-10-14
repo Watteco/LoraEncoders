@@ -7,11 +7,11 @@
 		},
 		{
 			"subProductID": "MT_CBEMM_ICC",
-			"name": ["Mono phased CBE/Linky (Historic)","CBE/Linky (Historique) monophasé"]
+			"name": ["1 phased CBE/Linky (Historic)","CBE/Linky (Historique) mono"]
 		},
 		{
 			"subProductID": "MT_CBETM",
-			"name": ["Three phased CBE/Linky (Historic)","CBE/Linky (Historique) triphasé"]
+			"name": ["3 phased CBE/Linky (Historic)","CBE/Linky (Historique) tri"]
 		},
 		{
 			"subProductID": "MT_STD",

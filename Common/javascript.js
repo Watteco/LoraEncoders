@@ -92,6 +92,9 @@ window.addEventListener('beforeunload', (event) => {
 //Définition des constantes de langue
 var langData = {
 	mainTitle: ["LoRaWAN frame encoder","Encodeur de trames LoRaWAN"],
+	mainTitleOTA: [
+		"LoRaWAN frame encoder <span style='font-size: 12px;'>(for  <a href='https://www.watteco.com/product/configuration-tool/' target='_blank'>OTA configuration tool</a>  compatible devices)</span>",
+		"Encodeur de trames LoRaWAN <span style='font-size: 12px;'>(pour les produits compatibles avec le <a href='https://www.watteco.fr/produit/outil-de-configuration-lorawan/' target='_blank'>configurateur OTA</a>)</span>"],
 	toolDesc: ["This tool allows to generate frames for LoRaWAN sensors in a simplified way. It may be possible that your sensor is not in the list or that some options are not yet available.","Cet outil permet de générer des trames pour les capteurs LoRaWAN de façon simplifiée. Il est possible que votre capteur ne soit pas présent dans la liste ou que certaines options ne soient pas encore disponibles."],
 	frameEncoder: ["Frame encoder","Encodeur de trames"],
 	firstMsg: ["First choose the sensor model, then select a command and edit the available parameters.","Choisissez tout d'abord le modèle de capteur, puis sélectionnez une commande et éditez les paramètres disponibles."],
@@ -562,6 +565,7 @@ if (! WITH_GROUPS_AND_TOOLTIPS)
 else // WITH_GROUPS_AND_TOOLTIPS 
 { 
 	getAllAvailableProducts = function getAllAvailableProducts_with_groups_and_tooltips() {
+		getLocalConfiguration();
 		getJSON("/Lora/WattecoSensors/AvailableProductsList.json?v=" + (new Date()).getTime(), function(err, data) {
 			if (err) {
 				console.error("Failed to load JSON:", err);
@@ -574,15 +578,23 @@ else // WITH_GROUPS_AND_TOOLTIPS
 
 			// Iterate over the products and categorize them
 			data.products.forEach(product => {
-				// If the product has no category, store it in uncategorizedProducts
-				if (!product.category) {
-					uncategorizedProducts.push(product);
-				} else {
-					// Store categorized products in categorizedProducts object
-					if (!categorizedProducts[product.category]) {
-						categorizedProducts[product.category] = [];
+				displayed = 1;
+				if(typeof(product["apps"]) !== 'undefined') {
+		// loraEncoderType defined in calling index.html ("LoraEncoder" or "LoraEncoderConfiguration")
+					displayed = product.apps.includes(loraEncoderType);
+				}
+				if (displayed) 
+				{
+					// If the product has no category, store it in uncategorizedProducts
+					if (!product.category) {
+						uncategorizedProducts.push(product);
+					} else {
+						// Store categorized products in categorizedProducts object
+						if (!categorizedProducts[product.category]) {
+							categorizedProducts[product.category] = [];
+						}
+						categorizedProducts[product.category].push(product);
 					}
-					categorizedProducts[product.category].push(product);
 				}
 			});
 
