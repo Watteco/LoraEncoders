@@ -6,8 +6,7 @@
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
 			"category": "Accelerometric sensors",
 			"comment": ["High amplitude chocks measurement [100g,200g,400g]",
-						"Mesure de chocs d'amplitude élevée [100g,200g,400g]"],
-			"addresses": ["@803A800\n","@803ABFE\n"]
+						"Mesure de chocs d'amplitude élevée [100g,200g,400g]"]
 		},
 		{
 			"name": "Atm'O (50-70-099)",
@@ -52,7 +51,6 @@
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
 			"BatchUncompressParams": "2 0,10,7,Temperature 1,100,6,RelativeHumidity 2,1,6,BatteryLevel 3,1,1,OpenCase",
 			"category": "TH sensors",
-			"addresses": ["@803A800\n","@803ABFE\n"],
 			"comment": ["Temperature, hygrometry measurement + break in alarm","Mesure de température et hygrometrie + alarme d'effraction"],
 			"docLink": "https://support.watteco.com/hygrotempo/"
 		},
@@ -62,7 +60,6 @@
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
 			"BatchUncompressParams": "2 0,10,7,Temperature 1,100,6,RelativeHumidity 2,1,6,BatteryLevel",
 			"category": "TH sensors",
-			"addresses": ["@803A800\n","@803ABFE\n"],
 			"comment": ["Temperature, hygrometry measurement","Mesure de température et hygrometrie"],
 			"docLink": "https://support.watteco.com/climo/"
 		},
@@ -112,14 +109,24 @@
 			"docLink" : "https://support.watteco.com/monito/"
 		},
 		{
-			"name": "Move'O (50-70-220)",
+			"name": "[Deprecated] Move'O (50-70-220)",
 			"file": "50-70-220-000-Move'o",
 			"apps": ["LoraEncoder","Decoder"],
 			"BatchUncompressParams": "3 0,1,4,OCC 1,10,7,T 2,100,6,H 5,10,6,LUX",
 			"category": "Environnemental sensors",
-			"comment": ["Occupancy, Temperature, Hygrometry and Illuminance measurement + break-in detetction",
+			"comment": ["Occupancy, Temperature, Hygrometry and Illuminance measurement + break-in detection",
 						"Mesure de luminosité, température, hygrometrie et détection de présence + détection d'effraction"],
 			"docLink": "https://support.watteco.com/moveo/"
+		},
+		{
+			"name": "Move'O (50-70-225)",
+			"file": "50-70-225-Move'o",
+			"apps": ["LoraEncoder","Decoder","LoraEncoderConfiguration"],
+			"BatchUncompressParams": "3 0,1,4,OCC 1,10,7,T 2,100,6,H 5,10,6,LUX",
+			"category": "Environnemental sensors",
+			"comment": ["Occupancy, Temperature, Hygrometry and Illuminance measurement + break-in detection",
+						"Mesure de luminosité, température, hygrometrie et détection de présence + détection d'effraction"],
+			"docLink": "https://support.watteco.com/moveo-2/"
 		},
 		{
 			"name": "Outdoor Temperature (50-70-164)",
@@ -252,7 +259,7 @@
 		{
 			"name": "TICs'O (50-70-045) [beta]",
 			"file": "50-70-045-TIC-PMEPMI",
-			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"apps": ["LoraEncoder","Decoder"],
 			"category": "AC power sensors & actuators",
 			"comment": ["French legal electrical meter monitoring (Tele-Information Client: CBE,ICE,CJE,PMEPMI,Linky)",
 						"Capteur TIC pour compteurs électriques (Tele-Information Client: CBE,ICE,CJE,PMEPMI,Linky)"],
@@ -283,10 +290,9 @@
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
 			"BatchUncompressParams": "3 1,10,7,T 2,100,6,H 3,10,6,CO2",
 			"category": "Environnemental sensors",
-			"addresses": ["@807A800\n","@807ABFE\n"],
 			"comment": ["Temperature, Hygrometry and CO2 measurement + break-in detection", 
 						"Mesure de température, hygrometrie et CO2 + détection d'effraction"],
-			"docLink": "https://support.watteco.com/vaqao2/"
+			"docLink": "https://support.watteco.com/vaqaolite/"
 		},
 		{
 			"name": "Vaqa'O + Lite (50-70-251)",
@@ -294,10 +300,9 @@
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
 			"BatchUncompressParams": "3 0,1,4,OCC 1,10,7,T 2,100,6,H 3,10,6,CO2 5,10,6,LUX ",
 			"category": "Environnemental sensors",
-			"addresses": ["@807A800\n","@807ABFE\n"],
 			"comment": ["Temperature, Hygrometry, CO2, luminosity and occupancy measurement + break-in detection", 
 						"Mesure de température, hygrometrie, CO2, luminosité et présence + détection d'effraction"],
-			"docLink": "https://support.watteco.com/vaqao2/"
+			"docLink": "https://support.watteco.com/vaqaolite/"
 		},
 		{
 			"name": "[Deprecated] Vaqa'O + Plus (50-70-074)",

@@ -26,7 +26,7 @@
 		{
 			"clusterID": "BinaryInput",
 			"customName": ["Open/close alarm","Alarme anti-arrachement"],
-			"endpoints": [1],
+			"endpoints": [0],
 			"endpointsComment": ["---","---"],
 			"threshold" : {
 				"available" : false
@@ -125,7 +125,7 @@
 		{
 			"clusterID": "Illuminance",
 			"customName": ["Illuminance measure","Mesure de luminosité"],
-			"endpoints": [0,1],
+			"endpoints": [0],
 			"endpointsComment": ["---","---"],
 			"threshold" : {
                 "available" : true,

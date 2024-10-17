@@ -101,7 +101,7 @@
 		{
 			"clusterID": "Illuminance",
 			"customName": ["Illuminance measure","Mesure de luminosité"],
-			"endpoints": [0,1],
+			"endpoints": [0],
 			"endpointsComment": ["---","---"],
 			"threshold" : {
                 "available" : true,
@@ -206,5 +206,6 @@
 
 		}
 	],
-	 "embeddedProductName": "ips-vaqao"
+	 "embeddedProductName": "ips-vaqao",
+	 "addresses": ["@807A800\n","@807ABFE\n"]
 }

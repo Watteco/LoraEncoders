@@ -139,6 +139,7 @@
 			]
 		}
 	],
-	"embeddedProductName": "ips-accelero"
+	"embeddedProductName": "ips-accelero",
+	"addresses": ["@803A800\n","@803ABFE\n"]
 
 }
