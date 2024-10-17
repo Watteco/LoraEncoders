@@ -116,7 +116,7 @@
 			"category": "Environnemental sensors",
 			"comment": ["Occupancy, Temperature, Hygrometry and Illuminance measurement + break-in detection",
 						"Mesure de luminosité, température, hygrometrie et détection de présence + détection d'effraction"],
-			"docLink": "https://support.watteco.com/moveo/"
+			"docLink": "https://support.watteco.com/moveo-old/"
 		},
 		{
 			"name": "Move'O (50-70-225)",
@@ -126,7 +126,7 @@
 			"category": "Environnemental sensors",
 			"comment": ["Occupancy, Temperature, Hygrometry and Illuminance measurement + break-in detection",
 						"Mesure de luminosité, température, hygrometrie et détection de présence + détection d'effraction"],
-			"docLink": "https://support.watteco.com/moveo-2/"
+			"docLink": "https://support.watteco.com/moveo/"
 		},
 		{
 			"name": "Outdoor Temperature (50-70-164)",
