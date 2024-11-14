@@ -1099,7 +1099,7 @@ function switchCategory(lCurrentReportType = 0) {
 			select.appendChild(opt); //On ajoute notre option à la liste select précédente
 		});
 		
-		row.insertCell(2).innerHTML = Array.isArray((clusterData.endpointsComment[lang])) ? clusterData.endpointsComment[document.getElementById('endpointSelect').value][lang]: clusterData.endpointsComment[lang]; //Remplissage de la troisième cellule
+		row.insertCell(2).innerHTML = Array.isArray((clusterData.endpointsComment[lang])) ? clusterData.endpointsComment[document.getElementById('endpointSelect').selectedIndex][lang]: clusterData.endpointsComment[lang]; //Remplissage de la troisième cellule
 		i++; //Incrémentation de la variable i
 	};
 
@@ -1524,7 +1524,7 @@ function updateBatchData(){
 				theElement.min = currentField.range[0];
 				theElement.max = currentField.range[1];
 				currentCommandParameters[idxCmdParam]["range"] = [currentField.range[0],currentField.range[1]];
-				document.getElementById('interval'+i).textContent = "--- (" + currentField.range[0] +", "+currentField.range[0] + ")";
+				document.getElementById('interval'+i).textContent = "--- (" + currentField.range[0] +", "+currentField.range[1] + ")";
 			} 
 			else {
 				currentCommandParameters[idxCmdParam]["range"]= [0,Infinity];
