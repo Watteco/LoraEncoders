@@ -305,6 +305,16 @@
 			"docLink": "https://support.watteco.com/vaqaolite/"
 		},
 		{
+			"name": "Vaqa'O Multi Lite (50-70-217)",
+			"file": "50-70-217-VAQAOMultiLt",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"BatchUncompressParams": "3 0,1,4,OCC 1,10,7,T 2,100,6,H 3,10,6,CO2 4,10,6,COV 5,10,6,LUX 6,10,6,P ",
+			"category": "Environnemental sensors",
+			"comment": ["Temperature, Hygrometry, Atmospheric Pressure, CO2, COV, luminosity and occupancy measurement + break-in detection", 
+						"Mesure de température, hygrometrie, Pression Atmosphérique, CO2, COV, luminosité et présence + détection d'effraction"],
+			"docLink": "https://support.watteco.com/vaqaolite/"
+		},
+		{
 			"name": "[Deprecated] Vaqa'O + Plus (50-70-074)",
 			"file": "50-70-074-VAQAO+Plus",
 			"apps": ["LoraEncoder","Decoder"],
