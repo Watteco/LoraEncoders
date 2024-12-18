@@ -4,68 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-// TOOLS
-//--------------------------------------------------------------------------------------------------
-// This code empowers all input tags having a placeholder and data-slots attribute
-
-function SetInputMaskMngt() {
-	//document.addEventListener('DOMContentLoaded', () => {
-		for (const el of document.querySelectorAll("[placeholder][data-slots]")) {
-			const pattern = el.getAttribute("placeholder"),
-				slots = new Set(el.dataset.slots || "_"),
-				prev = (j => Array.from(pattern, (c,i) => slots.has(c)? j=i+1: j))(0),
-				first = [...pattern].findIndex(c => slots.has(c)),
-				accept = new RegExp(el.dataset.accept || "\\d", "g"),
-				clean = input => {
-					input = input.match(accept) || [];
-					return Array.from(pattern, c =>
-						input[0] === c || slots.has(c) ? input.shift() || c : c
-					);
-				},
-				format = () => {
-					const [i, j] = [el.selectionStart, el.selectionEnd].map(i => {
-						i = clean(el.value.slice(0, i)).findIndex(c => slots.has(c));
-						return i<0? prev[prev.length-1]: back? prev[i-1] || first: i;
-					});
-					el.value = clean(el.value).join``;
-					el.setSelectionRange(i, j);
-					back = false;
-				};
-			let back = false;
-			el.addEventListener("keydown", (e) => back = e.key === "Backspace");
-			el.addEventListener("input", format);
-			el.addEventListener("focus", format);
-			el.addEventListener("blur", () => el.value === pattern && (el.value=""));
-		}
-	//});
-}
 //--------------------------------------------------------------------------------------------------
 //	PARTIE 1 : Définition des différentes variables pour la suite du programme
 //--------------------------------------------------------------------------------------------------
 
-
-//Fonction récupérant la valeur du cookie de langue
-function getLang() {	
-	var langCookie = "lang=";
-	var ca = document.cookie.split(';');
-	for(var i=0;i < ca.length;i++) {
-		var c = ca[i];
-		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-		if (c.indexOf(langCookie) == 0) {
-			var langCookieValue = c.substring(langCookie.length,c.length);
-			return parseInt(langCookieValue);
-		}
-	}
-	return 0;
-}
-
-
-//Variable contenant la langue actuelle
-var lang = getLang();
-
 // Une fonction qui permet de fermer le logiciel LoraUpdater.exe à la fermeture de la page 
-// var isSwitchingLang = false;
 
 // sessionStorage.setItem('reloaded', 'yes');
 
@@ -80,7 +23,6 @@ var lang = getLang();
 // 		}
 // 	}
 // });
-var isSwitchingLang = false;
 window.addEventListener('beforeunload', (event) => {
     if (gLocalConfiguration && !isSwitchingLang) {
 		navigator.sendBeacon("https://localhost:56700/System.txt","Action=Quit");
@@ -184,7 +126,7 @@ var langData = {
 	finalConfButton:["⑧ Enter the configuration mode to send your configuration n°","⑧ Entrer en mode configuration pour envoyer votre configuration n°"],
 	errorLoadConf: ["The configuration you chose doesn't match with the selected device.","Vous avez sélectionné une configuration qui n'est pas valable pour ce capteur"],
 	errorMsg: ["An error has occurred ! Please try again.","Une erreur est survenue ! Veuillez réessayer."],
-	errorTrame:["Your frame contain too many bytes","Ta trame contient trop d'octets"],
+	errorTrame:["Your frame contains too many bytes","La trame contient trop d'octets"],
 	errorFota:["Don't forget to open your local configuration tool.","N'oubliez pas d'allumer votre outil de configuration local."],
 	downloadCodec: ["Codecs used can be downloaded by following this link : ","Le programme utilisé peut être téléchargé via ce lien : "],
 	hideAndShowButton: ["Hide/Show local configuration","Afficher/masquer la configuration locale"],
@@ -311,22 +253,6 @@ function getBaseUrl() {
 	var re = new RegExp(/^.*\//);
 	return re.exec(window.location.href);
 }
-
-//Fonction permettant la lecture des fichiers .json
-var getJSON = function(url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-	xhr.responseType = "text";
-	xhr.onload = function() {
-	  var status = xhr.status;
-	  if (status === 200) {
-		callback(null, JSON.parse(xhr.response));
-	  } else {
-		callback(status, xhr.response);
-	  }
-	};
-    xhr.send();
-};
 
 //Fonction permettant la lecture des fichiers .json
 var getJSON2 = function(url, callback, extraParameters = null) {
@@ -490,216 +416,6 @@ function resetData(element) {
 		break;
 	}
 }
-
-
-//Changement de la langue utilisée
-function switchLang() {
-	var selectedLang = parseInt(document.getElementById('langSelect').value);
-	
-	if(gLocalConfiguration) isSwitchingLang = true;
-	var date = new Date();
-	date.setTime(date.getTime()+2500000000);
-	var expire = "; expire=" + date.toGMTString();
-	
-	document.cookie = "lang=" + selectedLang + expire + "; path=/";
-	document.location.reload(true);
-}
-
-//Obtenir la variable de local setu
-function getLocalConfiguration() {
-	getJSON("configuration.json?v=" + (new Date()).getTime(),
-		function(err, LocalConfigurations) {
-			if (err !== null) {
-				alert('Une erreur est survenue : ' + err);
-			} else {
-				gLocalConfiguration = LocalConfigurations.OutilLocalDeConfigurationOTA;
-				refreshTiming = LocalConfigurations.refreshTimingOnGet;
-				path = LocalConfigurations.pathPost;
-			}
-		}
-	);
-}
-
-	
-
-
-// Variable pour dire si nous sommes en local ou non
-var gLocalConfiguration = false;
-var refreshTiming = 100000;
-var path = "";
-
-//Obtenir la liste des produits disponibles (deux presentations possibles)
-WITH_GROUPS_AND_TOOLTIPS = true;
-let getAllAvailableProducts;
-if (! WITH_GROUPS_AND_TOOLTIPS)
-{
-	getAllAvailableProducts = function getAllAvailableProducts_old() {
-		getLocalConfiguration();
-		
-	// Use 2nd line from FOTA LEC
-		//getJSON(getRootUrl() + "/Lora/WattecoSensors/AvailableProductsList.json?v=" + (new Date()).getTime(),
-	getJSON("/Lora/WattecoSensors/AvailableProductsList.json?v=" + (new Date()).getTime(),
-			function(err, availableProducts) {
-				if (err !== null) {
-					console.log('Une erreur est survenue : ' + err);
-				} else {
-					var selectProduct = document.getElementById("productSelect");
-					availableProducts.products.forEach(function(product){
-						displayed = 1;
-						if(typeof(product["apps"]) !== 'undefined') {
-				// loraEncoderType defined in calling index.html ("LoraEncoder" or "LoraEncoderConfiguration")
-							displayed = product.apps.includes(loraEncoderType);
-						}
-						if (displayed) {
-							var opt = document.createElement('option');
-							opt.appendChild(document.createTextNode((Array.isArray(product.name) ? product.name[lang] : product.name)));
-							opt.value = product.file;
-							selectProduct.appendChild(opt);
-						}	
-					});
-				}
-			}
-		);
-	}
-} 
-else // WITH_GROUPS_AND_TOOLTIPS 
-{ 
-	getAllAvailableProducts = function getAllAvailableProducts_with_groups_and_tooltips() {
-		getLocalConfiguration();
-		getJSON("/Lora/WattecoSensors/AvailableProductsList.json?v=" + (new Date()).getTime(), function(err, data) {
-			if (err) {
-				console.error("Failed to load JSON:", err);
-				return; // Early exit on error
-			}
-
-			const productSelect = document.getElementById("productSelect");
-			const categorizedProducts = {}; // To hold products categorized by their category
-			const uncategorizedProducts = []; // To hold uncategorized products
-
-			// Iterate over the products and categorize them
-			data.products.forEach(product => {
-				displayed = 1;
-				if(typeof(product["apps"]) !== 'undefined') {
-		// loraEncoderType defined in calling index.html ("LoraEncoder" or "LoraEncoderConfiguration")
-					displayed = product.apps.includes(loraEncoderType);
-				}
-				if (displayed) 
-				{
-					// If the product has no category, store it in uncategorizedProducts
-					if (!product.category) {
-						uncategorizedProducts.push(product);
-					} else {
-						// Store categorized products in categorizedProducts object
-						if (!categorizedProducts[product.category]) {
-							categorizedProducts[product.category] = [];
-						}
-						categorizedProducts[product.category].push(product);
-					}
-				}
-			});
-
-			// Helper function for sorting with special handling for products starting with ~ or [Deprecated]
-			function sortProducts(a, b) {
-				const nameA = Array.isArray(a.name) ? a.name[lang] : a.name;
-				const nameB = Array.isArray(b.name) ? b.name[lang] : b.name;
-
-				// Products with ~ or [Deprecated] should come last
-				const isAAtEnd = nameA.startsWith("~") || nameA.startsWith("[Deprecated]");
-				const isBAtEnd = nameB.startsWith("~") || nameB.startsWith("[Deprecated]");
-
-				// Both are end products or neither
-				if (isAAtEnd && !isBAtEnd) return 1;
-				if (!isAAtEnd && isBAtEnd) return -1;
-
-				// Otherwise, sort alphabetically
-				return nameA.localeCompare(nameB);
-			}
-
-			// Sort uncategorized products alphabetically, with ~ and [Deprecated] names at the end
-			uncategorizedProducts.sort(sortProducts);
-
-			function setOptionsTooltips(option, product){
-				const zeComment = (product.comment ? ((Array.isArray(product.comment) ? product.comment[lang] : product.comment)) : "");
-				const zeDocLink = (product.docLink ? ((Array.isArray(product.docLink) ? product.docLink[lang] : product.docLink)) : "");
-				if (zeComment.length != 0)
-				{
-					option["title"] = zeComment;
-					option["data-tooltip"] = zeComment;
-				}
-				if (zeDocLink.length != 0) {
-					option["data-tooltip"] = option["data-tooltip"] + (lang == 0 ?
-						"<br> <a href='" + zeDocLink +"' target='_blank'>  Type &lt;Enter&gt; to Learn more</a>" :
-						"<br> <a href='" + zeDocLink +"' target='_blank'>  Tapper &lt;Entr&eacutee&gt; pour en savoir plus</a>")
-				}
-			}
-
-			// Add uncategorized products directly to the combo box
-			uncategorizedProducts.forEach(product => {
-				const option = document.createElement('option');
-				option.value = product.file;
-				option.text = ((Array.isArray(product.name) ? product.name[lang] : product.name));
-				setOptionsTooltips(option, product);
-				productSelect.appendChild(option);
-			});
-
-			// Get the categories and sort them alphabetically
-			const sortedCategories = Object.keys(categorizedProducts).sort();
-
-			// Iterate over each sorted category
-			sortedCategories.forEach(category => {
-				// Create a new <optgroup> for each category
-				const optgroup = document.createElement('optgroup');
-				optgroup.label = category;
-				optgroup.id = `optgroup-${category}`;
-				productSelect.appendChild(optgroup);
-
-				// Sort the products within the category alphabetically, with ~ and [Deprecated] names at the end
-				const sortedProducts = categorizedProducts[category].sort(sortProducts);
-
-				// Add each sorted product to the corresponding <optgroup>
-				sortedProducts.forEach(product => {
-					const option = document.createElement('option');
-					option.value = product.file;
-					option.text = ((Array.isArray(product.name) ? product.name[lang] : product.name));
-					setOptionsTooltips(option, product);
-					optgroup.appendChild(option);
-				});
-			});
-
-			// On select box Tooltip functionality allowing an URL link on <Enter> key
-			const tooltip = document.getElementById('tooltip');
-		
-			// Event listener to show tooltip when hovering over the select
-			productSelect.addEventListener('mousemove', function(event) {
-				const option = productSelect.options[productSelect.selectedIndex];
-				if (option['data-tooltip']) {
-					const tooltipText = option['data-tooltip'];
-					if (tooltipText) {
-						tooltip.style.display = 'block';
-						tooltip.innerHTML = tooltipText; // Set the HTML content of the tooltip
-						tooltip.style.left = event.pageX + 10 + 'px';
-						tooltip.style.top = event.pageY + 10 + 'px';
-					}
-				}
-			});
-		
-			// Hide the tooltip when the mouse leaves the select box
-			productSelect.addEventListener('mouseleave', function() {
-				tooltip.style.display = 'none';
-			});
-
-			// Handle keydown event to manage the Enter key => open the URL in tooltip 
-			document.addEventListener('keydown', function(event) {
-				if (event.key === 'Enter' && tooltip.style.display === 'block') {
-					const link = tooltip.querySelector('a'); // Get the link in the tooltip
-					if (link) {
-						window.open(link.href, '_blank'); // Open the link in a new tab
-					}
-				}
-			});
-		});
-	}
-} // WITH_GROUPS_AND_TOOLTIPS
 
 
 function getEmbeddedProductName() {

@@ -2,6 +2,11 @@
 <html lang="fr">
     <HEAD>
         <link rel="stylesheet" type="text/css" href="../Common/stylecss.css">
+        
+		<script>var loraEncoderType = "Decoder";</script>
+		<script type="text/javascript" src="../Common/commonTools.js?v=1.2a"></script>
+		<script type="text/javascript" src="../Common/buildProductSelect.js?v=1.2a"></script>
+
         <!-- <script src="../Common/jquery-3.4.1.min.js"></script> -->
         <meta charset="utf-8"/>
         <TITLE>Watteco - Décodeurs de trames ZCL</TITLE>
@@ -28,10 +33,10 @@
 
     </HEAD>
     <BODY>
-        <DIV">
+        <DIV>
             <!-- <IMG SRC="LOGO-NKE-WATTECO-CMJN.png" height=120px width=300px >-->
             <H2>ZCL frame decoder</H2>
-            <form method="get" action="" name="statement_user">
+            <form method="get" action="" name="statement_user"  onsubmit="return doBeforeSubmit()">
                 <p>
                     <label for="trame" >Frame to decode (FrmPayload)</label> : <input type="test" name="trame" id="trame" placeholder="" size="100"/>
                     <select name="MySelectMenu" id="MySelectMenu">
@@ -112,73 +117,26 @@
             <div id="tab2" class="tab">-->
         <DIV>
             <H2>Batch frame decoder</H2>
-            <form method="get" action="" name="statement_user2">
+            <form method="get" action="" name="statement_user2" onsubmit="return doBeforeSubmit()">
                 <p>
                     <label for="trameBatch" >Frame to decode (FrmPayload)</label> : <input type="text" name="trameBatch" id="trameBatch" placeholder="" size="80"/>
                     <br>
-                    <label for="timestamp"> TimeStamp</label> : <input type="text" name="timestamp" id="timestamp" placeholder="" size="30"/>
+                    <label for="timestamp"> TimeStamp</label> : <input type="text" name="timestamp" id="timestamp" placeholder="yyyy-MM-ddThh:mm:ss.000Z" data-slots="yMdhms" size="30"/>
                     <a class="tooltip">
                     <img src="../Common/help.png" alt=" ? " height=20px width=20px/>
                     <span class="tooltiptext">
                     Format: yyyy-MM-ddTDD:mm:ss.SSSZ
                     </span>
                     </a>
+                    <button type="button" id="btnNow" name="btnNow" onclick="setTimestamp()">Now</button>
                     <br>
                     <label for="BatchAttributes" >Batch attributes</label> :
                 <td>
                     <!--Liste de choix!-->
-                    <select id="selectSensor">
+                    <select id="productSelect">
                     </select>
                 </td>
                 <input type="text" name="BatchAttributes" id="BatchAttributes" placeholder="" size="90"/>
-                <script type="text/javascript">
-                    // Tableau des capteurs récupéré en php(server) plutot que javascript(requête locale) pour test 
-                    var array = <?php
-                        $APLJson=file_get_contents("../WattecoSensors/AvailableProductsList.json");
-                        //$APLJson=fixJSON($APLJson);
-                        $APLJson = str_replace("'","",$APLJson); 
-                        //echo $APLJson;
-                        $APL = json_decode($APLJson);
-                        //var_dump($APL);
-                        
-                        echo "[".' {name: "custom", attributes: ""}';
-                        foreach($APL->products as $product) {
-                            $displayed=true;
-                            if (property_exists($product, 'apps'))
-                                if (! in_array("Decoder", $product->apps))
-                                    $displayed=false;
-                            if ($displayed && (property_exists($product,'BatchUncompressParams'))) {
-                                echo ', {name: "'.
-                                    (is_array($product->name) ? $product->name[0]  : $product->name).'", attributes: "'.
-                                    $product->BatchUncompressParams.'"}'.
-                                    "\n";
-                            }
-                        }
-                        echo "]";
-                    ?>;
-                    
-                    // Pour chaque key (name) de ton tableau tu créais une balise <option> que tu insères dans le HTML
-                    for(var i in array){
-                        var option = document.createElement('option');
-                        option.setAttribute('value', array[i].name);
-                        option.innerHTML = array[i].name;
-                        document.getElementById('selectSensor').appendChild(option);
-                    }
-                    document.getElementById('selectSensor').value = localStorage.getItem("selectSensor");
-                    document.getElementById('BatchAttributes').value = localStorage.getItem("BatchAttributes");
-
-                    // Lors d'une sélection la function callback de l'évènement change est appelée
-                    document.getElementById('selectSensor').addEventListener('change', function(e){
-                        var selectUser = e.target.value;
-                        localStorage.setItem('selectSensor', selectUser)
-                        for(var i in array){ // ici on parcours le tableau afin de chercher le prix correspondant à la sélection
-                            if(array[i].name === selectUser) document.getElementById('BatchAttributes').value = array[i].attributes;
-                        }
-                        localStorage.setItem('BatchAttributes', document.getElementById('BatchAttributes').value)
-
-                    }, false);
-
-                </script>
                 <a class="tooltip">
                 <img src="../Common/help.png" alt=" ? " height=20px width=20px/>
                 <span class="tooltiptext">
@@ -245,5 +203,53 @@
                 </p>
             </form>
         </DIV>
+        <div align="right">
+            <select onchange="switchLang();" id="langSelect" style="font-size: 10px;width:100px;margin-top:8px;">
+                <option id="langOption0" value="0">English</option>
+                <option id="langOption1" value="1">Français</option>
+            </select>
+        </div>
+        <div id="tooltip"></div>
+        <script type="text/javascript"> /** Managed Events **/
+
+            // Lors d'une sélection la function callback de l'évènement change est appelée
+            document.getElementById('productSelect').addEventListener('change', function(e){
+                document.getElementById('BatchAttributes').value = e.target.value;
+            }, false);
+
+            function doBeforeSubmit() 
+            {
+                localStorage.setItem('MySelectMenuIndex', document.getElementById('MySelectMenu').selectedIndex);
+                localStorage.setItem('checkbaseValue', document.getElementById('checkbase').value);
+                localStorage.setItem('trameValue', document.getElementById('trame').value);
+
+                localStorage.setItem('productSelectIndex', document.getElementById("productSelect").selectedIndex);
+                localStorage.setItem('BatchAttributesValue', document.getElementById('BatchAttributes').value);
+                localStorage.setItem('trameBatchValue', document.getElementById('trameBatch').value);
+                localStorage.setItem('timestampValue', document.getElementById('timestamp').value);
+
+                return true;
+            }
+
+            function setTimestamp()
+            {
+                document.getElementById('timestamp').value = getCurrentDateBatchFormatted();
+            }
+
+        </script>
+		<script type="text/javascript"> /** Executed at each load **/
+			document.getElementById('langOption' + lang).defaultSelected = true;
+
+            document.getElementById('MySelectMenu').selectedIndex = localStorage.getItem("MySelectMenuIndex");
+            document.getElementById('checkbase').value = localStorage.getItem("checkbaseValue");
+            document.getElementById('trame').value = localStorage.getItem("trameValue");
+
+			getAllAvailableProducts(optSelectedIndex = localStorage.getItem("productSelectIndex"));
+            document.getElementById('BatchAttributes').value = localStorage.getItem("BatchAttributesValue");
+            document.getElementById('trameBatch').value = localStorage.getItem("trameBatchValue");
+            document.getElementById('timestamp').value = localStorage.getItem("timestampValue");
+
+            SetInputMaskMngt();
+		</script>
     </BODY>
 </HTML>
