@@ -42,28 +42,42 @@
 		},
 		{
 			"clusterID": "AnalogInput",
-			"customName": ["Current Measurement","Mesure de courant"],
 			"endpoints": [1],
-			"endpointsComment": ["---","---"],
-			"Data.unit": [["A","A"]],
-			"Data.comment": [["---","---"]],
+			"minMaxReport":[[60,1],[60,1]],
+			"endpointsComment": [["Current measurement","Mesure de courant"]],
+			"customAttributes":
+                [
+					{
+						"attribute":"PresentValue",
+						"Data.unit": [[],["A","A"]],
+						"Data.comment": [[],["---","---"]],
+						"Data.range": [[],[0,50]]
+					},
+                    {
+						"attribute":"PowerDuration",
+						"Data.unit": [[],["ms","ms"]],
+						"Data.comment": [[],["---","---"]],
+						"Data.range": [0,4294967295]
+                    }
+                ]
+            ,
 			"threshold" : {
                 "available" : true,
                 "slot" : [
                     {
                      "attribute" : "PresentValue", 
-                      "numberSlot" : 7,
+                      "numberSlot" : 6,
                       "fieldindex" : [0]
                       }
                   ]
 
             },
 			"batch" : [
-			{	
-				"attribute" : "PresentValue",
-				"available" : true,
-				"config" : [[[0,0.1,0,2]]] 
-			}
+				{
+					"attribute" : "PresentValue", 
+					"available" : true,
+					"config" : [[[0,0.1,0,2]]] 
+				}	
 			]
 		}
 	],
