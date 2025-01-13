@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
     <HEAD>
         <link rel="stylesheet" type="text/css" href="../Common/stylecss.css">
         
@@ -11,6 +12,17 @@
         <meta charset="utf-8"/>
         <TITLE>Watteco - Décodeurs de trames ZCL</TITLE>
         <link rel="shortcut icon" href="Common.png">
+        
+        <?php
+            // Init submited parameters to empty (used for default init of fields when they exists, before eventual localstorage values)
+            $submited_trame='';
+            $submited_MySelectMenu='';
+            $submited_checkbase='';
+            $submited_productSelectIndex="";
+            $submited_BatchAttributes="";
+            $submited_trameBatch="";
+            $submited_timestamp="";
+        ?>
         
         <?php
             //Get install parameters
@@ -53,9 +65,11 @@
                     <button type="submit" value="Submit" id="Submit" name=" submit" > Decode</button>
                     <br>
                     <?php
+                        $submited_trame='';
                         if (isset($_GET['trame']))
                         {
                         $user_statement = strip_tags($_GET['trame']);
+                        $submited_trame = htmlspecialchars($user_statement);
                         $user_statement = str_replace(' ','',$user_statement);
                         $pattern = "/[g-z=]/i";
 
@@ -65,10 +79,12 @@
                         $withTICRev = preg_match($patternRev, $user_statement);
 
                         if((isset($_GET['checkbase']) || preg_match($pattern, $user_statement)) && (! $withTICRev)){
+                            $submited_checkbase=htmlspecialchars($_GET['checkbase']);
                             $user_statement = bin2hex(base64_decode($user_statement));
                         }
                         if (isset($_GET['MySelectMenu']))
                         {
+                        $submited_MySelectMenu=htmlspecialchars($_GET['MySelectMenu']);
                         echo( "<hr size=2 align=center width='100%'>");
                         echo( "<br>");
 
@@ -135,6 +151,8 @@
                     <!--Liste de choix!-->
                     <select id="productSelect">
                     </select>
+                    <!-- Hidden input to store the index -->
+                    <input type="hidden" id="productSelectIndex" name="productSelectIndex">
                 </td>
                 <input type="text" name="BatchAttributes" id="BatchAttributes" placeholder="" size="90"/>
                 <a class="tooltip">
@@ -162,13 +180,18 @@
                 </label>
                 <button type="submit" value="Submit2" id="Submit2" name=" submit" > Decode</button>
                 <br>
+            
                 <?php
                     if (isset($_GET['trameBatch']))
                     {
                     $user_statement_trame = strip_tags($_GET['trameBatch']) ;
+                    $submited_trameBatch = htmlspecialchars($user_statement_trame);
+                    $submited_productSelectIndex = htmlspecialchars(($_GET['productSelectIndex']));
                     $user_statement_trame=str_replace(' ','',$user_statement_trame);
                     $user_statement_attributes = strip_tags($_GET['BatchAttributes']) ;
+                    $submited_BatchAttributes=htmlspecialchars($user_statement_attributes);
                     $user_statement_timestamp = strip_tags($_GET['timestamp']) ;
+                    $submited_timestamp=htmlspecialchars($user_statement_timestamp);
                     echo( "<hr size=2 align=center width='100%'>");
                     echo( "<br>");
 
@@ -219,6 +242,9 @@
 
             function doBeforeSubmit() 
             {
+                // Update hidden producSelectIndex input from productSelect
+                document.getElementById("productSelectIndex").value = document.getElementById("productSelect").selectedIndex;
+
                 localStorage.setItem('MySelectMenuIndex', document.getElementById('MySelectMenu').selectedIndex);
                 localStorage.setItem('checkbaseValue', document.getElementById('checkbase').value);
                 localStorage.setItem('trameValue', document.getElementById('trame').value);
@@ -237,16 +263,29 @@
             }
 
         </script>
-		<script type="text/javascript"> /** Executed at each load **/
+		<script type="text/javascript"> /** Executed at each load : Init fields either from submit parameters or last recoded in localstorage**/
 			document.getElementById('langOption' + lang).defaultSelected = true;
 
-            document.getElementById('MySelectMenu').selectedIndex = localStorage.getItem("MySelectMenuIndex");
-            document.getElementById('checkbase').value = localStorage.getItem("checkbaseValue");
-            document.getElementById('trame').value = localStorage.getItem("trameValue");
+            // For standard decoder form
+            submited_MySelectMenu="<?php echo $submited_MySelectMenu; ?>";
+            document.getElementById('MySelectMenu').selectedIndex = ((!(submited_MySelectMenu?.trim())) ? localStorage.getItem("MySelectMenuIndex") :submited_MySelectMenu);
+            submited_checkbase="<?php echo $submited_checkbase; ?>";
+            document.getElementById('checkbase').value = ((!(submited_checkbase?.trim())) ? localStorage.getItem("checkbaseValue") :submited_checkbase);
+            submited_trame="<?php echo $submited_trame; ?>";
+            document.getElementById('trame').value = ((!(submited_trame?.trim())) ? localStorage.getItem("trameValue") :submited_trame);
 
-			getAllAvailableProducts(optSelectedIndex = localStorage.getItem("productSelectIndex"));
-            document.getElementById('BatchAttributes').value = localStorage.getItem("BatchAttributesValue");
-            document.getElementById('trameBatch').value = localStorage.getItem("trameBatchValue");
+            // For batch decoder form
+            submited_productSelectIndex="<?php echo $submited_productSelectIndex; ?>";
+			getAllAvailableProducts(optSelectedIndex = ((!(submited_productSelectIndex?.trim())) ? localStorage.getItem("productSelectIndex") :submited_productSelectIndex));
+
+            submited_BatchAttributes="<?php echo $submited_BatchAttributes; ?>";
+            document.getElementById('BatchAttributes').value = ((!(submited_BatchAttributes?.trim())) ? localStorage.getItem("BatchAttributesValue") :submited_BatchAttributes);
+            
+            submited_trameBatch="<?php echo $submited_trameBatch; ?>";
+            document.getElementById('trameBatch').value = ((!(submited_trameBatch?.trim())) ? localStorage.getItem("trameBatchValue") :submited_trameBatch);
+
+            submited_timestamp="<?php echo $submited_timestamp; ?>";
+            document.getElementById('timestamp').value = ((!(submited_timestamp?.trim())) ? localStorage.getItem("timestampValue") :submited_timestamp);
             document.getElementById('timestamp').value = localStorage.getItem("timestampValue");
 
             SetInputMaskMngt();
