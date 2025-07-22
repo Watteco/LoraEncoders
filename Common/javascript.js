@@ -1612,7 +1612,8 @@ function modifyParameter() {
 function checkBatchAvailability(){
 	let lBool = false;
   // Following if comes from FOTA LEC
-	if(currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].CommandID === "ConfigureReporting"){
+	if(currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].CommandID === "ConfigureReporting" 
+		|| currentClusterData.attributes[currentAttributeIndex].commands[currentCommandIndex].CommandID === "ReadReportingConfiguration"){ // Pour pouvoir lire les configs batch
 		
 		currentProductData.clusters.forEach(function(cluster){
 			if(cluster.batch != undefined && cluster.clusterID === currentCluster){
