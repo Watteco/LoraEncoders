@@ -343,6 +343,16 @@
 			"comment": ["Differential pressure measurement (for ventilation and air conditionning)", 
 						"Mesure de pression différentielle (pour système de ventilation ou conditionnement d'air)"],
 			"docLink": "https://support.watteco.com/ventilo/"
+		},
+		{
+			"name": "Alt'O (50-70-236])",
+			"file": "50-70-064-Alt'o",
+			"apps": ["Decoder"],
+			"BatchUncompressParams": "3 0,1,6,ACCmg 1,0.1,12,Ang 2,0.001,12,Dist 3,1,6,Magn 4,1,6,VBatt 5,0.1,7,AccTemp",
+			"category": "Geometrical sensors",
+			"comment": ["Distance measurement (for water level, ...)", 
+						"Mesure de distance (Pour niveau d'eau, ...)"],
+			"docLink": "https://support.watteco.com/alto/"
 		}
 
 	],
