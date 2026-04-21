@@ -16,7 +16,7 @@ div#trame {
 	left : 50%;
 	margin-top : 0;
 	width : 600px;
-	margin-left : -215px;
+	margin-left : -250px;
 	/* la moitié de width */
 }
 
@@ -53,6 +53,13 @@ div#trame {
 #onglets a:hover
 {
 	background : #fff;
+}
+
+#onglets li#EasyCodec.active a
+{
+	border-bottom: 1px solid #f58211;
+	background-color: #f58211;
+	color: white;
 }
 
 #menu
@@ -145,7 +152,7 @@ padding:15px;
 border-radius:3px;
 box-shadow:-1px 1px 1px rgba(0,0,0,0.15);
 background:#fff;
-border-color:#4c4c4c
+border-color:#4c4c4c;
 border-width: 5px;
 }
 .tab {

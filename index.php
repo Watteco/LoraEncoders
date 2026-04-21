@@ -3,7 +3,7 @@
     <HEAD>
         <link rel="stylesheet" type="text/css" href="Common/stylecss.css">
         <meta charset="utf-8"/>
-        <TITLE>Watteco - Décodeur de trames ZCL</TITLE>
+        <TITLE>Watteco - Online Codec</TITLE>
         <link rel="shortcut icon" href="Common/cropped-cropped-favicon-300x300-1-32x32.png">
 
 		<script type="text/javascript">
@@ -11,6 +11,7 @@
                 document.getElementById("Decoders").className="";
                 document.getElementById("JSONTohexFrame").className="";
                 document.getElementById("Encoders").className="";
+                document.getElementById("EasyCodec").className="";
                 document.getElementById(id).className="active";
             }
         </script>
@@ -29,6 +30,7 @@
 				<li id="Decoders" class="active" ><a href="Decoders/index.php" target="iframe_a" onClick="TabSelect('Decoders');">  Decoders  </a></li>
 				<li id="JSONTohexFrame" ><a href="LoraEncoder/JSONTohexFrame.php" target="iframe_a" onClick="TabSelect('JSONTohexFrame');">  JSON to Hex encoder</a></li>
 				<li id="Encoders" ><a href="LoraEncoder/index.html" target="iframe_a" onClick="TabSelect('Encoders');">  Encoder assistant  </a></li>
+				<li id="EasyCodec" ><a href="https://lora.watteco.fr/EasyCodec/tabs/downlink" target="iframe_a" onClick="TabSelect('EasyCodec');">  Easy Codec  </a></li>
 			</ul>
 		</div>
         <div id="wrapper" style="position:relative">
