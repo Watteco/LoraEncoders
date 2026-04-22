@@ -1912,6 +1912,18 @@ function formatParameterData(parameter,parameterIndex) {
 			theHMIElement=document.getElementById('parameter' + parameterIndex);
 			theMantissa=parameter.mantissa;
 			theMultiplier=parameter.multiplier;
+			if(currentCustomData != null && parameter.ParameterID != undefined){
+				var endpointIndex = Number(document.getElementById("endpointSelect").selectedIndex);
+				var customMantissa = currentCustomData[parameter.ParameterID + ".mantissa"];
+				var customMultiplier = currentCustomData[parameter.ParameterID + ".multiplier"];
+
+				if(customMantissa != undefined){
+					theMantissa = customMantissa[endpointIndex];
+				}
+				if(customMultiplier != undefined){
+					theMultiplier = customMultiplier[endpointIndex];
+				}
+			}
 			if(currentCommandParameters[0].value === "SinglePrecision"){
 				return Number(theHMIElement.value);
 			}else if(theMantissa > theMultiplier){// assume float expected (for now used in TIC multi fields, wher attribute datatype is ByteString (notSinglePrecision))
