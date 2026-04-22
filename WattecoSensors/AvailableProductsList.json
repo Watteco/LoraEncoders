@@ -164,6 +164,24 @@
 			"docLink": "https://support.watteco.com/presso-3/"
 		},
 		{
+			"name": "PT1000 (50-70-126)",
+			"file": "50-70-126-PT1000",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"BatchUncompressParams": "1 0,10,7,Temperature 1,100,6,BatteryLevel",
+			"category": "TH sensors (Remote)",
+			"comment": ["PT1000 remote temperature measurement",
+						"Mesure de température déportée PT1000"]
+		},
+		{
+			"name": "PT1000 400°C (50-70-288)",
+			"file": "50-70-288-PT1000-400",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"BatchUncompressParams": "1 0,1,7,Temperature 1,100,6,BatteryLevel",
+			"category": "TH sensors (Remote)",
+			"comment": ["PT1000 400°C remote temperature measurement (1/10th degree resolution)",
+						"Mesure de température déportée PT1000 400°C (résolution au dixième de degré)"]
+		},
+		{
 			"name": "Pulse Sens'O ATEX zone 1 (50-70-[123,228])",
 			"file": "50-70-123-PulseSenso",
 			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
