@@ -97,47 +97,63 @@ $markerAlias = "# [Watteco-LoRa] AliasMatch block"
 
 $loraPath = $loraDir -replace "\\", "/"   # Apache préfère les slashes
 
+# Nettoyage des blocs managés existants (pour mise à jour idempotente)
+$confContent = [regex]::Replace(
+    $confContent,
+    '(?ms)\r?\n?[ \t]*# \[Watteco-LoRa\] Directory block\r?\n[ \t]*<Directory "[^"]+">.*?</Directory>\r?\n?',
+    "`n"
+)
+$confContent = [regex]::Replace(
+    $confContent,
+    '(?ms)\r?\n?[ \t]*# \[Watteco-LoRa\] AliasMatch block\r?\n[ \t]*AliasMatch .*?\r?\n',
+    "`n"
+)
+
+# Nettoyage des anciens blocs legacy non managés (historique setup manuel)
+$confContent = [regex]::Replace(
+    $confContent,
+    '(?ms)\r?\n?[ \t]*# Added directory below that contains the Lora webserver files\r?\n[ \t]*<Directory "[^"]+">.*?</Directory>\r?\n?',
+    "`n"
+)
+$confContent = [regex]::Replace(
+    $confContent,
+    '(?ms)\r?\n?[ \t]*# Set Alias for Lora server \(case-insensitive\)\r?\n[ \t]*AliasMatch \(\?i\)\^/Lora/\(\.\*\)\$ "[^"]*"\r?\n?',
+    "`n"
+)
+
+# Nettoyage de toute autre ligne AliasMatch /Lora potentiellement dupliquée
+$confContent = [regex]::Replace(
+    $confContent,
+    '(?m)^[ \t]*AliasMatch \(\?i\)\^/Lora/\(\.\*\)\$ "[^"]*"\r?\n',
+    ""
+)
+
 # ── Bloc <Directory> ──────────────────────────────────────
 
-if ($confContent -match [regex]::Escape($markerDir)) {
-    Write-OK "<Directory> déjà configuré (skip)"
-} else {
-    $dirBlock = @"
+$dirBlock = "`r`n$markerDir`r`n<Directory `"$loraPath`">`r`n    Options Indexes FollowSymLinks Includes ExecCGI`r`n    AllowOverride All`r`n    Require all granted`r`n</Directory>`r`n"
 
-$markerDir
-<Directory "$loraDir">
-    Options Indexes FollowSymLinks Includes ExecCGI
-    AllowOverride All
-    Require all granted
-</Directory>
-"@
-    # On injecte après le bloc Directory DocumentRoot existant, en fin de fichier sinon
-    if ($confContent -match '(?s)(<Directory "[^"]*">\s*Options Indexes[^<]*</Directory>)') {
-        $confContent = $confContent -replace '(?s)(<Directory "[^"]*">\s*Options Indexes[^<]*</Directory>)', "`$1$dirBlock"
-    } else {
-        $confContent += $dirBlock
-    }
-    Write-OK "Bloc <Directory> ajouté"
+# On injecte après le bloc <Directory> associé à DocumentRoot, en fin de fichier sinon
+$docRootDirPattern = '(?s)(DocumentRoot\s+"[^"]+"\r?\n\s*<Directory\s+"[^"]+">.*?</Directory>)'
+if ($confContent -match $docRootDirPattern) {
+    $confContent = [regex]::Replace($confContent, $docRootDirPattern, "`$1$dirBlock", 1)
+} else {
+    $confContent += $dirBlock
 }
+Write-OK "Bloc <Directory> ajouté/mis à jour"
 
 # ── AliasMatch ────────────────────────────────────────────
 
-if ($confContent -match [regex]::Escape($markerAlias)) {
-    Write-OK "AliasMatch déjà configuré (skip)"
-} else {
-    $aliasBlock = @"
+$aliasBlock = "`r`n$markerAlias`r`nAliasMatch (?i)^/Lora/(.*)$ `"$loraPath/`$1`"`r`n"
 
-$markerAlias
-AliasMatch (?i)^/Lora/(.*)$ "$loraDir/`$1"
-"@
-    # On injecte dans le bloc IfModule alias_module s'il existe, sinon à la fin
-    if ($confContent -match '<IfModule alias_module>') {
-        $confContent = $confContent -replace '(<IfModule alias_module>)', "`$1$aliasBlock"
-    } else {
-        $confContent += "`n<IfModule alias_module>$aliasBlock`n</IfModule>`n"
-    }
-    Write-OK "AliasMatch ajouté"
+# On injecte dans le bloc IfModule alias_module s'il existe, sinon à la fin
+if ($confContent -match '<IfModule alias_module>\r?\n') {
+    $aliasModuleMatch = [regex]::Match($confContent, '<IfModule alias_module>\r?\n')
+    $insertPos = $aliasModuleMatch.Index + $aliasModuleMatch.Length
+    $confContent = $confContent.Insert($insertPos, $aliasBlock)
+} else {
+    $confContent += "`n<IfModule alias_module>`n$aliasBlock`n</IfModule>`n"
 }
+Write-OK "AliasMatch ajouté/mis à jour"
 
 Set-Content $httpdConf -Value $confContent -Encoding UTF8 -NoNewline
 
@@ -148,13 +164,30 @@ Write-Step "Validation de la configuration Apache"
 if (-not (Test-Path $httpdExe)) {
     Write-Warn "httpd.exe introuvable : $httpdExe - validation manuelle requise"
 } else {
-    $result = & $httpdExe -t 2>&1
-    if ($LASTEXITCODE -eq 0) {
-        Write-OK "Configuration Apache valide (Syntax OK)"
-    } else {
-        Write-Host $result -ForegroundColor Red
-        Write-Warn "Erreur de configuration Apache. Le backup est disponible : $backupPath"
-        Write-Fail "Correction requise dans : $httpdConf"
+    $tmpOut = Join-Path $env:TEMP ("lora_httpd_out_{0}.log" -f [guid]::NewGuid().ToString("N"))
+    $tmpErr = Join-Path $env:TEMP ("lora_httpd_err_{0}.log" -f [guid]::NewGuid().ToString("N"))
+    try {
+        $proc = Start-Process -FilePath $httpdExe -ArgumentList "-t" -NoNewWindow -Wait -PassThru -RedirectStandardOutput $tmpOut -RedirectStandardError $tmpErr
+        $stdout = ""
+        $stderr = ""
+        if (Test-Path $tmpOut) { $stdout = [string](Get-Content $tmpOut -Raw -ErrorAction SilentlyContinue) }
+        if (Test-Path $tmpErr) { $stderr = [string](Get-Content $tmpErr -Raw -ErrorAction SilentlyContinue) }
+        if ($null -eq $stdout) { $stdout = "" }
+        if ($null -eq $stderr) { $stderr = "" }
+
+        if ($proc.ExitCode -eq 0) {
+            if ($stdout.Trim().Length -gt 0) { Write-Host $stdout.Trim() -ForegroundColor DarkGray }
+            if ($stderr.Trim().Length -gt 0) { Write-Host $stderr.Trim() -ForegroundColor DarkGray }
+            Write-OK "Configuration Apache valide (Syntax OK)"
+        } else {
+            if ($stdout.Trim().Length -gt 0) { Write-Host $stdout.Trim() -ForegroundColor Red }
+            if ($stderr.Trim().Length -gt 0) { Write-Host $stderr.Trim() -ForegroundColor Red }
+            Write-Warn "Erreur de configuration Apache. Le backup est disponible : $backupPath"
+            Write-Fail "Correction requise dans : $httpdConf"
+        }
+    }
+    finally {
+        Remove-Item $tmpOut, $tmpErr -ErrorAction SilentlyContinue
     }
 }
 
