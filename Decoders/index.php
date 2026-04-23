@@ -27,7 +27,8 @@
         <?php
             //Get install parameters
             $installDir=__DIR__.'/../';
-            $strJsonFileContents = file_get_contents($installDir."install.json");
+            $installFile = file_exists($installDir."install-local.json") ? "install-local.json" : "install.json";
+            $strJsonFileContents = file_get_contents($installDir.$installFile);
             $InstArrayParams = json_decode($strJsonFileContents, true); 
             
             $Python = (array_key_exists("pathPython",$InstArrayParams) ? $InstArrayParams["pathPython"] : "python.exe");

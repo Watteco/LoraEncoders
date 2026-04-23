@@ -1,9 +1,5 @@
 {
-    "//pathPython": "python.exe",
-    "//pathPythonStdCodec":"./cgi-bin/src/Main.py",
-    "//pathPythonBatchDecoder":"./cgi-bin/br_uncompress.py",
-
     "pathPython": "python.exe",
-    "pathPythonStdCodec":"../Codec-Report-Standard-Python/srcWatteco/Main.py",
-    "pathPythonBatchDecoder":"../Codec-Report-Batch-Python/br_uncompress.py"
+    "pathPythonStdCodec":"./cgi-bin/src/Main.py",
+    "pathPythonBatchDecoder":"./cgi-bin/br_uncompress.py"
 }

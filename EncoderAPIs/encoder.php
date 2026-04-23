@@ -46,7 +46,9 @@ function isValidJSON($dataString) {
     return (json_last_error() === JSON_ERROR_NONE);
 }
 //On vient lire le fichier configuration pour associer le chemin de python.exe à la variable $path
-$strJsonFileContents = file_get_contents(__DIR__."/../install.json");
+$installDir = __DIR__.'/../';
+$installFile = file_exists($installDir."install-local.json") ? "install-local.json" : "install.json";
+$strJsonFileContents = file_get_contents($installDir.$installFile);
 $array = json_decode($strJsonFileContents, true); // show contents
 $Python = $array["pathPython"];
 
