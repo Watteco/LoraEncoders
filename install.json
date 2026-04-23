@@ -4,6 +4,6 @@
     "//pathPythonBatchDecoder":"./cgi-bin/br_uncompress.py",
 
     "pathPython": "python.exe",
-    "pathPythonStdCodec":"../Codec-Python/srcWatteco/Main.py",
+    "pathPythonStdCodec":"../Codec-Report-Standard-Python/srcWatteco/Main.py",
     "pathPythonBatchDecoder":"../Codec-Report-Batch-Python/br_uncompress.py"
 }

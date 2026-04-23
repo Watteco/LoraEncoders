@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Codec-Report-Batch-Python"
+		},
+		{
+			"path": "../Codec-Report-Standard-Python"
+		}
+	],
+	"settings": {}
+}
