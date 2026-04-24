@@ -1,12 +1,20 @@
+<?php
+header('Cache-Control: no-cache, must-revalidate, max-age=0');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
+header('Expires: 0');
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
     <HEAD>
+        <?php require_once __DIR__ . '/../Common/assetVersion.php'; ?>
         <link rel="stylesheet" type="text/css" href="../Common/stylecss.css">
         
 		<script>var loraEncoderType = "Decoder";</script>
-		<script type="text/javascript" src="../Common/commonTools.js?v=1.2a"></script>
-		<script type="text/javascript" src="../Common/buildProductSelect.js?v=1.2a"></script>
+        <script type="text/javascript" src="<?php echo versionedAssetUrl('../Common/commonTools.js', __DIR__); ?>"></script>
+        <script type="text/javascript" src="<?php echo versionedAssetUrl('../Common/buildProductSelect.js', __DIR__); ?>"></script>
 
         <!-- <script src="../Common/jquery-3.4.1.min.js"></script> -->
         <meta charset="utf-8"/>

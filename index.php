@@ -1,3 +1,10 @@
+<?php
+header('Cache-Control: no-cache, must-revalidate, max-age=0');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
+header('Expires: 0');
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
     <HEAD>
@@ -29,7 +36,7 @@
 			<ul id="onglets">
 				<li id="Decoders" class="active" ><a href="Decoders/index.php" target="iframe_a" onClick="TabSelect('Decoders');">  Decoders  </a></li>
 				<li id="JSONTohexFrame" ><a href="LoraEncoder/JSONTohexFrame.php" target="iframe_a" onClick="TabSelect('JSONTohexFrame');">  JSON to Hex encoder</a></li>
-				<li id="Encoders" ><a href="LoraEncoder/index.html" target="iframe_a" onClick="TabSelect('Encoders');">  Encoder assistant  </a></li>
+                <li id="Encoders" ><a href="LoraEncoder/index.php" target="iframe_a" onClick="TabSelect('Encoders');">  Encoder assistant  </a></li>
 				<li id="EasyCodec" ><a href="https://lora.watteco.fr/EasyCodec/tabs/downlink" target="iframe_a" onClick="TabSelect('EasyCodec');">  Easy Codec  </a></li>
 			</ul>
 		</div>
