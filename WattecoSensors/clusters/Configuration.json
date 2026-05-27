@@ -150,8 +150,14 @@
                                             ]
                                         },
                                         {
-                                            "ParameterID": "ConstantVoltage",
+                                            "ParameterID": "CurrentPowerSource",
                                             "fieldIndex": 1,
+                                            "editable": false,
+                                            "value": "No"
+                                        },
+                                        {
+                                            "ParameterID": "ConstantVoltage",
+                                            "fieldIndex": 2,
                                             "name": [
                                                 "Reportable change of constant voltage",
                                                 "Variation à signaler du courant continu"
@@ -175,7 +181,7 @@
                                         },
                                         {
                                             "ParameterID": "RechargeableBatteryVoltage",
-                                            "fieldIndex": 2,
+                                            "fieldIndex": 3,
                                             "name": [
                                                 "Reportable change of rechargeable battery voltage",
                                                 "Variation à signaler de la recharge des batteries disponibles"
@@ -220,11 +226,6 @@
                                                 "mV",
                                                 "mV"
                                             ]
-                                        },
-                                        {
-                                            "ParameterID": "CurrentPowerSource",
-                                            "editable": false,
-                                            "value": "No"
                                         }
                                     ]
                                 }

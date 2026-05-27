@@ -17,7 +17,7 @@
 
 - Pour le cluster configuration il faut choisir une ou plusieurs source(s) (cf: https://support.nke-watteco.com/configuration-cluster/).
    C'est les mêmes sources que pour le treshold et le batch.
-        Exemple : "availablePowerSource":[4,2],
+        Exemple : "availablePowerSource":[4,1],
 
 
 /////////////////// Seuil /////////////////////////////////////

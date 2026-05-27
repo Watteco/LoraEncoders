@@ -888,7 +888,7 @@ function switchCategory(lCurrentReportType = 0) {
 					element.subParameters.forEach(function(subParameter) {
 						if(subParameter.editable) {
 							if(currentCluster == "Configuration" && currentReportType == 0 && !thresholdAvailable && subParameter.type == "number"){
-								if(currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource.indexOf(subParameter.fieldIndex) != -1){
+								if(isFieldIndexAllowedByPowerSource(currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource, subParameter.fieldIndex)){
 															
 									addParameterRow(body,i,parameterIndex,subParameter); //Appel de notre fonction d'ajout de ligne
 									parameterIndex++; //On incrémente le numéro d'index du paramètre
@@ -1524,6 +1524,21 @@ function selectSource(){
 		sourceSelecter.disabled = true;
 	}
 }
+
+function isFieldIndexAllowedByPowerSource(availablePowerSource, fieldIndex){
+	if(!Array.isArray(availablePowerSource)) return true;
+
+	var normalizedFieldIndex = Number(fieldIndex);
+	if(availablePowerSource.indexOf(normalizedFieldIndex) != -1) return true;
+
+	// Backward-compatible mapping: NodePowerDescriptor fieldIndex(2..n) -> power source bit(1,2,4,...)
+	if(Number.isInteger(normalizedFieldIndex) && normalizedFieldIndex >= 2){
+		var mappedSourceBit = 1 << (normalizedFieldIndex - 2);
+		return availablePowerSource.indexOf(mappedSourceBit) != -1;
+	}
+
+	return false;
+}
 //--------------------------------------------------------------------------------------------------
 //	PARTIE 4 : Fonctions utilisées suite à l'édition d'un paramètre
 //--------------------------------------------------------------------------------------------------
@@ -1698,7 +1713,7 @@ function generateJson() {
 								i++;
 							} else 
 							if(currentCluster == "Configuration" && currentReportType == 0 && !thresholdAvailable && subParameter.type == "number"){
-								if(currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource.indexOf(subParameter.fieldIndex) != -1){
+								if(isFieldIndexAllowedByPowerSource(currentProductData.clusters.find(clusters => clusters.clusterID == currentCluster).availablePowerSource, subParameter.fieldIndex)){
 									if (isSelectedParam(i))	dataParameter[subParameter.ParameterID] = formatParameterData(subParameter,i);
 									i++; //Incrémentation de la variable "i"
 								}
