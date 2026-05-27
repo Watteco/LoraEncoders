@@ -6,7 +6,9 @@ import sys
 
 # Create path to get codec srcs
 installDir=os.path.dirname(__file__)+"/../"
-f = open (installDir + 'install.json', "r")
+# Prefer local dev config when present, otherwise use the committed prod config.
+installFile = 'install-local.json' if os.path.isfile(installDir + 'install-local.json') else 'install.json'
+f = open (installDir + installFile, "r", encoding="utf-8-sig")
 data = json.loads(f.read())
 pathPythonStdCodecDir=os.path.dirname(data["pathPythonStdCodec"])
 if len(pathPythonStdCodecDir) > 0:

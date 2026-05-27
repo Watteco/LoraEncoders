@@ -116,39 +116,69 @@ foreach ($entry in @(
 Write-Step "Vérification de Python"
 
 function Find-Python {
-    foreach ($cmd in @("py", "python", "python3")) {
-        $p = Get-Command $cmd -ErrorAction SilentlyContinue
-        if ($p) {
-            $ver = & $cmd --version 2>&1
-            if ($ver -match "Python (\d+)\.(\d+)") {
-                $maj = [int]$Matches[1]; $min = [int]$Matches[2]
-                if ($maj -gt 3 -or ($maj -eq 3 -and $min -ge 7)) {
-                    return $p.Source
+    $targetMajor = 3
+    $targetMinor = 11
+
+    $candidateSpecs = @(
+        @{ Command = (Join-Path $env:LOCALAPPDATA "Programs\Python\Python311\python.exe"); Args = @() },
+        @{ Command = (Join-Path $env:ProgramFiles "Python311\python.exe"); Args = @() },
+        @{ Command = (Join-Path ${env:ProgramFiles(x86)} "Python311\python.exe"); Args = @() }
+    )
+
+    $pyLauncher = Get-Command py -ErrorAction SilentlyContinue
+    if ($pyLauncher) {
+        $candidateSpecs += @{ Command = $pyLauncher.Source; Args = @("-3.11") }
+    }
+
+    foreach ($cmdName in @("python3.11", "python311", "python", "python3")) {
+        $cmd = Get-Command $cmdName -ErrorAction SilentlyContinue
+        if ($cmd) {
+            $candidateSpecs += @{ Command = $cmd.Source; Args = @() }
+        }
+    }
+
+    foreach ($spec in $candidateSpecs) {
+        $command = $spec.Command
+        if (-not $command -or -not (Test-Path $command)) {
+            continue
+        }
+
+        $args = @()
+        if ($spec.Args) { $args += $spec.Args }
+        $ver = & $command @args --version 2>&1
+        if ($ver -match "Python (\d+)\.(\d+)") {
+            $maj = [int]$Matches[1]
+            $min = [int]$Matches[2]
+            if ($maj -eq $targetMajor -and $min -eq $targetMinor) {
+                return [pscustomobject]@{
+                    Command = $command
+                    Args    = $args
+                    Version = $ver
                 }
             }
         }
     }
+
     return $null
 }
 
-$pythonExe = Find-Python
+$pythonSpec = Find-Python
 
-if (-not $pythonExe) {
-    Write-Warn "Python >= 3.7 non trouvé. Tentative d'installation via winget..."
+if (-not $pythonSpec) {
+    Write-Warn "Python 3.11 non trouvé. Tentative d'installation via winget..."
     if (Get-Command winget -ErrorAction SilentlyContinue) {
         winget install --id Python.Python.3.11 -e --source winget --silent
         $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH","User")
-        $pythonExe = Find-Python
-        if (-not $pythonExe) {
-            Write-Fail "Python installé mais non détecté. Relancez ce script dans un nouveau terminal."
+        $pythonSpec = Find-Python
+        if (-not $pythonSpec) {
+            Write-Fail "Python 3.11 installé mais non détecté. Relancez ce script dans un nouveau terminal."
         }
-        Write-OK "Python installé : $pythonExe"
+        Write-OK "Python installé : $($pythonSpec.Version) ($($pythonSpec.Command))"
     } else {
-        Write-Fail "winget indisponible. Installez Python >= 3.7 manuellement : https://www.python.org/downloads/`nRelancez ce script ensuite."
+        Write-Fail "winget indisponible. Installez Python 3.11 manuellement : https://www.python.org/downloads/`nRelancez ce script ensuite."
     }
 } else {
-    $ver = & $pythonExe --version 2>&1
-    Write-OK "Python : $ver ($pythonExe)"
+    Write-OK "Python : $($pythonSpec.Version) ($($pythonSpec.Command))"
 }
 
 # ─── 4. Venv ─────────────────────────────────────────────────────────────────
@@ -157,12 +187,23 @@ Write-Step "Création/vérification du venv (.venv)"
 $venvDir  = Join-Path $repoDir ".venv"
 $venvPy   = Join-Path $venvDir "Scripts\python.exe"
 
+if (Test-Path $venvPy) {
+    $venvVer = & $venvPy --version 2>&1
+    if ($venvVer -notmatch "Python 3\.11(\.|$)") {
+        Write-Warn "venv existant en $venvVer, recréation avec Python 3.11"
+        Remove-Item -Path $venvDir -Recurse -Force
+    }
+}
+
 if (-not (Test-Path $venvPy)) {
-    & $pythonExe -m venv $venvDir
+    $venvCreateArgs = @()
+    if ($pythonSpec.Args) { $venvCreateArgs += $pythonSpec.Args }
+    $venvCreateArgs += @("-m", "venv", $venvDir)
+    & $pythonSpec.Command @venvCreateArgs
     if ($LASTEXITCODE -ne 0) { Write-Fail "Échec création du venv" }
-    Write-OK "venv créé"
+    Write-OK "venv créé (Python 3.11)"
 } else {
-    Write-OK "venv existant"
+    Write-OK "venv existant (Python 3.11)"
 }
 
 # Upgrade pip/setuptools/wheel
@@ -201,7 +242,8 @@ $config = [ordered]@{
     pathPythonStdCodec   = "../Codec-Report-Standard-Python/srcWatteco/Main.py"
     pathPythonBatchDecoder = "../Codec-Report-Batch-Python/br_uncompress.py"
 }
-$config | ConvertTo-Json | Set-Content -Path $installLocal -Encoding UTF8
+$utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+[System.IO.File]::WriteAllText($installLocal, ($config | ConvertTo-Json), $utf8NoBom)
 Write-OK "install-local.json écrit : $installLocal"
 
 # ─── 7. Validation ───────────────────────────────────────────────────────────
