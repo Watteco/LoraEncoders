@@ -285,6 +285,9 @@ textarea[readonly] {
 	border-color: #1c1c1c;
 	width: 100%;
 	max-width: 100%;
+	box-sizing: border-box;
+	overflow-y: hidden;
+	resize: none;
 }
 
 button {
@@ -431,6 +434,104 @@ body.compact-tool select {
 body.compact-tool textarea {
 	max-width: 100%;
 	font-family: "Cascadia Code", Consolas, "Courier New", monospace;
+}
+
+/* Selection du decodeur : un seul workflow visible, sans modifier les formulaires. */
+body.decoder-tool {
+	padding: 22px;
+}
+
+body.decoder-tool .decoder-toolbar {
+	display: flex;
+	align-items: center;
+	width: min(100%, 1150px);
+	margin-bottom: 20px;
+}
+
+body.decoder-tool .decoder-mode-switch {
+	display: inline-flex;
+	gap: 3px;
+	padding: 3px;
+	border: 1px solid #c8ccd0;
+	border-radius: 6px;
+	background: #eceff1;
+}
+
+body.decoder-tool .decoder-mode-button {
+	min-height: 32px;
+	padding: 6px 18px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background: transparent;
+	color: #41464a;
+	font: 600 13px/1.2 Arial, sans-serif;
+	cursor: pointer;
+}
+
+body.decoder-tool .decoder-mode-button:hover {
+	background: #f8f9fa;
+}
+
+body.decoder-tool .decoder-mode-button.active,
+body.decoder-tool .decoder-mode-button.active:hover {
+	border-color: var(--wtc-orange-dark);
+	background: var(--wtc-orange);
+	color: #fff;
+	box-shadow: 0 1px 3px rgba(90, 48, 8, 0.18);
+}
+
+body.decoder-tool .decoder-result-actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	min-height: 32px;
+	margin: 6px 0 10px;
+}
+
+body.decoder-tool .shareStatus {
+	min-width: 70px;
+	color: #4f5a52;
+	font-size: 12px;
+}
+
+body.decoder-tool .decoder-panel {
+	padding: 28px 32px;
+	margin-bottom: 20px;
+}
+
+body.decoder-tool .decoder-panel h2 {
+	margin-bottom: 16px;
+	padding-bottom: 10px;
+}
+
+body.decoder-tool .decoder-form-content {
+	line-height: 1.5;
+}
+
+body.decoder-tool .decoder-form-fields {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 4px;
+}
+
+body.decoder-tool .decoder-form-line {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 7px;
+}
+
+body.decoder-tool .decoder-panel input[type="text"],
+body.decoder-tool .decoder-panel input[type="test"],
+body.decoder-tool .decoder-panel select {
+	min-height: 32px;
+	padding: 5px 8px;
+}
+
+body.decoder-tool .decoder-panel[hidden] {
+	display: none;
 }
 
 /* Encodeur assistant : grandes tables lisibles sans perdre en densite. */
@@ -583,4 +684,8 @@ body.app-shell {
 	#header { flex-direction: column; align-items: flex-start; }
 	#mainMainTitle { margin: 10px 0 0 0; text-align: left !important; }
 	.wtc-panel { padding: 8px; }
+	body.decoder-tool { padding: 10px; }
+	body.decoder-tool .decoder-toolbar { align-items: flex-start; flex-direction: column; gap: 10px; }
+	body.decoder-tool .decoder-panel { padding: 16px; }
+	body.decoder-tool .decoder-form-fields { gap: 9px; }
 }

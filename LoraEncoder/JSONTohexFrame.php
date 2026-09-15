@@ -115,5 +115,29 @@
             <!--<hr>-->
             <!--<a href="https://support.nke-watteco.com/">support.nke-watteco.com </a> - <a href="https://www.nke-watteco.fr/">www.nke-watteco.fr</a> -->
         </DIV>
+        <script type="text/javascript">
+            (function synchronizeParentEncoderUrl() {
+                var requestParams = new URLSearchParams(window.location.search);
+                if (!requestParams.has('trame')) return;
+
+                try {
+                    var parentUrl = new URL('/Lora/', window.location.origin);
+                    parentUrl.searchParams.set('tool', 'json-to-hex');
+                    requestParams.forEach(function(value, name) {
+                        if (name !== 'tool') parentUrl.searchParams.append(name, value);
+                    });
+
+                    if (window.parent === window) {
+                        window.location.replace(parentUrl.href);
+                        return;
+                    }
+                    if (window.parent.location.origin !== window.location.origin) return;
+
+                    window.parent.history.replaceState(null, '', parentUrl.href);
+                } catch (error) {
+                    // Direct use with a cross-origin parent: keep the encoder functional.
+                }
+            })();
+        </script>
     </BODY>
 </HTML>

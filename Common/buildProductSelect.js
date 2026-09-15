@@ -31,7 +31,7 @@ if (! WITH_GROUPS_AND_TOOLTIPS)
 					{
 						const option = document.createElement('option');
 						option.value = "";
-						option.text = "Custom";
+						option.text = (lang == 0 ? "Custom" : "Personnalisé");
 						option["title"] = (lang == 0 ? 
 							'Enter specific batch params: <TagSize>;(<space><TagLabel>,<Resolution>,<Type>;[,<Name>])*' :
 							'Entrer des param&egrave;tres batch sp&eacute;cifiques: <TagSize>;(<space><TagLabel>,<Resolution>,<Type>;[,<Nom>])*');
@@ -149,7 +149,7 @@ else // WITH_GROUPS_AND_TOOLTIPS
 				{
 					const option = document.createElement('option');
 					option.value = "";
-					option.text = "Custom";
+					option.text = (lang == 0 ? "Custom" : "Personnalisé");
 					option["title"] = (lang == 0 ? 
 						'Enter specific batch params: <TagSize>;(<space><TagLabel>,<Resolution>,<Type>;[,<Name>])*' :
 						'Entrer des param&egrave;tres batch sp&eacute;cifiques: <TagSize>;(<space><TagLabel>,<Resolution>,<Type>;[,<Nom>])*');

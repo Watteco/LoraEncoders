@@ -97,6 +97,51 @@ function getLang() {
 }
 
 //-------------------------------------------------------------------------------
+// Adapte les sorties en lecture seule a leur contenu pour eviter un second
+// ascenseur vertical a l'interieur de la page. L'observer couvre aussi les
+// textareas ajoutees dynamiquement par l'encodeur apres une requete AJAX.
+function fitReadonlyTextarea(textarea) {
+	if (!(textarea instanceof HTMLTextAreaElement) || (!textarea.readOnly && !textarea.disabled)) return;
+
+	textarea.style.height = "1px";
+	textarea.style.height = Math.max(textarea.scrollHeight, 30) + "px";
+}
+
+function fitReadonlyTextareas(root) {
+	if (root instanceof HTMLTextAreaElement) fitReadonlyTextarea(root);
+	if (!root.querySelectorAll) return;
+
+	root.querySelectorAll('textarea[readonly], textarea:disabled').forEach(fitReadonlyTextarea);
+}
+
+function initializeReadonlyTextareaSizing() {
+	fitReadonlyTextareas(document);
+
+	var textareaObserver = new MutationObserver(function(mutations) {
+		mutations.forEach(function(mutation) {
+			mutation.addedNodes.forEach(function(node) {
+				if (node.nodeType === Node.ELEMENT_NODE) fitReadonlyTextareas(node);
+			});
+		});
+	});
+	textareaObserver.observe(document.body, { childList: true, subtree: true });
+
+	var resizeTimer;
+	window.addEventListener('resize', function() {
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(function() {
+			fitReadonlyTextareas(document);
+		}, 100);
+	});
+}
+
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', initializeReadonlyTextareaSizing);
+} else {
+	initializeReadonlyTextareaSizing();
+}
+
+//-------------------------------------------------------------------------------
 //Obtenir la variable de local setup
 function getLocalConfiguration() {
 	getJSON("configuration.json?v=" + (new Date()).getTime(),
