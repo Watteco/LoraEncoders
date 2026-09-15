@@ -10,9 +10,8 @@ header('Expires: 0');
 
     <HEAD>
         <?php require_once __DIR__ . '/../Common/assetVersion.php'; ?>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="../Common/stylecss.css">
-
+        
 		<script>var loraEncoderType = "Decoder";</script>
         <script type="text/javascript" src="<?php echo versionedAssetUrl('../Common/commonTools.js', __DIR__); ?>"></script>
         <script type="text/javascript" src="<?php echo versionedAssetUrl('../Common/buildProductSelect.js', __DIR__); ?>"></script>
@@ -55,7 +54,7 @@ header('Expires: 0');
 
     </HEAD>
     <BODY>
-        <DIV class="wtc-panel">
+        <DIV>
             <!-- <IMG SRC="LOGO-NKE-WATTECO-CMJN.png" height=120px width=300px >-->
             <H2>ZCL frame decoder</H2>
             <form method="get" action="" name="statement_user"  onsubmit="return doBeforeSubmit()">
@@ -79,7 +78,7 @@ header('Expires: 0');
                         if (isset($_GET['trame']))
                         {
                         $user_statement = strip_tags($_GET['trame']);
-                        $submited_trame = htmlspecialchars($user_statement, ENT_QUOTES);
+                        $submited_trame = htmlspecialchars($user_statement);
                         $user_statement = str_replace(' ','',$user_statement);
                         $pattern = "/[g-z=]/i";
 
@@ -89,12 +88,12 @@ header('Expires: 0');
                         $withTICRev = preg_match($patternRev, $user_statement);
 
                         if((isset($_GET['checkbase']) || preg_match($pattern, $user_statement)) && (! $withTICRev)){
-                            $submited_checkbase=htmlspecialchars($_GET['checkbase'], ENT_QUOTES);
+                            $submited_checkbase=htmlspecialchars($_GET['checkbase']);
                             $user_statement = bin2hex(base64_decode($user_statement));
                         }
                         if (isset($_GET['MySelectMenu']))
                         {
-                        $submited_MySelectMenu=htmlspecialchars($_GET['MySelectMenu'], ENT_QUOTES);
+                        $submited_MySelectMenu=htmlspecialchars($_GET['MySelectMenu']);
                         echo( "<hr size=2 align=center width='100%'>");
                         echo( "<br>");
 
@@ -104,33 +103,32 @@ header('Expires: 0');
                         switch ( $selected_val  ) {
                             case "0": // JSON
                                 $sf = ' -of json 2>&1';
-                                echo( "Decoded frame (json) : " . htmlspecialchars($user_statement, ENT_QUOTES) );
+                                echo( "Decoded frame (json) : " .$user_statement );
                             break;
                             case "1": // XMLP
                                 $sf =' -of xmlp 2>&1';
-                                echo( "Decoded frame (xmlp) : " . htmlspecialchars($user_statement, ENT_QUOTES) );
+                                echo( "Decoded frame (xmlp) : " .$user_statement );
                             break;
                             case "2": // XMLL
                                 $sf =' -of xmll 2>&1';
-                                echo( "Decoded frame (xmll) : " . htmlspecialchars($user_statement, ENT_QUOTES) );
+                                echo( "Decoded frame (xmll) : " .$user_statement );
                             break;
                             case "3": // STD
                                 $sf = ' -of std 2>&1';
-                                echo( "Decoded frame (std) : " . htmlspecialchars($user_statement, ENT_QUOTES) );
+                                echo( "Decoded frame (std) : " .$user_statement );
                             break;
                             case "4": // JSON-VERIF
                                 $sf = ' -of json-verif 2>&1';
-                                echo( "Decoded frame (json-verif) : " . htmlspecialchars($user_statement, ENT_QUOTES) );
+                                echo( "Decoded frame (json-verif) : " .$user_statement );
                             break;
                         }
 
-                        $s = escapeshellarg($Python).' '.escapeshellarg($pathPythonStdCodec).' -if '.escapeshellarg($user_statement).$sf;
+                        $s = $Python.' '.$pathPythonStdCodec.' -if '.escapeshellarg($user_statement).$sf;
 
                         echo( "<br>" );
                         $output = shell_exec( $s );
                         echo( "<br>");
-                        // SECURITE : echappement de la sortie avant insertion dans le <textarea>
-                        echo( "<textarea rows=25 cols=150 readonly wrap='hard'>" . htmlspecialchars($output, ENT_QUOTES) . "</textarea>" );
+                        echo( "<textarea rows=25 cols=150 readonly wrap='hard'>$output</textarea>" );
                         echo( "<br>");
                         }
                         }
@@ -142,7 +140,7 @@ header('Expires: 0');
         <!--<hr size=5 noshade>-->
         <!--</div>
             <div id="tab2" class="tab">-->
-        <DIV class="wtc-panel">
+        <DIV>
             <H2>Batch frame decoder</H2>
             <form method="get" action="" name="statement_user2" onsubmit="return doBeforeSubmit()">
                 <p>
@@ -196,13 +194,13 @@ header('Expires: 0');
                     if (isset($_GET['trameBatch']))
                     {
                     $user_statement_trame = strip_tags($_GET['trameBatch']) ;
-                    $submited_trameBatch = htmlspecialchars($user_statement_trame, ENT_QUOTES);
-                    $submited_productSelectIndex = htmlspecialchars((string)($_GET['productSelectIndex'] ?? ''), ENT_QUOTES);
+                    $submited_trameBatch = htmlspecialchars($user_statement_trame);
+                    $submited_productSelectIndex = htmlspecialchars(($_GET['productSelectIndex']));
                     $user_statement_trame=str_replace(' ','',$user_statement_trame);
                     $user_statement_attributes = strip_tags($_GET['BatchAttributes']) ;
-                    $submited_BatchAttributes=htmlspecialchars($user_statement_attributes, ENT_QUOTES);
+                    $submited_BatchAttributes=htmlspecialchars($user_statement_attributes);
                     $user_statement_timestamp = strip_tags($_GET['timestamp']) ;
-                    $submited_timestamp=htmlspecialchars($user_statement_timestamp, ENT_QUOTES);
+                    $submited_timestamp=htmlspecialchars($user_statement_timestamp);
                     echo( "<hr size=2 align=center width='100%'>");
                     echo( "<br>");
 
@@ -212,32 +210,25 @@ header('Expires: 0');
                         $user_statement_trame = bin2hex(base64_decode($user_statement_trame));
                     }
 
-                    // SECURITE : $user_statement_attributes est une liste d'arguments separes par
-                    // des espaces. On la decoupe puis on echappe chaque argument individuellement
-                    // pour conserver le format attendu tout en neutralisant l'injection shell.
-                    $escapedBatchAttributes = array_map('escapeshellarg', preg_split('/\s+/', trim((string)$user_statement_attributes), -1, PREG_SPLIT_NO_EMPTY));
-                    $batchAttributesArg = implode(' ', $escapedBatchAttributes);
                     if(empty($_GET['timestamp']))
                     {
-                    $s = escapeshellarg($Python).' '.escapeshellarg($pathPythonBatchDecoder).' -if '.escapeshellarg($user_statement_trame).' -a '.$batchAttributesArg.' 2>&1';
+                    $s = $Python.' '.$pathPythonBatchDecoder.' -if '.escapeshellarg($user_statement_trame).' -a '.$user_statement_attributes.' 2>&1';
                     }
                     else
                     {
-                    $s = escapeshellarg($Python).' '.escapeshellarg($pathPythonBatchDecoder).' -if '.escapeshellarg($user_statement_trame).' -t '.escapeshellarg($user_statement_timestamp).' -a '.$batchAttributesArg.' 2>&1';
+                    $s = $Python.' '.$pathPythonBatchDecoder.' -if '.escapeshellarg($user_statement_trame).' -t '.$user_statement_timestamp.' -a '.$user_statement_attributes.' 2>&1';
                     }
-                    echo( "Frame to decode (FrmPayload): " . htmlspecialchars($user_statement_trame, ENT_QUOTES) );
+                    echo( "Frame to decode (FrmPayload): " .$user_statement_trame );
                     echo( "<br>");
-                    echo( "TimeStamp: " . htmlspecialchars($user_statement_timestamp, ENT_QUOTES) );
+                    echo( "TimeStamp: " .$user_statement_timestamp );
                     echo( "<br>");
-                    echo( "Batch attributes: " . htmlspecialchars($user_statement_attributes, ENT_QUOTES) );
+                    echo( "Batch attributes: " .$user_statement_attributes );
 
                     echo( "<br>" );
                     //echo( "<br>");
                     $output2 = shell_exec( $s );
                     echo( "<br>");
-                    // SECURITE : la sortie est echappee avant d'etre placee dans le <textarea>
-                    // (un contenu contenant "</textarea><script>..." permettait une XSS)
-                    echo( "<textarea rows=25 cols=150 readonly wrap='hard'>" . htmlspecialchars($output2, ENT_QUOTES) . "</textarea>" );
+                    echo( "<textarea rows=25 cols=150 readonly wrap='hard'>$output2</textarea>" );
                     echo( "<br>");
                     }
                     ?>
@@ -284,33 +275,25 @@ header('Expires: 0');
 		<script type="text/javascript"> /** Executed at each load : Init fields either from submit parameters or last recoded in localstorage**/
 			document.getElementById('langOption' + lang).defaultSelected = true;
 
-            <?php
-                // SECURITE : les valeurs sont desormais serialisees avec json_encode()
-                // plutot que simplement echappees pour du HTML, puis inserees dans le JS.
-                // L'ancien code utilisait htmlspecialchars() sans ENT_QUOTES et sans
-                // echappement JS dedie : une valeur contenant certains caracteres pouvait
-                // casser hors de la chaine de caracteres JavaScript (XSS).
-                $jsopt = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP;
-            ?>
             // For standard decoder form
-            submited_MySelectMenu=<?php echo json_encode((string)$submited_MySelectMenu, $jsopt); ?>;
+            submited_MySelectMenu="<?php echo $submited_MySelectMenu; ?>";
             document.getElementById('MySelectMenu').selectedIndex = ((!(submited_MySelectMenu?.trim())) ? localStorage.getItem("MySelectMenuIndex") :submited_MySelectMenu);
-            submited_checkbase=<?php echo json_encode((string)$submited_checkbase, $jsopt); ?>;
+            submited_checkbase="<?php echo $submited_checkbase; ?>";
             document.getElementById('checkbase').value = ((!(submited_checkbase?.trim())) ? localStorage.getItem("checkbaseValue") :submited_checkbase);
-            submited_trame=<?php echo json_encode((string)$submited_trame, $jsopt); ?>;
+            submited_trame="<?php echo $submited_trame; ?>";
             document.getElementById('trame').value = ((!(submited_trame?.trim())) ? localStorage.getItem("trameValue") :submited_trame);
 
             // For batch decoder form
-            submited_productSelectIndex=<?php echo json_encode((string)$submited_productSelectIndex, $jsopt); ?>;
+            submited_productSelectIndex="<?php echo $submited_productSelectIndex; ?>";
 			getAllAvailableProducts(optSelectedIndex = ((!(submited_productSelectIndex?.trim())) ? localStorage.getItem("productSelectIndex") :submited_productSelectIndex));
 
-            submited_BatchAttributes=<?php echo json_encode((string)$submited_BatchAttributes, $jsopt); ?>;
+            submited_BatchAttributes="<?php echo $submited_BatchAttributes; ?>";
             document.getElementById('BatchAttributes').value = ((!(submited_BatchAttributes?.trim())) ? localStorage.getItem("BatchAttributesValue") :submited_BatchAttributes);
             
-            submited_trameBatch=<?php echo json_encode((string)$submited_trameBatch, $jsopt); ?>;
+            submited_trameBatch="<?php echo $submited_trameBatch; ?>";
             document.getElementById('trameBatch').value = ((!(submited_trameBatch?.trim())) ? localStorage.getItem("trameBatchValue") :submited_trameBatch);
 
-            submited_timestamp=<?php echo json_encode((string)$submited_timestamp, $jsopt); ?>;
+            submited_timestamp="<?php echo $submited_timestamp; ?>";
             document.getElementById('timestamp').value = ((!(submited_timestamp?.trim())) ? localStorage.getItem("timestampValue") :submited_timestamp);
             document.getElementById('timestamp').value = localStorage.getItem("timestampValue");
 

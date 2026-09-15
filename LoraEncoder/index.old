@@ -45,7 +45,7 @@ header('Expires: 0');
 
 		<script src="../Common/jquery-3.4.1.min.js"></script>
         <link rel="stylesheet" type="text/css" href="../Common/stylecss.css">
-
+		
 		<link rel="stylesheet" id="shootingstar-style-css" href="https://support.watteco.com/wp-content/themes/shootingstar-child/style.css?ver=4.5.4" type="text/css" media="all">
 
 		<link rel="stylesheet" id="tablepress-default-css" href="https://support.watteco.com/wp-content/tablepress-combined.min.css?ver=41" type="text/css" media="all">

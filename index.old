@@ -8,9 +8,8 @@ header('Expires: 0');
 <!DOCTYPE html>
 <html lang="fr">
     <HEAD>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="Common/stylecss.css">
+        <meta charset="utf-8"/>
         <TITLE>Watteco - Online Codec</TITLE>
         <link rel="shortcut icon" href="Common/cropped-cropped-favicon-300x300-1-32x32.png">
 
@@ -29,8 +28,8 @@ header('Expires: 0');
             <a href="https://support.watteco.com/"  target="_blank">
                 <img class="header-logo" src="Common/Logo-Watteco-rdm.png" style="float: left" width="100" height="auto" alt="">
             </a>   
-            <h2 id="mainMainTitle" style="text-align: center;">
-                <span style="text-decoration: underline;">ONLINE SENSORS CODECS</span>
+            <h2 style="margin-right: 100px; text-align: center;" id="mainMainTitle">
+                <span style="text-decoration: underline;">Online Sensors CoDecs</span>
             </h2>
         </header>
 		<div id="menu">
@@ -42,7 +41,7 @@ header('Expires: 0');
 			</ul>
 		</div>
         <div id="wrapper" style="position:relative">
-            <iframe style="position:absolute;top:0px;width:100%;height:calc( 100vh - 96px); border: 1px solid gray;border-top: none;" 
+            <iframe style="position:absolute;top:0px;width:100%;height:calc( 100vh - 81px); border: 1px solid gray;border-top: none;" 
                     name="iframe_a" title="Iframe container" src="Decoders/index.php"></iframe>
         </div>
     </BODY>

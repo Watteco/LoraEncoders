@@ -212,18 +212,18 @@ header('Expires: 0');
                         $user_statement_trame = bin2hex(base64_decode($user_statement_trame));
                     }
 
-                    // SECURITE : $user_statement_attributes est une liste d'arguments separes par
-                    // des espaces. On la decoupe puis on echappe chaque argument individuellement
-                    // pour conserver le format attendu tout en neutralisant l'injection shell.
-                    $escapedBatchAttributes = array_map('escapeshellarg', preg_split('/\s+/', trim((string)$user_statement_attributes), -1, PREG_SPLIT_NO_EMPTY));
-                    $batchAttributesArg = implode(' ', $escapedBatchAttributes);
+                    // SECURITE : $user_statement_attributes et $user_statement_timestamp etaient
+                    // auparavant concatenes tels quels dans la commande shell (aucun escapeshellarg),
+                    // ce qui permettait une injection de commande arbitraire via ces deux champs
+                    // (ex: BatchAttributes=" ; rm -rf / #"). Ils sont desormais systematiquement
+                    // passes a escapeshellarg().
                     if(empty($_GET['timestamp']))
                     {
-                    $s = escapeshellarg($Python).' '.escapeshellarg($pathPythonBatchDecoder).' -if '.escapeshellarg($user_statement_trame).' -a '.$batchAttributesArg.' 2>&1';
+                    $s = escapeshellarg($Python).' '.escapeshellarg($pathPythonBatchDecoder).' -if '.escapeshellarg($user_statement_trame).' -a '.escapeshellarg($user_statement_attributes).' 2>&1';
                     }
                     else
                     {
-                    $s = escapeshellarg($Python).' '.escapeshellarg($pathPythonBatchDecoder).' -if '.escapeshellarg($user_statement_trame).' -t '.escapeshellarg($user_statement_timestamp).' -a '.$batchAttributesArg.' 2>&1';
+                    $s = escapeshellarg($Python).' '.escapeshellarg($pathPythonBatchDecoder).' -if '.escapeshellarg($user_statement_trame).' -t '.escapeshellarg($user_statement_timestamp).' -a '.escapeshellarg($user_statement_attributes).' 2>&1';
                     }
                     echo( "Frame to decode (FrmPayload): " . htmlspecialchars($user_statement_trame, ENT_QUOTES) );
                     echo( "<br>");

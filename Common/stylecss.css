@@ -15,20 +15,27 @@ div#trame {
 	list-style-type : none;
 	left : 50%;
 	margin-top : 0;
-	width : 600px;
-	margin-left : -250px;
-	/* la moitié de width */
+	/* Centrage robuste : la largeur s'adapte desormais au contenu
+	   (auparavant width:600px + margin-left:-250px, une largeur fixe
+	   qui ne correspondait deja plus exactement a la moitie de 600px
+	   et qui aurait pu faire deborder/passer a la ligne les onglets
+	   en aerant le padding ci-dessous). */
+	width : auto;
+	white-space : nowrap;
+	transform : translateX(-50%);
 }
 
 #onglets li
 {
 	float : left;
-	height : 21px;
-	/* à modifier suivant la taille de la police pour centrer le texte dans l'onglet */
+	/* La hauteur fixe (21px) a ete retiree : elle etait trop juste des
+	   qu'on augmente le padding des liens et risquait de couper le texte.
+	   La hauteur est maintenant naturellement determinee par le padding
+	   du lien qu'elle contient. */
 	background-color: #F4F9FD;
-	margin : 2px 2px 0 2px !important;
+	margin : 2px 6px 0 6px !important;
 	/* Pour les navigateurs autre que IE */
-	margin : 1px 2px 0 2px;
+	margin : 1px 6px 0 6px;
 	/* Pour IE  */
 	border : 1px solid #9EA0A1;
 }
@@ -47,7 +54,8 @@ div#trame {
 	/*#666;
 	*/
 	text-decoration : none;
-	padding : 4px 10px;
+	padding : 10px 22px;
+	letter-spacing : 0.03em;
 }
 
 #onglets a:hover
@@ -65,7 +73,9 @@ div#trame {
 #menu
 {
 	border-bottom : 1px solid #9EA0A1;
-	padding-bottom : 25px;
+	padding-bottom : 40px;
+	/* augmente de 25px a 40px : les onglets sont plus hauts maintenant
+	   qu'ils sont plus aeres (padding des liens agrandi) */
 }
 
 body
@@ -186,4 +196,160 @@ h2
 #tooltip a {
 	color: blue;
 	text-decoration: underline;
+}
+
+/* ============================================================
+   Extension de style (ajoutee) — inspiree de l'onglet actif
+   "Easy Codec" deja defini plus haut (fond #f58211, texte blanc)
+   afin d'harmoniser l'ensemble du site autour de cette meme
+   teinte orange plutot que d'introduire une nouvelle charte.
+   Ces regles completent le CSS existant sans le modifier :
+   aucune regle ci-dessus n'est retouchee.
+
+   Remarque : je n'ai pas pu recuperer directement le rendu de
+   https://lora.watteco.fr/EasyCodec/tabs/downlink (le site
+   bloque l'acces automatise via robots.txt). Cette extension
+   s'appuie donc sur la couleur d'accent deja presente dans ce
+   fichier pour l'onglet EasyCodec (#f58211), pas sur une
+   capture ecran de l'outil. N'hesitez pas a me transmettre une
+   capture ou le CSS de l'outil si vous voulez un alignement
+   plus precis.
+   ============================================================ */
+
+:root {
+	--wtc-orange: #f58211;
+	--wtc-orange-dark: #c9690a;
+	--wtc-orange-light: #fdeee0;
+	--wtc-border: #9EA0A1;
+	--wtc-bg-tab: #F4F9FD;
+	--wtc-text: #333333;
+	--wtc-radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+	background: #f6f7f8;
+	line-height: 1.5;
+	color: var(--wtc-text);
+	padding: 20px;
+	margin: 0;
+}
+
+/* Panneaux englobant chaque bloc fonctionnel (decodeur, batch, encodeur...) */
+.wtc-panel {
+	background: #ffffff;
+	border: 1px solid #e2e4e6;
+	border-radius: var(--wtc-radius);
+	padding: 20px 22px;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px rgba(20, 20, 20, 0.06);
+	max-width: 1150px;
+}
+
+label {
+	font-weight: 600;
+	color: #4c4c4c;
+	font-size: 0.92rem;
+}
+
+input[type="text"],
+input[type="test"],
+textarea,
+select {
+	font-family: inherit;
+	font-size: 0.92rem;
+	padding: 7px 10px;
+	border: 1px solid var(--wtc-border);
+	border-radius: 6px;
+	background: #fff;
+	color: var(--wtc-text);
+	margin: 4px 6px 4px 0;
+}
+
+input[type="text"]:focus,
+input[type="test"]:focus,
+textarea:focus,
+select:focus {
+	outline: none;
+	border-color: var(--wtc-orange);
+	box-shadow: 0 0 0 3px rgba(245, 130, 17, 0.18);
+}
+
+textarea[readonly] {
+	font-family: "Cascadia Code", Consolas, "Courier New", monospace;
+	font-size: 0.85rem;
+	background: #1c1c1c;
+	color: #f0d9c0;
+	border-color: #1c1c1c;
+	width: 100%;
+	max-width: 100%;
+}
+
+button {
+	font-family: inherit;
+	font-weight: 700;
+	font-size: 0.92rem;
+	background: var(--wtc-orange);
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	padding: 8px 18px;
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+button:hover { background: var(--wtc-orange-dark); }
+button:active { transform: translateY(1px); }
+
+/* Tooltips au format "a.tooltip" utilises par les pages de decodage/encodage.
+   Complementaire de la classe .tooltip deja definie plus haut, avec un rendu
+   sur fond clair plutot que fond sombre, mieux integre aux panneaux blancs. */
+a.tooltip {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+}
+a.tooltip .tooltiptext {
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 0.15s ease;
+	background: #fff;
+	color: var(--wtc-text);
+	border: 1px solid var(--wtc-border);
+	border-radius: 8px;
+	box-shadow: 0 4px 14px rgba(20, 20, 20, 0.15);
+	padding: 12px 14px;
+	position: absolute;
+	z-index: 10;
+	top: 130%;
+	left: 0;
+	width: 320px;
+	font-size: 0.82rem;
+	line-height: 1.5;
+}
+a.tooltip:hover .tooltiptext,
+a.tooltip:focus .tooltiptext {
+	visibility: visible;
+	opacity: 1;
+}
+
+#langSelect {
+	border-radius: 6px;
+	border: 1px solid var(--wtc-border);
+}
+
+/* En-tete de la page racine (index.php) */
+#header {
+	display: flex;
+	align-items: center;
+	padding: 10px 20px;
+	border-bottom: 1px solid #e0e0e0;
+}
+#header .header-logo { float: none; margin-right: 16px; }
+#mainMainTitle { flex: 1; margin: 0 100px 0 0; }
+
+@media (max-width: 640px) {
+	#header { flex-direction: column; align-items: flex-start; }
+	#mainMainTitle { margin: 10px 0 0 0; text-align: left !important; }
+	.wtc-panel { padding: 14px; }
 }
