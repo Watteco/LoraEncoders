@@ -960,6 +960,7 @@ function switchCategory(lCurrentReportType = 0) {
 		
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
+		generateButton.className = "wtc-button wtc-button--primary";
 		generateButton.value = langData.chooseOutput[lang]; //Texte du bouton
 		generateButton.onclick = function() { showFinalFrame(); }; //Cliquer sur le bouton appelle la fonction d'affichage de la trame
 		row.insertCell(3).appendChild(generateButton); //Insertion du bouton dans la troisième cellule
@@ -972,6 +973,7 @@ function switchCategory(lCurrentReportType = 0) {
 		
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
+		generateButton.className = "wtc-button wtc-button--primary";
 		generateButton.value = langData.chooseOutput[lang]; //Texte du bouton
 		generateButton.onclick = function() { showFinalJson(); }; //Cliquer sur le bouton appelle la fonction d'affichage du JSON
 		row.insertCell(3).appendChild(generateButton); //Insertion du bouton dans la troisième cellule
@@ -985,6 +987,7 @@ function switchCategory(lCurrentReportType = 0) {
 
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
+		generateButton.className = "wtc-button wtc-button--primary";
     generateButton.id = "addFrameButton"; // Mise en place d'un id
 		generateButton.value = langData.chooseOption[lang]; //Texte du bouton
 		generateButton.onclick = function() { showFinalTxt(generateCheckbox.checked,true)}; //Cliquer sur le bouton appelle la fonction de création du fichier txt et du téléchargement de celui ci
@@ -992,6 +995,7 @@ function switchCategory(lCurrentReportType = 0) {
 		
 		var generateButton = document.createElement('input'); //Création d'un élément d'entrée
 		generateButton.type = "button"; //Définition de l'élément comme bouton
+		generateButton.className = "wtc-button wtc-button--primary";
     generateButton.id = "resetFrameButton"; // Mise en place d'un id
 		generateButton.value = langData.chooseOption[lang]; //Texte du bouton
 		generateButton.onclick = function() { resetShowFinalTxt(generateCheckbox.checked); }; //Cliquer sur le bouton appelle la fonction de création du fichier txt et du téléchargement de celui ci
@@ -1323,11 +1327,11 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 				}
 				catch (error) {	}
 			}
-			cell.innerHTML = "<input type='number' step='1' value='1' "+ 
+			cell.innerHTML = "<div class='time-input-group'><input type='number' step='1' value='1' "+
 				" min='" +  parameter.range[0] + "' max='" + parameter.range[1] +"'" +
 				"onchange='modifyParameter()' id='parameter" + parameterIndex + "'" +
-				"style='margin-right:10px;'><select onchange='switchTimeUnit(" + parameterIndex + ");'" +
-				" id='unit" + parameterIndex + "'></select>"; //Insertion des champs d'indication du temps et du choix de l'unité
+				"><select onchange='switchTimeUnit(" + parameterIndex + ");'" +
+				" id='unit" + parameterIndex + "'></select></div>"; //Insertion des champs d'indication du temps et du choix de l'unité
 			
 			var unitSelect = document.getElementById("unit" + parameterIndex); //On récupère le sélecteur d'unité tout juste créé
 			unitSelect.style.width = "100px"; //On lui indique sa valeur
@@ -1368,10 +1372,12 @@ function addParameterRow(body,rowIndex,parameterIndex,parameter,selectable = fal
 			}
 			
 						
-			row.insertCell(cellNum++).outerHTML = "<td id='interval" + parameterIndex + "'>" + 
-				parameter.comment[lang] + 
-				" (" + parameter.range[0] + " " + langData.to[lang] + " " + parameter.range[1] + " " +
-				langData.secondsOrMinutes[lang] + ")</td>"; //On remplit la cellule décrivant l'intervalle avec l'unité correspondante
+			var intervalCell = row.insertCell(cellNum++);
+			intervalCell.id = "interval" + parameterIndex;
+			intervalCell.dataset.comment = parameter.comment[lang];
+			intervalCell.dataset.rangeMin = parameter.range[0];
+			intervalCell.dataset.rangeMax = parameter.range[1];
+			updateTimeIntervalDescription(parameterIndex);
 			
 		break;
 		
@@ -1580,14 +1586,17 @@ function modifyReportType() {
 
 //Fonction appelée lors d'un changement d'unité pour les champs de données temporelles
 function switchTimeUnit(parameterIndex) {
-	var tdData = document.getElementById('interval' + parameterIndex).innerHTML; //On récupère le contenu de la cellule présentant l'intervalle
-	var selectedUnit = document.getElementById('unit' + parameterIndex).value; //On récupère l'unité sélectionnée
-	
-	if(selectedUnit == "Seconds") { //Si l'unité sélectionnée est "secondes"
-		document.getElementById('interval' + parameterIndex).innerHTML = tdData.replace(langData.minutes[lang], langData.seconds[lang]); //On remplace l'unité actuelle par la nouvelle
-	} else if(selectedUnit == "Minutes") { //Si l'unité sélectionnée est "minutes"
-		document.getElementById('interval' + parameterIndex).innerHTML = tdData.replace(langData.seconds[lang], langData.minutes[lang]); //On remplace l'unité actuelle par la nouvelle
-	}
+	updateTimeIntervalDescription(parameterIndex);
+}
+
+function updateTimeIntervalDescription(parameterIndex) {
+	var intervalCell = document.getElementById('interval' + parameterIndex);
+	var selectedUnit = document.getElementById('unit' + parameterIndex).value;
+	var displayedUnit = selectedUnit == "Minutes" ? langData.minutes[lang] : langData.seconds[lang];
+
+	intervalCell.innerHTML = intervalCell.dataset.comment +
+		" (" + intervalCell.dataset.rangeMin + " " + langData.to[lang] + " " +
+		intervalCell.dataset.rangeMax + " " + displayedUnit + ")";
 }
 
 
@@ -2978,6 +2987,7 @@ function addParameterThresh(body) {
 	var newCell = row.insertCell(1);
 	var addButton = document.createElement('button');
 	addButton.id = 'firstAddButton';
+	addButton.className = 'wtc-button wtc-button--secondary';
 	addButton.innerHTML = langData.add[lang];
 	addButton.onclick = function(){
 		addAThresh(body);
@@ -3008,6 +3018,7 @@ function setThresh(body){
 		var newCell = separateRow.insertCell(2);
 		var deleteButton = document.createElement('button');
 		deleteButton.innerHTML = langData.del[lang];
+		deleteButton.className = 'wtc-button wtc-button--danger';
 		deleteButton.id = j;
 		deleteButton.onclick = function(){
 			deleteAThresh(body,this.id);
@@ -3217,6 +3228,7 @@ function setThresh(body){
 			
 			var dynamicButton = document.createElement("button");
 			dynamicButton.innerText = langData.add[lang];
+			dynamicButton.className = "wtc-button wtc-button--secondary";
 			dynamicButton.id = j;
 			dynamicButton.onclick = function(){
 				if(this.innerText === langData.add[lang]){

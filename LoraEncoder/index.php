@@ -61,7 +61,7 @@ header('Expires: 0');
 
 	</head>
 
-	<BODY>
+	<BODY class="encoder-assistant">
 	  <div class="scroll-top arrow_carrot-up" style="display: none;"></div>
 		<div class="pattern"></div>
 		<div id="container">

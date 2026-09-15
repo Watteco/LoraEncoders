@@ -24,7 +24,7 @@ header('Expires: 0');
             }
         </script>
     </HEAD>
-    <BODY>  
+    <BODY class="app-shell">
         <header id="header">
             <a href="https://support.watteco.com/"  target="_blank">
                 <img class="header-logo" src="Common/Logo-Watteco-rdm.png" style="float: left" width="100" height="auto" alt="">
@@ -41,9 +41,8 @@ header('Expires: 0');
 				<li id="EasyCodec" ><a href="https://lora.watteco.fr/EasyCodec/tabs/downlink" target="iframe_a" onClick="TabSelect('EasyCodec');">  Easy Codec  </a></li>
 			</ul>
 		</div>
-        <div id="wrapper" style="position:relative">
-            <iframe style="position:absolute;top:0px;width:100%;height:calc( 100vh - 96px); border: 1px solid gray;border-top: none;" 
-                    name="iframe_a" title="Iframe container" src="Decoders/index.php"></iframe>
+		<div id="wrapper">
+            <iframe name="iframe_a" title="Iframe container" src="Decoders/index.php"></iframe>
         </div>
     </BODY>
 </HTML>

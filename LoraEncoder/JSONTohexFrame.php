@@ -30,7 +30,7 @@
         ?>
 
     </HEAD>
-    <BODY>
+    <BODY class="compact-tool">
         <DIV ALIGN="Left" class="wtc-panel">
             <!--<IMG SRC="LOGO-NKE-WATTECO-CMJN.png" height=120px width=300px >-->
             <H2>ZCL frame encoder</H2>
@@ -38,7 +38,7 @@
                 <p>
                     <label for="trame" >Frame to encode</label> :
                     <textarea id="trame" name="trame" rows=20 cols=100></textarea>
-                    <button type="submit" value="Submit" id="Submit" name=" submit" > Encode</button>
+                    <button class="wtc-button wtc-button--primary" type="submit" value="Submit" id="Submit" name=" submit" > Encode</button>
                     <br>
                     <?php
 						//Fonction permettant de verifier la validite du JSON recupere

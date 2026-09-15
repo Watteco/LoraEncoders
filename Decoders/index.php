@@ -54,7 +54,7 @@ header('Expires: 0');
         ?>
 
     </HEAD>
-    <BODY>
+    <BODY class="compact-tool">
         <DIV class="wtc-panel">
             <!-- <IMG SRC="LOGO-NKE-WATTECO-CMJN.png" height=120px width=300px >-->
             <H2>ZCL frame decoder</H2>
@@ -72,7 +72,7 @@ header('Expires: 0');
                     base 64
                     <input type="checkbox" name="checkbase" id ="checkbase" value="checkox_value">
                     </label>
-                    <button type="submit" value="Submit" id="Submit" name=" submit" > Decode</button>
+                    <button class="wtc-button wtc-button--primary" type="submit" value="Submit" id="Submit" name=" submit" > Decode</button>
                     <br>
                     <?php
                         $submited_trame='';
@@ -155,7 +155,7 @@ header('Expires: 0');
                     Format: yyyy-MM-ddTDD:mm:ss.SSSZ
                     </span>
                     </a>
-                    <button type="button" id="btnNow" name="btnNow" onclick="setTimestamp()">Now</button>
+                    <button class="wtc-button wtc-button--secondary" type="button" id="btnNow" name="btnNow" onclick="setTimestamp()">Now</button>
                     <br>
                     <label for="BatchAttributes" >Batch attributes</label> :
                 <td>
@@ -189,7 +189,7 @@ header('Expires: 0');
                     base 64
                     <input type="checkbox" name="checkbasebatch" id ="checkbasebatch" value="checkox_value">
                 </label>
-                <button type="submit" value="Submit2" id="Submit2" name=" submit" > Decode</button>
+                <button class="wtc-button wtc-button--primary" type="submit" value="Submit2" id="Submit2" name=" submit" > Decode</button>
                 <br>
             
                 <?php
