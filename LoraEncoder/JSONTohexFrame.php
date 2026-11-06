@@ -25,6 +25,29 @@
                 return $path;
             }
 
+            function runCodecWithStdin($command, $stdin) {
+                $descriptorSpec = array(
+                    0 => array("pipe", "r"),
+                    1 => array("pipe", "w"),
+                    2 => array("pipe", "w")
+                );
+
+                $process = proc_open($command, $descriptorSpec, $pipes, __DIR__);
+                if (!is_resource($process)) {
+                    return "Unable to start the encoder";
+                }
+
+                fwrite($pipes[0], $stdin);
+                fclose($pipes[0]);
+                $stdout = stream_get_contents($pipes[1]);
+                $stderr = stream_get_contents($pipes[2]);
+                fclose($pipes[1]);
+                fclose($pipes[2]);
+                proc_close($process);
+
+                return $stdout . $stderr;
+            }
+
             $pathPythonStdCodec = processPath($InstArrayParams,'pathPythonStdCodec', './cgi-bin/src/Main.py');
             $pathPythonBatchDecoder = processPath($InstArrayParams,'pathPythonBatchDecoder', './cgi-bin/src/br_uncompress.py');
         ?>
@@ -65,20 +88,21 @@
 								// avant d'etre injecte dans la commande shell. Auparavant la chaine
 								// JSON brute etait concatenee telle quelle, ce qui permettait une
 								// injection de commande arbitraire (ex: trame=";rm -rf / #").
-								$s = 'echo ' . escapeshellarg($user_statement) . ' | ' . escapeshellarg($Python) . ' ' . escapeshellarg($pathPythonStdCodec) . ' -m e 2>&1';
+								// Le JSON est transmis directement sur stdin. Sous Windows,
+								// escapeshellarg() altere les guillemets doubles lorsqu'ils sont
+								// inclus dans la commande et transforme l'objet JSON en chaine.
+								$s = escapeshellarg($Python) . ' ' . escapeshellarg($pathPythonStdCodec) . ' -m e';
 
-								$output = shell_exec( $s );
+								$output = runCodecWithStdin($s, $user_statement . PHP_EOL);
 								//$output = preg_replace("/(\\\r)?\\\n/", "\n", $output);
 								//$output = str_replace('\n', '<BR>', $output );
 								//$output = preg_replace ("/\r\n|\n\r|\n|\r/", "<br>", $output );
 
-								// supprime les 2 premiers caracteres b' puis le dernier caractere '
-								// (protege contre une sortie plus courte que prevu)
-								if (is_string($output) && strlen($output) >= 3) {
-									$output = substr( $output, 2, -1);
-									$output = substr( $output, 0, -1);
-								} else {
-									$output = '';
+								// Le codec historique affiche le resultat sous la forme b'...'.
+								// trim() gere aussi bien les fins de ligne Windows que Unix.
+								$output = is_string($output) ? trim($output) : '';
+								if (preg_match("/^b'([0-9a-fA-F]+)'$/", $output, $matches)) {
+									$output = $matches[1];
 								}
 							} else {
 								$output = "The input JSON is not valid";
