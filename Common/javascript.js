@@ -1980,23 +1980,9 @@ function showFinalJson() {
 
 //Fonction déterminant le script auquel effectuer la requête pour récupérer la trame
 function getEncoderFileLocation(callback) {
-	var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (request.readyState === XMLHttpRequest.DONE) {
-			if (callback && typeof callback === 'function') {
-				var serverInfo = request.getResponseHeader("server").toLowerCase();
-				if(!!~serverInfo.indexOf("php")) {
-					callback(getRootUrl() + "/Lora/EncoderAPIs/encoder.php");
-				} else if(!!~serverInfo.indexOf("python")) {
-					callback(getRootUrl() + "/Lora/EncoderAPIs/encoder.py");
-				} else {
-					callback(null);
-				}
-			}
-        }
-    };
-    request.open('HEAD', document.location, true);
-    request.send(null);
+	if (callback && typeof callback === 'function') {
+		callback(getRootUrl() + "/Lora/EncoderAPIs/encoder.php");
+	}
 }
 
 
@@ -2009,7 +1995,7 @@ function showFinalFrame() {
 	if((thresholdAvailable && checkTresholdOnExceedOnFall()) || !thresholdAvailable){
 		getEncoderFileLocation(function(scriptLocation) {
 			if(scriptLocation != null) {
-				jQuery.get(scriptLocation + "?json=" + jsonOutput, function(data, status) {
+				jQuery.get(scriptLocation, {json: jsonOutput}, function(data, status) {
 					if(status == "success" && !(!!~data.indexOf("errorMsg"))) {
             if (loraEncoderType == "LoraEncoderConfiguration") {
    						document.getElementById('frameOutput').innerHTML = "<p><span style='font-size: 16px;'>⑤ </span>" + langData.finalFrameMsg[lang] + "</p><textarea rows='1' cols='100' style='resize:none' readonly='readonly'>" + data.trim() + "</textarea>";
@@ -2061,7 +2047,7 @@ function showFinalTxt(checked,aButton){
 
 			getEncoderFileLocation(function(scriptLocation) {
 				if(scriptLocation != null) {
-					jQuery.get(scriptLocation + "?json=" + jsonOutput, function(data, status) {
+					jQuery.get(scriptLocation, {json: jsonOutput}, function(data, status) {
 						
 						var copiegDataConcatenation = gDataConcatenation;
 						
