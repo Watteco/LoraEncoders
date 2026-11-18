@@ -200,6 +200,24 @@
 			"docLink": "https://support.watteco.com/pulsesenso-2/"
 		},
 		{
+			"name": "Pulse Sens'O Neo (50-70-260)",
+			"file": "50-70-260-Pulse-Sens'O-Neo",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"BatchUncompressParams": "4 0,1,10,Index1 1,1,10,Index2 2,1,10,Index3 3,1,1,State1 4,1,1,State2 5,1,1,State3 6,100,6,VBAT 7,1,10,Index4 8,1,1,State4",
+			"category": "Digital input sensors",
+			"comment": ["4 digital inputs for state or count monitoring","4 entrées binaires de suivi d'état ou de comptage"],
+			"docLink": "https://support.watteco.com/"
+		},
+		{
+			"name": "Pulse Sens'O Lite Neo (50-70-304)",
+			"file": "50-70-304-Pulse-Sens'O-Lite-Neo",
+			"apps": ["LoraEncoder","LoraEncoderConfiguration","Decoder"],
+			"BatchUncompressParams": "4 0,1,10,Index1 3,1,1,State1 6,100,6,VBAT",
+			"category": "Digital input sensors",
+			"comment": ["1 digital input for state or count monitoring","1 entrée binaire de suivi d'état ou de comptage"],
+			"docLink": "https://support.watteco.com/"
+		},
+		{
 			"name": "[Deprecated] Remote temperature (50-70-043-002)",
 			"file": "50-70-043-002-RT",
 			"apps": ["LoraEncoder","Decoder"],
