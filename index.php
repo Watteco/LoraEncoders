@@ -99,6 +99,17 @@ header('Expires: 0');
                 return toolRoutes.JSONTohexFrame.src + (query ? '?' + query : '');
             }
 
+            function GetEasyCodecIframeUrl(params) {
+                var easyCodecParams = new URLSearchParams();
+
+                if (params.has('sensor')) {
+                    easyCodecParams.set('sensor', params.get('sensor'));
+                }
+
+                var query = easyCodecParams.toString();
+                return toolRoutes.EasyCodec.src + (query ? '?' + query : '');
+            }
+
             function GetToolId(params) {
                 var requestedSlug = params.get('tool');
                 var requestedTool = Object.keys(toolRoutes).find(function(id) {
@@ -116,9 +127,28 @@ header('Expires: 0');
                 var iframeUrl = toolRoutes[toolId].src;
                 if (toolId === 'Decoders') iframeUrl = GetDecoderIframeUrl(params);
                 if (toolId === 'JSONTohexFrame') iframeUrl = GetJsonToHexIframeUrl(params);
+                if (toolId === 'EasyCodec') iframeUrl = GetEasyCodecIframeUrl(params);
 
                 SetIframeSource(iframeUrl);
                 TabSelect(toolId);
+            }
+
+            function SynchronizeEasyCodecAddress(event) {
+                var iframe = document.querySelector('iframe[name="iframe_a"]');
+                var easyCodecOrigin = new URL(toolRoutes.EasyCodec.src, window.location.href).origin;
+
+                if (activeTabId !== 'EasyCodec') return;
+                if (event.source !== iframe.contentWindow || event.origin !== easyCodecOrigin) return;
+                if (!event.data || event.data.type !== 'watteco.easy-codec.selection') return;
+                if (typeof event.data.sensor !== 'string') return;
+
+                var sensor = event.data.sensor.trim();
+                if (!sensor || sensor.length > 200 || /[\u0000-\u001F\u007F]/.test(sensor)) return;
+
+                var targetUrl = new URL('/Lora/', window.location.origin);
+                targetUrl.searchParams.set('tool', 'easy-codec');
+                targetUrl.searchParams.set('sensor', sensor);
+                window.history.replaceState(null, '', targetUrl.href);
             }
 
             function OpenTool(event, id) {
@@ -145,6 +175,7 @@ header('Expires: 0');
             window.addEventListener('DOMContentLoaded', RestoreToolFromAddress);
             window.addEventListener('hashchange', RestoreToolFromAddress);
             window.addEventListener('popstate', RestoreToolFromAddress);
+            window.addEventListener('message', SynchronizeEasyCodecAddress);
         </script>
     </HEAD>
     <BODY class="app-shell">
